@@ -34,16 +34,15 @@
     
     html, body {
       width: 100%;
-      height: auto;
-      min-height: 100vh;
+      height: 100vh;
+      max-height: 100vh;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
       line-height: 1.4;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
-      overflow-y: auto;
+      overflow: hidden;
     }
 
     /* Top Bar */
@@ -54,9 +53,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 200;
       flex-shrink: 0;
     }
     .top-utility-nav {
@@ -88,15 +84,11 @@
       border-color: var(--google-blue);
       margin-left: auto;
     }
-    .top-utility-btn.accent-add:hover { background: var(--google-blue-hover); }
 
     /* Header */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 36px;
-      z-index: 100;
       padding: 0 1.25rem;
       display: flex;
       align-items: center;
@@ -135,12 +127,15 @@
 
     .container {
       width: 100%;
-      flex: 1 0 auto;
+      flex: 1;
       padding: 0.85rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
     }
 
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .tab-content { display: none; flex-direction: column; flex: 1; }
+    .tab-content.active { display: flex; }
 
     /* Dashboard KPIs */
     .kpi-grid {
@@ -148,6 +143,7 @@
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 0.65rem;
       margin-bottom: 0.85rem;
+      flex-shrink: 0;
     }
     .kpi-card {
       background: var(--bg-card);
@@ -172,6 +168,7 @@
       border-radius: var(--radius);
       padding: 0.65rem 0.9rem;
       margin-bottom: 0.75rem;
+      flex-shrink: 0;
     }
     .filter-label-catchy {
       font-family: 'Google Sans', sans-serif;
@@ -203,46 +200,43 @@
       border-radius: var(--radius);
       padding: 0.45rem 0.75rem;
       margin-bottom: 0.75rem;
+      flex-shrink: 0;
     }
     .search-box { position: relative; width: 100%; }
     .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 20px; }
     .search-input { width: 100%; padding: 0.4rem 1rem 0.4rem 2.2rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-body); font-size: 0.85rem; outline: none; }
 
-    /* Grid & Tile Highlights */
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
+    /* Grid & Cards */
+    .resources-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+      gap: 0.75rem; 
+      overflow-y: auto;
+      padding-bottom: 1rem;
+    }
     .resource-card {
       background: var(--bg-card); 
       border: 1px solid var(--border-color); 
       border-radius: var(--radius); 
       padding: 0.85rem;
       display: flex; flex-direction: column; justify-content: space-between;
-      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
       cursor: pointer;
     }
-    /* LIGHT BLUE HOVER STATE */
     .resource-card:hover {
       background-color: var(--google-blue-light) !important;
       border-color: var(--google-blue);
       transform: translateY(-3px);
       box-shadow: var(--shadow-sm);
     }
-    /* DARK BLUE ACTIVE CLICK STATE */
     .resource-card:active, .resource-card.selected-active {
       background-color: var(--google-blue) !important;
       color: #ffffff !important;
-      border-color: var(--google-blue-hover);
     }
     .resource-card:active .card-title,
     .resource-card.selected-active .card-title,
     .resource-card:active .action-btn,
-    .resource-card.selected-active .action-btn {
-      color: #ffffff !important;
-    }
-    .resource-card:active .link-btn,
-    .resource-card.selected-active .link-btn {
-      color: #ffffff !important;
-      background: rgba(255, 255, 255, 0.2);
-    }
+    .resource-card.selected-active .action-btn { color: #ffffff !important; }
 
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.9rem; font-weight: 500; line-height: 1.35; }
@@ -254,17 +248,15 @@
     .action-btn:hover { background: rgba(0,0,0,0.06); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    /* Table Highlight States */
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
+    /* Table */
+    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; flex: 1; }
     .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.83rem; }
     .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
     .doc-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #f1f3f4; }
-    .doc-table tr { transition: background-color 0.2s ease; cursor: pointer; }
     .doc-table tr:hover { background-color: var(--google-blue-light) !important; }
-    .doc-table tr:active, .doc-table tr.selected-active { background-color: var(--google-blue-active) !important; }
     .doc-type-tag { padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 500; background: #e8eaed; color: var(--text-primary); }
 
-    /* MODAL OVERLAYS LOCKED AT TOP */
+    /* POP-UP MODAL MENUS */
     .modal-overlay {
       position: fixed !important; 
       top: 0 !important; 
@@ -273,23 +265,20 @@
       height: 100vh !important;
       background: rgba(32, 33, 36, 0.65);
       display: none;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       z-index: 999999 !important;
       padding: 1rem;
-      overflow-y: auto;
     }
     .modal-overlay.open { display: flex !important; }
     .modal-content {
-      position: relative;
       background: var(--bg-card); 
       border-radius: var(--radius); 
       width: 100%; 
-      max-width: 480px; 
+      max-width: 450px; 
       padding: 1.25rem; 
       box-shadow: var(--shadow-md);
-      margin-top: 15px !important;
-      max-height: 85vh;
+      max-height: 90vh;
       overflow-y: auto;
     }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
@@ -299,7 +288,10 @@
     .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
     .form-group label { font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); }
     .form-group input, .form-group select { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
+    .pin-input { border-color: var(--google-blue) !important; background: var(--google-blue-light) !important; font-weight: 700; letter-spacing: 2px; }
+    .error-msg { color: var(--google-red); font-size: 0.78rem; font-weight: 500; display: none; margin-top: -0.2rem; }
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-family: 'Google Sans', sans-serif; font-weight: 500; cursor: pointer; }
+    .btn-danger { background: var(--google-red) !important; }
     .empty-state { grid-column: 1 / -1; text-align: center; padding: 1.5rem 1rem; color: var(--text-secondary); }
   </style>
 </head>
@@ -451,12 +443,12 @@
     </div>
   </div>
 
-  <!-- ADD LINK POP-UP MODAL -->
+  <!-- ADD LINK POP-UP MENU -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
         <h2>Submit New Resource Link</h2>
-        <button class="modal-close-btn" onclick="closeAddModal()">
+        <button class="modal-close-btn" onclick="closeModal('addModalOverlay')">
           <span class="material-icons-outlined">close</span>
         </button>
       </div>
@@ -523,12 +515,12 @@
     </div>
   </div>
 
-  <!-- EDIT LINK POP-UP MODAL -->
+  <!-- EDIT LINK POP-UP MENU -->
   <div class="modal-overlay" id="editModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="editModalTitle">Edit Item</h2>
-        <button class="modal-close-btn" onclick="closeEditModal()">
+        <h2 id="editModalTitle">Edit Item Menu</h2>
+        <button class="modal-close-btn" onclick="closeModal('editModalOverlay')">
           <span class="material-icons-outlined">close</span>
         </button>
       </div>
@@ -577,19 +569,50 @@
           <input type="url" id="editLink" required>
         </div>
 
-        <button type="submit" class="btn-submit" id="editSubmitBtn">Save Changes</button>
+        <div class="form-group">
+          <label for="editPin">Enter Security PIN (1137) *</label>
+          <input type="password" id="editPin" class="pin-input" placeholder="••••" required>
+          <span class="error-msg" id="editPinError">Invalid PIN! Try again.</span>
+        </div>
+
+        <button type="submit" class="btn-submit" id="editSubmitBtn">Save & Sync Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DELETE LINK POP-UP MENU -->
+  <div class="modal-overlay" id="deleteModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Confirm Delete Item</h2>
+        <button class="modal-close-btn" onclick="closeModal('deleteModalOverlay')">
+          <span class="material-icons-outlined">close</span>
+        </button>
+      </div>
+
+      <form id="deleteResourceForm" class="modal-form">
+        <input type="hidden" id="deleteTargetHub">
+        <input type="hidden" id="deleteTargetId">
+
+        <p style="font-size: 0.88rem; color: var(--text-secondary);" id="deleteItemNameText">Are you sure you want to delete this item?</p>
+
+        <div class="form-group">
+          <label for="deletePin">Enter Security PIN (1137) *</label>
+          <input type="password" id="deletePin" class="pin-input" placeholder="••••" required>
+          <span class="error-msg" id="deletePinError">Invalid PIN! Delete canceled.</span>
+        </div>
+
+        <button type="submit" class="btn-submit btn-danger" id="deleteSubmitBtn">Confirm Delete Permanently</button>
       </form>
     </div>
   </div>
 
   <script>
-    // GENERATE A NEW GITHUB TOKEN AT: https://github.com/settings/tokens
-    // AND REPLACE BELOW
     const GITHUB_CONFIG = {
       owner: "Prabhaharan1137",
       repo: "knowledge-center",
       fileTarget: "Knowledge_Center.html",
-      token: "YOUR_NEW_GITHUB_PAT_HERE"
+      token: "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"
     };
 
     const ACTION_PASSWORD = "1137";
@@ -792,13 +815,6 @@
       }
     }
 
-    function verifyAdminPIN() {
-      const pin = prompt("Password Required (1137):");
-      if (pin === ACTION_PASSWORD) return true;
-      alert("Incorrect Password!");
-      return false;
-    }
-
     function syncDropdownOptions() {
       const existingCats = new Set([...DEFAULT_CATEGORIES, ...dataset.map(d => d.category)]);
       const mainSelect = document.getElementById('moduleSelect');
@@ -845,11 +861,6 @@
 
     async function commitDatasetToGitHub(updatedLearningDataset, updatedDocDataset, commitMessage) {
       persistStateLocally();
-      if (!GITHUB_CONFIG.token || GITHUB_CONFIG.token.includes("YOUR_NEW_GITHUB_PAT")) {
-        console.warn("Personal Access Token not set. Changes saved to LocalStorage.");
-        return;
-      }
-
       const { owner, repo, fileTarget, token } = GITHUB_CONFIG;
       const apiBase = `https://api.github.com/repos/${owner}/${repo}`;
       const headers = {
@@ -906,8 +917,8 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    function closeAddModal() {
-      document.getElementById('addModalOverlay').classList.remove('open');
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('open');
       setTimeout(notifyIframeHeight, 100);
     }
 
@@ -954,7 +965,7 @@
           await commitDatasetToGitHub(null, docDataset, `Add Doc Link: ${pkg}`);
         }
 
-        closeAddModal();
+        closeModal('addModalOverlay');
         document.getElementById('addResourceForm').reset();
 
         renderLearningHub();
@@ -970,12 +981,12 @@
     }
 
     function openEditLearningModal(id) {
-      if (!verifyAdminPIN()) return;
-
       const item = dataset.find(d => d.id === id);
       if (!item) return;
 
-      document.getElementById('editModalTitle').textContent = "Edit Learning Topic";
+      document.getElementById('editPinError').style.display = 'none';
+      document.getElementById('editPin').value = '';
+      document.getElementById('editModalTitle').textContent = "Edit Learning Topic Menu";
       document.getElementById('editTargetHub').value = "learning";
       document.getElementById('editTargetId').value = id;
       document.getElementById('editTitle').value = item.name;
@@ -989,12 +1000,12 @@
     }
 
     function openEditDocModal(originalIndex) {
-      if (!verifyAdminPIN()) return;
-
       const item = docDataset[originalIndex];
       if (!item) return;
 
-      document.getElementById('editModalTitle').textContent = "Edit Document";
+      document.getElementById('editPinError').style.display = 'none';
+      document.getElementById('editPin').value = '';
+      document.getElementById('editModalTitle').textContent = "Edit Document Menu";
       document.getElementById('editTargetHub').value = "document";
       document.getElementById('editTargetId').value = originalIndex;
       document.getElementById('editPkg').value = item.pkg;
@@ -1008,16 +1019,19 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    function closeEditModal() {
-      document.getElementById('editModalOverlay').classList.remove('open');
-      setTimeout(notifyIframeHeight, 100);
-    }
-
     async function handleEditSubmission(e) {
       e.preventDefault();
+      const pin = document.getElementById('editPin').value;
+      const errorMsg = document.getElementById('editPinError');
+
+      if (pin !== ACTION_PASSWORD) {
+        errorMsg.style.display = 'block';
+        return;
+      }
+      errorMsg.style.display = 'none';
 
       const editBtn = document.getElementById('editSubmitBtn');
-      editBtn.textContent = "Saving...";
+      editBtn.textContent = "Saving Changes...";
       editBtn.disabled = true;
 
       const targetHub = document.getElementById('editTargetHub').value;
@@ -1048,42 +1062,85 @@
           }
         }
 
-        closeEditModal();
+        closeModal('editModalOverlay');
         alert("Changes saved successfully!");
       } catch (err) {
         alert(`Error: ${err.message}`);
       } finally {
-        editBtn.textContent = "Save Changes";
+        editBtn.textContent = "Save & Sync Changes";
         editBtn.disabled = false;
       }
     }
 
-    async function deleteLearningItem(id) {
-      if (!verifyAdminPIN()) return;
+    function openDeleteLearningModal(id) {
       const item = dataset.find(d => d.id === id);
       if (!item) return;
-      if (!confirm(`Are you sure you want to delete "${item.name}"?`)) return;
 
-      dataset = dataset.filter(d => d.id !== id);
+      document.getElementById('deletePinError').style.display = 'none';
+      document.getElementById('deletePin').value = '';
+      document.getElementById('deleteTargetHub').value = "learning";
+      document.getElementById('deleteTargetId').value = id;
+      document.getElementById('deleteItemNameText').textContent = `Are you sure you want to delete "${item.name}"?`;
 
-      await commitDatasetToGitHub(dataset, null, `Delete Topic: ${item.name}`);
-      syncDropdownOptions();
-      renderLearningHub();
-      alert("Deleted successfully!");
+      document.getElementById('deleteModalOverlay').classList.add('open');
+      setTimeout(notifyIframeHeight, 100);
     }
 
-    async function deleteDocItem(originalIndex) {
-      if (!verifyAdminPIN()) return;
+    function openDeleteDocModal(originalIndex) {
       const item = docDataset[originalIndex];
       if (!item) return;
-      if (!confirm(`Are you sure you want to delete "${item.pkg} (${item.type})"?`)) return;
 
-      docDataset.splice(originalIndex, 1);
+      document.getElementById('deletePinError').style.display = 'none';
+      document.getElementById('deletePin').value = '';
+      document.getElementById('deleteTargetHub').value = "document";
+      document.getElementById('deleteTargetId').value = originalIndex;
+      document.getElementById('deleteItemNameText').textContent = `Are you sure you want to delete "${item.pkg} (${item.type})"?`;
 
-      await commitDatasetToGitHub(null, docDataset, `Delete Doc: ${item.pkg}`);
-      syncDocPackageOptions();
-      renderDocumentHub();
-      alert("Document deleted successfully!");
+      document.getElementById('deleteModalOverlay').classList.add('open');
+      setTimeout(notifyIframeHeight, 100);
+    }
+
+    async function handleDeleteSubmission(e) {
+      e.preventDefault();
+      const pin = document.getElementById('deletePin').value;
+      const errorMsg = document.getElementById('deletePinError');
+
+      if (pin !== ACTION_PASSWORD) {
+        errorMsg.style.display = 'block';
+        return;
+      }
+      errorMsg.style.display = 'none';
+
+      const deleteBtn = document.getElementById('deleteSubmitBtn');
+      deleteBtn.textContent = "Deleting...";
+      deleteBtn.disabled = true;
+
+      const targetHub = document.getElementById('deleteTargetHub').value;
+      const targetId = document.getElementById('deleteTargetId').value;
+
+      try {
+        if (targetHub === 'learning') {
+          const item = dataset.find(d => d.id === targetId);
+          dataset = dataset.filter(d => d.id !== targetId);
+          await commitDatasetToGitHub(dataset, null, `Delete Topic: ${item ? item.name : targetId}`);
+          syncDropdownOptions();
+          renderLearningHub();
+        } else {
+          const item = docDataset[targetId];
+          docDataset.splice(targetId, 1);
+          await commitDatasetToGitHub(null, docDataset, `Delete Doc: ${item ? item.pkg : targetId}`);
+          syncDocPackageOptions();
+          renderDocumentHub();
+        }
+
+        closeModal('deleteModalOverlay');
+        alert("Item deleted successfully!");
+      } catch (err) {
+        alert(`Error: ${err.message}`);
+      } finally {
+        deleteBtn.textContent = "Confirm Delete Permanently";
+        deleteBtn.disabled = false;
+      }
     }
 
     function toggleTileActive(cardElement) {
@@ -1121,6 +1178,7 @@
 
       document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
       document.getElementById('editResourceForm').addEventListener('submit', handleEditSubmission);
+      document.getElementById('deleteResourceForm').addEventListener('submit', handleDeleteSubmission);
       
       window.addEventListener('resize', notifyIframeHeight);
       setTimeout(notifyIframeHeight, 200);
@@ -1178,7 +1236,7 @@
                   <button class="action-btn" onclick="openEditLearningModal('${res.id}')" title="Edit Item">
                     <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
                   </button>
-                  <button class="action-btn" onclick="deleteLearningItem('${res.id}')" title="Delete Item">
+                  <button class="action-btn" onclick="openDeleteLearningModal('${res.id}')" title="Delete Item">
                     <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
                   </button>
                 </div>
@@ -1230,7 +1288,7 @@
               <button class="action-btn" onclick="openEditDocModal(${doc.originalIndex})" title="Edit Item">
                 <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
               </button>
-              <button class="action-btn" onclick="deleteDocItem(${doc.originalIndex})" title="Delete Item">
+              <button class="action-btn" onclick="openDeleteDocModal(${doc.originalIndex})" title="Delete Item">
                 <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
               </button>
             </div>
