@@ -35,7 +35,7 @@
     html, body {
       width: 100%;
       height: auto;
-      min-height: 100%;
+      min-height: auto;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
@@ -43,7 +43,7 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
     }
 
     /* Top Bar */
@@ -134,13 +134,12 @@
 
     .container {
       width: 100%;
-      flex: 1;
       padding: 0.85rem 1.25rem;
       display: flex;
       flex-direction: column;
     }
 
-    .tab-content { display: none; flex-direction: column; flex: 1; }
+    .tab-content { display: none; flex-direction: column; }
     .tab-content.active { display: flex; }
 
     /* Dashboard KPIs */
@@ -217,7 +216,7 @@
       display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
       gap: 0.75rem; 
-      padding-bottom: 1rem;
+      padding-bottom: 0.5rem;
     }
     .resource-card {
       background: var(--bg-card); 
@@ -254,7 +253,7 @@
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
     /* Table */
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; flex: 1; }
+    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
     .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.83rem; }
     .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
     .doc-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #f1f3f4; }
@@ -270,7 +269,7 @@
       bottom: 0 !important;
       width: 100% !important; 
       height: 100% !important;
-      background: rgba(32, 33, 36, 0.75);
+      background: rgba(32, 33, 36, 0.65);
       display: none;
       align-items: flex-start !important;
       justify-content: center !important;
@@ -352,24 +351,15 @@
   </header>
 
   <div class="container">
+    <!-- SEPARATE SPECIFIC DASHBOARDS -->
     <section class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-icon-wrapper" style="background: var(--google-blue-light); color: var(--google-blue);">
-          <span class="material-icons-outlined">library_books</span>
+        <div class="kpi-icon-wrapper" id="kpiMainIcon" style="background: var(--google-blue-light); color: var(--google-blue);">
+          <span class="material-icons-outlined" id="kpiMainSymbol">library_books</span>
         </div>
         <div class="kpi-info">
           <div class="value" id="kpiTotal">0</div>
-          <div class="label">Learning Topics</div>
-        </div>
-      </div>
-
-      <div class="kpi-card">
-        <div class="kpi-icon-wrapper" style="background: var(--google-purple-light); color: var(--google-purple);">
-          <span class="material-icons-outlined">article</span>
-        </div>
-        <div class="kpi-info">
-          <div class="value" id="kpiDocsTotal">0</div>
-          <div class="label">Documents</div>
+          <div class="label" id="kpiTotalLabel">Learning Topics</div>
         </div>
       </div>
 
@@ -379,11 +369,11 @@
         </div>
         <div class="kpi-info">
           <div class="value" id="kpiVisible">0</div>
-          <div class="label">Active View Items</div>
+          <div class="label" id="kpiVisibleLabel">Active View Items</div>
         </div>
       </div>
 
-      <div class="kpi-card">
+      <div class="kpi-card" id="bookmarkKpiCard">
         <div class="kpi-icon-wrapper" style="background: var(--google-yellow-light); color: var(--google-yellow);">
           <span class="material-icons-outlined">star</span>
         </div>
@@ -930,7 +920,6 @@
     }
 
     function openAddModal() {
-      requestScrollToTop();
       document.getElementById('addModalOverlay').classList.add('open');
       setTimeout(notifyIframeHeight, 100);
     }
@@ -1002,7 +991,6 @@
       const item = dataset.find(d => d.id === id);
       if (!item) return;
 
-      requestScrollToTop();
       document.getElementById('editPinError').style.display = 'none';
       document.getElementById('editPin').value = '';
       document.getElementById('editModalTitle').textContent = "Edit Learning Topic Menu";
@@ -1022,7 +1010,6 @@
       const item = docDataset[originalIndex];
       if (!item) return;
 
-      requestScrollToTop();
       document.getElementById('editPinError').style.display = 'none';
       document.getElementById('editPin').value = '';
       document.getElementById('editModalTitle').textContent = "Edit Document Menu";
@@ -1096,7 +1083,6 @@
       const item = dataset.find(d => d.id === id);
       if (!item) return;
 
-      requestScrollToTop();
       document.getElementById('deletePinError').style.display = 'none';
       document.getElementById('deletePin').value = '';
       document.getElementById('deleteTargetHub').value = "learning";
@@ -1111,7 +1097,6 @@
       const item = docDataset[originalIndex];
       if (!item) return;
 
-      requestScrollToTop();
       document.getElementById('deletePinError').style.display = 'none';
       document.getElementById('deletePin').value = '';
       document.getElementById('deleteTargetHub').value = "document";
@@ -1218,10 +1203,28 @@
     }
 
     function renderKPIs(activeVisibleCount) {
-      document.getElementById('kpiTotal').textContent = dataset.length;
-      document.getElementById('kpiDocsTotal').textContent = docDataset.length;
+      const bookmarkCard = document.getElementById('bookmarkKpiCard');
+
+      if (activeTab === 'learningHubTab') {
+        document.getElementById('kpiTotalLabel').textContent = "Learning Topics";
+        document.getElementById('kpiTotal').textContent = dataset.length;
+        document.getElementById('kpiMainSymbol').textContent = "library_books";
+        document.getElementById('kpiMainIcon').style.background = "var(--google-blue-light)";
+        document.getElementById('kpiMainIcon').style.color = "var(--google-blue)";
+        
+        bookmarkCard.style.display = "flex";
+        document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
+      } else {
+        document.getElementById('kpiTotalLabel').textContent = "Total Documents";
+        document.getElementById('kpiTotal').textContent = docDataset.length;
+        document.getElementById('kpiMainSymbol').textContent = "article";
+        document.getElementById('kpiMainIcon').style.background = "var(--google-purple-light)";
+        document.getElementById('kpiMainIcon').style.color = "var(--google-purple)";
+
+        bookmarkCard.style.display = "none";
+      }
+
       document.getElementById('kpiVisible').textContent = activeVisibleCount;
-      document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
     }
 
     function renderLearningHub() {
