@@ -22,38 +22,40 @@
       --bg-body: #f8f9fa;
       --bg-card: #ffffff;
       --border-color: #dadce0;
-      --shadow-sm: 0 1px 3px rgba(60,64,67,0.12), 0 1px 2px rgba(60,64,67,0.24);
-      --shadow-md: 0 4px 6px rgba(60,64,67,0.15), 0 1px 3px rgba(60,64,67,0.2);
-      --radius: 10px;
+      --shadow-sm: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+      --shadow-md: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+      --radius: 12px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      width: 100%;
       min-height: 100%;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
-    /* Navigation Bar */
+    /* Fixed Top Utility Bar */
     .top-utility-bar {
       background-color: #202124;
       color: #ffffff;
-      padding: 0.5rem 1.25rem;
+      padding: 0.6rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 0.85rem;
       position: sticky;
       top: 0;
       z-index: 200;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
     .top-utility-nav {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.75rem;
       width: 100%;
+      justify-content: flex-start;
       flex-wrap: wrap;
     }
     .top-utility-link, .top-utility-btn {
@@ -61,175 +63,222 @@
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.4rem;
       font-weight: 500;
-      padding: 0.35rem 0.75rem;
+      padding: 0.4rem 0.85rem;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
-      font-size: 0.82rem;
-      transition: all 0.2s;
+      font-size: 0.85rem;
+      transition: background 0.2s, color 0.2s;
     }
     .top-utility-link:hover, .top-utility-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
     }
     .top-utility-btn.accent-add {
       background: var(--google-blue);
       border-color: var(--google-blue);
       margin-left: auto;
     }
-    .top-utility-btn.accent-add:hover { background: var(--google-blue-hover); }
+    .top-utility-btn.accent-add:hover {
+      background: var(--google-blue-hover);
+    }
+    .admin-badge {
+      background: #34a853;
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      display: none;
+    }
 
-    /* Compact Header */
+    /* Header & Tabs */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
       position: sticky;
-      top: 42px;
+      top: 48px;
       z-index: 100;
-      padding: 0 1.25rem;
+      padding: 0 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 50px;
+      height: 56px;
     }
-    .header-left { display: flex; align-items: center; gap: 1.5rem; }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 500;
       color: var(--text-primary);
     }
-    .brand-icon { color: var(--google-blue); font-size: 24px; }
-    .nav-tabs { display: flex; gap: 0.25rem; height: 100%; }
+    .brand-icon {
+      color: var(--google-blue);
+      font-size: 28px;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      height: 100%;
+    }
     .tab-btn {
       background: none;
       border: none;
       border-bottom: 3px solid transparent;
-      padding: 0 0.85rem;
+      padding: 0 1rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 500;
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.5rem;
+      transition: color 0.2s, border-color 0.2s;
       height: 100%;
     }
     .tab-btn:hover { color: var(--google-blue); }
     .tab-btn.active { color: var(--google-blue); border-bottom-color: var(--google-blue); }
 
-    /* Layout */
+    /* Main Container */
     .container {
-      width: 100%;
-      padding: 1rem 1.25rem;
+      max-width: 1280px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem 1.5rem 1.5rem;
     }
 
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Summary Grid */
+    /* KPI Grid */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
     }
     .kpi-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
-      padding: 0.85rem 1.1rem;
+      padding: 1.25rem;
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 1rem;
+      transition: box-shadow 0.2s;
     }
+    .kpi-card:hover { box-shadow: var(--shadow-sm); }
     .kpi-icon-wrapper {
-      width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px;
+      width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;
     }
-    .kpi-info .value { font-family: 'Google Sans', sans-serif; font-size: 1.4rem; font-weight: 700; line-height: 1.1; }
-    .kpi-info .label { font-size: 0.8rem; color: var(--text-secondary); }
+    .kpi-info .value { font-family: 'Google Sans', sans-serif; font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
+    .kpi-info .label { font-size: 0.875rem; color: var(--text-secondary); }
 
     /* Filter Box */
     .filter-card-highlight {
-      background: #ffffff;
-      border: 1.5px solid var(--google-blue);
+      background: linear-gradient(135deg, #e8f0fe 0%, #ffffff 100%);
+      border: 2px solid var(--google-blue);
       border-radius: var(--radius);
-      padding: 0.85rem 1.1rem;
-      margin-bottom: 1rem;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.15);
+      position: relative;
     }
     .filter-card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.75rem;
     }
     .filter-label-catchy {
       font-family: 'Google Sans', sans-serif;
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 1.05rem;
       color: var(--google-blue-hover);
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.5rem;
+    }
+    .filter-badge {
+      background: var(--google-blue);
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 12px;
+      font-weight: 500;
     }
     .styled-dropdown-catchy {
       width: 100%;
-      padding: 0.55rem 0.85rem;
+      padding: 0.85rem 1.2rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.92rem;
+      font-size: 1.05rem;
       font-weight: 500;
       color: var(--google-blue-hover);
       background-color: var(--bg-card);
-      border: 1.5px solid var(--border-color);
-      border-radius: 8px;
+      border: 2px solid var(--google-blue);
+      border-radius: 10px;
       outline: none;
       cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .styled-dropdown-catchy:focus {
+      box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.25);
     }
 
     .toolbar {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
-      padding: 0.6rem 1rem;
-      margin-bottom: 1rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .search-box { position: relative; width: 100%; }
-    .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 20px; }
-    .search-input { width: 100%; padding: 0.5rem 1rem 0.5rem 2.2rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-body); font-size: 0.9rem; outline: none; }
+    .search-box { position: relative; flex: 1; max-width: 480px; }
+    .search-box .material-icons-outlined { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
+    .search-input { width: 100%; padding: 0.65rem 1rem 0.65rem 2.5rem; border: 1px solid var(--border-color); border-radius: 24px; background: var(--bg-body); font-size: 0.95rem; outline: none; }
 
-    /* Cards Grid */
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    /* Resource Cards Grid */
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
     .resource-card {
-      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1rem;
-      display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.15s, box-shadow 0.15s;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.25rem;
+      display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s, box-shadow 0.2s;
     }
-    .resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
-    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.92rem; font-weight: 500; line-height: 1.35; }
-    .category-badge { font-size: 0.7rem; font-weight: 500; padding: 0.2rem 0.5rem; border-radius: 10px; white-space: nowrap; }
-    .card-actions { margin-top: 0.85rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.5rem; }
-    .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.82rem; padding: 0.3rem 0.6rem; border-radius: 4px; }
+    .resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .card-title { font-family: 'Google Sans', sans-serif; font-size: 1.05rem; font-weight: 500; }
+    .category-badge { font-size: 0.75rem; font-weight: 500; padding: 0.25rem 0.6rem; border-radius: 12px; white-space: nowrap; }
+    .card-actions { margin-top: 1.25rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.75rem; }
+    .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.875rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
     .link-btn:hover { background: var(--google-blue-light); }
-    .action-icons { display: flex; gap: 0.1rem; align-items: center; }
-    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.3rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+    .action-icons { display: flex; gap: 0.2rem; align-items: center; }
+    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.4rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
     .action-btn:hover { background: var(--bg-body); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
+    .admin-controls { display: none; gap: 0.2rem; }
+    .admin-mode-active .admin-controls { display: inline-flex; }
 
-    /* Tables */
+    /* Data Table */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
-    .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
-    .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
-    .doc-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #f1f3f4; }
+    .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+    .doc-table td { padding: 0.85rem 1.25rem; border-bottom: 1px solid #f1f3f4; }
     .doc-table tr:hover { background-color: #f8f9fa; }
-    .doc-type-tag { padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 500; background: #e8eaed; color: var(--text-primary); }
+    .doc-type-tag { padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; background: #e8eaed; color: var(--text-primary); }
 
-    /* Modal */
+    /* Modal Overlays */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(32, 33, 36, 0.6);
@@ -237,24 +286,29 @@
       align-items: flex-start;
       justify-content: center;
       z-index: 1000;
-      padding: 1.5rem 1rem;
+      padding: 2rem 1rem;
       overflow-y: auto;
     }
     .modal-overlay.open { display: flex; }
     .modal-content {
-      background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 480px; padding: 1.25rem; box-shadow: var(--shadow-md);
+      background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 520px; padding: 1.5rem; box-shadow: var(--shadow-md);
+      animation: slideDownTop 0.25s ease-out;
     }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-    .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1.1rem; font-weight: 500; }
+    @keyframes slideDownTop {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1.2rem; font-weight: 500; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
-    .modal-form { display: flex; flex-direction: column; gap: 0.85rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
-    .form-group label { font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); }
-    .form-group input, .form-group select { padding: 0.55rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.9rem; outline: none; }
-    .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.65rem; border-radius: 6px; font-family: 'Google Sans', sans-serif; font-weight: 500; cursor: pointer; }
+    .modal-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group label { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+    .form-group input, .form-group select { padding: 0.65rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; outline: none; }
+    .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-family: 'Google Sans', sans-serif; font-weight: 500; cursor: pointer; margin-top: 0.5rem; }
     .btn-submit:hover { background: var(--google-blue-hover); }
 
-    .empty-state { grid-column: 1 / -1; text-align: center; padding: 2rem 1rem; color: var(--text-secondary); }
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-secondary); }
   </style>
 </head>
 <body>
@@ -262,23 +316,29 @@
   <!-- Top Utility Bar -->
   <div class="top-utility-bar">
     <div class="top-utility-nav">
-      <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">key</span>
+      <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="top-utility-link">
+        <span class="material-icons-outlined" style="font-size:16px;">key</span>
         <span>PSO Org Access</span>
       </a>
 
-      <a href="https://docs.google.com/spreadsheets/d/1bJju9VxH42h_WgtOka_Rz0CvKWbAHdLMdxNQj6YutxE/edit?gid=2110691200#gid=2110691200" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">assignment_ind</span>
+      <a href="https://docs.google.com/spreadsheets/d/1bJju9VxH42h_WgtOka_Rz0CvKWbAHdLMdxNQj6YutxE/edit?gid=2110691200#gid=2110691200" target="_blank" rel="noopener noreferrer" class="top-utility-link">
+        <span class="material-icons-outlined" style="font-size:16px;">assignment_ind</span>
         <span>Project Allocation</span>
       </a>
 
-      <a href="https://docs.google.com/spreadsheets/d/1OOm0wgAZdr21o9tPQJbwFBfDef73XCbH1ckOif5PjqQ/edit?gid=1957868564#gid=1957868564" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">table_chart</span>
-        <span>Implementation Tracker</span>
+      <a href="https://docs.google.com/spreadsheets/d/1OOm0wgAZdr21o9tPQJbwFBfDef73XCbH1ckOif5PjqQ/edit?gid=1957868564#gid=1957868564" target="_blank" rel="noopener noreferrer" class="top-utility-link">
+        <span class="material-icons-outlined" style="font-size:16px;">table_chart</span>
+        <span>Implementation Project Tracker</span>
       </a>
 
-      <button type="button" class="top-utility-btn accent-add" onclick="openAddModal()">
-        <span class="material-icons-outlined" style="font-size:15px;">add_circle</span>
+      <button type="button" id="adminLoginBtn" class="top-utility-btn" onclick="toggleAdminMode()">
+        <span class="material-icons-outlined" style="font-size:16px;">lock</span>
+        <span id="adminBtnLabel">Admin Login</span>
+      </button>
+      <span class="admin-badge" id="adminBadge">Admin Mode Active</span>
+
+      <button type="button" id="topAddBtn" class="top-utility-btn accent-add" onclick="openAddModal()">
+        <span class="material-icons-outlined" style="font-size:16px;">add_circle</span>
         <span>Submit New Link Live</span>
       </button>
     </div>
@@ -294,11 +354,11 @@
 
       <nav class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('learningHubTab', this)">
-          <span class="material-icons-outlined" style="font-size:18px;">school</span>
+          <span class="material-icons-outlined" style="font-size:20px;">school</span>
           <span>Learning Hub</span>
         </button>
         <button class="tab-btn" onclick="switchTab('documentHubTab', this)">
-          <span class="material-icons-outlined" style="font-size:18px;">description</span>
+          <span class="material-icons-outlined" style="font-size:20px;">description</span>
           <span>Document Hub</span>
         </button>
       </nav>
@@ -316,7 +376,7 @@
           </div>
           <div class="kpi-info">
             <div class="value" id="kpiTotal">0</div>
-            <div class="label">Total Topics</div>
+            <div class="label">Total Learning Topics</div>
           </div>
         </div>
 
@@ -336,16 +396,18 @@
           </div>
           <div class="kpi-info">
             <div class="value" id="kpiBookmarks">0</div>
-            <div class="label">Bookmarked (Private View)</div>
+            <div class="label">Bookmarked (Your Private View)</div>
           </div>
         </div>
       </section>
 
+      <!-- Filter Box -->
       <section class="filter-card-highlight">
         <div class="filter-card-header">
           <label for="moduleSelect" class="filter-label-catchy">
             <span class="material-icons-outlined">tune</span> SELECT LEARNING MODULE
           </label>
+          <span class="filter-badge">Personal View</span>
         </div>
         <select id="moduleSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Learning Modules --</option>
@@ -364,11 +426,13 @@
 
     <!-- TAB 2: DOCUMENT HUB -->
     <div id="documentHubTab" class="tab-content">
+      <!-- Filter Box -->
       <section class="filter-card-highlight">
         <div class="filter-card-header">
           <label for="docPackageSelect" class="filter-label-catchy">
             <span class="material-icons-outlined">inventory_2</span> FILTER BY PACKAGE NAME
           </label>
+          <span class="filter-badge">Personal View</span>
         </div>
         <select id="docPackageSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Packages --</option>
@@ -403,7 +467,7 @@
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Submit New Resource Link</h2>
+        <h2 id="modalTitle">Submit New Resource Link</h2>
         <button class="modal-close-btn" onclick="closeAddModal()">
           <span class="material-icons-outlined">close</span>
         </button>
@@ -423,6 +487,7 @@
           <input type="email" id="submitterEmail" placeholder="your.name@maxval.com" required>
         </div>
 
+        <!-- Learning Hub Fields -->
         <div id="learningFields">
           <div class="form-group">
             <label for="newTitle">Resource Title *</label>
@@ -444,6 +509,7 @@
           </div>
         </div>
 
+        <!-- Document Hub Fields -->
         <div id="documentFields" style="display:none;">
           <div class="form-group">
             <label for="newPkg">Package Name *</label>
@@ -472,6 +538,7 @@
   </div>
 
   <script>
+    // GitHub API Commit Configuration
     const GITHUB_CONFIG = {
       owner: "Prabhaharan1137",
       repo: "knowledge-center",
@@ -480,6 +547,8 @@
     };
 
     const ADMIN_PIN = "1137";
+    let isAdminMode = false;
+
     let activeTab = 'learningHubTab';
 
     const DEFAULT_CATEGORIES = [
@@ -487,8 +556,7 @@
       "Patent Module", "Renewals", "Trademark", "Assessment", "Additional Reference Materials"
     ];
 
-/* LEARNING_DATA_START */
-    let dataset = [
+    const COMPLETE_LEARNING_DATASET = [
       { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
       { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
       { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
@@ -541,10 +609,8 @@
       { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8" },
       { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m" }
     ];
-/* LEARNING_DATA_END */
 
-/* DOC_DATA_START */
-    let docDataset = [
+    const COMPLETE_DOC_DATASET = [
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" },
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0" },
       { pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8" },
@@ -560,7 +626,7 @@
       { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Upgrade Steps", link: "https://docs.google.com/document/d/1OvitBT0PemTnXxpue0MagvPjFGs8h0eNQ8pYE_FKrI4/edit?tab=t.0#heading=h.f6wmunhppk9w" },
 
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Release Notes", link: "https://docs.google.com/document/d/1UW30pnWjtAj30meb6XfuBXbKa0E0epf1CrJTKaAkg7U/edit?tab=t.3eyh0nlcm3z0#heading=h.529i7peg55gb" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation (Profiles & Permission Sets)", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0" },
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Installation Doc", link: "https://docs.google.com/document/d/1z5P5YvE8pVtIgv1Y27khwNxZCLcpZgse23Qctfi61sg/edit?usp=sharing" },
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Upgrade Doc", link: "https://docs.google.com/document/d/1wQoKpdDCyuORvtPxychos06PYPqJGTPrVazlCGel19c/edit?usp=sharing" },
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Recordings Folder", link: "https://drive.google.com/drive/folders/1nPPwt0RvFvvzSKy2StbSNVP7lIM-CmNO" },
@@ -569,7 +635,7 @@
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes(Patch Updates)", link: "https://docs.google.com/document/d/1DSzp2roWj81PLDsgM1jzCm3kFOU7H5AqhKGAEyYB-w4/edit?tab=t.0#heading=h.doi0kxxzb3c6" },
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "PTA & TD", link: "https://docs.google.com/document/d/1ZK_k1vmJ4S-B9pm9X3T_rAtB7Nuu_J4mPwioi6Ag1pk/edit?tab=t.0" },
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes", link: "https://docs.google.com/document/d/1aMEtBF9hJ4LbsNBddzP3FBjdGblc-MIdx3C4eX9NK3k/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "TM Renewal & Maintenance workflow", link: "https://docs.google.com/document/d/1YYWUrchs1ofHUY4lhJbhfbazXUYko7eYZSgfGm-Xeok/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "TM Renewal & Maintenance workflow - Syngenta (SLS-1095)", link: "https://docs.google.com/document/d/1YYWUrchs1ofHUY4lhJbhfbazXUYko7eYZSgfGm-Xeok/edit?tab=t.0" },
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Installation Procedure", link: "https://docs.google.com/document/d/15ojq7aUyBebs87Q5j_qOuJKbC4QN7q2OKeWURHbUO64/edit?tab=t.0" },
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Release Notes", link: "https://docs.google.com/document/d/1nAxplj9o5V-gd-wK-hsQ_IVYE48bheTlphi2-v2nP_c/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "FAQs", link: "https://docs.google.com/document/d/15eUk8aTdCMwxRXu-cO6ga9kD9lAeX6IqoVb0ZY01CwI/edit" },
@@ -588,7 +654,7 @@
       { pkg: "PTO Integration", ver: "PTO Integration", type: "Configuration & Setup", link: "https://docs.google.com/document/d/12O9E13nzhvUCf3G4tPJcCALdoU_-rNBe06Qwb555YVA/edit?tab=t.0#heading=h.w1f633o6rz3d" },
       { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Configuration ( Recent Changes )", link: "https://docs.google.com/document/d/17oQjYBs-7YXTbrt8w0xr9v7AVmeezISCGw4s-1hW0GE/edit?usp=sharing" },
       { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO TM Configuration", link: "https://docs.google.com/document/d/1KNFCiqFxOYpreqQI6pzTSNFMKpIJcRUZg1fX7_-ZS3Q/edit?tab=t.0#heading=h.9j1x6qq0ikur" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "Symphony Corporate - Technical Document", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.3iawlk4gm5a9" },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "Symphony Corporate - Technical Document - PTO Integration", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.3iawlk4gm5a9" },
       { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration User guide", link: "https://docs.google.com/document/d/19U7qsSC6n9Umpz-ZVtcJ6TLeRwS1DUDE/edit" },
       { pkg: "PTO Integration", ver: "PTO Integration", type: "TM PTO Integration - User Guide", link: "https://docs.google.com/document/d/1x7pQZnZmd4PDr-S_U2BIN1NSs0Qhc_Ujiz8TwiKXpAc/edit?tab=t.0" },
       { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration - FAQ", link: "https://docs.google.com/spreadsheets/d/12XkVFQoFoLbBDwW6o2Xn0ieAyptyS15HjETrPWSAeW8/edit?gid=0#gid=0" },
@@ -627,7 +693,7 @@
       { pkg: "Other", ver: "Other", type: "MaxForms List Old", link: "https://docs.google.com/spreadsheets/d/1Kyt3D24WY-t8RXjy4GsDuAuYsA6zdDfmIGTsEilcQSg/edit?gid=0#gid=0" },
       { pkg: "Other", ver: "Other", type: "Prosecution Analytics Requirement Definition Document", link: "https://docs.google.com/document/d/16fefj0Mr4q1u-jxrPNykY-ZE_P1Pw0Z1/edit?usp=sharing" },
       { pkg: "Other", ver: "Other", type: "Prosecution Analytics & History Doc", link: "https://docs.google.com/document/d/1EJ270FIDMS5eRTsokPeV8x4zovO6WsCt8sSjsOeNQKo/edit?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Prosecution Analytics- Api Integration", link: "https://drive.google.com/file/d/1QZGbpZEhgPsdDDyz8_X24ordjNURJfIC/view?usp=sharing" },
+      { pkg: "Other", ver: "Other", type: "Prosecution Analytics- Api Integration (video explanation)", link: "https://drive.google.com/file/d/1QZGbpZEhgPsdDDyz8_X24ordjNURJfIC/view?usp=sharing" },
       { pkg: "Other", ver: "Other", type: "Support checklist document Template", link: "https://docs.google.com/spreadsheets/d/1S7fqp95TLsLXdI6VMQWSj8ffLu34uJYClceJMGKo5x4/edit?gid=2105910797#gid=2105910797" },
       { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 1", link: "https://docs.google.com/document/d/1BeMcpIbVNIP0etuufO-Duc_SXznyEqJo_yQaB-ah-2Y/edit?tab=t.0" },
       { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 2", link: "https://docs.google.com/document/d/1YA0f1BRx5tB1UXB3Q74e_LdrQ0lyKrphEnNYEp0rw30/edit?tab=t.0" },
@@ -644,10 +710,12 @@
       { pkg: "Other", ver: "Other", type: "Renewal Guide for Annuity", link: "https://docs.google.com/document/d/1gHFV9ixVcZCuE8y00eeRk5TFSw2yboeVbqgGG3ES7jU/edit?tab=t.0" },
       { pkg: "Other", ver: "Other", type: "UPC Folder", link: "https://drive.google.com/drive/folders/1a6FgPCByxI1ibEPehvKLM_d2K6IV8u2s" },
       { pkg: "Other", ver: "Other", type: "New Object/Fields Request Template", link: "https://docs.google.com/spreadsheets/d/1tvaTEMsruZ4mrylN8sGb1w6DnKxhgKR8nPFPyTUQZkQ/edit?gid=526926240#gid=526926240" },
-      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring PPT", link: "https://docs.google.com/presentation/d/1jmw9iCRUUKnLwFzMGPWu21X0V5Zk9olXsdFHK7BEGcM/edit#slide=id.g2e29f102836_0_70" },
+      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring PPT (Slide Deck)", link: "https://docs.google.com/presentation/d/1jmw9iCRUUKnLwFzMGPWu21X0V5Zk9olXsdFHK7BEGcM/edit#slide=id.g2e29f102836_0_70" },
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
     ];
-/* DOC_DATA_END */
+
+    let dataset = COMPLETE_LEARNING_DATASET;
+    let docDataset = COMPLETE_DOC_DATASET;
 
     let selectedModule = localStorage.getItem('user_pref_module_v12') || 'Patent Module';
     let searchQuery = '';
@@ -667,9 +735,27 @@
       'default': { bg: '#f1f3f4', color: '#5f6368' }
     };
 
-    function verifyAdminPIN() {
-      const pin = prompt("Admin Password Required:");
-      return pin === ADMIN_PIN;
+    function toggleAdminMode() {
+      if (isAdminMode) {
+        isAdminMode = false;
+        document.body.classList.remove('admin-mode-active');
+        document.getElementById('adminBadge').style.display = 'none';
+        document.getElementById('adminBtnLabel').textContent = 'Admin Login';
+        renderLearningHub();
+        renderDocumentHub();
+      } else {
+        const pin = prompt("Enter Admin PIN:");
+        if (pin === ADMIN_PIN) {
+          isAdminMode = true;
+          document.body.classList.add('admin-mode-active');
+          document.getElementById('adminBadge').style.display = 'inline-block';
+          document.getElementById('adminBtnLabel').textContent = 'Exit Admin';
+          renderLearningHub();
+          renderDocumentHub();
+        } else if (pin !== null) {
+          alert("Incorrect PIN.");
+        }
+      }
     }
 
     function syncDropdownOptions() {
@@ -706,6 +792,7 @@
       }
     }
 
+    // --- DIRECT GITHUB COMMIT ENGINE ---
     async function commitDatasetToGitHub(updatedLearningDataset, updatedDocDataset, commitMessage) {
       const { owner, repo, fileTarget, token } = GITHUB_CONFIG;
       const apiBase = `https://api.github.com/repos/${owner}/${repo}`;
@@ -724,16 +811,16 @@
       if (updatedLearningDataset) {
         const learningDataStr = JSON.stringify(updatedLearningDataset, null, 6);
         currentContent = currentContent.replace(
-          /\/\* LEARNING_DATA_START \*\/[\s\S]*?\/\* LEARNING_DATA_END \*\//,
-          `/* LEARNING_DATA_START */\n    let dataset = ${learningDataStr};\n/* LEARNING_DATA_END */`
+          /const COMPLETE_LEARNING_DATASET = \[[\s\S]*?\];/,
+          `const COMPLETE_LEARNING_DATASET = ${learningDataStr};`
         );
       }
 
       if (updatedDocDataset) {
         const docDataStr = JSON.stringify(updatedDocDataset, null, 6);
         currentContent = currentContent.replace(
-          /\/\* DOC_DATA_START \*\/[\s\S]*?\/\* DOC_DATA_END \*\//,
-          `/* DOC_DATA_START */\n    let docDataset = ${docDataStr};\n/* DOC_DATA_END */`
+          /const COMPLETE_DOC_DATASET = \[[\s\S]*?\];/,
+          `const COMPLETE_DOC_DATASET = ${docDataStr};`
         );
       }
 
@@ -750,7 +837,7 @@
 
       if (!updateRes.ok) {
         const errData = await updateRes.json();
-        throw new Error(errData.message || "Commit failed");
+        throw new Error(errData.message || "Failed to commit changes");
       }
     }
 
@@ -770,23 +857,23 @@
           const category = document.getElementById('newModule').value;
           const newItem = { id: `res_custom_${Date.now()}`, name: title, category, link };
           dataset.unshift(newItem);
-          await commitDatasetToGitHub(dataset, null, `Add Learning Link: ${title}`);
+          await commitDatasetToGitHub(dataset, null, `Add Learning Link from ${submitterEmail}: ${title}`);
         } else {
           const pkg = document.getElementById('newPkg').value.trim();
           const ver = document.getElementById('newVer').value.trim();
           const type = document.getElementById('newDocType').value.trim();
           const newItem = { pkg, ver, type, link };
           docDataset.unshift(newItem);
-          await commitDatasetToGitHub(null, docDataset, `Add Doc Link: ${pkg}`);
+          await commitDatasetToGitHub(null, docDataset, `Add Doc Link from ${submitterEmail}: ${pkg}`);
         }
 
-        alert("Success! Resource published live to GitHub.");
+        alert("Success! Link published live to GitHub. The live site will reflect this in ~20 seconds.");
         closeAddModal();
         document.getElementById('addResourceForm').reset();
         renderLearningHub();
         renderDocumentHub();
       } catch (err) {
-        alert(`Error: ${err.message}`);
+        alert(`Submission Error: ${err.message}`);
       } finally {
         submitBtn.textContent = "Publish Link Live to GitHub";
         submitBtn.disabled = false;
@@ -794,7 +881,6 @@
     }
 
     async function editLearningItem(id) {
-      if (!verifyAdminPIN()) { alert("Incorrect Password."); return; }
       const item = dataset.find(d => d.id === id);
       if (!item) return;
 
@@ -807,16 +893,15 @@
       item.link = newLink.trim();
 
       try {
-        await commitDatasetToGitHub(dataset, null, `Admin Edit: ${item.name}`);
+        await commitDatasetToGitHub(dataset, null, `Admin Edit Learning Topic: ${item.name}`);
         alert("Topic updated successfully!");
         renderLearningHub();
       } catch (err) {
-        alert(`Error: ${err.message}`);
+        alert(`Error editing item: ${err.message}`);
       }
     }
 
     async function deleteLearningItem(id) {
-      if (!verifyAdminPIN()) { alert("Incorrect Password."); return; }
       const item = dataset.find(d => d.id === id);
       if (!item) return;
       if (!confirm(`Are you sure you want to delete "${item.name}"?`)) return;
@@ -824,16 +909,15 @@
       dataset = dataset.filter(d => d.id !== id);
 
       try {
-        await commitDatasetToGitHub(dataset, null, `Admin Delete: ${item.name}`);
+        await commitDatasetToGitHub(dataset, null, `Admin Delete Learning Topic: ${item.name}`);
         alert("Topic deleted successfully!");
         renderLearningHub();
       } catch (err) {
-        alert(`Error: ${err.message}`);
+        alert(`Error deleting item: ${err.message}`);
       }
     }
 
     async function editDocItem(index) {
-      if (!verifyAdminPIN()) { alert("Incorrect Password."); return; }
       const item = docDataset[index];
       if (!item) return;
 
@@ -852,28 +936,27 @@
       item.link = newLink.trim();
 
       try {
-        await commitDatasetToGitHub(null, docDataset, `Admin Edit Doc: ${item.pkg}`);
+        await commitDatasetToGitHub(null, docDataset, `Admin Edit Document: ${item.pkg}`);
         alert("Document updated successfully!");
         renderDocumentHub();
       } catch (err) {
-        alert(`Error: ${err.message}`);
+        alert(`Error editing document: ${err.message}`);
       }
     }
 
     async function deleteDocItem(index) {
-      if (!verifyAdminPIN()) { alert("Incorrect Password."); return; }
       const item = docDataset[index];
       if (!item) return;
-      if (!confirm(`Delete "${item.pkg} (${item.type})"?`)) return;
+      if (!confirm(`Are you sure you want to delete document for "${item.pkg} (${item.type})"?`)) return;
 
       docDataset.splice(index, 1);
 
       try {
-        await commitDatasetToGitHub(null, docDataset, `Admin Delete Doc: ${item.pkg}`);
+        await commitDatasetToGitHub(null, docDataset, `Admin Delete Document: ${item.pkg}`);
         alert("Document deleted successfully!");
         renderDocumentHub();
       } catch (err) {
-        alert(`Error: ${err.message}`);
+        alert(`Error deleting document: ${err.message}`);
       }
     }
 
@@ -908,11 +991,20 @@
       document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
     });
 
-    function openAddModal() { document.getElementById('addModalOverlay').classList.add('open'); }
-    function closeAddModal() { document.getElementById('addModalOverlay').classList.remove('open'); }
+    function openAddModal() {
+      document.getElementById('addModalOverlay').classList.add('open');
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModalOverlay').classList.remove('open');
+    }
 
     function toggleBookmark(id) {
-      if (bookmarkedIds.has(id)) { bookmarkedIds.delete(id); } else { bookmarkedIds.add(id); }
+      if (bookmarkedIds.has(id)) {
+        bookmarkedIds.delete(id);
+      } else {
+        bookmarkedIds.add(id);
+      }
       localStorage.setItem('user_private_bookmarks_v12', JSON.stringify(Array.from(bookmarkedIds)));
       renderLearningHub();
     }
@@ -924,9 +1016,11 @@
 
     function renderLearningHub() {
       const grid = document.getElementById('resourcesGrid');
+      
       const filtered = dataset.filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
-        const matchesSearch = res.name.toLowerCase().includes(searchQuery) || res.category.toLowerCase().includes(searchQuery);
+        const matchesSearch = res.name.toLowerCase().includes(searchQuery) || 
+                            res.category.toLowerCase().includes(searchQuery);
         return matchesModule && matchesSearch;
       });
 
@@ -949,22 +1043,24 @@
               <div class="card-header">
                 <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
                 <div class="action-icons">
-                  <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark">
+                  <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark (Private)">
                     <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
-                  <button class="action-btn" onclick="editLearningItem('${res.id}')" title="Edit (Password Protected)">
-                    <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
-                  </button>
-                  <button class="action-btn" onclick="deleteLearningItem('${res.id}')" title="Delete (Password Protected)">
-                    <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
-                  </button>
+                  <div class="admin-controls">
+                    <button class="action-btn" onclick="editLearningItem('${res.id}')" title="Admin Edit">
+                      <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
+                    </button>
+                    <button class="action-btn" onclick="deleteLearningItem('${res.id}')" title="Admin Delete">
+                      <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
+                    </button>
+                  </div>
                 </div>
               </div>
               <h3 class="card-title">${res.name}</h3>
             </div>
             <div class="card-actions">
               <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
-                <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+                <span>Open Link</span><span class="material-icons-outlined" style="font-size:16px;">open_in_new</span>
               </a>
             </div>
           </article>
@@ -974,6 +1070,7 @@
 
     function renderDocumentHub() {
       const tbody = document.getElementById('docTableBody');
+
       const filteredWithIndex = docDataset.map((doc, idx) => ({ ...doc, originalIndex: idx })).filter(doc => {
         const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
         const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) ||
@@ -983,7 +1080,7 @@
       });
 
       if (filteredWithIndex.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 1.5rem;">No matching documents found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">No matching documents found.</td></tr>`;
         return;
       }
 
@@ -993,16 +1090,18 @@
           <td>${doc.ver}</td>
           <td><span class="doc-type-tag">${doc.type}</span></td>
           <td>
-            <div style="display: flex; align-items: center; gap: 0.4rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
               <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
-                <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+                <span>View Doc</span><span class="material-icons-outlined" style="font-size:16px;">open_in_new</span>
               </a>
-              <button class="action-btn" onclick="editDocItem(${doc.originalIndex})" title="Edit (Password Protected)">
-                <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
-              </button>
-              <button class="action-btn" onclick="deleteDocItem(${doc.originalIndex})" title="Delete (Password Protected)">
-                <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
-              </button>
+              <div class="admin-controls">
+                <button class="action-btn" onclick="editDocItem(${doc.originalIndex})" title="Admin Edit">
+                  <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
+                </button>
+                <button class="action-btn" onclick="deleteDocItem(${doc.originalIndex})" title="Admin Delete">
+                  <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
+                </button>
+              </div>
             </div>
           </td>
         </tr>
