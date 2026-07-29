@@ -11,6 +11,7 @@
       --google-blue: #1a73e8;
       --google-blue-hover: #1557b0;
       --google-blue-light: #e8f0fe;
+      --google-blue-active: #d2e3fc;
       --google-green: #1e8e3e;
       --google-green-light: #e6f4ea;
       --google-yellow: #f9ab00;
@@ -207,14 +208,42 @@
     .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 20px; }
     .search-input { width: 100%; padding: 0.4rem 1rem 0.4rem 2.2rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-body); font-size: 0.85rem; outline: none; }
 
-    /* Grid & Cards */
+    /* Grid & Tile Highlights */
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
     .resource-card {
-      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.85rem;
+      background: var(--bg-card); 
+      border: 1px solid var(--border-color); 
+      border-radius: var(--radius); 
+      padding: 0.85rem;
       display: flex; flex-direction: column; justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
     }
-    .resource-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+    /* LIGHT BLUE HOVER STATE */
+    .resource-card:hover {
+      background-color: var(--google-blue-light) !important;
+      border-color: var(--google-blue);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+    /* DARK BLUE ACTIVE CLICK STATE */
+    .resource-card:active, .resource-card.selected-active {
+      background-color: var(--google-blue) !important;
+      color: #ffffff !important;
+      border-color: var(--google-blue-hover);
+    }
+    .resource-card:active .card-title,
+    .resource-card.selected-active .card-title,
+    .resource-card:active .action-btn,
+    .resource-card.selected-active .action-btn {
+      color: #ffffff !important;
+    }
+    .resource-card:active .link-btn,
+    .resource-card.selected-active .link-btn {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.9rem; font-weight: 500; line-height: 1.35; }
     .category-badge { font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.45rem; border-radius: 10px; white-space: nowrap; }
@@ -222,17 +251,20 @@
     .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.8rem; padding: 0.25rem 0.55rem; border-radius: 4px; }
     .action-icons { display: flex; gap: 0.2rem; align-items: center; }
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.3rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
-    .action-btn:hover { background: var(--bg-body); }
+    .action-btn:hover { background: rgba(0,0,0,0.06); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    /* Table */
+    /* Table Highlight States */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
     .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.83rem; }
     .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
     .doc-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #f1f3f4; }
+    .doc-table tr { transition: background-color 0.2s ease; cursor: pointer; }
+    .doc-table tr:hover { background-color: var(--google-blue-light) !important; }
+    .doc-table tr:active, .doc-table tr.selected-active { background-color: var(--google-blue-active) !important; }
     .doc-type-tag { padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 500; background: #e8eaed; color: var(--text-primary); }
 
-    /* Fixed Modals Locked at Top Viewport */
+    /* MODAL OVERLAYS LOCKED AT TOP */
     .modal-overlay {
       position: fixed !important; 
       top: 0 !important; 
@@ -256,7 +288,7 @@
       max-width: 480px; 
       padding: 1.25rem; 
       box-shadow: var(--shadow-md);
-      margin-top: 20px !important;
+      margin-top: 15px !important;
       max-height: 85vh;
       overflow-y: auto;
     }
@@ -551,11 +583,13 @@
   </div>
 
   <script>
+    // GENERATE A NEW GITHUB TOKEN AT: https://github.com/settings/tokens
+    // AND REPLACE BELOW
     const GITHUB_CONFIG = {
       owner: "Prabhaharan1137",
       repo: "knowledge-center",
       fileTarget: "Knowledge_Center.html",
-      token: "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"
+      token: "YOUR_NEW_GITHUB_PAT_HERE"
     };
 
     const ACTION_PASSWORD = "1137";
@@ -811,6 +845,11 @@
 
     async function commitDatasetToGitHub(updatedLearningDataset, updatedDocDataset, commitMessage) {
       persistStateLocally();
+      if (!GITHUB_CONFIG.token || GITHUB_CONFIG.token.includes("YOUR_NEW_GITHUB_PAT")) {
+        console.warn("Personal Access Token not set. Changes saved to LocalStorage.");
+        return;
+      }
+
       const { owner, repo, fileTarget, token } = GITHUB_CONFIG;
       const apiBase = `https://api.github.com/repos/${owner}/${repo}`;
       const headers = {
@@ -931,7 +970,6 @@
     }
 
     function openEditLearningModal(id) {
-      // Require PIN before showing edit dialog
       if (!verifyAdminPIN()) return;
 
       const item = dataset.find(d => d.id === id);
@@ -951,7 +989,6 @@
     }
 
     function openEditDocModal(originalIndex) {
-      // Require PIN before showing edit dialog
       if (!verifyAdminPIN()) return;
 
       const item = docDataset[originalIndex];
@@ -1022,7 +1059,6 @@
     }
 
     async function deleteLearningItem(id) {
-      // Require PIN before delete
       if (!verifyAdminPIN()) return;
       const item = dataset.find(d => d.id === id);
       if (!item) return;
@@ -1037,7 +1073,6 @@
     }
 
     async function deleteDocItem(originalIndex) {
-      // Require PIN before delete
       if (!verifyAdminPIN()) return;
       const item = docDataset[originalIndex];
       if (!item) return;
@@ -1049,6 +1084,11 @@
       syncDocPackageOptions();
       renderDocumentHub();
       alert("Document deleted successfully!");
+    }
+
+    function toggleTileActive(cardElement) {
+      document.querySelectorAll('.resource-card, .doc-table tr').forEach(el => el.classList.remove('selected-active'));
+      cardElement.classList.add('selected-active');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -1127,11 +1167,11 @@
         const isBookmarked = bookmarkedIds.has(res.id);
 
         return `
-          <article class="resource-card">
+          <article class="resource-card" onclick="toggleTileActive(this)">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
-                <div class="action-icons">
+                <div class="action-icons" onclick="event.stopPropagation()">
                   <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark">
                     <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
@@ -1145,7 +1185,7 @@
               </div>
               <h3 class="card-title">${res.name}</h3>
             </div>
-            <div class="card-actions">
+            <div class="card-actions" onclick="event.stopPropagation()">
               <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
                 <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
@@ -1178,11 +1218,11 @@
       }
 
       tbody.innerHTML = filteredWithIndex.map(doc => `
-        <tr>
+        <tr onclick="toggleTileActive(this)">
           <td><strong>${doc.pkg}</strong></td>
           <td>${doc.ver}</td>
           <td><span class="doc-type-tag">${doc.type}</span></td>
-          <td>
+          <td onclick="event.stopPropagation()">
             <div style="display: flex; align-items: center; gap: 0.4rem;">
               <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
                 <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
