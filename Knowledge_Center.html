@@ -25,7 +25,7 @@
       --bg-card: #ffffff;
       --border-color: #dadce0;
       --shadow-sm: 0 1px 3px rgba(60,64,67,0.12), 0 1px 2px rgba(60,64,67,0.24);
-      --shadow-md: 0 4px 6px rgba(60,64,67,0.15), 0 1px 3px rgba(60,64,67,0.2);
+      --shadow-md: 0 8px 24px rgba(60,64,67,0.28);
       --radius: 10px;
     }
 
@@ -43,6 +43,7 @@
       overflow-x: hidden;
     }
 
+    /* Top Bar */
     .top-utility-bar {
       background-color: #202124;
       color: #ffffff;
@@ -75,16 +76,10 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
       font-size: 0.82rem;
-      transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s;
+      transition: transform 0.15s ease, background 0.2s ease;
       touch-action: manipulation;
     }
-    .top-utility-link:hover, .top-utility-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .top-utility-link:active, .top-utility-btn:active {
-      transform: scale(0.95);
-    }
+    .top-utility-link:hover, .top-utility-btn:hover { background: rgba(255, 255, 255, 0.25); }
     .top-utility-btn.accent-add {
       background: var(--google-blue);
       border-color: var(--google-blue);
@@ -92,6 +87,7 @@
     }
     .top-utility-btn.accent-add:hover { background: var(--google-blue-hover); }
 
+    /* Header */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
@@ -113,7 +109,6 @@
       font-family: 'Google Sans', sans-serif;
       font-size: 1.15rem;
       font-weight: 500;
-      color: var(--text-primary);
     }
     .brand-icon { color: var(--google-blue); font-size: 24px; }
     .nav-tabs { display: flex; gap: 0.25rem; height: 100%; }
@@ -131,11 +126,8 @@
       align-items: center;
       gap: 0.4rem;
       height: 100%;
-      transition: color 0.2s, border-bottom-color 0.2s, transform 0.1s ease;
-      touch-action: manipulation;
+      transition: all 0.2s ease;
     }
-    .tab-btn:hover { color: var(--google-blue); }
-    .tab-btn:active { transform: scale(0.96); }
     .tab-btn.active { color: var(--google-blue); border-bottom-color: var(--google-blue); }
 
     .container {
@@ -147,6 +139,7 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
+    /* Dashboard KPIs */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -161,44 +154,21 @@
       display: flex;
       align-items: center;
       gap: 0.65rem;
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s;
-    }
-    .kpi-card:hover {
-      transform: translateY(-2px) scale(1.01);
-      box-shadow: var(--shadow-sm);
-      border-color: #bec2c7;
+      transition: transform 0.2s ease;
     }
     .kpi-icon-wrapper {
       width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
     }
-    .kpi-info .value { 
-      font-family: 'Google Sans', sans-serif; 
-      font-size: 1.15rem; 
-      font-weight: 700; 
-      line-height: 1.1; 
-      transition: transform 0.15s ease;
-    }
-    .kpi-card:hover .kpi-info .value { transform: scale(1.05); }
+    .kpi-info .value { font-family: 'Google Sans', sans-serif; font-size: 1.15rem; font-weight: 700; }
     .kpi-info .label { font-size: 0.72rem; color: var(--text-secondary); white-space: nowrap; }
 
+    /* Filter Section */
     .filter-card-highlight {
       background: #ffffff;
       border: 1.5px solid var(--google-blue);
       border-radius: var(--radius);
       padding: 0.65rem 0.9rem;
       margin-bottom: 0.75rem;
-      box-shadow: 0 2px 5px rgba(26,115,232,0.05);
-      transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
-    }
-    .filter-card-highlight:focus-within {
-      box-shadow: 0 4px 12px rgba(26,115,232,0.15);
-      border-color: var(--google-blue-hover);
-    }
-    .filter-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.3rem;
     }
     .filter-label-catchy {
       font-family: 'Google Sans', sans-serif;
@@ -208,7 +178,7 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      letter-spacing: 0.3px;
+      margin-bottom: 0.3rem;
     }
     .styled-dropdown-catchy {
       width: 100%;
@@ -222,7 +192,6 @@
       border-radius: 8px;
       outline: none;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
     .toolbar {
@@ -231,21 +200,17 @@
       border-radius: var(--radius);
       padding: 0.45rem 0.75rem;
       margin-bottom: 0.75rem;
-      transition: border-color 0.2s;
     }
     .search-box { position: relative; width: 100%; }
-    .search-box .material-icons-outlined { 
-      position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 20px;
-    }
-    .search-input { 
-      width: 100%; padding: 0.4rem 1rem 0.4rem 2.2rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-body); font-size: 0.85rem; outline: none; transition: all 0.2s ease; 
-    }
+    .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 20px; }
+    .search-input { width: 100%; padding: 0.4rem 1rem 0.4rem 2.2rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-body); font-size: 0.85rem; outline: none; }
 
+    /* Grid & Cards */
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
     .resource-card {
       background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.85rem;
-      display: flex; flex-direction: column; justify-content: space-between; 
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .resource-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
@@ -253,42 +218,42 @@
     .category-badge { font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.45rem; border-radius: 10px; white-space: nowrap; }
     .card-actions { margin-top: 0.65rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.4rem; }
     .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.8rem; padding: 0.25rem 0.55rem; border-radius: 4px; }
-    .action-icons { display: flex; gap: 0.1rem; align-items: center; }
+    .action-icons { display: flex; gap: 0.2rem; align-items: center; }
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.3rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+    .action-btn:hover { background: var(--bg-body); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
+    /* Table */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
     .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.83rem; }
     .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
     .doc-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #f1f3f4; }
     .doc-type-tag { padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 500; background: #e8eaed; color: var(--text-primary); }
 
+    /* Top Overlay Modals (High z-index to always render on top) */
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(32, 33, 36, 0.6);
-      display: flex;
-      align-items: center;
+      position: fixed; 
+      top: 0; left: 0; 
+      width: 100vw; height: 100vh;
+      background: rgba(32, 33, 36, 0.65);
+      display: none;
+      align-items: flex-start;
       justify-content: center;
-      z-index: 1000;
-      padding: 1rem;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
+      z-index: 99999;
+      padding: 1.5rem 1rem;
+      overflow-y: auto;
     }
-    .modal-overlay.open { opacity: 1; visibility: visible; }
+    .modal-overlay.open { display: flex !important; }
     .modal-content {
       background: var(--bg-card); 
       border-radius: var(--radius); 
       width: 100%; 
       max-width: 480px; 
-      max-height: 90vh;
-      overflow-y: auto;
       padding: 1.25rem; 
       box-shadow: var(--shadow-md);
-      transform: scale(0.92);
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: auto;
+      margin-bottom: auto;
     }
-    .modal-overlay.open .modal-content { transform: scale(1); }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
     .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1.05rem; font-weight: 500; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 0.2rem; border-radius: 50%; }
@@ -302,7 +267,6 @@
 </head>
 <body>
 
-  <!-- Top Utility Bar -->
   <div class="top-utility-bar">
     <div class="top-utility-nav">
       <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="top-utility-link">
@@ -327,7 +291,6 @@
     </div>
   </div>
 
-  <!-- Header -->
   <header>
     <div class="header-left">
       <div class="brand">
@@ -450,7 +413,7 @@
     </div>
   </div>
 
-  <!-- Add Modal -->
+  <!-- ADD LINK POP-UP MODAL -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -522,7 +485,7 @@
     </div>
   </div>
 
-  <!-- Edit Modal -->
+  <!-- EDIT LINK POP-UP MODAL -->
   <div class="modal-overlay" id="editModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -755,11 +718,11 @@
     ];
 /* DOC_DATA_END */
 
-    const savedDataset = localStorage.getItem('kc_learning_dataset_v15');
+    const savedDataset = localStorage.getItem('kc_learning_dataset_v16');
     if (savedDataset) {
       try { dataset = JSON.parse(savedDataset); } catch(e){}
     }
-    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v15');
+    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v16');
     if (savedDocDataset) {
       try { docDataset = JSON.parse(savedDocDataset); } catch(e){}
     }
@@ -836,8 +799,8 @@
     }
 
     function persistStateLocally() {
-      localStorage.setItem('kc_learning_dataset_v15', JSON.stringify(dataset));
-      localStorage.setItem('kc_doc_dataset_v15', JSON.stringify(docDataset));
+      localStorage.setItem('kc_learning_dataset_v16', JSON.stringify(dataset));
+      localStorage.setItem('kc_doc_dataset_v16', JSON.stringify(docDataset));
     }
 
     async function commitDatasetToGitHub(updatedLearningDataset, updatedDocDataset, commitMessage) {
@@ -891,6 +854,16 @@
       } catch (err) {
         console.warn("GitHub live commit notice:", err.message, "- Saved locally.");
       }
+    }
+
+    function openAddModal() {
+      document.getElementById('addModalOverlay').classList.add('open');
+      setTimeout(notifyIframeHeight, 100);
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModalOverlay').classList.remove('open');
+      setTimeout(notifyIframeHeight, 100);
     }
 
     async function handleAddSubmission(e) {
@@ -965,6 +938,7 @@
       document.getElementById('editLearningFields').style.display = 'block';
       document.getElementById('editDocFields').style.display = 'none';
       document.getElementById('editModalOverlay').classList.add('open');
+      setTimeout(notifyIframeHeight, 100);
     }
 
     function openEditDocModal(originalIndex) {
@@ -982,10 +956,12 @@
       document.getElementById('editLearningFields').style.display = 'none';
       document.getElementById('editDocFields').style.display = 'block';
       document.getElementById('editModalOverlay').classList.add('open');
+      setTimeout(notifyIframeHeight, 100);
     }
 
     function closeEditModal() {
       document.getElementById('editModalOverlay').classList.remove('open');
+      setTimeout(notifyIframeHeight, 100);
     }
 
     async function handleEditSubmission(e) {
@@ -1096,13 +1072,6 @@
       window.addEventListener('resize', notifyIframeHeight);
       setTimeout(notifyIframeHeight, 200);
     });
-
-    function openAddModal() { 
-      document.getElementById('addModalOverlay').classList.add('open'); 
-    }
-    function closeAddModal() { 
-      document.getElementById('addModalOverlay').classList.remove('open'); 
-    }
 
     function toggleBookmark(id) {
       if (bookmarkedIds.has(id)) { bookmarkedIds.delete(id); } else { bookmarkedIds.add(id); }
