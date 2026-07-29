@@ -30,19 +30,18 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
       line-height: 1.4;
-      overflow-x: hidden;
     }
 
-    /* Sticky Utility Bar */
+    /* Navigation Bar */
     .top-utility-bar {
       background-color: #202124;
       color: #ffffff;
-      padding: 0.5rem 1.5rem;
+      padding: 0.5rem 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -82,14 +81,14 @@
     }
     .top-utility-btn.accent-add:hover { background: var(--google-blue-hover); }
 
-    /* Compact Sticky Header */
+    /* Compact Header */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 42px;
       z-index: 100;
-      padding: 0 1.5rem;
+      padding: 0 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -125,17 +124,16 @@
     .tab-btn:hover { color: var(--google-blue); }
     .tab-btn.active { color: var(--google-blue); border-bottom-color: var(--google-blue); }
 
-    /* Flush Full-Width Layout */
+    /* Layout */
     .container {
       width: 100%;
-      max-width: 100%;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.25rem;
     }
 
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* KPI Summary Strip */
+    /* Summary Grid */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -152,30 +150,29 @@
       gap: 0.85rem;
     }
     .kpi-icon-wrapper {
-      width: 40px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px;
+      width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px;
     }
     .kpi-info .value { font-family: 'Google Sans', sans-serif; font-size: 1.4rem; font-weight: 700; line-height: 1.1; }
     .kpi-info .label { font-size: 0.8rem; color: var(--text-secondary); }
 
-    /* Filter Toolbar Box */
+    /* Filter Box */
     .filter-card-highlight {
       background: #ffffff;
       border: 1.5px solid var(--google-blue);
       border-radius: var(--radius);
       padding: 0.85rem 1.1rem;
       margin-bottom: 1rem;
-      box-shadow: 0 2px 6px rgba(26, 115, 232, 0.08);
     }
     .filter-card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
     .filter-label-catchy {
       font-family: 'Google Sans', sans-serif;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--google-blue-hover);
       display: flex;
       align-items: center;
@@ -183,9 +180,9 @@
     }
     .styled-dropdown-catchy {
       width: 100%;
-      padding: 0.6rem 0.85rem;
+      padding: 0.55rem 0.85rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 500;
       color: var(--google-blue-hover);
       background-color: var(--bg-card);
@@ -199,27 +196,27 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
-      padding: 0.65rem 1rem;
+      padding: 0.6rem 1rem;
       margin-bottom: 1rem;
     }
     .search-box { position: relative; width: 100%; }
     .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 20px; }
     .search-input { width: 100%; padding: 0.5rem 1rem 0.5rem 2.2rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-body); font-size: 0.9rem; outline: none; }
 
-    /* Dynamic Grid Layout */
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1rem; }
+    /* Cards Grid */
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
     .resource-card {
       background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1rem;
       display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.15s, box-shadow 0.15s;
     }
     .resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
-    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.95rem; font-weight: 500; line-height: 1.35; }
+    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.92rem; font-weight: 500; line-height: 1.35; }
     .category-badge { font-size: 0.7rem; font-weight: 500; padding: 0.2rem 0.5rem; border-radius: 10px; white-space: nowrap; }
-    .card-actions { margin-top: 0.85rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.6rem; }
+    .card-actions { margin-top: 0.85rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.5rem; }
     .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.82rem; padding: 0.3rem 0.6rem; border-radius: 4px; }
     .link-btn:hover { background: var(--google-blue-light); }
-    .action-icons { display: flex; gap: 0.2rem; align-items: center; }
+    .action-icons { display: flex; gap: 0.1rem; align-items: center; }
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.3rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
     .action-btn:hover { background: var(--bg-body); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
@@ -262,7 +259,7 @@
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
+  <!-- Top Utility Bar -->
   <div class="top-utility-bar">
     <div class="top-utility-nav">
       <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" class="top-utility-link">
@@ -490,6 +487,7 @@
       "Patent Module", "Renewals", "Trademark", "Assessment", "Additional Reference Materials"
     ];
 
+/* LEARNING_DATA_START */
     let dataset = [
       { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
       { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
@@ -543,7 +541,9 @@
       { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8" },
       { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m" }
     ];
+/* LEARNING_DATA_END */
 
+/* DOC_DATA_START */
     let docDataset = [
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" },
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0" },
@@ -647,6 +647,7 @@
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring PPT", link: "https://docs.google.com/presentation/d/1jmw9iCRUUKnLwFzMGPWu21X0V5Zk9olXsdFHK7BEGcM/edit#slide=id.g2e29f102836_0_70" },
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
     ];
+/* DOC_DATA_END */
 
     let selectedModule = localStorage.getItem('user_pref_module_v12') || 'Patent Module';
     let searchQuery = '';
@@ -715,7 +716,7 @@
       };
 
       const fileRes = await fetch(`${apiBase}/contents/${fileTarget}?ref=main`, { headers });
-      if (!fileRes.ok) throw new Error("Failed to fetch file from GitHub");
+      if (!fileRes.ok) throw new Error("Failed to fetch repository file");
       const fileData = await fileRes.json();
       
       let currentContent = decodeURIComponent(escape(atob(fileData.content.replace(/\s/g, ''))));
@@ -723,16 +724,16 @@
       if (updatedLearningDataset) {
         const learningDataStr = JSON.stringify(updatedLearningDataset, null, 6);
         currentContent = currentContent.replace(
-          /let dataset = \[[\s\S]*?\];/,
-          `let dataset = ${learningDataStr};`
+          /\/\* LEARNING_DATA_START \*\/[\s\S]*?\/\* LEARNING_DATA_END \*\//,
+          `/* LEARNING_DATA_START */\n    let dataset = ${learningDataStr};\n/* LEARNING_DATA_END */`
         );
       }
 
       if (updatedDocDataset) {
         const docDataStr = JSON.stringify(updatedDocDataset, null, 6);
         currentContent = currentContent.replace(
-          /let docDataset = \[[\s\S]*?\];/,
-          `let docDataset = ${docDataStr};`
+          /\/\* DOC_DATA_START \*\/[\s\S]*?\/\* DOC_DATA_END \*\//,
+          `/* DOC_DATA_START */\n    let docDataset = ${docDataStr};\n/* DOC_DATA_END */`
         );
       }
 
@@ -951,10 +952,10 @@
                   <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark">
                     <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
-                  <button class="action-btn" onclick="editLearningItem('${res.id}')" title="Edit">
+                  <button class="action-btn" onclick="editLearningItem('${res.id}')" title="Edit (Password Protected)">
                     <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
                   </button>
-                  <button class="action-btn" onclick="deleteLearningItem('${res.id}')" title="Delete">
+                  <button class="action-btn" onclick="deleteLearningItem('${res.id}')" title="Delete (Password Protected)">
                     <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
                   </button>
                 </div>
@@ -996,10 +997,10 @@
               <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
                 <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
-              <button class="action-btn" onclick="editDocItem(${doc.originalIndex})" title="Edit">
+              <button class="action-btn" onclick="editDocItem(${doc.originalIndex})" title="Edit (Password Protected)">
                 <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
               </button>
-              <button class="action-btn" onclick="deleteDocItem(${doc.originalIndex})" title="Delete">
+              <button class="action-btn" onclick="deleteDocItem(${doc.originalIndex})" title="Delete (Password Protected)">
                 <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
               </button>
             </div>
