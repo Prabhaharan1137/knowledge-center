@@ -11,6 +11,7 @@
       --google-blue: #1a73e8;
       --google-blue-hover: #1557b0;
       --google-blue-light: #e8f0fe;
+      --google-blue-active: #d2e3fc;
       --google-green: #1e8e3e;
       --google-green-light: #e6f4ea;
       --google-yellow: #f9ab00;
@@ -91,6 +92,10 @@
       border-color: var(--google-blue);
       margin-left: auto;
     }
+    .top-utility-btn.accent-analytics {
+      background: var(--google-purple);
+      border-color: var(--google-purple);
+    }
 
     /* Header */
     header {
@@ -148,7 +153,6 @@
       font-weight: 700;
       box-shadow: 0 2px 8px rgba(26,115,232,0.18);
     }
-    /* LEARNING HUB BLUE ACCENT DOT */
     .tab-btn.learning-tab.active::before {
       content: '';
       width: 7px; height: 7px;
@@ -156,7 +160,6 @@
       background: var(--google-blue);
       box-shadow: 0 0 6px var(--google-blue);
     }
-    /* DOCUMENT HUB PURPLE ACCENT GLOW */
     .tab-btn.doc-tab.active {
       background-color: var(--google-purple-light);
       color: var(--google-purple);
@@ -321,7 +324,7 @@
       background: var(--bg-card); 
       border-radius: var(--radius); 
       width: 100%; 
-      max-width: 450px; 
+      max-width: 500px; 
       padding: 1.25rem; 
       box-shadow: var(--shadow-md);
       margin-top: 10px !important;
@@ -335,6 +338,30 @@
     .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
     .form-group label { font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); }
     .form-group input, .form-group select { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
+    
+    /* Checkbox & Email Field Styling */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--google-blue-light);
+      padding: 0.55rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(26,115,232,0.2);
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: var(--google-blue);
+      cursor: pointer;
+    }
+    .checkbox-group label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--google-blue-hover);
+      cursor: pointer;
+      user-select: none;
+    }
+
     .pin-input { border-color: var(--google-blue) !important; background: var(--google-blue-light) !important; font-weight: 700; letter-spacing: 2px; }
     .error-msg { color: var(--google-red); font-size: 0.78rem; font-weight: 500; display: none; margin-top: -0.2rem; }
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-family: 'Google Sans', sans-serif; font-weight: 500; cursor: pointer; }
@@ -360,6 +387,12 @@
         <span class="material-icons-outlined" style="font-size:15px;">table_chart</span>
         <span>Implementation Tracker</span>
       </a>
+
+      <!-- USER INSIGHTS DASHBOARD BUTTON -->
+      <button type="button" class="top-utility-btn accent-analytics" onclick="openUserAnalyticsDashboard()">
+        <span class="material-icons-outlined" style="font-size:15px;">insights</span>
+        <span>User Progress Dashboard</span>
+      </button>
 
       <button type="button" class="top-utility-btn accent-add" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:15px;">add_circle</span>
@@ -389,7 +422,6 @@
   </header>
 
   <div class="container">
-    <!-- DASHBOARD SPECIFICALLY TAILORED PER HUB -->
     <section class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-icon-wrapper" id="kpiMainIcon" style="background: var(--google-blue-light); color: var(--google-blue);">
@@ -548,6 +580,17 @@
           <input type="url" id="newLink" placeholder="https://..." required>
         </div>
 
+        <!-- DL EMAIL NOTIFICATION CHECKBOX & ADDRESS INPUT -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="sendEmailCheckbox" checked onchange="toggleDlEmailInput(this.checked)">
+          <label for="sendEmailCheckbox">Send Release Email Notification to DL</label>
+        </div>
+
+        <div class="form-group" id="dlEmailGroup">
+          <label for="dlEmailAddress">Distribution List (DL) Email Address *</label>
+          <input type="email" id="dlEmailAddress" value="pso-team-dl@maxval.com" placeholder="pso-team-dl@maxval.com">
+        </div>
+
         <button type="submit" class="btn-submit" id="submitBtn">Publish Link Live to GitHub</button>
       </form>
     </div>
@@ -645,6 +688,32 @@
     </div>
   </div>
 
+  <!-- USER PROGRESS & ANALYTICS DASHBOARD MODAL -->
+  <div class="modal-overlay" id="userDashboardModalOverlay">
+    <div class="modal-content" style="max-width: 580px;">
+      <div class="modal-header">
+        <h2>User Completion & View Analytics</h2>
+        <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')">
+          <span class="material-icons-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>User Email</th>
+              <th>Last Login</th>
+              <th>Completed Topics</th>
+              <th>Docs Viewed</th>
+            </tr>
+          </thead>
+          <tbody id="userAnalyticsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <script>
     const GITHUB_CONFIG = {
       owner: "Prabhaharan1137",
@@ -654,7 +723,87 @@
     };
 
     const ACTION_PASSWORD = "1137";
+    const DEFAULT_DL_EMAIL = "pso-team-dl@maxval.com";
     let activeTab = 'learningHubTab';
+
+    // USER TRACKING ENGINE
+    let currentUser = localStorage.getItem('kc_user_email') || null;
+    let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v2')) || { users: {} };
+
+    function enforceUserLogin() {
+      if (!currentUser) {
+        const email = prompt("Welcome to Knowledge Center! Please enter your work email to continue:");
+        if (email && email.includes('@')) {
+          currentUser = email.trim().toLowerCase();
+          localStorage.setItem('kc_user_email', currentUser);
+        } else {
+          currentUser = "guest@maxval.com";
+        }
+      }
+
+      if (!userAnalytics.users[currentUser]) {
+        userAnalytics.users[currentUser] = { lastLogin: "", completedTopics: [], seenDocs: [] };
+      }
+      userAnalytics.users[currentUser].lastLogin = new Date().toLocaleString();
+      saveAnalytics();
+    }
+
+    function saveAnalytics() {
+      localStorage.setItem('kc_user_analytics_v2', JSON.stringify(userAnalytics));
+    }
+
+    function toggleTopicCompletion(resId) {
+      if (!currentUser) return;
+      const userRecord = userAnalytics.users[currentUser];
+      if (!userRecord.completedTopics) userRecord.completedTopics = [];
+
+      const idx = userRecord.completedTopics.indexOf(resId);
+      if (idx > -1) {
+        userRecord.completedTopics.splice(idx, 1);
+      } else {
+        userRecord.completedTopics.push(resId);
+      }
+
+      saveAnalytics();
+      renderLearningHub();
+    }
+
+    function trackDocView(pkgName, docType) {
+      if (!currentUser) return;
+      const userRecord = userAnalytics.users[currentUser];
+      if (!userRecord.seenDocs) userRecord.seenDocs = [];
+
+      userRecord.seenDocs.push({ pkg: pkgName, type: docType, timestamp: new Date().toLocaleString() });
+      saveAnalytics();
+    }
+
+    function openUserAnalyticsDashboard() {
+      const tbody = document.getElementById('userAnalyticsTableBody');
+      const users = userAnalytics.users;
+
+      const userKeys = Object.keys(users);
+      if (userKeys.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 1.25rem;">No user tracking data available yet.</td></tr>`;
+      } else {
+        tbody.innerHTML = userKeys.map(email => {
+          const u = users[email];
+          const completedCount = u.completedTopics ? u.completedTopics.length : 0;
+          const viewCount = u.seenDocs ? u.seenDocs.length : 0;
+
+          return `
+            <tr>
+              <td><strong>${email}</strong></td>
+              <td>${u.lastLogin || 'N/A'}</td>
+              <td><span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">${completedCount} Completed</span></td>
+              <td><span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">${viewCount} Views</span></td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('userDashboardModalOverlay').classList.add('open');
+      setTimeout(notifyIframeHeight, 100);
+    }
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -892,6 +1041,19 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
+    function toggleDlEmailInput(checked) {
+      const group = document.getElementById('dlEmailGroup');
+      const input = document.getElementById('dlEmailAddress');
+      if (checked) {
+        group.style.display = 'flex';
+        input.required = true;
+      } else {
+        group.style.display = 'none';
+        input.required = false;
+      }
+      setTimeout(notifyIframeHeight, 50);
+    }
+
     function persistStateLocally() {
       localStorage.setItem('kc_learning_dataset_v16', JSON.stringify(dataset));
       localStorage.setItem('kc_doc_dataset_v16', JSON.stringify(docDataset));
@@ -950,7 +1112,38 @@
       }
     }
 
+    function triggerReleaseEmail(details) {
+      const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      const subject = encodeURIComponent(`🔔 [Release Notification] New Resource Published in Knowledge Center`);
+      
+      const bodyText = 
+`Dear Team,
+
+A new resource has just been published live to the Knowledge Center!
+
+📌 Release Details:
+• Hub Location: ${details.hubName}
+• Category / Package: ${details.category}
+• Resource Title: ${details.title}
+• Published By: ${details.submitter}
+• Release Date: ${today}
+
+🔗 Access Link:
+Direct Resource URL:
+${details.link}
+
+Or visit the Knowledge Center Portal:
+https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html
+
+---
+Note: This is an automated release notification from the Knowledge Center platform.`;
+
+      const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+      window.open(mailtoUrl, '_blank');
+    }
+
     function openAddModal() {
+      document.getElementById('dlEmailAddress').value = DEFAULT_DL_EMAIL;
       document.getElementById('addModalOverlay').classList.add('open');
       setTimeout(notifyIframeHeight, 100);
     }
@@ -967,7 +1160,12 @@
       submitBtn.disabled = true;
 
       const targetHub = document.getElementById('targetHub').value;
+      const submitterEmail = document.getElementById('submitterEmail').value.trim();
       const link = document.getElementById('newLink').value.trim();
+      const shouldSendEmail = document.getElementById('sendEmailCheckbox').checked;
+      const dlAddress = document.getElementById('dlEmailAddress').value.trim();
+
+      let releaseDetails = {};
 
       try {
         if (targetHub === 'learning') {
@@ -984,6 +1182,7 @@
             switchTab('learningHubTab', document.querySelectorAll('.tab-btn')[0]);
           }
 
+          releaseDetails = { hubName: "Learning Hub", title, category, link, submitter: submitterEmail, dlAddress };
           await commitDatasetToGitHub(dataset, null, `Add Learning Link: ${title}`);
         } else {
           const pkg = document.getElementById('newPkg').value.trim();
@@ -1000,11 +1199,19 @@
             switchTab('documentHubTab', document.querySelectorAll('.tab-btn')[1]);
           }
 
+          releaseDetails = { hubName: "Document Hub", title: `${pkg} (${type})`, category: `${pkg} ${ver}`, link, submitter: submitterEmail, dlAddress };
           await commitDatasetToGitHub(null, docDataset, `Add Doc Link: ${pkg}`);
         }
 
         closeModal('addModalOverlay');
+
+        if (shouldSendEmail && dlAddress) {
+          triggerReleaseEmail(releaseDetails);
+        }
+
         document.getElementById('addResourceForm').reset();
+        document.getElementById('sendEmailCheckbox').checked = true;
+        toggleDlEmailInput(true);
 
         renderLearningHub();
         renderDocumentHub();
@@ -1187,6 +1394,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      enforceUserLogin();
       syncDropdownOptions();
       syncDocPackageOptions();
       renderLearningHub();
@@ -1276,9 +1484,12 @@
         return;
       }
 
+      const userRecord = (userAnalytics.users && userAnalytics.users[currentUser]) ? userAnalytics.users[currentUser] : { completedTopics: [] };
+
       grid.innerHTML = filtered.map(res => {
         const style = getCategoryStyle(res.category);
         const isBookmarked = bookmarkedIds.has(res.id);
+        const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
 
         return `
           <article class="resource-card" onclick="toggleTileActive(this)">
@@ -1286,6 +1497,14 @@
               <div class="card-header">
                 <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
                 <div class="action-icons" onclick="event.stopPropagation()">
+                  
+                  <!-- INDIVIDUAL USER COMPLETION BUTTON -->
+                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Completed' : 'Mark as Complete'}">
+                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
+                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                    </span>
+                  </button>
+
                   <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark">
                     <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
@@ -1300,7 +1519,7 @@
               <h3 class="card-title">${res.name}</h3>
             </div>
             <div class="card-actions" onclick="event.stopPropagation()">
-              <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+              <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
                 <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
             </div>
@@ -1338,7 +1557,7 @@
           <td><span class="doc-type-tag">${doc.type}</span></td>
           <td onclick="event.stopPropagation()">
             <div style="display: flex; align-items: center; gap: 0.4rem;">
-              <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+              <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
                 <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
               <button class="action-btn" onclick="openEditDocModal(${doc.originalIndex})" title="Edit Item">
