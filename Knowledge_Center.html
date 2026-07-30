@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Knowledge Center</title>
+  <title>Symphony Implementation - Learning & Documentation Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <style>
@@ -11,6 +11,7 @@
       --google-blue: #1a73e8;
       --google-blue-hover: #1557b0;
       --google-blue-light: #e8f0fe;
+      --google-blue-active: #d2e3fc;
       --google-green: #1e8e3e;
       --google-green-light: #e6f4ea;
       --google-yellow: #f9ab00;
@@ -26,47 +27,75 @@
       --border-color: #dadce0;
       --shadow-sm: 0 1px 3px rgba(60,64,67,0.12), 0 1px 2px rgba(60,64,67,0.24);
       --shadow-md: 0 8px 24px rgba(60,64,67,0.28);
-      --radius: 8px;
+      --radius: 10px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    html {
+    html, body {
       width: 100%;
-      height: max-content;
-      background-color: var(--bg-body);
-    }
-
-    body {
-      width: 100%;
-      height: max-content;
+      height: 100vh;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
-      line-height: 1.35;
+      line-height: 1.4;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
-    /* Top Bar */
-    .top-utility-bar {
-      background-color: #202124;
+    /* ANIMATED HERO HEADER BANNER */
+    .hero-banner {
+      background: linear-gradient(135deg, #101214 0%, #1a2332 50%, #0d1b2a 100%);
       color: #ffffff;
-      padding: 0.25rem 1rem;
+      padding: 0.85rem 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 200;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      border-bottom: 2px solid var(--google-blue);
       flex-shrink: 0;
     }
+    
+    .hero-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-icon-animated {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(26, 115, 232, 0.25);
+      border: 1.5px solid var(--google-blue);
+      display: flex; align-items: center; justify-content: center;
+      color: #ffffff;
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(26, 115, 232, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
+    }
+
+    .hero-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ffffff 0%, #a8c7fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.3px;
+    }
+
     .top-utility-nav {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      width: 100%;
       flex-wrap: wrap;
     }
     .top-utility-link, .top-utility-btn {
@@ -76,12 +105,12 @@
       align-items: center;
       gap: 0.3rem;
       font-weight: 500;
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       transition: transform 0.15s ease, background 0.2s ease;
       touch-action: manipulation;
     }
@@ -89,66 +118,39 @@
     .top-utility-btn.accent-add {
       background: var(--google-blue);
       border-color: var(--google-blue);
-      margin-left: auto;
     }
     .top-utility-btn.accent-analytics {
       background: var(--google-purple);
       border-color: var(--google-purple);
     }
 
-    .user-profile-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      background: rgba(255,255,255,0.18);
-      padding: 0.15rem 0.5rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    /* Header */
-    header {
+    /* TAB NAVIGATION BAR */
+    .tab-bar-container {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 28px;
-      z-index: 100;
-      padding: 0 1rem;
+      padding: 0 1.25rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      height: 36px;
+      height: 42px;
       flex-shrink: 0;
     }
-    .header-left { display: flex; align-items: center; gap: 1rem; height: 100%; }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: 'Google Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-    }
-    .brand-icon { color: var(--google-blue); font-size: 20px; }
-    
-    .nav-tabs { display: flex; gap: 0.3rem; height: 100%; align-items: center; }
+    .nav-tabs { display: flex; gap: 0.5rem; height: 100%; align-items: center; }
     .tab-btn {
       position: relative;
       background: none;
       border: none;
-      padding: 0.2rem 0.75rem;
+      padding: 0.3rem 0.85rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 500;
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.3rem;
-      height: 28px;
-      border-radius: 14px;
-      transition: all 0.2s ease;
+      gap: 0.4rem;
+      height: 32px;
+      border-radius: 16px;
+      transition: all 0.25s ease;
       touch-action: manipulation;
     }
     .tab-btn:hover { background-color: var(--google-blue-light); color: var(--google-blue); }
@@ -157,12 +159,14 @@
 
     .container {
       width: 100%;
-      padding: 0.65rem 1rem 0.2rem 1rem;
+      flex: 1;
+      padding: 0.85rem 1.25rem;
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
     }
 
-    .tab-content { display: none; flex-direction: column; }
+    .tab-content { display: none; flex-direction: column; flex: 1; }
     .tab-content.active { display: flex; }
 
     /* Filter Card */
@@ -237,7 +241,8 @@
       display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); 
       gap: 0.65rem; 
-      padding-bottom: 0.25rem;
+      overflow-y: auto;
+      padding-bottom: 1rem;
     }
     .resource-card {
       background: var(--bg-card); 
@@ -291,13 +296,6 @@
       font-size: 0.62rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; text-transform: uppercase;
     }
 
-    /* Table fallback styling */
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
-    .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.8rem; }
-    .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
-    .doc-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f3f4; }
-    .doc-type-tag { padding: 0.12rem 0.4rem; border-radius: 4px; font-size: 0.7rem; font-weight: 500; background: #e8eaed; color: var(--text-primary); }
-
     /* Modals */
     .modal-overlay {
       position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
@@ -306,7 +304,7 @@
     }
     .modal-overlay.open { display: flex !important; }
     .modal-content {
-      background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 440px;
+      background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 450px;
       padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 10px !important; max-height: 85vh; overflow-y: auto;
     }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
@@ -316,6 +314,29 @@
     .form-group { display: flex; flex-direction: column; gap: 0.2rem; }
     .form-group label { font-size: 0.75rem; font-weight: 500; color: var(--text-secondary); }
     .form-group input, .form-group select { padding: 0.4rem 0.65rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.85rem; outline: none; }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--google-blue-light);
+      padding: 0.55rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(26,115,232,0.2);
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: var(--google-blue);
+      cursor: pointer;
+    }
+    .checkbox-group label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--google-blue-hover);
+      cursor: pointer;
+      user-select: none;
+    }
+
     .pin-input { border-color: var(--google-blue) !important; background: var(--google-blue-light) !important; font-weight: 700; letter-spacing: 2px; }
     .error-msg { color: var(--google-red); font-size: 0.75rem; font-weight: 500; display: none; }
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.5rem; border-radius: 6px; font-family: 'Google Sans', sans-serif; font-weight: 500; cursor: pointer; }
@@ -327,7 +348,17 @@
 
   <iframe id="emailTriggerFrame" style="display:none;"></iframe>
 
-  <div class="top-utility-bar">
+  <!-- HERO HEADER WITH ANIMATED SYMPHONY TITLE -->
+  <div class="hero-banner">
+    <div class="hero-title-group">
+      <div class="hero-icon-animated">
+        <span class="material-icons-outlined" style="font-size:22px;">hub</span>
+      </div>
+      <div class="hero-title">
+        Symphony Implementation - Learning & Documentation Hub
+      </div>
+    </div>
+
     <div class="top-utility-nav">
       <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="top-utility-link">
         <span class="material-icons-outlined" style="font-size:14px;">key</span>
@@ -349,11 +380,6 @@
         <span>User Progress</span>
       </button>
 
-      <div class="user-profile-tag" id="userProfileTag">
-        <span class="material-icons-outlined" style="font-size:13px;">account_circle</span>
-        <span id="activeUserDisplay">User</span>
-      </div>
-
       <button type="button" class="top-utility-btn accent-add" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:14px;">add_circle</span>
         <span>Submit New Link Live</span>
@@ -361,25 +387,19 @@
     </div>
   </div>
 
-  <header>
-    <div class="header-left">
-      <div class="brand">
-        <span class="material-icons-outlined brand-icon">folder_special</span>
-        <span>Knowledge Center</span>
-      </div>
-
-      <nav class="nav-tabs">
-        <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
-          <span class="material-icons-outlined" style="font-size:16px;">school</span>
-          <span>Learning Hub</span>
-        </button>
-        <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
-          <span class="material-icons-outlined" style="font-size:16px;">description</span>
-          <span>Document Hub</span>
-        </button>
-      </nav>
-    </div>
-  </header>
+  <!-- COMPACT TAB BAR -->
+  <div class="tab-bar-container">
+    <nav class="nav-tabs">
+      <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
+        <span class="material-icons-outlined" style="font-size:16px;">school</span>
+        <span>Learning Hub</span>
+      </button>
+      <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
+        <span class="material-icons-outlined" style="font-size:16px;">description</span>
+        <span>Document Hub</span>
+      </button>
+    </nav>
+  </div>
 
   <div class="container">
     <!-- TAB 1: LEARNING HUB -->
@@ -411,7 +431,7 @@
       <main class="resources-grid" id="resourcesGrid"></main>
     </div>
 
-    <!-- TAB 2: DOCUMENT HUB (TILES VIEW RESTORED) -->
+    <!-- TAB 2: DOCUMENT HUB -->
     <div id="documentHubTab" class="tab-content">
       <section class="filter-card-highlight">
         <div class="filter-card-header">
@@ -437,12 +457,11 @@
         </div>
       </section>
 
-      <!-- RESTORED TILES GRID FOR DOCUMENTS -->
       <main class="resources-grid" id="docResourcesGrid"></main>
     </div>
   </div>
 
-  <!-- ADD LINK MODAL -->
+  <!-- ADD LINK POP-UP MENU -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -502,6 +521,17 @@
         <div class="form-group">
           <label for="newLink">URL / Link *</label>
           <input type="url" id="newLink" placeholder="https://..." required>
+        </div>
+
+        <!-- CONFIGURABLE DL EMAIL CHECKBOX & ADDRESS INPUT -->
+        <div class="checkbox-group">
+          <input type="checkbox" id="sendEmailCheckbox" checked onchange="toggleDlEmailInput(this.checked)">
+          <label for="sendEmailCheckbox">Send Release Notification Email to DL</label>
+        </div>
+
+        <div class="form-group" id="dlEmailGroup">
+          <label for="dlEmailAddress">Distribution List (DL) Email Address *</label>
+          <input type="email" id="dlEmailAddress" value="pso-team-dl@maxval.com" placeholder="pso-team-dl@maxval.com">
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Publish Link Live to GitHub</button>
@@ -639,13 +669,11 @@
     const DEFAULT_DL_EMAIL = "pso-team-dl@maxval.com";
     let activeTab = 'learningHubTab';
 
-    let currentUser = localStorage.getItem('kc_user_email_v4') || "prabhaharan.j@maxval.com";
-    let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v4')) || { users: {} };
-    let docSeenReceipts = JSON.parse(localStorage.getItem('kc_seen_receipts_v4')) || {};
+    let currentUser = localStorage.getItem('kc_user_email_v5') || "prabhaharan.j@maxval.com";
+    let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v5')) || { users: {} };
+    let docSeenReceipts = JSON.parse(localStorage.getItem('kc_seen_receipts_v5')) || {};
 
     function enforceUserIdentity() {
-      document.getElementById('activeUserDisplay').textContent = currentUser;
-
       if (!userAnalytics.users[currentUser]) {
         userAnalytics.users[currentUser] = { lastLogin: "", completedTopics: [], seenDocs: [] };
       }
@@ -654,8 +682,8 @@
     }
 
     function saveAnalytics() {
-      localStorage.setItem('kc_user_analytics_v4', JSON.stringify(userAnalytics));
-      localStorage.setItem('kc_seen_receipts_v4', JSON.stringify(docSeenReceipts));
+      localStorage.setItem('kc_user_analytics_v5', JSON.stringify(userAnalytics));
+      localStorage.setItem('kc_seen_receipts_v5', JSON.stringify(docSeenReceipts));
     }
 
     function recordSeenReceipt(itemId, title) {
@@ -724,7 +752,6 @@
       }
 
       document.getElementById('userDashboardModalOverlay').classList.add('open');
-      setTimeout(notifyIframeHeight, 100);
     }
 
     const DEFAULT_CATEGORIES = [
@@ -905,18 +932,6 @@
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v12') || '[]'));
 
-    const categoryColors = {
-      'intellectual property': { bg: '#feefe3', color: '#b06000' },
-      'introduction to symphony': { bg: '#f3e8fd', color: '#9334e6' },
-      'invention module': { bg: '#e8f0fe', color: '#1a73e8' },
-      'patent module': { bg: '#e6f4ea', color: '#1e8e3e' },
-      'renewals': { bg: '#fef7e0', color: '#b06000' },
-      'trademark': { bg: '#fce8e6', color: '#c5221f' },
-      'assessment': { bg: '#e8f0fe', color: '#1a73e8' },
-      'additional reference materials': { bg: '#feefe3', color: '#b06000' },
-      'default': { bg: '#f1f3f4', color: '#5f6368' }
-    };
-
     function notifyIframeHeight() {
       if (window.parent && window.parent !== window) {
         const height = document.documentElement.scrollHeight || document.body.scrollHeight;
@@ -959,6 +974,19 @@
       } else {
         document.getElementById('learningFields').style.display = 'none';
         document.getElementById('documentFields').style.display = 'block';
+      }
+      setTimeout(notifyIframeHeight, 50);
+    }
+
+    function toggleDlEmailInput(checked) {
+      const group = document.getElementById('dlEmailGroup');
+      const input = document.getElementById('dlEmailAddress');
+      if (checked) {
+        group.style.display = 'flex';
+        input.required = true;
+      } else {
+        group.style.display = 'none';
+        input.required = false;
       }
       setTimeout(notifyIframeHeight, 50);
     }
@@ -1040,7 +1068,8 @@
       const targetHub = document.getElementById('targetHub').value;
       const submitterEmail = currentUser;
       const link = document.getElementById('newLink').value.trim();
-      const dlAddress = DEFAULT_DL_EMAIL;
+      const shouldSendEmail = document.getElementById('sendEmailCheckbox').checked;
+      const dlAddress = document.getElementById('dlEmailAddress').value.trim();
 
       let releaseDetails = {};
 
@@ -1081,7 +1110,10 @@
         }
 
         closeModal('addModalOverlay');
-        quietTriggerEmail(releaseDetails);
+
+        if (shouldSendEmail && dlAddress) {
+          quietTriggerEmail(releaseDetails);
+        }
 
         document.getElementById('addResourceForm').reset();
         renderLearningHub();
@@ -1400,7 +1432,6 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
-    // DOCUMENT HUB TILES RENDERING RESTORED
     function renderDocumentHub() {
       const grid = document.getElementById('docResourcesGrid');
       const filteredWithIndex = docDataset.map((doc, idx) => ({ ...doc, originalIndex: idx })).filter(doc => {
