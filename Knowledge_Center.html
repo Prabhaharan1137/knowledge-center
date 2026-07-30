@@ -31,7 +31,13 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    html, body {
+    html {
+      width: 100%;
+      height: max-content;
+      background-color: var(--bg-body);
+    }
+
+    body {
       width: 100%;
       height: max-content;
       background-color: var(--bg-body);
@@ -43,7 +49,7 @@
       overflow: hidden;
     }
 
-    /* Ultra Compact Top Bar */
+    /* Top Bar */
     .top-utility-bar {
       background-color: #202124;
       color: #ffffff;
@@ -101,7 +107,7 @@
       border: 1px solid rgba(255,255,255,0.3);
     }
 
-    /* Ultra Small Compact Header */
+    /* Header */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
@@ -159,7 +165,7 @@
     .tab-content { display: none; flex-direction: column; }
     .tab-content.active { display: flex; }
 
-    /* Inline Count Display Below Dropdown */
+    /* Filter Card */
     .filter-card-highlight {
       background: #ffffff;
       border: 1.5px solid var(--google-blue);
@@ -197,7 +203,6 @@
       cursor: pointer;
     }
     
-    /* Inline Text Count Badge Below Select */
     .module-count-text-inline {
       margin-top: 0.35rem;
       font-size: 0.78rem;
@@ -254,7 +259,6 @@
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.88rem; font-weight: 500; line-height: 1.3; }
     .category-badge { font-size: 0.65rem; font-weight: 500; padding: 0.12rem 0.4rem; border-radius: 8px; white-space: nowrap; }
     
-    /* Module Completion Progress Pill (Red / Green Status) */
     .completion-status-pill {
       font-size: 0.68rem;
       font-weight: 700;
@@ -281,12 +285,17 @@
     .action-btn:hover { background: rgba(0,0,0,0.06); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    /* Table */
+    .seen-by-container { display: flex; align-items: center; gap: 0.2rem; margin-top: 0.3rem; font-size: 0.72rem; color: var(--text-secondary); }
+    .seen-avatar {
+      width: 18px; height: 18px; border-radius: 50%; background: var(--google-blue); color: #fff;
+      font-size: 0.62rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; text-transform: uppercase;
+    }
+
+    /* Table fallback styling */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
     .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.8rem; }
     .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
     .doc-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f3f4; }
-    .doc-table tr:hover { background-color: var(--google-blue-light) !important; }
     .doc-type-tag { padding: 0.12rem 0.4rem; border-radius: 4px; font-size: 0.7rem; font-weight: 500; background: #e8eaed; color: var(--text-primary); }
 
     /* Modals */
@@ -316,7 +325,6 @@
 </head>
 <body>
 
-  <!-- Invisible Email Trigger Target Frame -->
   <iframe id="emailTriggerFrame" style="display:none;"></iframe>
 
   <div class="top-utility-bar">
@@ -341,7 +349,6 @@
         <span>User Progress</span>
       </button>
 
-      <!-- Active User Profile Identity -->
       <div class="user-profile-tag" id="userProfileTag">
         <span class="material-icons-outlined" style="font-size:13px;">account_circle</span>
         <span id="activeUserDisplay">User</span>
@@ -380,14 +387,13 @@
       <section class="filter-card-highlight">
         <div class="filter-card-header">
           <label for="moduleSelect" class="filter-label-catchy">
-            <span class="material-icons-outlined">tune</span> SELECT LEARNING MODULE
+            <span class="material-icons-outlined">tune</span> SELECT LEARNING TOPIC / MODULE
           </label>
         </div>
         <select id="moduleSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Learning Modules --</option>
         </select>
 
-        <!-- Inline View Items Count -->
         <div class="module-count-text-inline">
           <span class="material-icons-outlined" style="font-size:15px; color:var(--google-blue);">visibility</span>
           <span>Visible Items for this Module:</span>
@@ -405,19 +411,18 @@
       <main class="resources-grid" id="resourcesGrid"></main>
     </div>
 
-    <!-- TAB 2: DOCUMENT HUB -->
+    <!-- TAB 2: DOCUMENT HUB (TILES VIEW RESTORED) -->
     <div id="documentHubTab" class="tab-content">
       <section class="filter-card-highlight">
         <div class="filter-card-header">
           <label for="docPackageSelect" class="filter-label-catchy">
-            <span class="material-icons-outlined">inventory_2</span> FILTER BY PACKAGE NAME
+            <span class="material-icons-outlined">inventory_2</span> SELECT PACKAGE / DOCUMENT CATEGORY
           </label>
         </div>
         <select id="docPackageSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Packages --</option>
         </select>
 
-        <!-- Inline View Items Count -->
         <div class="module-count-text-inline">
           <span class="material-icons-outlined" style="font-size:15px; color:var(--google-purple);">visibility</span>
           <span>Visible Items for this Package:</span>
@@ -432,24 +437,12 @@
         </div>
       </section>
 
-      <div class="table-container">
-        <table class="doc-table">
-          <thead>
-            <tr>
-              <th>Package Name</th>
-              <th>Package Version</th>
-              <th>Type of Doc</th>
-              <th>Seen By (Receipts)</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="docTableBody"></tbody>
-        </table>
-      </div>
+      <!-- RESTORED TILES GRID FOR DOCUMENTS -->
+      <main class="resources-grid" id="docResourcesGrid"></main>
     </div>
   </div>
 
-  <!-- ADD LINK POP-UP MENU -->
+  <!-- ADD LINK MODAL -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -646,18 +639,11 @@
     const DEFAULT_DL_EMAIL = "pso-team-dl@maxval.com";
     let activeTab = 'learningHubTab';
 
-    // USER IDENTITY & VIEW RECEIPT ENGINE
-    let currentUser = localStorage.getItem('kc_user_email_v4');
+    let currentUser = localStorage.getItem('kc_user_email_v4') || "prabhaharan.j@maxval.com";
     let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v4')) || { users: {} };
     let docSeenReceipts = JSON.parse(localStorage.getItem('kc_seen_receipts_v4')) || {};
 
     function enforceUserIdentity() {
-      if (!currentUser) {
-        // Detect from document environment or prompt once
-        currentUser = "prabhaharan.j@maxval.com";
-        localStorage.setItem('kc_user_email_v4', currentUser);
-      }
-
       document.getElementById('activeUserDisplay').textContent = currentUser;
 
       if (!userAnalytics.users[currentUser]) {
@@ -919,6 +905,18 @@
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v12') || '[]'));
 
+    const categoryColors = {
+      'intellectual property': { bg: '#feefe3', color: '#b06000' },
+      'introduction to symphony': { bg: '#f3e8fd', color: '#9334e6' },
+      'invention module': { bg: '#e8f0fe', color: '#1a73e8' },
+      'patent module': { bg: '#e6f4ea', color: '#1e8e3e' },
+      'renewals': { bg: '#fef7e0', color: '#b06000' },
+      'trademark': { bg: '#fce8e6', color: '#c5221f' },
+      'assessment': { bg: '#e8f0fe', color: '#1a73e8' },
+      'additional reference materials': { bg: '#feefe3', color: '#b06000' },
+      'default': { bg: '#f1f3f4', color: '#5f6368' }
+    };
+
     function notifyIframeHeight() {
       if (window.parent && window.parent !== window) {
         const height = document.documentElement.scrollHeight || document.body.scrollHeight;
@@ -1021,37 +1019,6 @@
       } catch (err) {
         console.warn("GitHub live commit notice:", err.message, "- Saved locally.");
       }
-    }
-
-    function quietTriggerEmail(details) {
-      const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-      const subject = `🔔 [Release Notification] New Resource Published in Knowledge Center`;
-      
-      const bodyText = 
-`Dear Team,
-
-A new resource has just been published live to the Knowledge Center!
-
-📌 Release Details:
-• Hub Location: ${details.hubName}
-• Category / Package: ${details.category}
-• Resource Title: ${details.title}
-• Published By: ${details.submitter}
-• Release Date: ${today}
-
-🔗 Access Link:
-Direct Resource URL:
-${details.link}
-
-Or visit the Knowledge Center Portal:
-https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html
-
----
-Note: Automated release notification.`;
-
-      const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
-      // Quiet background load without interrupting or redirecting page
-      document.getElementById('emailTriggerFrame').src = mailtoUrl;
     }
 
     function openAddModal() {
@@ -1293,7 +1260,7 @@ Note: Automated release notification.`;
     }
 
     function toggleTileActive(cardElement) {
-      document.querySelectorAll('.resource-card, .doc-table tr').forEach(el => el.classList.remove('selected-active'));
+      document.querySelectorAll('.resource-card').forEach(el => el.classList.remove('selected-active'));
       cardElement.classList.add('selected-active');
     }
 
@@ -1381,7 +1348,6 @@ Note: Automated release notification.`;
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
 
-        // CALCULATE MODULE COMPLETION INTACT PROGRESS
         const sameCategoryItems = dataset.filter(d => d.category === res.category);
         const completedCategoryItems = sameCategoryItems.filter(d => userRecord.completedTopics && userRecord.completedTopics.includes(d.id));
         const totalCatCount = sameCategoryItems.length;
@@ -1417,7 +1383,6 @@ Note: Automated release notification.`;
               </div>
               <h3 class="card-title">${res.name}</h3>
 
-              <!-- COMPLETION PROGRESS (RED/GREEN STATUS) -->
               <div class="completion-status-pill ${isAllCatCompleted ? 'complete' : 'incomplete'}">
                 <span class="material-icons-outlined" style="font-size:12px;">${isAllCatCompleted ? 'task_alt' : 'hourglass_top'}</span>
                 <span>Module Status: ${completedCatCount} / ${totalCatCount} Completed</span>
@@ -1435,8 +1400,9 @@ Note: Automated release notification.`;
       setTimeout(notifyIframeHeight, 50);
     }
 
+    // DOCUMENT HUB TILES RENDERING RESTORED
     function renderDocumentHub() {
-      const tbody = document.getElementById('docTableBody');
+      const grid = document.getElementById('docResourcesGrid');
       const filteredWithIndex = docDataset.map((doc, idx) => ({ ...doc, originalIndex: idx })).filter(doc => {
         const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
         const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) ||
@@ -1448,38 +1414,42 @@ Note: Automated release notification.`;
       document.getElementById('inlineDocCount').textContent = filteredWithIndex.length;
 
       if (filteredWithIndex.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No matching documents found.</td></tr>`;
+        grid.innerHTML = `<div class="empty-state"><span class="material-icons-outlined" style="font-size:32px; margin-bottom:0.3rem;">search_off</span><h3>No matching documents found</h3></div>`;
         setTimeout(notifyIframeHeight, 50);
         return;
       }
 
-      tbody.innerHTML = filteredWithIndex.map(doc => {
+      grid.innerHTML = filteredWithIndex.map(doc => {
         const docId = `doc_${doc.pkg}_${doc.type}`.replace(/\s+/g, '_');
         const seenReceiptsHtml = renderSeenByAvatars(docId);
 
         return `
-          <tr onclick="toggleTileActive(this)">
-            <td>
-              <strong>${doc.pkg}</strong>
-              ${doc.isNewRelease ? `<span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple); margin-left:0.3rem;">New Release</span>` : ''}
-            </td>
-            <td>${doc.ver}</td>
-            <td><span class="doc-type-tag">${doc.type}</span></td>
-            <td>${seenReceiptsHtml}</td>
-            <td onclick="event.stopPropagation()">
-              <div style="display: flex; align-items: center; gap: 0.4rem;">
-                <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="recordSeenReceipt('${docId}', '${doc.pkg} (${doc.type})')">
-                  <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-                </a>
-                <button class="action-btn" onclick="openEditDocModal(${doc.originalIndex})" title="Edit Item">
-                  <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
-                </button>
-                <button class="action-btn" onclick="openDeleteDocModal(${doc.originalIndex})" title="Delete Item">
-                  <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
-                </button>
+          <article class="resource-card" onclick="toggleTileActive(this)">
+            <div>
+              <div class="card-header">
+                <div>
+                  <span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">${doc.pkg}</span>
+                  <span class="category-badge" style="background:#e8eaed; color:var(--text-primary); margin-left:0.2rem;">${doc.ver}</span>
+                  ${doc.isNewRelease ? `<span class="category-badge" style="background:var(--google-green-light); color:var(--google-green); margin-left:0.2rem;">New Release</span>` : ''}
+                </div>
+                <div class="action-icons" onclick="event.stopPropagation()">
+                  <button class="action-btn" onclick="openEditDocModal(${doc.originalIndex})" title="Edit Item">
+                    <span class="material-icons-outlined" style="color:var(--google-blue);">edit</span>
+                  </button>
+                  <button class="action-btn" onclick="openDeleteDocModal(${doc.originalIndex})" title="Delete Item">
+                    <span class="material-icons-outlined" style="color:var(--google-red);">delete</span>
+                  </button>
+                </div>
               </div>
-            </td>
-          </tr>
+              <h3 class="card-title">${doc.type}</h3>
+              <div style="margin-top:0.4rem;">${seenReceiptsHtml}</div>
+            </div>
+            <div class="card-actions" onclick="event.stopPropagation()">
+              <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="recordSeenReceipt('${docId}', '${doc.pkg} (${doc.type})')">
+                <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+              </a>
+            </div>
+          </article>
         `;
       }).join('');
 
