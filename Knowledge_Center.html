@@ -11,7 +11,6 @@
       --google-blue: #1a73e8;
       --google-blue-hover: #1557b0;
       --google-blue-light: #e8f0fe;
-      --google-blue-active: #d2e3fc;
       --google-green: #1e8e3e;
       --google-green-light: #e6f4ea;
       --google-yellow: #f9ab00;
@@ -523,7 +522,6 @@
           <input type="url" id="newLink" placeholder="https://..." required>
         </div>
 
-        <!-- CONFIGURABLE DL EMAIL CHECKBOX & ADDRESS INPUT -->
         <div class="checkbox-group">
           <input type="checkbox" id="sendEmailCheckbox" checked onchange="toggleDlEmailInput(this.checked)">
           <label for="sendEmailCheckbox">Send Release Notification Email to DL</label>
@@ -1047,6 +1045,36 @@
       } catch (err) {
         console.warn("GitHub live commit notice:", err.message, "- Saved locally.");
       }
+    }
+
+    function quietTriggerEmail(details) {
+      const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      const subject = `🔔 [Release Notification] New Resource Published in Knowledge Center`;
+      
+      const bodyText = 
+`Dear Team,
+
+A new resource has just been published live to the Knowledge Center!
+
+📌 Release Details:
+• Hub Location: ${details.hubName}
+• Category / Package: ${details.category}
+• Resource Title: ${details.title}
+• Published By: ${details.submitter}
+• Release Date: ${today}
+
+🔗 Access Link:
+Direct Resource URL:
+${details.link}
+
+Or visit the Knowledge Center Portal:
+https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html
+
+---
+Note: Automated release notification.`;
+
+      const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+      document.getElementById('emailTriggerFrame').src = mailtoUrl;
     }
 
     function openAddModal() {
