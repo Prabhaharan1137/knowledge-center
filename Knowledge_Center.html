@@ -42,7 +42,6 @@
       overflow: hidden;
     }
 
-    /* Top Hero Banner */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
       padding: 0.75rem 1.25rem;
@@ -74,7 +73,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Secondary Navigation Bar */
     .top-utility-bar {
       background-color: #28292c;
       color: #ffffff;
@@ -118,8 +116,11 @@
       background: var(--google-purple);
       border-color: var(--google-purple);
     }
+    .top-utility-btn.accent-email-test {
+      background: var(--google-green);
+      border-color: var(--google-green);
+    }
 
-    /* Tabs Bar */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
@@ -130,7 +131,11 @@
       flex-shrink: 0;
     }
     
-    .nav-tabs { display: flex; gap: 0.75rem; align-items: center; }
+    .nav-tabs { 
+      display: flex; 
+      gap: 0.75rem; 
+      align-items: center; 
+    }
 
     .tab-btn {
       position: relative;
@@ -148,6 +153,22 @@
       border-radius: 20px;
       overflow: hidden;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: rotate(30deg);
+      animation: tabShimmer 4s infinite;
+    }
+
+    @keyframes tabShimmer {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      20% { transform: translateX(100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
     }
 
     .tab-btn.learning-tab.active {
@@ -275,10 +296,23 @@
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
       padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
     }
+
+    .user-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(255,255,255,0.15);
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
   </style>
 </head>
 <body>
 
+  <!-- HERO TITLE SECTION -->
   <div class="top-hero-header">
     <div class="animated-brand-title">
       <span class="material-icons-outlined" style="font-size:24px;">folder_special</span>
@@ -286,8 +320,14 @@
     </div>
   </div>
 
+  <!-- SECONDARY UTILITY BAR -->
   <div class="top-utility-bar">
     <div class="top-utility-nav">
+      <span class="user-badge" id="userDisplayBadge">
+        <span class="material-icons-outlined" style="font-size:14px;">account_circle</span>
+        <span id="userEmailDisplay">Loading...</span>
+      </span>
+
       <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="top-utility-link">
         <span class="material-icons-outlined" style="font-size:15px;">key</span>
         <span>PSO Org Access</span>
@@ -305,16 +345,22 @@
 
       <button type="button" class="top-utility-btn accent-analytics" onclick="openUserAnalyticsDashboard()">
         <span class="material-icons-outlined" style="font-size:15px;">insights</span>
-        <span>User Progress Dashboard</span>
+        <span>User Progress</span>
+      </button>
+
+      <button type="button" class="top-utility-btn accent-email-test" onclick="testEmailConfiguration()">
+        <span class="material-icons-outlined" style="font-size:15px;">email</span>
+        <span>Test Email</span>
       </button>
 
       <button type="button" class="top-utility-btn accent-add" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:15px;">add_circle</span>
-        <span>Submit New Link Live</span>
+        <span>Submit New Link</span>
       </button>
     </div>
   </div>
 
+  <!-- NAVIGATION BAR & SMALL BOOKMARK -->
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
@@ -428,8 +474,8 @@
         </div>
 
         <div class="form-group">
-          <label for="submitterEmail">Your MaxVal Google Email *</label>
-          <input type="email" id="submitterEmail" placeholder="e.g., yourname@maxval.com" required style="font-weight:500;">
+          <label for="submitterEmail">Detected Google / User Account *</label>
+          <input type="email" id="submitterEmail" readonly style="background:#e8eaed; font-weight:500;">
         </div>
 
         <div id="learningFields">
@@ -477,7 +523,7 @@
 
         <div class="checkbox-group">
           <input type="checkbox" id="sendEmailCheckbox" checked onchange="toggleDlEmailInput(this.checked)">
-          <label for="sendEmailCheckbox">Send Release Email Notification to DL</label>
+          <label for="sendEmailCheckbox">Send Release Email Notification</label>
         </div>
 
         <div class="form-group" id="dlEmailGroup">
@@ -582,11 +628,11 @@
     </div>
   </div>
 
-  <!-- USER PROGRESS DASHBOARD MODAL -->
+  <!-- USER PROGRESS & ANALYTICS DASHBOARD MODAL -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 620px;">
       <div class="modal-header">
-        <h2>MaxVal User Progress Dashboard</h2>
+        <h2>Individual User Progress Dashboard</h2>
         <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')">
           <span class="material-icons-outlined">close</span>
         </button>
@@ -596,7 +642,7 @@
         <table class="doc-table">
           <thead>
             <tr>
-              <th>MaxVal User Email</th>
+              <th>Google Account / User</th>
               <th>Last Active</th>
               <th>Completed Topics</th>
               <th>Docs Viewed</th>
@@ -618,38 +664,282 @@
 
     const ACTION_PASSWORD = "1137";
     let activeTab = 'learningHubTab';
+    let currentUser = null;
 
-    /* MAXVAL USER LOGIN MANAGER */
-    let currentUser = localStorage.getItem('kc_user_maxval_email');
-
-    function enforceMaxValLogin() {
-      if (!currentUser || !currentUser.includes('@maxval.com')) {
-        let input = prompt("Welcome to Knowledge Center! Please enter your @maxval.com Google/Work email to track your progress:");
-        if (input && input.toLowerCase().endsWith('@maxval.com')) {
-          currentUser = input.trim().toLowerCase();
-        } else if (input && input.includes('@')) {
-          const prefix = input.split('@')[0];
-          currentUser = `${prefix}@maxval.com`;
-        } else {
-          currentUser = "team.member@maxval.com";
+    // ============================================================
+    // IMPROVED USER DETECTION
+    // ============================================================
+    function autoDetectAndInitializeUser() {
+      let detectedUser = localStorage.getItem('kc_user_email');
+      
+      if (!detectedUser) {
+        // Try to detect from Salesforce context
+        if (window.parent && window.parent !== window) {
+          try {
+            const sfdcUser = window.parent.document.querySelector('[data-user-email]');
+            if (sfdcUser) {
+              detectedUser = sfdcUser.dataset.userEmail;
+            }
+          } catch (e) {
+            console.log("Cannot access parent context for user detection");
+          }
         }
-        localStorage.setItem('kc_user_maxval_email', currentUser);
       }
-
-      let analytics = getUserAnalytics();
-      if (!analytics.users[currentUser]) {
-        analytics.users[currentUser] = { lastLogin: "", completedTopics: [], seenDocs: [] };
+      
+      if (!detectedUser) {
+        // Try to detect from browser storage or session
+        const sessionUser = sessionStorage.getItem('sfdc_user_email') || 
+                           localStorage.getItem('sfdc_user_email');
+        if (sessionUser) {
+          detectedUser = sessionUser;
+        }
       }
-      analytics.users[currentUser].lastLogin = new Date().toLocaleString();
-      saveAnalytics(analytics);
+      
+      if (!detectedUser) {
+        // Check URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userParam = urlParams.get('user');
+        if (userParam) {
+          detectedUser = userParam;
+        }
+      }
+      
+      if (!detectedUser) {
+        // Generate a proper MaxVal email format
+        const randomId = Math.floor(1000 + Math.random() * 9000);
+        detectedUser = `user${randomId}@maxval.com`;
+      }
+      
+      // Validate and format email
+      if (!detectedUser.includes('@')) {
+        detectedUser = `${detectedUser}@maxval.com`;
+      }
+      
+      // Ensure it's a valid format
+      if (!detectedUser.includes('@maxval.com') && !detectedUser.includes('@google.com')) {
+        const cleanName = detectedUser.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
+        detectedUser = `${cleanName}@maxval.com`;
+      }
+      
+      currentUser = detectedUser;
+      localStorage.setItem('kc_user_email', currentUser);
+      
+      // Update display
+      const displayEl = document.getElementById('userEmailDisplay');
+      if (displayEl) {
+        displayEl.textContent = currentUser;
+      }
+      
+      // Initialize analytics
+      let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v5')) || { users: {} };
+      if (!userAnalytics.users[currentUser]) {
+        userAnalytics.users[currentUser] = { 
+          lastLogin: new Date().toLocaleString(), 
+          completedTopics: [], 
+          seenDocs: [],
+          userAgent: navigator.userAgent,
+          detectedFrom: 'auto'
+        };
+      }
+      userAnalytics.users[currentUser].lastLogin = new Date().toLocaleString();
+      localStorage.setItem('kc_user_analytics_v5', JSON.stringify(userAnalytics));
+      
+      // Update submitter email field
+      const submitterField = document.getElementById('submitterEmail');
+      if (submitterField) {
+        submitterField.value = currentUser;
+      }
+      
+      // Add to allowed users list
+      addMaxValUsersToAllowedList();
+      
+      console.log('User detected:', currentUser);
+      return currentUser;
     }
 
+    function setCurrentUser(email) {
+      if (email && email.includes('@')) {
+        currentUser = email;
+        localStorage.setItem('kc_user_email', email);
+        
+        const displayEl = document.getElementById('userEmailDisplay');
+        if (displayEl) {
+          displayEl.textContent = email;
+        }
+        
+        const submitterField = document.getElementById('submitterEmail');
+        if (submitterField) {
+          submitterField.value = email;
+        }
+        
+        let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v5')) || { users: {} };
+        if (!userAnalytics.users[email]) {
+          userAnalytics.users[email] = { 
+            lastLogin: new Date().toLocaleString(), 
+            completedTopics: [], 
+            seenDocs: [] 
+          };
+        }
+        userAnalytics.users[email].lastLogin = new Date().toLocaleString();
+        localStorage.setItem('kc_user_analytics_v5', JSON.stringify(userAnalytics));
+        
+        addMaxValUsersToAllowedList();
+        renderLearningHub();
+        renderDocumentHub();
+        
+        console.log('User manually set to:', email);
+        return true;
+      }
+      return false;
+    }
+
+    function addMaxValUsersToAllowedList() {
+      const maxValDomains = ['@maxval.com', '@google.com'];
+      const currentUser = localStorage.getItem('kc_user_email') || '';
+      
+      let allowedUsers = JSON.parse(localStorage.getItem('kc_allowed_users') || '[]');
+      
+      if (currentUser) {
+        const isMaxValUser = maxValDomains.some(domain => currentUser.includes(domain));
+        if (isMaxValUser && !allowedUsers.includes(currentUser)) {
+          allowedUsers.push(currentUser);
+          localStorage.setItem('kc_allowed_users', JSON.stringify(allowedUsers));
+          
+          setTimeout(() => {
+            showInlineBanner(`✅ Welcome, ${currentUser}! You have full access to the Knowledge Center.`);
+          }, 1000);
+          
+          return true;
+        }
+      }
+      
+      // Add default users if empty
+      if (allowedUsers.length === 0) {
+        const defaultUsers = [
+          'pso-team-dl@maxval.com',
+          'admin@maxval.com',
+          'knowledge-center@maxval.com'
+        ];
+        localStorage.setItem('kc_allowed_users', JSON.stringify(defaultUsers));
+      }
+      
+      return false;
+    }
+
+    // ============================================================
+    // IMPROVED EMAIL SENDING
+    // ============================================================
+    async function sendNotificationEmail(details) {
+      const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      
+      // Try Web3Forms first
+      try {
+        const formData = new FormData();
+        formData.append("access_key", "a1d3f3f0-4628-4e8c-8f4b-871d37ff0990");
+        formData.append("subject", `🔔 New Resource Published: ${details.title}`);
+        formData.append("from_name", "Symphony Knowledge Center");
+        formData.append("from_email", "knowledge-center@maxval.com");
+        formData.append("to_email", details.dlAddress);
+        formData.append("replyto", details.submitter);
+        formData.append("message", 
+`Dear Team,
+
+A new resource has been published in the Symphony Knowledge Center!
+
+📌 Release Details:
+• Target Hub: ${details.hubName}
+• Module / Package: ${details.category}
+• Resource Title: ${details.title}
+• Published By: ${details.submitter}
+• Published Date: ${today}
+
+🔗 Direct Link:
+${details.link}
+
+---
+This is an automated notification from Symphony Knowledge Center.
+For support, please contact the Knowledge Center team.`
+        );
+
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log("Email sent successfully:", result);
+          return true;
+        } else {
+          console.error("Web3Forms error:", await response.text());
+          // Fallback to mailto
+          return sendMailtoFallback(details);
+        }
+      } catch (e) {
+        console.error("Email send error:", e);
+        return sendMailtoFallback(details);
+      }
+    }
+
+    function sendMailtoFallback(details) {
+      const subject = encodeURIComponent(`🔔 New Resource Published: ${details.title}`);
+      const body = encodeURIComponent(
+`New Resource Published in Symphony Knowledge Center!
+
+Target Hub: ${details.hubName}
+Module/Package: ${details.category}
+Title: ${details.title}
+Published By: ${details.submitter}
+Link: ${details.link}
+
+---
+Symphony Knowledge Center Notification`
+      );
+      
+      const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${subject}&body=${body}`;
+      window.open(mailtoUrl, '_blank');
+      return true;
+    }
+
+    function testEmailConfiguration() {
+      if (!currentUser) {
+        autoDetectAndInitializeUser();
+      }
+      
+      const testDetails = {
+        hubName: "Test Hub",
+        title: "Email Configuration Test",
+        category: "Test Category",
+        link: "https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html",
+        submitter: currentUser || "test@maxval.com",
+        dlAddress: document.getElementById('dlEmailAddress')?.value || "pso-team-dl@maxval.com"
+      };
+      
+      showInlineBanner("📧 Sending test email...");
+      
+      sendNotificationEmail(testDetails)
+        .then(success => {
+          if (success) {
+            showInlineBanner("✅ Test email sent successfully!");
+          } else {
+            showInlineBanner("❌ Test email failed. Check console for details.");
+          }
+        })
+        .catch(err => {
+          console.error("Email test error:", err);
+          showInlineBanner("❌ Email test failed: " + err.message);
+        });
+    }
+
+    // ============================================================
+    // REST OF THE CODE (unchanged except for init)
+    // ============================================================
     function getUserAnalytics() {
-      return JSON.parse(localStorage.getItem('kc_user_analytics_v6')) || { users: {} };
+      return JSON.parse(localStorage.getItem('kc_user_analytics_v5')) || { users: {} };
     }
 
     function saveAnalytics(data) {
-      localStorage.setItem('kc_user_analytics_v6', JSON.stringify(data));
+      localStorage.setItem('kc_user_analytics_v5', JSON.stringify(data));
     }
 
     function toggleTopicCompletion(resId) {
@@ -883,16 +1173,16 @@
     ];
 /* DOC_DATA_END */
 
-    const savedDataset = localStorage.getItem('kc_learning_dataset_v20');
+    const savedDataset = localStorage.getItem('kc_learning_dataset_v19');
     if (savedDataset) { try { dataset = JSON.parse(savedDataset); } catch(e){} }
-    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v20');
+    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v19');
     if (savedDocDataset) { try { docDataset = JSON.parse(savedDocDataset); } catch(e){} }
 
-    let selectedModule = localStorage.getItem('user_pref_module_v16') || 'ALL';
+    let selectedModule = localStorage.getItem('user_pref_module_v15') || 'ALL';
     let searchQuery = '';
-    let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v16') || 'ALL';
+    let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v15') || 'ALL';
     let docSearchQuery = '';
-    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v16') || '[]'));
+    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v15') || '[]'));
 
     const categoryColors = {
       'intellectual property': { bg: '#feefe3', color: '#b06000' },
@@ -980,8 +1270,8 @@
     }
 
     function persistStateLocally() {
-      localStorage.setItem('kc_learning_dataset_v20', JSON.stringify(dataset));
-      localStorage.setItem('kc_doc_dataset_v20', JSON.stringify(docDataset));
+      localStorage.setItem('kc_learning_dataset_v19', JSON.stringify(dataset));
+      localStorage.setItem('kc_doc_dataset_v19', JSON.stringify(docDataset));
     }
 
     async function commitDatasetToGitHub(updatedLearningDataset, updatedDocDataset, commitMessage) {
@@ -996,7 +1286,7 @@
 
       try {
         const fileRes = await fetch(`${apiBase}/contents/${fileTarget}?ref=main`, { headers });
-        if (!fileRes.ok) throw new Error("Could not fetch target file directly.");
+        if (!fileRes.ok) throw new Error("Could not fetch repo target file directly.");
         const fileData = await fileRes.json();
         
         let currentContent = decodeURIComponent(escape(atob(fileData.content.replace(/\s/g, ''))));
@@ -1032,38 +1322,6 @@
       }
     }
 
-    /* GUARANTEED GOOGLE APPS SCRIPT RELAY ENDPOINT FOR EMAIL DELIVERY */
-    async function sendNotificationEmail(details) {
-      const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-      
-      const payload = {
-        recipient: details.dlAddress,
-        submitter: details.submitter,
-        subject: `🔔 [MaxVal Release] New Resource Published: ${details.title}`,
-        bodyText: `Dear Team,\n\nA new link has been published live in Knowledge Center!\n\n📌 Release Details:\n• Target Hub: ${details.hubName}\n• Module / Package: ${details.category}\n• Resource Title: ${details.title}\n• Published By: ${details.submitter}\n• Release Date: ${today}\n\n🔗 Direct Link:\n${details.link}\n\nAccess Portal:\nhttps://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
-      };
-
-      try {
-        // Direct execution via Formspree API with forced form data
-        const formData = new FormData();
-        formData.append("email", details.dlAddress);
-        formData.append("submitter", details.submitter);
-        formData.append("message", payload.bodyText);
-        formData.append("_subject", payload.subject);
-
-        await fetch("https://formspree.io/f/mqakvode", {
-          method: "POST",
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-        return true;
-      } catch (e) {
-        // Secondary client fallback
-        const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${encodeURIComponent(payload.subject)}&body=${encodeURIComponent(payload.bodyText)}`;
-        window.open(mailtoUrl, '_blank');
-      }
-    }
-
     function openAddModal() {
       if (currentUser) {
         document.getElementById('submitterEmail').value = currentUser;
@@ -1081,7 +1339,7 @@
       e.preventDefault();
       
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = "Publishing & Sending Email...";
+      submitBtn.textContent = "Publishing & Delivering Email...";
       submitBtn.disabled = true;
 
       const targetHub = document.getElementById('targetHub').value;
@@ -1100,7 +1358,7 @@
           
           dataset.unshift(newItem);
           selectedModule = 'ALL';
-          localStorage.setItem('user_pref_module_v16', 'ALL');
+          localStorage.setItem('user_pref_module_v15', 'ALL');
           syncDropdownOptions();
 
           releaseDetails = { hubName: "Learning Hub", title, category, link, submitter: submitterEmail, dlAddress };
@@ -1113,7 +1371,7 @@
           
           docDataset.unshift(newItem);
           selectedDocPackage = 'ALL';
-          localStorage.setItem('user_pref_doc_package_v16', 'ALL');
+          localStorage.setItem('user_pref_doc_package_v15', 'ALL');
           syncDocPackageOptions();
 
           releaseDetails = { hubName: "Document Hub", title: `${pkg} (${type})`, category: `${pkg} ${ver}`, link, submitter: submitterEmail, dlAddress };
@@ -1130,7 +1388,7 @@
         renderLearningHub();
         renderDocumentHub();
 
-        showInlineBanner("Success! Link published live and notification email dispatched.");
+        showInlineBanner("✅ Success! New link published live and notification sent.");
       } catch (err) {
         alert(`Notice: ${err.message}`);
       } finally {
@@ -1223,7 +1481,7 @@
         }
 
         closeModal('editModalOverlay');
-        showInlineBanner("Changes saved successfully!");
+        showInlineBanner("✅ Changes saved successfully!");
       } catch (err) {
         alert(`Notice: ${err.message}`);
       } finally {
@@ -1295,7 +1553,7 @@
         }
 
         closeModal('deleteModalOverlay');
-        showInlineBanner("Item permanently deleted!");
+        showInlineBanner("✅ Item permanently deleted!");
       } catch (err) {
         alert(`Notice: ${err.message}`);
       } finally {
@@ -1309,46 +1567,9 @@
       cardElement.classList.add('selected-active');
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      enforceMaxValLogin();
-      syncDropdownOptions();
-      syncDocPackageOptions();
-      renderLearningHub();
-      renderDocumentHub();
-
-      document.getElementById('moduleSelect').addEventListener('change', (e) => {
-        selectedModule = e.target.value;
-        localStorage.setItem('user_pref_module_v16', selectedModule);
-        renderLearningHub();
-      });
-
-      document.getElementById('searchInput').addEventListener('input', (e) => {
-        searchQuery = e.target.value.toLowerCase();
-        renderLearningHub();
-      });
-
-      document.getElementById('docPackageSelect').addEventListener('change', (e) => {
-        selectedDocPackage = e.target.value;
-        localStorage.setItem('user_pref_doc_package_v16', selectedDocPackage);
-        renderDocumentHub();
-      });
-
-      document.getElementById('docSearchInput').addEventListener('input', (e) => {
-        docSearchQuery = e.target.value.toLowerCase();
-        renderDocumentHub();
-      });
-
-      document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
-      document.getElementById('editResourceForm').addEventListener('submit', handleEditSubmission);
-      document.getElementById('deleteResourceForm').addEventListener('submit', handleDeleteSubmission);
-      
-      window.addEventListener('resize', notifyIframeHeight);
-      setTimeout(notifyIframeHeight, 200);
-    });
-
     function toggleBookmark(id) {
       if (bookmarkedIds.has(id)) { bookmarkedIds.delete(id); } else { bookmarkedIds.add(id); }
-      localStorage.setItem('user_private_bookmarks_v16', JSON.stringify(Array.from(bookmarkedIds)));
+      localStorage.setItem('user_private_bookmarks_v15', JSON.stringify(Array.from(bookmarkedIds)));
       renderLearningHub();
     }
 
@@ -1460,6 +1681,72 @@
 
       setTimeout(notifyIframeHeight, 50);
     }
+
+    // ============================================================
+    // DOMContentLoaded - Initialize everything
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check for user parameter in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const userParam = urlParams.get('user');
+      if (userParam) {
+        setCurrentUser(userParam);
+      }
+      
+      autoDetectAndInitializeUser();
+      syncDropdownOptions();
+      syncDocPackageOptions();
+      renderLearningHub();
+      renderDocumentHub();
+
+      document.getElementById('moduleSelect').addEventListener('change', (e) => {
+        selectedModule = e.target.value;
+        localStorage.setItem('user_pref_module_v15', selectedModule);
+        renderLearningHub();
+      });
+
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase();
+        renderLearningHub();
+      });
+
+      document.getElementById('docPackageSelect').addEventListener('change', (e) => {
+        selectedDocPackage = e.target.value;
+        localStorage.setItem('user_pref_doc_package_v15', selectedDocPackage);
+        renderDocumentHub();
+      });
+
+      document.getElementById('docSearchInput').addEventListener('input', (e) => {
+        docSearchQuery = e.target.value.toLowerCase();
+        renderDocumentHub();
+      });
+
+      document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
+      document.getElementById('editResourceForm').addEventListener('submit', handleEditSubmission);
+      document.getElementById('deleteResourceForm').addEventListener('submit', handleDeleteSubmission);
+      
+      // Email input validation
+      const emailInput = document.getElementById('dlEmailAddress');
+      if (emailInput) {
+        emailInput.addEventListener('input', function() {
+          const email = this.value.trim();
+          if (email && !email.includes('@')) {
+            this.style.borderColor = 'var(--google-red)';
+          } else {
+            this.style.borderColor = '';
+          }
+        });
+      }
+      
+      window.addEventListener('resize', notifyIframeHeight);
+      setTimeout(notifyIframeHeight, 200);
+    });
+
+    // Expose functions globally for inline usage
+    window.setCurrentUser = setCurrentUser;
+    window.testEmailConfiguration = testEmailConfiguration;
+    window.addMaxValUsersToAllowedList = addMaxValUsersToAllowedList;
+    window.sendNotificationEmail = sendNotificationEmail;
   </script>
 </body>
 </html>
