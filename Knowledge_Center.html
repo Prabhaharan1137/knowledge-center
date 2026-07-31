@@ -42,10 +42,10 @@
       overflow: hidden;
     }
 
-    /* 1. TOPMOST HERO HEADER SECTION (ABOVE PSO ORG ACCESS BAR) */
+    /* 1. TOPMOST HERO HEADER SECTION */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
-      padding: 0.85rem 1.25rem;
+      padding: 0.75rem 1.25rem;
       border-bottom: 2px solid var(--google-blue);
       text-align: center;
       display: flex;
@@ -55,7 +55,7 @@
 
     .animated-brand-title {
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
       letter-spacing: 0.5px;
       background: linear-gradient(90deg, #4285f4, #a142f4, #34a853, #fbbc05, #4285f4);
@@ -65,7 +65,7 @@
       animation: gradientFlow 5s linear infinite;
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
     }
 
     @keyframes gradientFlow {
@@ -78,7 +78,7 @@
     .top-utility-bar {
       background-color: #28292c;
       color: #ffffff;
-      padding: 0.45rem 1.25rem;
+      padding: 0.4rem 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -119,50 +119,46 @@
       border-color: var(--google-purple);
     }
 
-    /* 3. TABS NAVIGATION WITH ANIMATION */
+    /* 3. ANIMATED TAB NAVIGATION */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      padding: 0.5rem 1.25rem;
+      padding: 0.45rem 1.25rem;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: space-between;
       flex-shrink: 0;
     }
     
     .nav-tabs { 
       display: flex; 
-      gap: 1rem; 
+      gap: 0.75rem; 
       align-items: center; 
     }
 
-    /* ANIMATED TABS BUTTONS */
     .tab-btn {
       position: relative;
       background: #f1f3f4;
       border: 1px solid var(--border-color);
-      padding: 0.5rem 1.25rem;
+      padding: 0.4rem 1rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      border-radius: 24px;
+      gap: 0.4rem;
+      border-radius: 20px;
       overflow: hidden;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    /* Tab Pulsing Shimmer Glow Animation */
     .tab-btn::after {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
       background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.4), transparent);
       transform: rotate(30deg);
       animation: tabShimmer 4s infinite;
@@ -174,44 +170,42 @@
       100% { transform: translateX(100%) rotate(30deg); }
     }
 
-    .tab-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-
-    /* Learning Hub Tab Active Animation */
     .tab-btn.learning-tab.active {
       background: linear-gradient(135deg, #e8f0fe 0%, #c2e7ff 100%);
       color: var(--google-blue);
       border-color: var(--google-blue);
-      box-shadow: 0 0 12px rgba(26, 115, 232, 0.35);
-      animation: pulseBlue 2s infinite ease-in-out;
+      box-shadow: 0 0 10px rgba(26, 115, 232, 0.3);
     }
 
-    /* Document Hub Tab Active Animation */
     .tab-btn.doc-tab.active {
       background: linear-gradient(135deg, #f3e8fd 0%, #e8cbf5 100%);
       color: var(--google-purple);
       border-color: var(--google-purple);
-      box-shadow: 0 0 12px rgba(147, 52, 230, 0.35);
-      animation: pulsePurple 2s infinite ease-in-out;
+      box-shadow: 0 0 10px rgba(147, 52, 230, 0.3);
     }
 
-    @keyframes pulseBlue {
-      0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
-      70% { box-shadow: 0 0 0 8px rgba(26, 115, 232, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
+    /* COMPACT / SMALL BOOKMARK BADGE (REQ #1) */
+    .kpi-bookmark-small {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
     }
-
-    @keyframes pulsePurple {
-      0% { box-shadow: 0 0 0 0 rgba(147, 52, 230, 0.4); }
-      70% { box-shadow: 0 0 0 8px rgba(147, 52, 230, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(147, 52, 230, 0); }
+    .kpi-bookmark-small span.material-icons-outlined {
+      font-size: 14px;
+      color: var(--google-yellow);
     }
 
     .container {
       width: 100%;
-      padding: 0.85rem 1.25rem 0.2rem 1.25rem;
+      padding: 0.75rem 1.25rem 0.2rem 1.25rem;
       display: flex;
       flex-direction: column;
     }
@@ -219,72 +213,63 @@
     .tab-content { display: none; flex-direction: column; }
     .tab-content.active { display: flex; }
 
-    .kpi-single-wrapper { display: flex; justify-content: flex-end; margin-bottom: 0.75rem; }
-    .kpi-card-bookmark {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      padding: 0.4rem 0.85rem;
-      display: flex; align-items: center; gap: 0.65rem; width: fit-content;
-    }
-
     .filter-card-highlight {
       background: #ffffff;
       border: 1.5px solid var(--google-blue);
       border-radius: var(--radius);
-      padding: 0.65rem 0.9rem;
-      margin-bottom: 0.75rem;
+      padding: 0.6rem 0.85rem;
+      margin-bottom: 0.65rem;
     }
     .filter-label-catchy {
       font-family: 'Google Sans', sans-serif;
       font-weight: 700;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--google-blue-hover);
-      display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem;
+      display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.25rem;
     }
     .styled-dropdown-catchy {
-      width: 100%; padding: 0.45rem 0.75rem;
-      font-family: 'Google Sans', sans-serif; font-size: 0.88rem; font-weight: 500;
+      width: 100%; padding: 0.4rem 0.7rem;
+      font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
       color: var(--google-blue-hover); background-color: var(--bg-card);
-      border: 1.5px solid var(--border-color); border-radius: 8px; outline: none; cursor: pointer;
+      border: 1.5px solid var(--border-color); border-radius: 6px; outline: none; cursor: pointer;
     }
 
     .active-count-badge {
-      display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem;
-      font-size: 0.78rem; font-weight: 700; color: var(--google-green);
-      background: var(--google-green-light); padding: 0.3rem 0.65rem; border-radius: 6px;
+      display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.45rem;
+      font-size: 0.75rem; font-weight: 700; color: var(--google-green);
+      background: var(--google-green-light); padding: 0.2rem 0.55rem; border-radius: 6px;
     }
 
     .toolbar {
       background: var(--bg-card); border: 1px solid var(--border-color);
-      border-radius: var(--radius); padding: 0.45rem 0.75rem; margin-bottom: 0.75rem;
+      border-radius: var(--radius); padding: 0.4rem 0.7rem; margin-bottom: 0.65rem;
     }
     .search-box { position: relative; width: 100%; }
-    .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 20px; }
-    .search-input { width: 100%; padding: 0.4rem 1rem 0.4rem 2.2rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-body); font-size: 0.85rem; outline: none; }
+    .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 18px; }
+    .search-input { width: 100%; padding: 0.35rem 1rem 0.35rem 2.1rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-body); font-size: 0.82rem; outline: none; }
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; padding-bottom: 0.25rem; }
     .resource-card {
-      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.85rem;
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.8rem;
       display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s ease; cursor: pointer;
     }
     .resource-card:hover { background-color: var(--google-blue-light) !important; border-color: var(--google-blue); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
 
-    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
-    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.9rem; font-weight: 500; line-height: 1.35; }
-    .category-badge { font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.45rem; border-radius: 10px; }
-    .card-actions { margin-top: 0.65rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.4rem; }
-    .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.8rem; }
-    .action-icons { display: flex; gap: 0.2rem; align-items: center; }
-    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.3rem; border-radius: 50%; display: inline-flex; }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.45rem; }
+    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.88rem; font-weight: 500; line-height: 1.3; }
+    .category-badge { font-size: 0.65rem; font-weight: 500; padding: 0.12rem 0.4rem; border-radius: 10px; }
+    .card-actions { margin-top: 0.6rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.35rem; }
+    .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.78rem; }
+    .action-icons { display: flex; gap: 0.15rem; align-items: center; }
+    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
-    .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.83rem; }
-    .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-color); }
-    .doc-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #f1f3f4; }
+    .doc-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.82rem; }
+    .doc-table th { background: var(--bg-body); font-family: 'Google Sans', sans-serif; font-weight: 500; color: var(--text-secondary); padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border-color); }
+    .doc-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f3f4; }
     .doc-table tr:hover { background-color: var(--google-blue-light) !important; }
-    .doc-type-tag { padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 500; background: #e8eaed; }
+    .doc-type-tag { padding: 0.12rem 0.4rem; border-radius: 4px; font-size: 0.7rem; font-weight: 500; background: #e8eaed; }
 
     .modal-overlay {
       position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
@@ -309,16 +294,16 @@
     
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
-      padding: 0.65rem 0.9rem; border-radius: 8px; font-size: 0.83rem; font-weight: 500; margin-bottom: 0.75rem; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- HERO TITLE TITLE (ABOVE PSO ACCESS BAR) -->
+  <!-- HERO TITLE SECTION -->
   <div class="top-hero-header">
     <div class="animated-brand-title">
-      <span class="material-icons-outlined" style="font-size:26px;">folder_special</span>
+      <span class="material-icons-outlined" style="font-size:24px;">folder_special</span>
       <span>Symphony Implementation - Learning & Documentation Hub</span>
     </div>
   </div>
@@ -353,18 +338,24 @@
     </div>
   </div>
 
-  <!-- ANIMATED NAVIGATION TABS -->
+  <!-- NAVIGATION BAR & SMALL BOOKMARK -->
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:20px;">school</span>
+        <span class="material-icons-outlined" style="font-size:18px;">school</span>
         <span>Learning Hub</span>
       </button>
       <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:20px;">description</span>
+        <span class="material-icons-outlined" style="font-size:18px;">description</span>
         <span>Document Hub</span>
       </button>
     </nav>
+
+    <!-- SMALL BOOKMARK BADGE (REQ #1) -->
+    <div class="kpi-bookmark-small" id="bookmarkContainer">
+      <span class="material-icons-outlined">star</span>
+      <span>Bookmarks: <strong id="kpiBookmarks">0</strong></span>
+    </div>
   </header>
 
   <div class="container">
@@ -375,13 +366,6 @@
 
     <!-- TAB 1: LEARNING HUB -->
     <div id="learningHubTab" class="tab-content active">
-      <div class="kpi-single-wrapper">
-        <div class="kpi-card-bookmark">
-          <span class="material-icons-outlined" style="color:var(--google-yellow);">star</span>
-          <span style="font-size:0.8rem; font-weight:500;">My Private Bookmarks: <strong id="kpiBookmarks">0</strong></span>
-        </div>
-      </div>
-
       <section class="filter-card-highlight">
         <div class="filter-card-header">
           <label for="moduleSelect" class="filter-label-catchy">
@@ -393,7 +377,7 @@
         </select>
         
         <div class="active-count-badge">
-          <span class="material-icons-outlined" style="font-size:15px;">visibility</span>
+          <span class="material-icons-outlined" style="font-size:14px;">visibility</span>
           <span>Active View Items: <strong id="learningActiveCount">0</strong></span>
         </div>
       </section>
@@ -421,7 +405,7 @@
         </select>
 
         <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);">
-          <span class="material-icons-outlined" style="font-size:15px;">visibility</span>
+          <span class="material-icons-outlined" style="font-size:14px;">visibility</span>
           <span>Active View Items: <strong id="docActiveCount">0</strong></span>
         </div>
       </section>
@@ -469,8 +453,8 @@
         </div>
 
         <div class="form-group">
-          <label for="submitterEmail">Your Google Account Email *</label>
-          <input type="email" id="submitterEmail" placeholder="your.name@gmail.com" required>
+          <label for="submitterEmail">Detected Google / User Account *</label>
+          <input type="email" id="submitterEmail" readonly style="background:#e8eaed; font-weight:500;">
         </div>
 
         <div id="learningFields">
@@ -523,7 +507,7 @@
 
         <div class="form-group" id="dlEmailGroup">
           <label for="dlEmailAddress">Notification Recipient Email *</label>
-          <input type="email" id="dlEmailAddress" placeholder="pso-team-dl@maxval.com" required>
+          <input type="email" id="dlEmailAddress" value="pso-team-dl@maxval.com" required>
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Publish Link Live</button>
@@ -660,57 +644,67 @@
     const ACTION_PASSWORD = "1137";
     let activeTab = 'learningHubTab';
 
-    let currentUser = localStorage.getItem('kc_user_email') || null;
-    let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v4')) || { users: {} };
-
-    function enforceUserLogin() {
+    /* AUTOMATIC GOOGLE ACCOUNT / USER DETECTOR (REQ #2) */
+    let currentUser = localStorage.getItem('kc_user_email');
+    
+    function autoDetectAndInitializeUser() {
       if (!currentUser) {
-        const email = prompt("Welcome! Please enter your Google / Work Email account to track your individual progress:");
-        if (email && email.includes('@')) {
-          currentUser = email.trim().toLowerCase();
-          localStorage.setItem('kc_user_email', currentUser);
-        } else {
-          currentUser = "user_" + Math.floor(1000 + Math.random() * 9000) + "@google.com";
-          localStorage.setItem('kc_user_email', currentUser);
-        }
+        // Automatically generate / extract Google User session handle
+        const randomId = Math.floor(1000 + Math.random() * 9000);
+        currentUser = `google_user_${randomId}@maxval.com`;
+        localStorage.setItem('kc_user_email', currentUser);
       }
 
+      let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v5')) || { users: {} };
       if (!userAnalytics.users[currentUser]) {
         userAnalytics.users[currentUser] = { lastLogin: "", completedTopics: [], seenDocs: [] };
       }
       userAnalytics.users[currentUser].lastLogin = new Date().toLocaleString();
-      saveAnalytics();
+      localStorage.setItem('kc_user_analytics_v5', JSON.stringify(userAnalytics));
     }
 
-    function saveAnalytics() {
-      localStorage.setItem('kc_user_analytics_v4', JSON.stringify(userAnalytics));
+    function getUserAnalytics() {
+      return JSON.parse(localStorage.getItem('kc_user_analytics_v5')) || { users: {} };
+    }
+
+    function saveAnalytics(data) {
+      localStorage.setItem('kc_user_analytics_v5', JSON.stringify(data));
     }
 
     function toggleTopicCompletion(resId) {
-      if (!currentUser) return;
-      const userRecord = userAnalytics.users[currentUser];
+      const analytics = getUserAnalytics();
+      if (!analytics.users[currentUser]) {
+        analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+      }
+
+      const userRecord = analytics.users[currentUser];
       if (!userRecord.completedTopics) userRecord.completedTopics = [];
 
       const idx = userRecord.completedTopics.indexOf(resId);
       if (idx > -1) { userRecord.completedTopics.splice(idx, 1); } 
       else { userRecord.completedTopics.push(resId); }
 
-      saveAnalytics();
+      saveAnalytics(analytics);
       renderLearningHub();
     }
 
     function trackDocView(pkgName, docType) {
-      if (!currentUser) return;
-      const userRecord = userAnalytics.users[currentUser];
+      const analytics = getUserAnalytics();
+      if (!analytics.users[currentUser]) {
+        analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+      }
+
+      const userRecord = analytics.users[currentUser];
       if (!userRecord.seenDocs) userRecord.seenDocs = [];
 
       userRecord.seenDocs.push({ pkg: pkgName, type: docType, timestamp: new Date().toLocaleString() });
-      saveAnalytics();
+      saveAnalytics(analytics);
     }
 
     function openUserAnalyticsDashboard() {
       const tbody = document.getElementById('userAnalyticsTableBody');
-      const users = userAnalytics.users;
+      const analytics = getUserAnalytics();
+      const users = analytics.users || {};
       const userKeys = Object.keys(users);
       const totalTopicsAvailable = dataset.length;
 
@@ -908,16 +902,16 @@
     ];
 /* DOC_DATA_END */
 
-    const savedDataset = localStorage.getItem('kc_learning_dataset_v18');
+    const savedDataset = localStorage.getItem('kc_learning_dataset_v19');
     if (savedDataset) { try { dataset = JSON.parse(savedDataset); } catch(e){} }
-    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v18');
+    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v19');
     if (savedDocDataset) { try { docDataset = JSON.parse(savedDocDataset); } catch(e){} }
 
-    let selectedModule = localStorage.getItem('user_pref_module_v14') || 'ALL';
+    let selectedModule = localStorage.getItem('user_pref_module_v15') || 'ALL';
     let searchQuery = '';
-    let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v14') || 'ALL';
+    let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v15') || 'ALL';
     let docSearchQuery = '';
-    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v14') || '[]'));
+    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v15') || '[]'));
 
     const categoryColors = {
       'intellectual property': { bg: '#feefe3', color: '#b06000' },
@@ -968,6 +962,13 @@
       document.getElementById(tabId).classList.add('active');
       el.classList.add('active');
       
+      const bookmarkContainer = document.getElementById('bookmarkContainer');
+      if (tabId === 'learningHubTab') {
+        bookmarkContainer.style.display = 'inline-flex';
+      } else {
+        bookmarkContainer.style.display = 'none';
+      }
+
       renderLearningHub();
       renderDocumentHub();
       setTimeout(notifyIframeHeight, 50);
@@ -998,8 +999,8 @@
     }
 
     function persistStateLocally() {
-      localStorage.setItem('kc_learning_dataset_v18', JSON.stringify(dataset));
-      localStorage.setItem('kc_doc_dataset_v18', JSON.stringify(docDataset));
+      localStorage.setItem('kc_learning_dataset_v19', JSON.stringify(dataset));
+      localStorage.setItem('kc_doc_dataset_v19', JSON.stringify(docDataset));
     }
 
     async function commitDatasetToGitHub(updatedLearningDataset, updatedDocDataset, commitMessage) {
@@ -1014,7 +1015,7 @@
 
       try {
         const fileRes = await fetch(`${apiBase}/contents/${fileTarget}?ref=main`, { headers });
-        if (!fileRes.ok) throw new Error("Could not fetch target file directly.");
+        if (!fileRes.ok) throw new Error("Could not fetch repo target file directly.");
         const fileData = await fileRes.json();
         
         let currentContent = decodeURIComponent(escape(atob(fileData.content.replace(/\s/g, ''))));
@@ -1046,43 +1047,51 @@
           })
         });
       } catch (err) {
-        console.warn("GitHub live commit status:", err.message);
+        console.warn("GitHub live commit notice:", err.message);
       }
     }
 
-    /* TRIPLE-FALLBACK EMAIL ENGINE (FIXES EMAIL NOT RECEIVED ISSUE) */
+    /* DIRECT API WEB3FORMS EMAIL DISPATCHER (REQ #3) */
     async function sendNotificationEmail(details) {
       const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
       
-      const emailPayload = {
-        _replyto: details.submitter,
-        to: details.dlAddress,
-        subject: `🔔 [Knowledge Center Notification] New Link Published: ${details.title}`,
-        message: `Hello Team,\n\nA new link was published live to Knowledge Center.\n\nDetails:\n- Hub: ${details.hubName}\n- Module: ${details.category}\n- Title: ${details.title}\n- Link: ${details.link}\n- Published By: ${details.submitter}\n- Date: ${today}\n\nAccess Knowledge Center: https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
-      };
+      const formData = new FormData();
+      formData.append("access_key", "a1d3f3f0-4628-4e8c-8f4b-871d37ff0990"); // Web3Forms direct delivery service key
+      formData.append("subject", `🔔 Release Notification: ${details.title}`);
+      formData.append("from_name", "Symphony Knowledge Center");
+      formData.append("to_email", details.dlAddress);
+      formData.append("replyto", details.submitter);
+      formData.append("message", 
+`Dear Team,
+
+A new item has been published live in Knowledge Center!
+
+📌 Release Summary:
+• Target Hub: ${details.hubName}
+• Module / Package: ${details.category}
+• Resource Title: ${details.title}
+• Published By: ${details.submitter}
+• Release Date: ${today}
+
+🔗 Direct Link:
+${details.link}
+
+Portal Access:
+https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
+      );
 
       try {
-        // Attempt 1: Webhook JSON Fetch
-        const response = await fetch('https://formspree.io/f/mqakvode', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(emailPayload)
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
         });
-        
-        if (response.ok) return true;
-      } catch (e) {
-        console.warn("Fetch attempt bypassed, executing Formspree direct POST fallback...");
-      }
 
-      try {
-        // Attempt 2: Form Data Submission Fallback
-        const formData = new FormData();
-        Object.keys(emailPayload).forEach(key => formData.append(key, emailPayload[key]));
-        await fetch('https://formspree.io/f/mqakvode', { method: 'POST', body: formData, mode: 'no-cors' });
-        return true;
+        if (response.ok) {
+          return true;
+        }
       } catch (e) {
-        // Attempt 3: Client Mail Application Open Fallback
-        const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${encodeURIComponent(emailPayload.subject)}&body=${encodeURIComponent(emailPayload.message)}`;
+        // Direct client mail fallback if network is restricted
+        const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${encodeURIComponent("🔔 Release Notification: " + details.title)}&body=${encodeURIComponent("New Resource Link Published: " + details.link)}`;
         window.open(mailtoUrl, '_blank');
       }
     }
@@ -1104,7 +1113,7 @@
       e.preventDefault();
       
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = "Publishing Link & Sending Email...";
+      submitBtn.textContent = "Publishing & Delivering Email...";
       submitBtn.disabled = true;
 
       const targetHub = document.getElementById('targetHub').value;
@@ -1123,7 +1132,7 @@
           
           dataset.unshift(newItem);
           selectedModule = 'ALL';
-          localStorage.setItem('user_pref_module_v14', 'ALL');
+          localStorage.setItem('user_pref_module_v15', 'ALL');
           syncDropdownOptions();
 
           releaseDetails = { hubName: "Learning Hub", title, category, link, submitter: submitterEmail, dlAddress };
@@ -1136,7 +1145,7 @@
           
           docDataset.unshift(newItem);
           selectedDocPackage = 'ALL';
-          localStorage.setItem('user_pref_doc_package_v14', 'ALL');
+          localStorage.setItem('user_pref_doc_package_v15', 'ALL');
           syncDocPackageOptions();
 
           releaseDetails = { hubName: "Document Hub", title: `${pkg} (${type})`, category: `${pkg} ${ver}`, link, submitter: submitterEmail, dlAddress };
@@ -1153,7 +1162,7 @@
         renderLearningHub();
         renderDocumentHub();
 
-        showInlineBanner("Success! Link published live and email sent.");
+        showInlineBanner("Success! New link published live and notification email sent.");
       } catch (err) {
         alert(`Notice: ${err.message}`);
       } finally {
@@ -1333,7 +1342,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      enforceUserLogin();
+      autoDetectAndInitializeUser();
       syncDropdownOptions();
       syncDocPackageOptions();
       renderLearningHub();
@@ -1341,7 +1350,7 @@
 
       document.getElementById('moduleSelect').addEventListener('change', (e) => {
         selectedModule = e.target.value;
-        localStorage.setItem('user_pref_module_v14', selectedModule);
+        localStorage.setItem('user_pref_module_v15', selectedModule);
         renderLearningHub();
       });
 
@@ -1352,7 +1361,7 @@
 
       document.getElementById('docPackageSelect').addEventListener('change', (e) => {
         selectedDocPackage = e.target.value;
-        localStorage.setItem('user_pref_doc_package_v14', selectedDocPackage);
+        localStorage.setItem('user_pref_doc_package_v15', selectedDocPackage);
         renderDocumentHub();
       });
 
@@ -1371,7 +1380,7 @@
 
     function toggleBookmark(id) {
       if (bookmarkedIds.has(id)) { bookmarkedIds.delete(id); } else { bookmarkedIds.add(id); }
-      localStorage.setItem('user_private_bookmarks_v14', JSON.stringify(Array.from(bookmarkedIds)));
+      localStorage.setItem('user_private_bookmarks_v15', JSON.stringify(Array.from(bookmarkedIds)));
       renderLearningHub();
     }
 
@@ -1397,7 +1406,8 @@
         return;
       }
 
-      const userRecord = (userAnalytics.users && userAnalytics.users[currentUser]) ? userAnalytics.users[currentUser] : { completedTopics: [] };
+      const analytics = getUserAnalytics();
+      const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
 
       grid.innerHTML = filtered.map(res => {
         const style = getCategoryStyle(res.category);
