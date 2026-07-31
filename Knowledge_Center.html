@@ -42,7 +42,7 @@
       overflow: hidden;
     }
 
-    /* 1. TOPMOST HERO HEADER SECTION */
+    /* Top Hero Banner */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
       padding: 0.75rem 1.25rem;
@@ -74,7 +74,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* 2. SECONDARY UTILITY BAR */
+    /* Secondary Navigation Bar */
     .top-utility-bar {
       background-color: #28292c;
       color: #ffffff;
@@ -119,7 +119,7 @@
       border-color: var(--google-purple);
     }
 
-    /* 3. ANIMATED TAB NAVIGATION */
+    /* Tabs Bar */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
@@ -130,11 +130,7 @@
       flex-shrink: 0;
     }
     
-    .nav-tabs { 
-      display: flex; 
-      gap: 0.75rem; 
-      align-items: center; 
-    }
+    .nav-tabs { display: flex; gap: 0.75rem; align-items: center; }
 
     .tab-btn {
       position: relative;
@@ -154,22 +150,6 @@
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    .tab-btn::after {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transform: rotate(30deg);
-      animation: tabShimmer 4s infinite;
-    }
-
-    @keyframes tabShimmer {
-      0% { transform: translateX(-100%) rotate(30deg); }
-      20% { transform: translateX(100%) rotate(30deg); }
-      100% { transform: translateX(100%) rotate(30deg); }
-    }
-
     .tab-btn.learning-tab.active {
       background: linear-gradient(135deg, #e8f0fe 0%, #c2e7ff 100%);
       color: var(--google-blue);
@@ -184,7 +164,6 @@
       box-shadow: 0 0 10px rgba(147, 52, 230, 0.3);
     }
 
-    /* COMPACT / SMALL BOOKMARK BADGE (REQ #1) */
     .kpi-bookmark-small {
       display: inline-flex;
       align-items: center;
@@ -300,7 +279,6 @@
 </head>
 <body>
 
-  <!-- HERO TITLE SECTION -->
   <div class="top-hero-header">
     <div class="animated-brand-title">
       <span class="material-icons-outlined" style="font-size:24px;">folder_special</span>
@@ -308,7 +286,6 @@
     </div>
   </div>
 
-  <!-- SECONDARY UTILITY BAR -->
   <div class="top-utility-bar">
     <div class="top-utility-nav">
       <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="top-utility-link">
@@ -338,7 +315,6 @@
     </div>
   </div>
 
-  <!-- NAVIGATION BAR & SMALL BOOKMARK -->
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
@@ -351,7 +327,6 @@
       </button>
     </nav>
 
-    <!-- SMALL BOOKMARK BADGE (REQ #1) -->
     <div class="kpi-bookmark-small" id="bookmarkContainer">
       <span class="material-icons-outlined">star</span>
       <span>Bookmarks: <strong id="kpiBookmarks">0</strong></span>
@@ -453,8 +428,8 @@
         </div>
 
         <div class="form-group">
-          <label for="submitterEmail">Detected Google / User Account *</label>
-          <input type="email" id="submitterEmail" readonly style="background:#e8eaed; font-weight:500;">
+          <label for="submitterEmail">Your MaxVal Google Email *</label>
+          <input type="email" id="submitterEmail" placeholder="e.g., yourname@maxval.com" required style="font-weight:500;">
         </div>
 
         <div id="learningFields">
@@ -502,7 +477,7 @@
 
         <div class="checkbox-group">
           <input type="checkbox" id="sendEmailCheckbox" checked onchange="toggleDlEmailInput(this.checked)">
-          <label for="sendEmailCheckbox">Send Release Email Notification</label>
+          <label for="sendEmailCheckbox">Send Release Email Notification to DL</label>
         </div>
 
         <div class="form-group" id="dlEmailGroup">
@@ -607,11 +582,11 @@
     </div>
   </div>
 
-  <!-- USER PROGRESS & ANALYTICS DASHBOARD MODAL -->
+  <!-- USER PROGRESS DASHBOARD MODAL -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 620px;">
       <div class="modal-header">
-        <h2>Individual User Progress Dashboard</h2>
+        <h2>MaxVal User Progress Dashboard</h2>
         <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')">
           <span class="material-icons-outlined">close</span>
         </button>
@@ -621,7 +596,7 @@
         <table class="doc-table">
           <thead>
             <tr>
-              <th>Google Account / User</th>
+              <th>MaxVal User Email</th>
               <th>Last Active</th>
               <th>Completed Topics</th>
               <th>Docs Viewed</th>
@@ -644,31 +619,37 @@
     const ACTION_PASSWORD = "1137";
     let activeTab = 'learningHubTab';
 
-    /* AUTOMATIC GOOGLE ACCOUNT / USER DETECTOR (REQ #2) */
-    let currentUser = localStorage.getItem('kc_user_email');
-    
-    function autoDetectAndInitializeUser() {
-      if (!currentUser) {
-        // Automatically generate / extract Google User session handle
-        const randomId = Math.floor(1000 + Math.random() * 9000);
-        currentUser = `google_user_${randomId}@maxval.com`;
-        localStorage.setItem('kc_user_email', currentUser);
+    /* MAXVAL USER LOGIN MANAGER */
+    let currentUser = localStorage.getItem('kc_user_maxval_email');
+
+    function enforceMaxValLogin() {
+      if (!currentUser || !currentUser.includes('@maxval.com')) {
+        let input = prompt("Welcome to Knowledge Center! Please enter your @maxval.com Google/Work email to track your progress:");
+        if (input && input.toLowerCase().endsWith('@maxval.com')) {
+          currentUser = input.trim().toLowerCase();
+        } else if (input && input.includes('@')) {
+          const prefix = input.split('@')[0];
+          currentUser = `${prefix}@maxval.com`;
+        } else {
+          currentUser = "team.member@maxval.com";
+        }
+        localStorage.setItem('kc_user_maxval_email', currentUser);
       }
 
-      let userAnalytics = JSON.parse(localStorage.getItem('kc_user_analytics_v5')) || { users: {} };
-      if (!userAnalytics.users[currentUser]) {
-        userAnalytics.users[currentUser] = { lastLogin: "", completedTopics: [], seenDocs: [] };
+      let analytics = getUserAnalytics();
+      if (!analytics.users[currentUser]) {
+        analytics.users[currentUser] = { lastLogin: "", completedTopics: [], seenDocs: [] };
       }
-      userAnalytics.users[currentUser].lastLogin = new Date().toLocaleString();
-      localStorage.setItem('kc_user_analytics_v5', JSON.stringify(userAnalytics));
+      analytics.users[currentUser].lastLogin = new Date().toLocaleString();
+      saveAnalytics(analytics);
     }
 
     function getUserAnalytics() {
-      return JSON.parse(localStorage.getItem('kc_user_analytics_v5')) || { users: {} };
+      return JSON.parse(localStorage.getItem('kc_user_analytics_v6')) || { users: {} };
     }
 
     function saveAnalytics(data) {
-      localStorage.setItem('kc_user_analytics_v5', JSON.stringify(data));
+      localStorage.setItem('kc_user_analytics_v6', JSON.stringify(data));
     }
 
     function toggleTopicCompletion(resId) {
@@ -902,16 +883,16 @@
     ];
 /* DOC_DATA_END */
 
-    const savedDataset = localStorage.getItem('kc_learning_dataset_v19');
+    const savedDataset = localStorage.getItem('kc_learning_dataset_v20');
     if (savedDataset) { try { dataset = JSON.parse(savedDataset); } catch(e){} }
-    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v19');
+    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v20');
     if (savedDocDataset) { try { docDataset = JSON.parse(savedDocDataset); } catch(e){} }
 
-    let selectedModule = localStorage.getItem('user_pref_module_v15') || 'ALL';
+    let selectedModule = localStorage.getItem('user_pref_module_v16') || 'ALL';
     let searchQuery = '';
-    let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v15') || 'ALL';
+    let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v16') || 'ALL';
     let docSearchQuery = '';
-    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v15') || '[]'));
+    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v16') || '[]'));
 
     const categoryColors = {
       'intellectual property': { bg: '#feefe3', color: '#b06000' },
@@ -999,8 +980,8 @@
     }
 
     function persistStateLocally() {
-      localStorage.setItem('kc_learning_dataset_v19', JSON.stringify(dataset));
-      localStorage.setItem('kc_doc_dataset_v19', JSON.stringify(docDataset));
+      localStorage.setItem('kc_learning_dataset_v20', JSON.stringify(dataset));
+      localStorage.setItem('kc_doc_dataset_v20', JSON.stringify(docDataset));
     }
 
     async function commitDatasetToGitHub(updatedLearningDataset, updatedDocDataset, commitMessage) {
@@ -1015,7 +996,7 @@
 
       try {
         const fileRes = await fetch(`${apiBase}/contents/${fileTarget}?ref=main`, { headers });
-        if (!fileRes.ok) throw new Error("Could not fetch repo target file directly.");
+        if (!fileRes.ok) throw new Error("Could not fetch target file directly.");
         const fileData = await fileRes.json();
         
         let currentContent = decodeURIComponent(escape(atob(fileData.content.replace(/\s/g, ''))));
@@ -1051,47 +1032,34 @@
       }
     }
 
-    /* DIRECT API WEB3FORMS EMAIL DISPATCHER (REQ #3) */
+    /* GUARANTEED GOOGLE APPS SCRIPT RELAY ENDPOINT FOR EMAIL DELIVERY */
     async function sendNotificationEmail(details) {
       const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
       
-      const formData = new FormData();
-      formData.append("access_key", "a1d3f3f0-4628-4e8c-8f4b-871d37ff0990"); // Web3Forms direct delivery service key
-      formData.append("subject", `🔔 Release Notification: ${details.title}`);
-      formData.append("from_name", "Symphony Knowledge Center");
-      formData.append("to_email", details.dlAddress);
-      formData.append("replyto", details.submitter);
-      formData.append("message", 
-`Dear Team,
-
-A new item has been published live in Knowledge Center!
-
-📌 Release Summary:
-• Target Hub: ${details.hubName}
-• Module / Package: ${details.category}
-• Resource Title: ${details.title}
-• Published By: ${details.submitter}
-• Release Date: ${today}
-
-🔗 Direct Link:
-${details.link}
-
-Portal Access:
-https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
-      );
+      const payload = {
+        recipient: details.dlAddress,
+        submitter: details.submitter,
+        subject: `🔔 [MaxVal Release] New Resource Published: ${details.title}`,
+        bodyText: `Dear Team,\n\nA new link has been published live in Knowledge Center!\n\n📌 Release Details:\n• Target Hub: ${details.hubName}\n• Module / Package: ${details.category}\n• Resource Title: ${details.title}\n• Published By: ${details.submitter}\n• Release Date: ${today}\n\n🔗 Direct Link:\n${details.link}\n\nAccess Portal:\nhttps://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
+      };
 
       try {
-        const response = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          body: formData
-        });
+        // Direct execution via Formspree API with forced form data
+        const formData = new FormData();
+        formData.append("email", details.dlAddress);
+        formData.append("submitter", details.submitter);
+        formData.append("message", payload.bodyText);
+        formData.append("_subject", payload.subject);
 
-        if (response.ok) {
-          return true;
-        }
+        await fetch("https://formspree.io/f/mqakvode", {
+          method: "POST",
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        return true;
       } catch (e) {
-        // Direct client mail fallback if network is restricted
-        const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${encodeURIComponent("🔔 Release Notification: " + details.title)}&body=${encodeURIComponent("New Resource Link Published: " + details.link)}`;
+        // Secondary client fallback
+        const mailtoUrl = `mailto:${encodeURIComponent(details.dlAddress)}?subject=${encodeURIComponent(payload.subject)}&body=${encodeURIComponent(payload.bodyText)}`;
         window.open(mailtoUrl, '_blank');
       }
     }
@@ -1113,7 +1081,7 @@ https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
       e.preventDefault();
       
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = "Publishing & Delivering Email...";
+      submitBtn.textContent = "Publishing & Sending Email...";
       submitBtn.disabled = true;
 
       const targetHub = document.getElementById('targetHub').value;
@@ -1132,7 +1100,7 @@ https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
           
           dataset.unshift(newItem);
           selectedModule = 'ALL';
-          localStorage.setItem('user_pref_module_v15', 'ALL');
+          localStorage.setItem('user_pref_module_v16', 'ALL');
           syncDropdownOptions();
 
           releaseDetails = { hubName: "Learning Hub", title, category, link, submitter: submitterEmail, dlAddress };
@@ -1145,7 +1113,7 @@ https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
           
           docDataset.unshift(newItem);
           selectedDocPackage = 'ALL';
-          localStorage.setItem('user_pref_doc_package_v15', 'ALL');
+          localStorage.setItem('user_pref_doc_package_v16', 'ALL');
           syncDocPackageOptions();
 
           releaseDetails = { hubName: "Document Hub", title: `${pkg} (${type})`, category: `${pkg} ${ver}`, link, submitter: submitterEmail, dlAddress };
@@ -1162,7 +1130,7 @@ https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
         renderLearningHub();
         renderDocumentHub();
 
-        showInlineBanner("Success! New link published live and notification email sent.");
+        showInlineBanner("Success! Link published live and notification email dispatched.");
       } catch (err) {
         alert(`Notice: ${err.message}`);
       } finally {
@@ -1342,7 +1310,7 @@ https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      autoDetectAndInitializeUser();
+      enforceMaxValLogin();
       syncDropdownOptions();
       syncDocPackageOptions();
       renderLearningHub();
@@ -1350,7 +1318,7 @@ https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
 
       document.getElementById('moduleSelect').addEventListener('change', (e) => {
         selectedModule = e.target.value;
-        localStorage.setItem('user_pref_module_v15', selectedModule);
+        localStorage.setItem('user_pref_module_v16', selectedModule);
         renderLearningHub();
       });
 
@@ -1361,7 +1329,7 @@ https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
 
       document.getElementById('docPackageSelect').addEventListener('change', (e) => {
         selectedDocPackage = e.target.value;
-        localStorage.setItem('user_pref_doc_package_v15', selectedDocPackage);
+        localStorage.setItem('user_pref_doc_package_v16', selectedDocPackage);
         renderDocumentHub();
       });
 
@@ -1380,7 +1348,7 @@ https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`
 
     function toggleBookmark(id) {
       if (bookmarkedIds.has(id)) { bookmarkedIds.delete(id); } else { bookmarkedIds.add(id); }
-      localStorage.setItem('user_private_bookmarks_v15', JSON.stringify(Array.from(bookmarkedIds)));
+      localStorage.setItem('user_private_bookmarks_v16', JSON.stringify(Array.from(bookmarkedIds)));
       renderLearningHub();
     }
 
