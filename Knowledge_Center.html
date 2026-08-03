@@ -193,7 +193,7 @@
   <!-- HIDDEN IFRAME TARGET TO PREVENT BLANK PAGE REDIRECTS -->
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <!-- HIDDEN BACKGROUND FORM TARGETING UPDATED GOOGLE APPS SCRIPT -->
+  <!-- HIDDEN BACKGROUND FORM TARGETING GOOGLE APPS SCRIPT -->
   <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwsFqMBMf--7g_TkbUq14fhB7O4j6lBm-DR5TlNGCbMVpqzM19o2W3YyV1hK78i1VFy/exec" method="POST" target="hidden_email_iframe" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
@@ -311,7 +311,7 @@
         <h2>Sign In with MaxVal Email</h2>
         <button class="modal-close-btn" onclick="closeModal('loginModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <form id="loginForm" class="modal-form" onsubmit="handleLoginSubmission(event)">
+      <form id="loginForm" class="modal-form">
         <div class="form-group">
           <label>Enter Your Official MaxVal Gmail / Work Address *</label>
           <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="font-weight:500;">
@@ -329,7 +329,7 @@
         <button class="modal-close-btn" onclick="closeModal('addModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
 
-      <form id="addResourceForm" class="modal-form" onsubmit="handleAddSubmission(event)">
+      <form id="addResourceForm" class="modal-form">
         <div class="form-group">
           <label>Target Hub *</label>
           <select id="targetHub" onchange="toggleFormFields(this.value)">
@@ -407,8 +407,7 @@
       "Patent Module", "Renewals", "Trademark", "Assessment", "Additional Reference Materials"
     ];
 
-/* LEARNING_DATA_START */
-    let dataset = [
+    const baseDataset = [
       { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
       { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
       { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
@@ -461,10 +460,8 @@
       { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8" },
       { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m" }
     ];
-/* LEARNING_DATA_END */
 
-/* DOC_DATA_START */
-    let docDataset = [
+    const baseDocDataset = [
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" },
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0" },
       { pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8" },
@@ -563,7 +560,13 @@
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring PPT", link: "https://docs.google.com/presentation/d/1jmw9iCRUUKnLwFzMGPWu21X0V5Zk9olXsdFHK7BEGcM/edit#slide=id.g2e29f102836_0_70" },
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
     ];
-/* DOC_DATA_END */
+
+    // Read stored dynamic additions so published items persist on reload
+    let localCustomDataset = JSON.parse(localStorage.getItem('kc_custom_learning_v17') || '[]');
+    let localCustomDocs = JSON.parse(localStorage.getItem('kc_custom_docs_v17') || '[]');
+
+    let dataset = [...baseDataset, ...localCustomDataset];
+    let docDataset = [...baseDocDataset, ...localCustomDocs];
 
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
@@ -872,7 +875,6 @@
       cardElement.classList.add('selected-active');
     }
 
-    /* SILENT BACKGROUND IFRAME FORM SUBMISSION TO GOOGLE APPS SCRIPT */
     function sendNotificationEmail(details) {
       document.getElementById('gas_dlAddress').value = details.dlAddress;
       document.getElementById('gas_submitter').value = details.submitter;
@@ -880,7 +882,6 @@
       document.getElementById('gas_hubName').value = details.hubName;
       document.getElementById('gas_link').value = details.link;
 
-      // Triggers form submission silently into the hidden background iframe
       document.getElementById('hiddenGasForm').submit();
     }
 
@@ -897,14 +898,37 @@
       const shouldSend = document.getElementById('sendEmailCheckbox').checked;
       const dlAddress = document.getElementById('dlEmailAddress').value.trim();
 
+      if (targetHub === 'learning') {
+        const title = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
+        const category = document.getElementById('newModule').value;
+        const newResource = { id: `res_custom_${Date.now()}`, name: title, category: category, link: link };
+        
+        dataset.push(newResource);
+        localCustomDataset.push(newResource);
+        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(localCustomDataset));
+        
+        syncDropdownOptions();
+        renderLearningHub();
+      } else {
+        const pkg = document.getElementById('newPkg').value.trim() || 'New Package';
+        const ver = document.getElementById('newVer').value.trim() || 'v1.0';
+        const type = document.getElementById('newDocType').value.trim() || 'Document';
+        const newDoc = { pkg, ver, type, link };
+
+        docDataset.push(newDoc);
+        localCustomDocs.push(newDoc);
+        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(localCustomDocs));
+
+        syncDocPackageOptions();
+        renderDocumentHub();
+      }
+
       let title = targetHub === 'learning' 
         ? (document.getElementById('newTitle').value.trim() || 'New Learning Resource') 
         : (document.getElementById('newPkg').value.trim() || 'New Document Package');
       
-      let releaseDetails = { hubName: targetHub, title, link, submitter: submitterEmail, dlAddress };
-
       if (shouldSend) {
-        sendNotificationEmail(releaseDetails);
+        sendNotificationEmail({ hubName: targetHub, title, link, submitter: submitterEmail, dlAddress });
       }
 
       closeModal('addModalOverlay');
