@@ -190,7 +190,7 @@
 </head>
 <body>
 
-  <!-- HIDDEN IFRAME TARGET TO PREVENT BLANK PAGE REDIRECTS -->
+  <!-- HIDDEN IFRAME TARGET -->
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
   <!-- HIDDEN BACKGROUND FORM TARGETING GOOGLE APPS SCRIPT -->
@@ -200,6 +200,7 @@
     <input type="hidden" name="title" id="gas_title">
     <input type="hidden" name="hubName" id="gas_hubName">
     <input type="hidden" name="link" id="gas_link">
+    <input type="hidden" name="releaseDate" id="gas_releaseDate">
   </form>
 
   <div class="top-hero-header">
@@ -370,12 +371,12 @@
 
         <div class="checkbox-group">
           <input type="checkbox" id="sendEmailCheckbox" checked>
-          <label for="sendEmailCheckbox">Send Release Email Notification to DL</label>
+          <label for="sendEmailCheckbox">Send Notification Email</label>
         </div>
 
         <div class="form-group">
-          <label>Notification Recipient Email *</label>
-          <input type="email" id="dlEmailAddress" value="pso-team-dl@maxval.com" required>
+          <label>Notification Recipient Email(s) *</label>
+          <input type="text" id="dlEmailAddress" placeholder="e.g., team@maxval.com, colleague@maxval.com" required>
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Publish Link Live</button>
@@ -561,7 +562,7 @@
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
     ];
 
-    // Load locally persisted dynamic additions
+    // Read stored dynamic additions
     let localCustomDataset = JSON.parse(localStorage.getItem('kc_custom_learning_v17') || '[]');
     let localCustomDocs = JSON.parse(localStorage.getItem('kc_custom_docs_v17') || '[]');
 
@@ -762,6 +763,11 @@
     function openAddModal() {
       if (!currentUser) { openLoginModal(); return; }
       document.getElementById('submitterEmail').value = currentUser;
+      
+      // Auto-populate submitter's email as default recipient
+      const dlField = document.getElementById('dlEmailAddress');
+      if (!dlField.value) dlField.value = currentUser;
+
       document.getElementById('addModalOverlay').classList.add('open');
       setTimeout(notifyIframeHeight, 100);
     }
@@ -886,11 +892,12 @@
     }
 
     function sendNotificationEmail(details) {
-      document.getElementById('gas_dlAddress').value = cleanAsciiText(details.dlAddress);
+      document.getElementById('gas_dlAddress').value = details.dlAddress;
       document.getElementById('gas_submitter').value = cleanAsciiText(details.submitter);
       document.getElementById('gas_title').value = cleanAsciiText(details.title);
       document.getElementById('gas_hubName').value = cleanAsciiText(details.hubName);
       document.getElementById('gas_link').value = details.link.trim();
+      document.getElementById('gas_releaseDate').value = details.releaseDate;
 
       document.getElementById('hiddenGasForm').submit();
     }
@@ -907,6 +914,7 @@
       const link = document.getElementById('newLink').value.trim();
       const shouldSend = document.getElementById('sendEmailCheckbox').checked;
       const dlAddress = document.getElementById('dlEmailAddress').value.trim();
+      const currentDateStr = new Date().toLocaleDateString();
 
       let releaseTitle = "";
 
@@ -938,7 +946,14 @@
       }
 
       if (shouldSend) {
-        sendNotificationEmail({ hubName: targetHub, title: releaseTitle, link, submitter: submitterEmail, dlAddress });
+        sendNotificationEmail({
+          hubName: targetHub,
+          title: releaseTitle,
+          link: link,
+          submitter: submitterEmail,
+          dlAddress: dlAddress,
+          releaseDate: currentDateStr
+        });
       }
 
       closeModal('addModalOverlay');
@@ -947,7 +962,7 @@
       submitBtn.textContent = "Publish Link Live";
       submitBtn.disabled = false;
 
-      // Reset form fields
+      // Reset input fields
       document.getElementById('newTitle').value = '';
       document.getElementById('newPkg').value = '';
       document.getElementById('newVer').value = '';
