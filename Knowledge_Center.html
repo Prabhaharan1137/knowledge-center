@@ -565,6 +565,11 @@
     ];
 /* DOC_DATA_END */
 
+    const savedDataset = localStorage.getItem('kc_learning_dataset_v22');
+    if (savedDataset) { try { dataset = JSON.parse(savedDataset); } catch(e){} }
+    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v22');
+    if (savedDocDataset) { try { docDataset = JSON.parse(savedDocDataset); } catch(e){} }
+
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
     let selectedModule = localStorage.getItem('user_pref_module_v17') || 'ALL';
@@ -897,17 +902,41 @@
       const shouldSend = document.getElementById('sendEmailCheckbox').checked;
       const dlAddress = document.getElementById('dlEmailAddress').value.trim();
 
-      let title = targetHub === 'learning' 
-        ? (document.getElementById('newTitle').value.trim() || 'New Learning Resource') 
-        : (document.getElementById('newPkg').value.trim() || 'New Document Package');
-      
-      let releaseDetails = { hubName: targetHub, title, link, submitter: submitterEmail, dlAddress };
+      if (targetHub === 'learning') {
+        const title = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
+        const category = document.getElementById('newModule').value;
+        
+        // Add new link to active dataset immediately so it shows live on portal
+        const newItem = { id: 'res_custom_' + Date.now(), name: title, category: category, link: link };
+        dataset.unshift(newItem);
+        localStorage.setItem('kc_learning_dataset_v22', JSON.stringify(dataset));
+        
+        syncDropdownOptions();
+        renderLearningHub();
 
-      if (shouldSend) {
-        sendNotificationEmail(releaseDetails);
+        if (shouldSend) {
+          sendNotificationEmail({ hubName: 'Learning Hub', title: title, link: link, submitter: submitterEmail, dlAddress: dlAddress });
+        }
+      } else {
+        const pkg = document.getElementById('newPkg').value.trim() || 'New Package';
+        const ver = document.getElementById('newVer').value.trim() || 'v1.0';
+        const type = document.getElementById('newDocType').value.trim() || 'Guide';
+
+        // Add new doc link to dataset immediately
+        const newItem = { pkg: pkg, ver: ver, type: type, link: link };
+        docDataset.unshift(newItem);
+        localStorage.setItem('kc_doc_dataset_v22', JSON.stringify(docDataset));
+
+        syncDocPackageOptions();
+        renderDocumentHub();
+
+        if (shouldSend) {
+          sendNotificationEmail({ hubName: 'Document Hub', title: `${pkg} (${type})`, link: link, submitter: submitterEmail, dlAddress: dlAddress });
+        }
       }
 
       closeModal('addModalOverlay');
+      document.getElementById('addResourceForm').reset();
       showInlineBanner("Success! New link published live and notification email sent.");
       
       submitBtn.textContent = "Publish Link Live";
