@@ -157,6 +157,9 @@
     .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.78rem; }
     .action-icons { display: flex; gap: 0.15rem; align-items: center; }
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; }
+    .action-btn:hover { background: rgba(0, 0, 0, 0.05); }
+    .action-btn.delete-btn:hover { color: var(--google-red); }
+    .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
@@ -181,6 +184,7 @@
     .form-group input, .form-group select { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
     .checkbox-group { display: flex; align-items: center; gap: 0.5rem; background: var(--google-blue-light); padding: 0.55rem 0.75rem; border-radius: 6px; }
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
+    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
     
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
@@ -190,11 +194,10 @@
 </head>
 <body>
 
-  <!-- HIDDEN IFRAME TARGET -->
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <!-- HIDDEN BACKGROUND FORM TARGETING GOOGLE APPS SCRIPT -->
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxhCL825N8-jsjB9k5EB-BER5-OnrF6ojk-aS7eForc6Qra40veh_I1PPxg8kxKNxWB/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <!-- NEW DEPLOYMENT FORM TARGET -->
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwU0ZyOOr4EjN-gz8iuTTKqHC7zFMFd6PaxcNBoMFwypwNWC33XqzvJz1YSevUrH874/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -222,7 +225,6 @@
         <span class="material-icons-outlined" style="font-size:15px;">table_chart</span><span>Implementation Tracker</span>
       </a>
 
-      <!-- MAXVAL PROFILE BADGE -->
       <button type="button" class="top-utility-btn user-profile-badge" onclick="openLoginModal()">
         <span class="material-icons-outlined" style="font-size:15px;">account_circle</span>
         <span id="activeUserDisplay">Sign In (@maxval.com)</span>
@@ -326,11 +328,14 @@
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Submit New Resource Link</h2>
+        <h2 id="addModalTitle">Submit New Resource Link</h2>
         <button class="modal-close-btn" onclick="closeModal('addModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
 
       <form id="addResourceForm" class="modal-form">
+        <input type="hidden" id="editItemIndex" value="">
+        <input type="hidden" id="editItemType" value="">
+
         <div class="form-group">
           <label>Target Hub *</label>
           <select id="targetHub" onchange="toggleFormFields(this.value)">
@@ -384,6 +389,23 @@
     </div>
   </div>
 
+  <!-- PIN VERIFICATION MODAL (FOR EDIT & DELETE) -->
+  <div class="modal-overlay" id="pinModalOverlay">
+    <div class="modal-content" style="max-width:380px;">
+      <div class="modal-header">
+        <h2 id="pinModalTitle">Admin Security Verification</h2>
+        <button class="modal-close-btn" onclick="closeModal('pinModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <form id="pinForm" class="modal-form" onsubmit="handlePinSubmission(event)">
+        <div class="form-group">
+          <label>Enter Security PIN to proceed *</label>
+          <input type="password" id="pinInput" placeholder="Enter PIN (Default: 1234)" required maxlength="8" style="text-align:center; font-size:1.2rem; letter-spacing:4px;">
+        </div>
+        <button type="submit" class="btn-submit" id="pinConfirmBtn">Verify PIN</button>
+      </form>
+    </div>
+  </div>
+
   <!-- PROGRESS DASHBOARD -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 620px;">
@@ -403,6 +425,8 @@
   </div>
 
   <script>
+    const ADMIN_PIN = "1234"; // Default security PIN for edit/delete
+
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
       "Patent Module", "Renewals", "Trademark", "Assessment", "Additional Reference Materials"
@@ -562,7 +586,6 @@
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
     ];
 
-    // Read stored dynamic additions
     let localCustomDataset = JSON.parse(localStorage.getItem('kc_custom_learning_v17') || '[]');
     let localCustomDocs = JSON.parse(localStorage.getItem('kc_custom_docs_v17') || '[]');
 
@@ -576,6 +599,9 @@
     let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v17') || 'ALL';
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
+
+    // State for pending PIN action (edit or delete)
+    let pendingAction = null; 
 
     const categoryColors = {
       'intellectual property': { bg: '#feefe3', color: '#b06000' },
@@ -762,9 +788,11 @@
 
     function openAddModal() {
       if (!currentUser) { openLoginModal(); return; }
+      document.getElementById('addModalTitle').textContent = "Submit New Resource Link";
+      document.getElementById('editItemIndex').value = "";
+      document.getElementById('editItemType').value = "";
       document.getElementById('submitterEmail').value = currentUser;
       
-      // Auto-populate submitter's email as default recipient
       const dlField = document.getElementById('dlEmailAddress');
       if (!dlField.value) dlField.value = currentUser;
 
@@ -795,9 +823,83 @@
       return categoryColors[key] || categoryColors['default'];
     }
 
+    /* EDIT & DELETE PIN HANDLERS */
+    function promptPinForAction(type, index, hub) {
+      if (!currentUser) { openLoginModal(); return; }
+      pendingAction = { type, index, hub };
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinModalOverlay').classList.add('open');
+    }
+
+    function handlePinSubmission(e) {
+      e.preventDefault();
+      const enteredPin = document.getElementById('pinInput').value.trim();
+      
+      if (enteredPin !== ADMIN_PIN) {
+        alert("Incorrect PIN! Action unauthorized.");
+        document.getElementById('pinInput').value = '';
+        return;
+      }
+
+      closeModal('pinModalOverlay');
+
+      if (!pendingAction) return;
+
+      const { type, index, hub } = pendingAction;
+
+      if (type === 'delete') {
+        executeDeleteItem(hub, index);
+      } else if (type === 'edit') {
+        executeEditItem(hub, index);
+      }
+      
+      pendingAction = null;
+    }
+
+    function executeDeleteItem(hub, index) {
+      if (hub === 'learning') {
+        dataset.splice(index, 1);
+        // Save remaining custom items
+        const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
+        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
+        renderLearningHub();
+      } else {
+        docDataset.splice(index, 1);
+        // Save remaining custom docs
+        const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
+        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
+        renderDocumentHub();
+      }
+      showInlineBanner("Item successfully deleted.");
+    }
+
+    function executeEditItem(hub, index) {
+      document.getElementById('addModalTitle').textContent = "Edit Resource Link";
+      document.getElementById('editItemIndex').value = index;
+      document.getElementById('editItemType').value = hub;
+      document.getElementById('targetHub').value = hub;
+      toggleFormFields(hub);
+
+      if (hub === 'learning') {
+        const item = dataset[index];
+        document.getElementById('newTitle').value = item.name;
+        document.getElementById('newModule').value = item.category;
+        document.getElementById('newLink').value = item.link;
+      } else {
+        const doc = docDataset[index];
+        document.getElementById('newPkg').value = doc.pkg;
+        document.getElementById('newVer').value = doc.ver;
+        document.getElementById('newDocType').value = doc.type;
+        document.getElementById('newLink').value = doc.link;
+      }
+
+      document.getElementById('submitterEmail').value = currentUser;
+      document.getElementById('addModalOverlay').classList.add('open');
+    }
+
     function renderLearningHub() {
       const grid = document.getElementById('resourcesGrid');
-      const filtered = dataset.filter(res => {
+      const filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery) || res.category.toLowerCase().includes(searchQuery);
         return matchesModule && matchesSearch;
@@ -842,6 +944,14 @@
               <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
                 <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
+              <div class="action-icons">
+                <button class="action-btn edit-btn" onclick="promptPinForAction('edit', ${res.originalIndex}, 'learning')" title="Edit Resource">
+                  <span class="material-icons-outlined" style="font-size:18px;">edit</span>
+                </button>
+                <button class="action-btn delete-btn" onclick="promptPinForAction('delete', ${res.originalIndex}, 'learning')" title="Delete Resource">
+                  <span class="material-icons-outlined" style="font-size:18px;">delete</span>
+                </button>
+              </div>
             </div>
           </article>
         `;
@@ -874,10 +984,18 @@
           <td>${doc.ver}</td>
           <td><span class="doc-type-tag">${doc.type}</span></td>
           <td onclick="event.stopPropagation()">
-            <div style="display: flex; align-items: center; gap: 0.4rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
               <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
                 <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
+              <div class="action-icons">
+                <button class="action-btn edit-btn" onclick="promptPinForAction('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
+                  <span class="material-icons-outlined" style="font-size:18px;">edit</span>
+                </button>
+                <button class="action-btn delete-btn" onclick="promptPinForAction('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
+                  <span class="material-icons-outlined" style="font-size:18px;">delete</span>
+                </button>
+              </div>
             </div>
           </td>
         </tr>
@@ -909,6 +1027,7 @@
       submitBtn.textContent = "Publishing & Delivering Email...";
       submitBtn.disabled = true;
 
+      const editIndex = document.getElementById('editItemIndex').value;
       const targetHub = document.getElementById('targetHub').value;
       const submitterEmail = document.getElementById('submitterEmail').value.trim();
       const link = document.getElementById('newLink').value.trim();
@@ -921,12 +1040,18 @@
       if (targetHub === 'learning') {
         releaseTitle = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
         const category = document.getElementById('newModule').value;
-        const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link };
         
-        dataset.push(newResource);
-        localCustomDataset.push(newResource);
+        if (editIndex !== "") {
+          dataset[editIndex].name = releaseTitle;
+          dataset[editIndex].category = category;
+          dataset[editIndex].link = link;
+        } else {
+          const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link };
+          dataset.push(newResource);
+          localCustomDataset.push(newResource);
+        }
+        
         localStorage.setItem('kc_custom_learning_v17', JSON.stringify(localCustomDataset));
-        
         syncDropdownOptions();
         renderLearningHub();
       } else {
@@ -935,12 +1060,18 @@
         const type = document.getElementById('newDocType').value.trim() || 'Document';
         releaseTitle = `${pkg} (${ver}) - ${type}`;
 
-        const newDoc = { pkg, ver, type, link };
+        if (editIndex !== "") {
+          docDataset[editIndex].pkg = pkg;
+          docDataset[editIndex].ver = ver;
+          docDataset[editIndex].type = type;
+          docDataset[editIndex].link = link;
+        } else {
+          const newDoc = { pkg, ver, type, link };
+          docDataset.push(newDoc);
+          localCustomDocs.push(newDoc);
+        }
 
-        docDataset.push(newDoc);
-        localCustomDocs.push(newDoc);
         localStorage.setItem('kc_custom_docs_v17', JSON.stringify(localCustomDocs));
-
         syncDocPackageOptions();
         renderDocumentHub();
       }
@@ -957,12 +1088,13 @@
       }
 
       closeModal('addModalOverlay');
-      showInlineBanner("Success! New link published live and notification email sent.");
+      showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live and notification email sent.");
       
       submitBtn.textContent = "Publish Link Live";
       submitBtn.disabled = false;
 
-      // Reset input fields
+      document.getElementById('editItemIndex').value = "";
+      document.getElementById('editItemType').value = "";
       document.getElementById('newTitle').value = '';
       document.getElementById('newPkg').value = '';
       document.getElementById('newVer').value = '';
