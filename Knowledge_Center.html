@@ -39,7 +39,6 @@
       overflow-x: hidden;
     }
 
-    /* Top Animated Banner */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
       padding: 0.75rem 1.25rem;
@@ -300,7 +299,7 @@
         <h2>Sign In with MaxVal Email</h2>
         <button class="modal-close-btn" onclick="closeModal('loginModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <form id="loginForm" class="modal-form">
+      <form id="loginForm" class="modal-form" onsubmit="handleLoginSubmission(event)">
         <div class="form-group">
           <label>Enter Your Official MaxVal Gmail / Work Address *</label>
           <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="font-weight:500;">
@@ -318,7 +317,7 @@
         <button class="modal-close-btn" onclick="closeModal('addModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
 
-      <form id="addResourceForm" class="modal-form">
+      <form id="addResourceForm" class="modal-form" onsubmit="handleAddSubmission(event)">
         <div class="form-group">
           <label>Target Hub *</label>
           <select id="targetHub" onchange="toggleFormFields(this.value)">
@@ -861,20 +860,29 @@
       cardElement.classList.add('selected-active');
     }
 
+    /* DIRECT GOOGLE APPS SCRIPT WEB APP EMAIL ENGINE */
     async function sendNotificationEmail(details) {
-      const messageBody = `Hello MaxVal Team,\n\nA new resource link was published in Knowledge Center.\n\nRelease Summary:\n• Target Hub: ${details.hubName}\n• Title: ${details.title}\n• Link: ${details.link}\n• Published By: ${details.submitter}\n\nAccess: https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`;
+      const GOOGLE_SCRIPT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbz4T8_KQYkDrrqg8IAE6j-GstQPVs-5VA_HTOl5H7CLQ_v7XUhyvL_pr_D_MP_ZrwcB/exec";
+
+      const payload = {
+        dlAddress: details.dlAddress,
+        submitter: details.submitter,
+        title: details.title,
+        hubName: details.hubName,
+        link: details.link
+      };
 
       try {
-        const payload = new FormData();
-        payload.append("access_key", "a1d3f3f0-4628-4e8c-8f4b-871d37ff0990");
-        payload.append("subject", `🔔 Release Notification: ${details.title}`);
-        payload.append("from_name", "MaxVal Knowledge Center");
-        payload.append("to_email", details.dlAddress);
-        payload.append("replyto", details.submitter);
-        payload.append("message", messageBody);
-
-        await fetch("https://api.web3forms.com/submit", { method: "POST", body: payload, mode: "no-cors" });
-      } catch (e) { console.warn("Email service notice:", e); }
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        return true;
+      } catch (e) {
+        console.warn("Apps Script dispatch notice:", e);
+      }
     }
 
     async function handleAddSubmission(e) {
@@ -901,7 +909,7 @@
       }
 
       closeModal('addModalOverlay');
-      showInlineBanner("Success! New link published live and email sent.");
+      showInlineBanner("Success! New link published live and notification email sent.");
       
       submitBtn.textContent = "Publish Link Live";
       submitBtn.disabled = false;
