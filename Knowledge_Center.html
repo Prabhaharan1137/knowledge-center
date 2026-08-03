@@ -40,7 +40,7 @@
       position: relative;
     }
 
-    /* FROSTED GLASS BACKGROUND BLUR OVERLAY (PINNED AT TOP) */
+    /* FROSTED GLASS BACKGROUND BLUR OVERLAY */
     .app-lock-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -120,6 +120,7 @@
     }
     .top-utility-btn.accent-add { background: var(--google-blue); border-color: var(--google-blue); margin-left: auto; }
     .top-utility-btn.accent-analytics { background: var(--google-purple); border-color: var(--google-purple); }
+    .top-utility-btn.accent-settings { background: #5f6368; border-color: #5f6368; }
     .user-profile-badge { background: rgba(52, 168, 83, 0.25) !important; border-color: #34a853 !important; font-weight: 700 !important; }
 
     header {
@@ -179,6 +180,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .filter-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
     .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; }
     .styled-dropdown-catchy { width: 100%; padding: 0.4rem 0.7rem; font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 500; border: 1.5px solid var(--border-color); border-radius: 6px; outline: none; }
@@ -207,11 +215,16 @@
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
+    /* CHECKBOXES HIDDEN BY DEFAULT */
     .item-select-checkbox {
       width: 16px;
       height: 16px;
       cursor: pointer;
       accent-color: var(--google-red);
+      display: none;
+    }
+    .selection-mode-active .item-select-checkbox {
+      display: inline-block;
     }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
@@ -238,8 +251,16 @@
     .form-group input, .form-group select { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
     .checkbox-group { display: flex; align-items: center; gap: 0.5rem; background: var(--google-blue-light); padding: 0.55rem 0.75rem; border-radius: 6px; }
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
+    .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
     .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
     
+    .power-user-chip {
+      display: inline-flex; align-items: center; justify-content: space-between;
+      background: var(--google-purple-light); color: var(--google-purple);
+      padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+      border: 1px solid rgba(147, 52, 230, 0.2);
+    }
+
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
       padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
@@ -303,6 +324,11 @@
       <button type="button" class="top-utility-btn accent-analytics" onclick="openUserAnalyticsDashboard()">
         <span class="material-icons-outlined" style="font-size:15px;">insights</span><span>User Progress Dashboard</span>
       </button>
+
+      <button type="button" class="top-utility-btn accent-settings" onclick="promptPowerUserSettings()">
+        <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Users</span>
+      </button>
+
       <button type="button" class="top-utility-btn accent-add" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:15px;">add_circle</span><span>Submit New Link Live</span>
       </button>
@@ -335,10 +361,16 @@
       <section class="filter-card-highlight">
         <div class="filter-header-row">
           <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
-          <button id="learningBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="promptBulkDelete('learning')">
-            <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
-            <span>Delete Selected (<strong id="learningSelectedCount">0</strong>)</span>
-          </button>
+          <div class="filter-actions-group">
+            <button id="toggleLearningSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('learning')">
+              <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
+              <span id="learningSelectBtnLabel">Select Multiple to Delete</span>
+            </button>
+            <button id="learningBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="promptBulkDelete('learning')">
+              <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
+              <span>Delete Selected (<strong id="learningSelectedCount">0</strong>)</span>
+            </button>
+          </div>
         </div>
         <select id="moduleSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Learning Modules --</option>
@@ -360,10 +392,16 @@
       <section class="filter-card-highlight">
         <div class="filter-header-row">
           <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY NAME</label>
-          <button id="docBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="promptBulkDelete('document')">
-            <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
-            <span>Delete Selected (<strong id="docSelectedCount">0</strong>)</span>
-          </button>
+          <div class="filter-actions-group">
+            <button id="toggleDocSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('document')">
+              <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
+              <span id="docSelectBtnLabel">Select Multiple to Delete</span>
+            </button>
+            <button id="docBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="promptBulkDelete('document')">
+              <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
+              <span>Delete Selected (<strong id="docSelectedCount">0</strong>)</span>
+            </button>
+          </div>
         </div>
         <select id="docPackageSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Packages --</option>
@@ -381,7 +419,10 @@
       <div class="table-container">
         <table class="doc-table">
           <thead>
-            <tr><th><input type="checkbox" id="selectAllDocsCheckbox" onchange="toggleSelectAllDocs(this)"></th><th>Package Name</th><th>Package Version</th><th>Type of Doc</th><th>Actions</th></tr>
+            <tr>
+              <th class="doc-checkbox-th" style="display:none;"><input type="checkbox" id="selectAllDocsCheckbox" class="item-select-checkbox" onchange="toggleSelectAllDocs(this)"></th>
+              <th>Package Name</th><th>Package Version</th><th>Type of Doc</th><th>Actions</th>
+            </tr>
           </thead>
           <tbody id="docTableBody"></tbody>
         </table>
@@ -403,6 +444,31 @@
         <button type="button" class="btn-danger" style="width: 100%; justify-content: center; padding: 0.65rem;" onclick="handleSignOut()">
           <span class="material-icons-outlined" style="font-size: 16px;">logout</span><span>Sign Out</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POWER USER CONFIGURATION MODAL -->
+  <div class="modal-overlay" id="powerUserSettingsModalOverlay">
+    <div class="modal-content" style="max-width:480px;">
+      <div class="modal-header">
+        <h2>Power Users Configuration</h2>
+        <button class="modal-close-btn" onclick="closeModal('powerUserSettingsModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <p style="font-size: 0.8rem; color: var(--text-secondary);">
+          Power Users can view the progress dashboard for <strong>all users</strong> across the organization. Standard users only see their own metrics.
+        </p>
+        
+        <form onsubmit="handleAddPowerUser(event)" style="display: flex; gap: 0.5rem;">
+          <input type="email" id="newPowerUserEmail" placeholder="user@maxval.com" required style="flex:1; padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.85rem;">
+          <button type="submit" class="btn-submit" style="padding: 0.45rem 0.85rem;">Add Power User</button>
+        </form>
+
+        <div style="margin-top: 0.5rem;">
+          <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">Authorized Power Users List:</label>
+          <div id="powerUserListContainer" style="display: flex; flex-direction: column; gap: 0.4rem; max-height: 180px; overflow-y: auto;"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -493,7 +559,7 @@
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 620px;">
       <div class="modal-header">
-        <h2>MaxVal User Progress Dashboard</h2>
+        <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
         <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
       <div class="table-container">
@@ -683,6 +749,13 @@
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
 
+    // Configurable Power Users List
+    let powerUsers = new Set(JSON.parse(localStorage.getItem('kc_power_users_v17') || '["admin@maxval.com", "prabhaharan.j@maxval.com"]'));
+
+    // Selection mode state flags
+    let isLearningSelectionMode = false;
+    let isDocSelectionMode = false;
+
     // Multi-select tracking sets
     let selectedLearningIndices = new Set();
     let selectedDocIndices = new Set();
@@ -760,6 +833,7 @@
       }
       document.getElementById('modalProfileEmail').textContent = currentUser;
       document.getElementById('profileModalOverlay').classList.add('open');
+      scrollParentToTop();
     }
 
     function handleSignOut() {
@@ -818,43 +892,126 @@
       saveAnalytics(analytics);
     }
 
+    /* POWER USER VS STANDARD USER PROGRESS DASHBOARD */
+    function isPowerUser(email) {
+      if (!email) return false;
+      return powerUsers.has(email.toLowerCase().trim());
+    }
+
     function openUserAnalyticsDashboard() {
       if (!currentUser) { checkUserLoginState(); return; }
       const tbody = document.getElementById('userAnalyticsTableBody');
+      const titleElem = document.getElementById('dashboardModalTitle');
       const analytics = getUserAnalytics();
       const users = analytics.users || {};
-      const userKeys = Object.keys(users);
       const totalTopicsAvailable = dataset.length;
 
-      if (userKeys.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
-      } else {
-        tbody.innerHTML = userKeys.map(email => {
-          const u = users[email];
-          const completedCount = u.completedTopics ? u.completedTopics.length : 0;
-          const viewCount = u.seenDocs ? u.seenDocs.length : 0;
+      if (isPowerUser(currentUser)) {
+        titleElem.textContent = "Power User - Organization Dashboard";
+        const userKeys = Object.keys(users);
 
-          return `
-            <tr>
-              <td><strong>${email}</strong></td>
-              <td>${u.lastLogin || 'N/A'}</td>
-              <td>
-                <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
-                  ${completedCount} / ${totalTopicsAvailable} Completed
-                </span>
-              </td>
-              <td>
-                <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
-                  ${viewCount} Viewed
-                </span>
-              </td>
-            </tr>
-          `;
-        }).join('');
+        if (userKeys.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
+        } else {
+          tbody.innerHTML = userKeys.map(email => {
+            const u = users[email];
+            const completedCount = u.completedTopics ? u.completedTopics.length : 0;
+            const viewCount = u.seenDocs ? u.seenDocs.length : 0;
+
+            return `
+              <tr>
+                <td><strong>${email}</strong></td>
+                <td>${u.lastLogin || 'N/A'}</td>
+                <td>
+                  <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
+                    ${completedCount} / ${totalTopicsAvailable} Completed
+                  </span>
+                </td>
+                <td>
+                  <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
+                    ${viewCount} Viewed
+                  </span>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } else {
+        titleElem.textContent = "My Progress Dashboard";
+        const u = users[currentUser] || { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+        const completedCount = u.completedTopics ? u.completedTopics.length : 0;
+        const viewCount = u.seenDocs ? u.seenDocs.length : 0;
+
+        tbody.innerHTML = `
+          <tr>
+            <td><strong>${currentUser} (You)</strong></td>
+            <td>${u.lastLogin || 'Active Now'}</td>
+            <td>
+              <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
+                ${completedCount} / ${totalTopicsAvailable} Completed
+              </span>
+            </td>
+            <td>
+              <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
+                ${viewCount} Viewed
+              </span>
+            </td>
+          </tr>
+        `;
       }
 
       document.getElementById('userDashboardModalOverlay').classList.add('open');
+      scrollParentToTop();
       setTimeout(notifyIframeHeight, 100);
+    }
+
+    /* POWER USER SETTINGS CONFIGURATION */
+    function promptPowerUserSettings() {
+      if (!currentUser) { checkUserLoginState(); return; }
+      pendingAction = { type: 'open_power_settings' };
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinModalOverlay').classList.add('open');
+      scrollParentToTop();
+    }
+
+    function renderPowerUsersList() {
+      const container = document.getElementById('powerUserListContainer');
+      const list = Array.from(powerUsers);
+
+      if (list.length === 0) {
+        container.innerHTML = `<p style="font-size: 0.8rem; color: var(--text-secondary);">No power users configured.</p>`;
+        return;
+      }
+
+      container.innerHTML = list.map(email => `
+        <div class="power-user-chip">
+          <span>${email}</span>
+          <button type="button" onclick="handleRemovePowerUser('${email}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;" title="Remove Power User">
+            <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function handleAddPowerUser(e) {
+      e.preventDefault();
+      const input = document.getElementById('newPowerUserEmail').value.trim().toLowerCase();
+      if (!input.includes('@maxval.com')) {
+        alert("Please enter a valid @maxval.com email address.");
+        return;
+      }
+      powerUsers.add(input);
+      localStorage.setItem('kc_power_users_v17', JSON.stringify(Array.from(powerUsers)));
+      document.getElementById('newPowerUserEmail').value = '';
+      renderPowerUsersList();
+      showInlineBanner(`Added ${input} to Power Users.`);
+    }
+
+    function handleRemovePowerUser(email) {
+      powerUsers.delete(email);
+      localStorage.setItem('kc_power_users_v17', JSON.stringify(Array.from(powerUsers)));
+      renderPowerUsersList();
+      showInlineBanner(`Removed ${email} from Power Users.`);
     }
 
     function syncDropdownOptions() {
@@ -910,6 +1067,7 @@
       if (!dlField.value) dlField.value = currentUser;
 
       document.getElementById('addModalOverlay').classList.add('open');
+      scrollParentToTop();
       setTimeout(notifyIframeHeight, 100);
     }
 
@@ -936,7 +1094,39 @@
       return categoryColors[key] || categoryColors['default'];
     }
 
-    /* MULTI-SELECT CHECKBOX HANDLERS */
+    /* SELECTION MODE & MULTI-SELECT CHECKBOX HANDLERS */
+    function toggleSelectionMode(hub) {
+      if (hub === 'learning') {
+        isLearningSelectionMode = !isLearningSelectionMode;
+        selectedLearningIndices.clear();
+        document.getElementById('learningSelectBtnLabel').textContent = isLearningSelectionMode ? "Cancel Selection Mode" : "Select Multiple to Delete";
+        const grid = document.getElementById('resourcesGrid');
+        if (isLearningSelectionMode) {
+          grid.classList.add('selection-mode-active');
+        } else {
+          grid.classList.remove('selection-mode-active');
+        }
+        updateLearningBulkUI();
+        renderLearningHub();
+      } else {
+        isDocSelectionMode = !isDocSelectionMode;
+        selectedDocIndices.clear();
+        document.getElementById('docSelectBtnLabel').textContent = isDocSelectionMode ? "Cancel Selection Mode" : "Select Multiple to Delete";
+        
+        const thCheckbox = document.querySelector('.doc-checkbox-th');
+        if (thCheckbox) thCheckbox.style.display = isDocSelectionMode ? 'table-cell' : 'none';
+
+        const tbody = document.getElementById('docTableBody');
+        if (isDocSelectionMode) {
+          tbody.classList.add('selection-mode-active');
+        } else {
+          tbody.classList.remove('selection-mode-active');
+        }
+        updateDocBulkUI();
+        renderDocumentHub();
+      }
+    }
+
     function toggleLearningSelect(index, event) {
       event.stopPropagation();
       if (selectedLearningIndices.has(index)) {
@@ -951,7 +1141,7 @@
       const count = selectedLearningIndices.size;
       const btn = document.getElementById('learningBulkDeleteBtn');
       document.getElementById('learningSelectedCount').textContent = count;
-      btn.style.display = count > 0 ? 'inline-flex' : 'none';
+      btn.style.display = (isLearningSelectionMode && count > 0) ? 'inline-flex' : 'none';
 
       document.querySelectorAll('#resourcesGrid .resource-card').forEach(card => {
         const idx = parseInt(card.getAttribute('data-index'), 10);
@@ -993,7 +1183,7 @@
       const count = selectedDocIndices.size;
       const btn = document.getElementById('docBulkDeleteBtn');
       document.getElementById('docSelectedCount').textContent = count;
-      btn.style.display = count > 0 ? 'inline-flex' : 'none';
+      btn.style.display = (isDocSelectionMode && count > 0) ? 'inline-flex' : 'none';
     }
 
     function promptBulkDelete(hub) {
@@ -1034,6 +1224,9 @@
         executeBulkDeleteItem(hub);
       } else if (type === 'edit') {
         executeEditItem(hub, index);
+      } else if (type === 'open_power_settings') {
+        renderPowerUsersList();
+        document.getElementById('powerUserSettingsModalOverlay').classList.add('open');
       }
       
       pendingAction = null;
@@ -1067,7 +1260,7 @@
         const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
         localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
         
-        updateLearningBulkUI();
+        toggleSelectionMode('learning'); // Exit selection mode
         renderLearningHub();
       } else {
         const sortedIndices = Array.from(selectedDocIndices).sort((a, b) => b - a);
@@ -1077,7 +1270,7 @@
         const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
         localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
 
-        updateDocBulkUI();
+        toggleSelectionMode('document'); // Exit selection mode
         renderDocumentHub();
       }
       showInlineBanner("Selected items successfully deleted.");
@@ -1195,7 +1388,7 @@
         const isSelected = selectedDocIndices.has(doc.originalIndex);
         return `
           <tr onclick="toggleTileActive(this)">
-            <td onclick="event.stopPropagation()">
+            <td class="doc-checkbox-td" style="display:${isDocSelectionMode ? 'table-cell' : 'none'};" onclick="event.stopPropagation()">
               <input type="checkbox" class="item-select-checkbox" data-index="${doc.originalIndex}" ${isSelected ? 'checked' : ''} onchange="toggleDocSelect(${doc.originalIndex}, event)">
             </td>
             <td><strong>${doc.pkg}</strong></td>
