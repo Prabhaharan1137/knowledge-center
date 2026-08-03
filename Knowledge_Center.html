@@ -286,7 +286,7 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <!-- FORM TARGET FOR UPDATED GOOGLE APPS SCRIPT -->
+  <!-- FORM TARGET FOR GOOGLE APPS SCRIPT -->
   <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycby5i8pL2dt8TFdRRlIjoA4IoV4bsi7P61FDSXINm6XeGiVMQRmcXoPizpPYwQ-pN2UE/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
@@ -366,7 +366,7 @@
               <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
               <span id="learningSelectBtnLabel">Select Multiple to Delete</span>
             </button>
-            <button id="learningBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="promptBulkDelete('learning')">
+            <button id="learningBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="handleActionRequest('bulk_delete', null, 'learning')">
               <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
               <span>Delete Selected (<strong id="learningSelectedCount">0</strong>)</span>
             </button>
@@ -397,7 +397,7 @@
               <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
               <span id="docSelectBtnLabel">Select Multiple to Delete</span>
             </button>
-            <button id="docBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="promptBulkDelete('document')">
+            <button id="docBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="handleActionRequest('bulk_delete', null, 'document')">
               <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
               <span>Delete Selected (<strong id="docSelectedCount">0</strong>)</span>
             </button>
@@ -457,7 +457,7 @@
       </div>
       <div style="display: flex; flex-direction: column; gap: 0.85rem;">
         <p style="font-size: 0.8rem; color: var(--text-secondary);">
-          Power Users can view the progress dashboard for <strong>all users</strong> across the organization. Standard users only see their own metrics.
+          Power Users have full privileges to edit/delete items without entering a PIN and can view full organization progress metrics.
         </p>
         
         <form onsubmit="handleAddPowerUser(event)" style="display: flex; gap: 0.5rem;">
@@ -892,7 +892,7 @@
       saveAnalytics(analytics);
     }
 
-    /* POWER USER VS STANDARD USER PROGRESS DASHBOARD */
+    /* POWER USER CHECK */
     function isPowerUser(email) {
       if (!email) return false;
       return powerUsers.has(email.toLowerCase().trim());
@@ -968,6 +968,15 @@
     /* POWER USER SETTINGS CONFIGURATION */
     function promptPowerUserSettings() {
       if (!currentUser) { checkUserLoginState(); return; }
+      
+      // Power Users can open Settings without PIN
+      if (isPowerUser(currentUser)) {
+        renderPowerUsersList();
+        document.getElementById('powerUserSettingsModalOverlay').classList.add('open');
+        scrollParentToTop();
+        return;
+      }
+
       pendingAction = { type: 'open_power_settings' };
       document.getElementById('pinInput').value = '';
       document.getElementById('pinModalOverlay').classList.add('open');
@@ -1186,16 +1195,23 @@
       btn.style.display = (isDocSelectionMode && count > 0) ? 'inline-flex' : 'none';
     }
 
-    function promptBulkDelete(hub) {
+    /* ACTION REQUEST ROUTER - POWER USER BYPASSES PIN FOR EDIT/DELETE */
+    function handleActionRequest(type, index, hub) {
       if (!currentUser) { checkUserLoginState(); return; }
-      pendingAction = { type: 'bulk_delete', hub };
-      document.getElementById('pinInput').value = '';
-      document.getElementById('pinModalOverlay').classList.add('open');
-      scrollParentToTop();
-    }
 
-    function promptPinForAction(type, index, hub) {
-      if (!currentUser) { checkUserLoginState(); return; }
+      // Power Users bypass PIN check for edit or delete actions
+      if (isPowerUser(currentUser)) {
+        if (type === 'delete') {
+          executeDeleteItem(hub, index);
+        } else if (type === 'bulk_delete') {
+          executeBulkDeleteItem(hub);
+        } else if (type === 'edit') {
+          executeEditItem(hub, index);
+        }
+        return;
+      }
+
+      // Standard users must enter Security PIN
       pendingAction = { type, index, hub };
       document.getElementById('pinInput').value = '';
       document.getElementById('pinModalOverlay').classList.add('open');
@@ -1260,7 +1276,7 @@
         const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
         localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
         
-        toggleSelectionMode('learning'); // Exit selection mode
+        toggleSelectionMode('learning');
         renderLearningHub();
       } else {
         const sortedIndices = Array.from(selectedDocIndices).sort((a, b) => b - a);
@@ -1270,7 +1286,7 @@
         const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
         localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
 
-        toggleSelectionMode('document'); // Exit selection mode
+        toggleSelectionMode('document');
         renderDocumentHub();
       }
       showInlineBanner("Selected items successfully deleted.");
@@ -1351,10 +1367,10 @@
                 <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
               <div class="action-icons">
-                <button class="action-btn edit-btn" onclick="promptPinForAction('edit', ${res.originalIndex}, 'learning')" title="Edit Resource">
+                <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')" title="Edit Resource">
                   <span class="material-icons-outlined" style="font-size:18px;">edit</span>
                 </button>
-                <button class="action-btn delete-btn" onclick="promptPinForAction('delete', ${res.originalIndex}, 'learning')" title="Delete Resource">
+                <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')" title="Delete Resource">
                   <span class="material-icons-outlined" style="font-size:18px;">delete</span>
                 </button>
               </div>
@@ -1400,10 +1416,10 @@
                   <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
                 </a>
                 <div class="action-icons">
-                  <button class="action-btn edit-btn" onclick="promptPinForAction('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
+                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
                     <span class="material-icons-outlined" style="font-size:18px;">edit</span>
                   </button>
-                  <button class="action-btn delete-btn" onclick="promptPinForAction('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
+                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
                     <span class="material-icons-outlined" style="font-size:18px;">delete</span>
                   </button>
                 </div>
