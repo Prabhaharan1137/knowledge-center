@@ -39,6 +39,31 @@
       overflow-x: hidden;
     }
 
+    /* MANDATORY SIGN-IN LOCK OVERLAY */
+    .app-lock-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 16, 18, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .app-lock-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
       padding: 0.75rem 1.25rem;
@@ -194,9 +219,24 @@
 </head>
 <body>
 
+  <!-- MANDATORY SIGN-IN LOCK OVERLAY -->
+  <div id="mandatoryLockOverlay" class="app-lock-overlay">
+    <div class="app-lock-card">
+      <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
+      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Sign In Required</h2>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+        Please sign in with your official <strong>@maxval.com</strong> account to access the Symphony Learning & Documentation Hub.
+      </p>
+      <form id="mandatoryLoginForm" onsubmit="handleMandatoryLogin(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <input type="email" id="mandatoryEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
+        <button type="submit" class="btn-submit" style="padding: 0.65rem; font-size: 0.9rem;">Sign In to Start Portal</button>
+      </form>
+    </div>
+  </div>
+
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <!-- NEW DEPLOYMENT FORM TARGET -->
+  <!-- FORM TARGET FOR GOOGLE APPS SCRIPT -->
   <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwU0ZyOOr4EjN-gz8iuTTKqHC7zFMFd6PaxcNBoMFwypwNWC33XqzvJz1YSevUrH874/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
@@ -225,7 +265,8 @@
         <span class="material-icons-outlined" style="font-size:15px;">table_chart</span><span>Implementation Tracker</span>
       </a>
 
-      <button type="button" class="top-utility-btn user-profile-badge" onclick="openLoginModal()">
+      <!-- USER PROFILE BADGE WITH SIGN-OUT OPTION -->
+      <button type="button" class="top-utility-btn user-profile-badge" onclick="openProfileModal()">
         <span class="material-icons-outlined" style="font-size:15px;">account_circle</span>
         <span id="activeUserDisplay">Sign In (@maxval.com)</span>
       </button>
@@ -307,20 +348,21 @@
     </div>
   </div>
 
-  <!-- SIGN IN MODAL -->
-  <div class="modal-overlay" id="loginModalOverlay">
-    <div class="modal-content" style="max-width:420px;">
+  <!-- PROFILE / SIGN OUT MODAL -->
+  <div class="modal-overlay" id="profileModalOverlay">
+    <div class="modal-content" style="max-width:380px; text-align:center;">
       <div class="modal-header">
-        <h2>Sign In with MaxVal Email</h2>
-        <button class="modal-close-btn" onclick="closeModal('loginModalOverlay')"><span class="material-icons-outlined">close</span></button>
+        <h2>Active User Profile</h2>
+        <button class="modal-close-btn" onclick="closeModal('profileModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <form id="loginForm" class="modal-form">
-        <div class="form-group">
-          <label>Enter Your Official MaxVal Gmail / Work Address *</label>
-          <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="font-weight:500;">
-        </div>
-        <button type="submit" class="btn-submit">Register Account & Track Progress</button>
-      </form>
+      <div style="padding: 1rem 0;">
+        <span class="material-icons-outlined" style="font-size: 56px; color: var(--google-green);">account_circle</span>
+        <p style="font-size: 0.95rem; font-weight: 700; margin-top: 0.5rem;" id="modalProfileEmail">user@maxval.com</p>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Logged in to Symphony Knowledge Hub</p>
+        <button type="button" class="btn-danger" style="width: 100%;" onclick="handleSignOut()">
+          <span class="material-icons-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">logout</span>Sign Out
+        </button>
+      </div>
     </div>
   </div>
 
@@ -389,11 +431,11 @@
     </div>
   </div>
 
-  <!-- PIN VERIFICATION MODAL (FOR EDIT & DELETE) -->
+  <!-- PIN VERIFICATION MODAL -->
   <div class="modal-overlay" id="pinModalOverlay">
     <div class="modal-content" style="max-width:380px;">
       <div class="modal-header">
-        <h2 id="pinModalTitle">Admin Security Verification</h2>
+        <h2>Admin Security Verification</h2>
         <button class="modal-close-btn" onclick="closeModal('pinModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
       <form id="pinForm" class="modal-form" onsubmit="handlePinSubmission(event)">
@@ -401,7 +443,7 @@
           <label>Enter Security PIN to proceed *</label>
           <input type="password" id="pinInput" placeholder="Enter PIN (Default: 1234)" required maxlength="8" style="text-align:center; font-size:1.2rem; letter-spacing:4px;">
         </div>
-        <button type="submit" class="btn-submit" id="pinConfirmBtn">Verify PIN</button>
+        <button type="submit" class="btn-submit">Verify PIN</button>
       </form>
     </div>
   </div>
@@ -425,7 +467,7 @@
   </div>
 
   <script>
-    const ADMIN_PIN = "1234"; // Default security PIN for edit/delete
+    const ADMIN_PIN = "1234";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -600,7 +642,6 @@
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
 
-    // State for pending PIN action (edit or delete)
     let pendingAction = null; 
 
     const categoryColors = {
@@ -632,39 +673,58 @@
       }
     }
 
+    /* MANDATORY SIGN-IN GATE HANDLERS */
     function checkUserLoginState() {
+      const lockOverlay = document.getElementById('mandatoryLockOverlay');
       if (!currentUser || !currentUser.toLowerCase().includes('@maxval.com')) {
-        openLoginModal();
+        lockOverlay.style.display = 'flex';
       } else {
+        lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
       }
     }
 
-    function openLoginModal() {
-      if (currentUser) document.getElementById('loginEmailInput').value = currentUser;
-      document.getElementById('loginModalOverlay').classList.add('open');
-    }
-
-    function handleLoginSubmission(e) {
-      if (e) e.preventDefault();
-      let input = document.getElementById('loginEmailInput').value.trim().toLowerCase();
+    function handleMandatoryLogin(e) {
+      e.preventDefault();
+      let input = document.getElementById('mandatoryEmailInput').value.trim().toLowerCase();
       if (!input.includes('@maxval.com')) {
         const prefix = input.split('@')[0];
         input = `${prefix}@maxval.com`;
       }
       currentUser = input;
       localStorage.setItem('kc_user_maxval_email', currentUser);
+      
+      document.getElementById('mandatoryLockOverlay').style.display = 'none';
       updateUserBadgeDisplay();
-      closeModal('loginModalOverlay');
-      showInlineBanner(`Signed in as: ${currentUser}`);
+      showInlineBanner(`Welcome! Signed in as: ${currentUser}`);
       renderLearningHub();
       renderDocumentHub();
+    }
+
+    function openProfileModal() {
+      if (!currentUser) {
+        document.getElementById('mandatoryLockOverlay').style.display = 'flex';
+        return;
+      }
+      document.getElementById('modalProfileEmail').textContent = currentUser;
+      document.getElementById('profileModalOverlay').classList.add('open');
+    }
+
+    function handleSignOut() {
+      currentUser = null;
+      localStorage.removeItem('kc_user_maxval_email');
+      closeModal('profileModalOverlay');
+      document.getElementById('mandatoryEmailInput').value = '';
+      checkUserLoginState();
+      showInlineBanner("Signed out successfully.");
     }
 
     function updateUserBadgeDisplay() {
       const displayElem = document.getElementById('activeUserDisplay');
       if (currentUser) {
         displayElem.textContent = `${currentUser.split('@')[0]}@maxval.com`;
+      } else {
+        displayElem.textContent = "Sign In (@maxval.com)";
       }
     }
 
@@ -677,7 +737,7 @@
     }
 
     function toggleTopicCompletion(resId) {
-      if (!currentUser) { openLoginModal(); return; }
+      if (!currentUser) { checkUserLoginState(); return; }
       const analytics = getUserAnalytics();
       if (!analytics.users[currentUser]) {
         analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
@@ -707,6 +767,7 @@
     }
 
     function openUserAnalyticsDashboard() {
+      if (!currentUser) { checkUserLoginState(); return; }
       const tbody = document.getElementById('userAnalyticsTableBody');
       const analytics = getUserAnalytics();
       const users = analytics.users || {};
@@ -787,7 +848,7 @@
     }
 
     function openAddModal() {
-      if (!currentUser) { openLoginModal(); return; }
+      if (!currentUser) { checkUserLoginState(); return; }
       document.getElementById('addModalTitle').textContent = "Submit New Resource Link";
       document.getElementById('editItemIndex').value = "";
       document.getElementById('editItemType').value = "";
@@ -823,9 +884,8 @@
       return categoryColors[key] || categoryColors['default'];
     }
 
-    /* EDIT & DELETE PIN HANDLERS */
     function promptPinForAction(type, index, hub) {
-      if (!currentUser) { openLoginModal(); return; }
+      if (!currentUser) { checkUserLoginState(); return; }
       pendingAction = { type, index, hub };
       document.getElementById('pinInput').value = '';
       document.getElementById('pinModalOverlay').classList.add('open');
@@ -859,13 +919,11 @@
     function executeDeleteItem(hub, index) {
       if (hub === 'learning') {
         dataset.splice(index, 1);
-        // Save remaining custom items
         const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
         localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
         renderLearningHub();
       } else {
         docDataset.splice(index, 1);
-        // Save remaining custom docs
         const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
         localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
         renderDocumentHub();
@@ -1111,7 +1169,6 @@
       renderLearningHub();
       renderDocumentHub();
 
-      document.getElementById('loginForm').addEventListener('submit', handleLoginSubmission);
       document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
 
       document.getElementById('moduleSelect').addEventListener('change', (e) => {
