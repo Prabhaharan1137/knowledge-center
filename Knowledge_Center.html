@@ -37,32 +37,33 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* MANDATORY SIGN-IN LOCK OVERLAY - FIXED AT TOP */
+    /* MANDATORY SIGN-IN LOCK OVERLAY - FIXED AT TOP VIA STICKY VIEWPORT ANCHOR */
     .app-lock-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 16, 18, 0.85);
+      background: rgba(15, 16, 18, 0.88);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       z-index: 9999999;
       display: flex;
-      align-items: flex-start; /* Keeps box anchored near top */
       justify-content: center;
-      padding-top: 40px;
+      align-items: flex-start;
+      padding-top: 20px;
       overflow-y: auto;
     }
 
     .app-lock-card {
-      position: fixed;
-      top: 40px;
+      position: relative;
+      margin-top: 20px;
       background: #ffffff;
       border-radius: 16px;
       padding: 2rem;
       max-width: 440px;
       width: 90%;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.45);
       text-align: center;
       border: 1px solid var(--border-color);
       z-index: 10000000;
@@ -223,7 +224,7 @@
 </head>
 <body>
 
-  <!-- FIXED MANDATORY SIGN-IN LOCK OVERLAY -->
+  <!-- MANDATORY SIGN-IN LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
@@ -269,7 +270,7 @@
         <span class="material-icons-outlined" style="font-size:15px;">table_chart</span><span>Implementation Tracker</span>
       </a>
 
-      <!-- USER PROFILE BADGE WITH SIGN-OUT OPTION -->
+      <!-- USER PROFILE BADGE -->
       <button type="button" class="top-utility-btn user-profile-badge" onclick="openProfileModal()">
         <span class="material-icons-outlined" style="font-size:15px;">account_circle</span>
         <span id="activeUserDisplay">Sign In (@maxval.com)</span>
@@ -677,11 +678,18 @@
       }
     }
 
+    function scrollParentToTop() {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'kc-scroll-top' }, '*');
+      }
+    }
+
     /* MANDATORY SIGN-IN GATE HANDLERS */
     function checkUserLoginState() {
       const lockOverlay = document.getElementById('mandatoryLockOverlay');
       if (!currentUser || !currentUser.toLowerCase().includes('@maxval.com')) {
         lockOverlay.style.display = 'flex';
+        scrollParentToTop();
       } else {
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
@@ -707,7 +715,7 @@
 
     function openProfileModal() {
       if (!currentUser) {
-        document.getElementById('mandatoryLockOverlay').style.display = 'flex';
+        checkUserLoginState();
         return;
       }
       document.getElementById('modalProfileEmail').textContent = currentUser;
