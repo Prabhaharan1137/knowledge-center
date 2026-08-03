@@ -39,6 +39,7 @@
       overflow-x: hidden;
     }
 
+    /* Top Animated Banner */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
       padding: 0.75rem 1.25rem;
@@ -245,7 +246,7 @@
       <span id="inlineSuccessText">Operation completed successfully!</span>
     </div>
 
-    <!-- LEARNING HUB -->
+    <!-- LEARNING HUB TAB -->
     <div id="learningHubTab" class="tab-content active">
       <section class="filter-card-highlight">
         <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
@@ -264,7 +265,7 @@
       <main class="resources-grid" id="resourcesGrid"></main>
     </div>
 
-    <!-- DOCUMENT HUB -->
+    <!-- DOCUMENT HUB TAB -->
     <div id="documentHubTab" class="tab-content">
       <section class="filter-card-highlight">
         <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY NAME</label>
@@ -299,7 +300,7 @@
         <h2>Sign In with MaxVal Email</h2>
         <button class="modal-close-btn" onclick="closeModal('loginModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <form id="loginForm" class="modal-form" onsubmit="handleLoginSubmission(event)">
+      <form id="loginForm" class="modal-form">
         <div class="form-group">
           <label>Enter Your Official MaxVal Gmail / Work Address *</label>
           <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="font-weight:500;">
@@ -317,8 +318,7 @@
         <button class="modal-close-btn" onclick="closeModal('addModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
 
-      <!-- ABSOLUTE ZERO PAGE NAVIGATION FORM -->
-      <form id="addResourceForm" class="modal-form" onsubmit="handleAddSubmission(event)">
+      <form id="addResourceForm" class="modal-form">
         <div class="form-group">
           <label>Target Hub *</label>
           <select id="targetHub" onchange="toggleFormFields(this.value)">
@@ -391,8 +391,195 @@
   </div>
 
   <script>
+    const DEFAULT_CATEGORIES = [
+      "Intellectual Property", "Introduction to Symphony", "Invention Module",
+      "Patent Module", "Renewals", "Trademark", "Assessment", "Additional Reference Materials"
+    ];
+
+/* LEARNING_DATA_START */
+    let dataset = [
+      { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
+      { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
+      { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
+      { id: 'res_4', name: "The Value of Intellectual Property", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_5', name: "Challenges in Managing IP", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_6', name: "The Symphony Solution", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_7', name: "Introduction to Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_8', name: "Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_9', name: "The Value of Capturing an Idea", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_10', name: "The Challenges in Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_11', name: "The Solution: Invention Disclosure in Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_12', name: "The Benefits for Users and Clients", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_13', name: "IDF Invention Disclosure Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/19MWylq6fYMnMeaFnVlr5fCarEurIzyZ4" },
+      { id: 'res_14', name: "Invention Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
+      { id: 'res_15', name: "Invention Submission", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
+      { id: 'res_16', name: "Invention Review", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
+      { id: 'res_17', name: "Invention Decision", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
+      { id: 'res_18', name: "Patent Drafting and Filing", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
+      { id: 'res_19', name: "Patent Prosecution", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
+      { id: 'res_20', name: "Patent Search", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
+      { id: 'res_21', name: "Types of Patent Searches", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
+      { id: 'res_22', name: "AIA", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
+      { id: 'res_23', name: "Importance of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_24', name: "Tools we use", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_25', name: "Types of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_26', name: "PTO Rules for Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_27', name: "Handling Patent drawing rejections", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_28', name: "Overview of Patent Center", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=244" },
+      { id: 'res_29', name: "Overview of WIPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_30', name: "Overview of EPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_31', name: "US Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231" },
+      { id: 'res_32', name: "PCT Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231" },
+      { id: 'res_33', name: "Overview of IDS", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232" },
+      { id: 'res_34', name: "IDS obligation and procedure", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232" },
+      { id: 'res_35', name: "Renewals Overview", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_36', name: "Duration of Asset Protection", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_37', name: "Patent term and renewal timeline", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_38', name: "Consequences of not renewing an asset", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_39', name: "Renewal Fee and mode of payment", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_40', name: "Who can pay the renewals", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_41', name: "What is a Trademark?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_42', name: "What can be Trademarked?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_43', name: "Unconventional marks as a Trademark", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_44', name: "Types of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_45', name: "Trademarks Distinctiveness Spectrum", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_46', name: "Classification of Goods & Services", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_47', name: "Basis of Filings and Use Requirement", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_48', name: "Maintenance of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_49', name: "Trademark Life Cycle", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8" },
+      { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m" }
+    ];
+/* LEARNING_DATA_END */
+
+/* DOC_DATA_START */
+    let docDataset = [
+      { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8" },
+      { pkg: "Symphony LF", ver: "Standard", type: "PTO Integration", link: "https://docs.google.com/document/d/1MiR6AGAMgPJHxmwySp4bap_tmQFHWATG66dB1X7B0bY/edit?tab=t.0#heading=h.gn2p9i53yy15" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Field Configuration", link: "https://docs.google.com/spreadsheets/d/1qZTCt4lbngMsRQ37JxkCiHfTOfhFlhCweXqsEZrCyJ8/edit?gid=0#gid=0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Data Uploads & Renewals", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0#heading=h.fvxjcsbrpisy" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Dates Component Config", link: "https://docs.google.com/document/d/1Lz90hLqDNZqNKay1CahffYgFMu9yX0tv7H8ijJgd0iE/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Family Tree Tech Doc", link: "https://docs.google.com/document/d/1oxMp3xiPkMttzt43dPVJJcfKd4OSAlPul7aajz75qfQ/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Related IP Matters - Configuration", link: "https://docs.google.com/document/d/1_-rbG5XfJUmNKNzbj_DEgOFjGeXiNuNqWDaDfs1oL_g/edit?hl=en&forcehl=1&tab=t.0#heading=h.x4tnm73un1bn" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Update Term Name", link: "https://docs.google.com/document/d/1mkQQ--uSk3k2WX0RUkCdsT-4_85ggM0OyY3gfEOBPD0/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "PTO Doc Codes", link: "https://docs.google.com/document/d/1Y64tmdzbawTj8hHvr-P3jOLZeYtQwGEgteQKnBkR2r0/edit?tab=t.nn7xerowdjpb" },
+      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Configuration Steps", link: "https://docs.google.com/document/d/1USadU5-pzbZhLzYlvGEc2SPuUgjpxbOOVIgbnC_zoyY/edit?tab=t.0" },
+      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Upgrade Steps", link: "https://docs.google.com/document/d/1OvitBT0PemTnXxpue0MagvPjFGs8h0eNQ8pYE_FKrI4/edit?tab=t.0#heading=h.f6wmunhppk9w" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Release Notes", link: "https://docs.google.com/document/d/1UW30pnWjtAj30meb6XfuBXbKa0E0epf1CrJTKaAkg7U/edit?tab=t.3eyh0nlcm3z0#heading=h.529i7peg55gb" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Installation Doc", link: "https://docs.google.com/document/d/1z5P5YvE8pVtIgv1Y27khwNxZCLcpZgse23Qctfi61sg/edit?usp=sharing" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Upgrade Doc", link: "https://docs.google.com/document/d/1wQoKpdDCyuORvtPxychos06PYPqJGTPrVazlCGel19c/edit?usp=sharing" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Recordings Folder", link: "https://drive.google.com/drive/folders/1nPPwt0RvFvvzSKy2StbSNVP7lIM-CmNO" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "User Guides & Technical Docs Folder", link: "https://drive.google.com/drive/folders/1AjCqtpHhEg9HpLhUY7mED_MuGb_8qJpb?usp=drive_link" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Installation Procedure", link: "https://docs.google.com/document/d/12t1TSmtTI7cT4p7VA3eG8ZuNgpCGLf0GruB5RSWN_gE/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes(Patch Updates)", link: "https://docs.google.com/document/d/1DSzp2roWj81PLDsgM1jzCm3kFOU7H5AqhKGAEyYB-w4/edit?tab=t.0#heading=h.doi0kxxzb3c6" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "PTA & TD", link: "https://docs.google.com/document/d/1ZK_k1vmJ4S-B9pm9X3T_rAtB7Nuu_J4mPwioi6Ag1pk/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes", link: "https://docs.google.com/document/d/1aMEtBF9hJ4LbsNBddzP3FBjdGblc-MIdx3C4eX9NK3k/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "TM Renewal & Maintenance workflow", link: "https://docs.google.com/document/d/1YYWUrchs1ofHUY4lhJbhfbazXUYko7eYZSgfGm-Xeok/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Installation Procedure", link: "https://docs.google.com/document/d/15ojq7aUyBebs87Q5j_qOuJKbC4QN7q2OKeWURHbUO64/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Release Notes", link: "https://docs.google.com/document/d/1nAxplj9o5V-gd-wK-hsQ_IVYE48bheTlphi2-v2nP_c/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "FAQs", link: "https://docs.google.com/document/d/15eUk8aTdCMwxRXu-cO6ga9kD9lAeX6IqoVb0ZY01CwI/edit" },
+      { pkg: "SymphonyIPM", ver: "Post Installation", type: "Template cloned org - Post Installation", link: "https://docs.google.com/document/d/1zFWAJflfnTFunMkCObs17UHBUdIoo3rKYXAfE8zc5Ow/edit?tab=t.0#heading=h.nxx749ly2sd1" },
+      { pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Additional Steps", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Post Installation", link: "https://docs.google.com/document/d/1TYoM38OwvqGUj2vIBf1cXrH07wIrkL6iYP8E1GGBNZ8/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Post Installation", type: "Post Installation Consolidated", link: "https://docs.google.com/spreadsheets/d/12-cra50RDo8BD5bkNql0wfn11CBLegFNbsW2reJS94k/edit?gid=0#gid=0" },
+      { pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Installation Procedure", link: "https://docs.google.com/document/d/1sN0_8dLaGhSjFiDwiSvTZxf4aGHPACO4jo2cuep1Euc/edit?tab=t.0" },
+      { pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Release Notes", link: "https://docs.google.com/document/d/16m5mOKx96X2dpQMmEYhTM-Vu4RBGRzadyByFbGWepEI/edit?tab=t.0#heading=h.afvb612sap42" },
+      { pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Release Notes", link: "https://docs.google.com/document/d/1k_aNNuBtpBS6bctW21TVKF5A1dmsqhuG_4kS57DvcUE/edit?tab=t.0#heading=h.z20ne1xmld5z" },
+      { pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Installation Procedure", link: "https://drive.google.com/file/d/1fFiQUZu8ATOinYmH_zI-jr6J9UPS4f9E/view" },
+      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Installation Procedure", link: "https://docs.google.com/document/d/18Rkm3Y_GGUjWToa_N-GtKLx2gZ-rrg48MubcU9W_xrE/edit?usp=sharing" },
+      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Release Notes", link: "https://docs.google.com/document/d/1s3xLP2YA0l2UG3sXJ8vk62Xolw1XiKl8Tx6QH2vp6zM/edit?usp=sharing" },
+      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "User Guide", link: "https://docs.google.com/document/d/1d8KEX4fXKGU3jC8mNmGjIV5MHZ40gQJ2L5JwGcXj74g/edit?usp=sharing" },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "Configuration & Setup", link: "https://docs.google.com/document/d/12O9E13nzhvUCf3G4tPJcCALdoU_-rNBe06Qwb555YVA/edit?tab=t.0#heading=h.w1f633o6rz3d" },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Configuration ( Recent Changes )", link: "https://docs.google.com/document/d/17oQjYBs-7YXTbrt8w0xr9v7AVmeezISCGw4s-1hW0GE/edit?usp=sharing" },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO TM Configuration", link: "https://docs.google.com/document/d/1KNFCiqFxOYpreqQI6pzTSNFMKpIJcRUZg1fX7_-ZS3Q/edit?tab=t.0#heading=h.9j1x6qq0ikur" },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "Symphony Corporate - Technical Document", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.3iawlk4gm5a9" },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration User guide", link: "https://docs.google.com/document/d/19U7qsSC6n9Umpz-ZVtcJ6TLeRwS1DUDE/edit" },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "TM PTO Integration - User Guide", link: "https://docs.google.com/document/d/1x7pQZnZmd4PDr-S_U2BIN1NSs0Qhc_Ujiz8TwiKXpAc/edit?tab=t.0" },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration - FAQ", link: "https://docs.google.com/spreadsheets/d/12XkVFQoFoLbBDwW6o2Xn0ieAyptyS15HjETrPWSAeW8/edit?gid=0#gid=0" },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 1", link: "https://docs.google.com/document/d/1xQSlTOKb1YlB4YgCkTbZrz5_yCHDND71rwyqVo9xk4U/edit?tab=t.0" },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 2", link: "https://docs.google.com/document/d/1TxknkBApfacf5IhmcIUFoTCOSqlwCTHx2nLTfPeXd7w/edit?tab=t.0" },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 3", link: "https://docs.google.com/document/d/1dR31w_O5cmKH1Hjg1GmH3F-dbvfE6xAosjd9AdeEiiI/edit?tab=t.0#heading=h.e8ns8op5dsap" },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Package details", link: "https://docs.google.com/spreadsheets/d/1sTxqq6GV5jN7zf_Bbsv2l7zOt_b_3x6tlM1QlTxzPZs/edit?gid=0#gid=0" },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Release Notes", link: "https://docs.google.com/document/d/1LRGEHLGKZ8ktQ4K-FALU6E-xwLTN37gleI5TWUB1aPc/edit?hl=en&forcehl=1&tab=t.0" },
+      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Installation Procedure", link: "https://docs.google.com/document/d/1uDOHTA1nAuptl50XVE8zroDriJvEC-vWaMlr-Qmul0k/edit?tab=t.0" },
+      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "User Guide", link: "https://docs.google.com/document/d/1x0Byh0sS7mjE3Mrtm0Qotq671hQvpPoMwccpgTDhw3k/edit?tab=t.0" },
+      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Release Notes", link: "https://docs.google.com/document/d/1QqwMgMNlzuTAThfFUunGB5sTo_Pj2OyECF0loyi4Nzs/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
+      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Package details", link: "https://docs.google.com/document/d/1Lsz2mprPkHYf58fmE6yQK81NAzlI7f3j/edit" },
+      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Release Notes", link: "https://docs.google.com/document/d/1lXuZP5OL0ZaFQp_dqxz3i-WPh40HRGlqfB3y4cJ9-6E/edit?tab=t.0" },
+      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "User Guide", link: "https://docs.google.com/document/d/1To_yiyqfyBO7_qVLqyADumWNaLsFwxTEaVqlDhPTzao/edit?tab=t.0" },
+      { pkg: "sIDS Docketing", ver: "sIDS Docketing", type: "User Guide", link: "https://docs.google.com/document/d/1CZDWmzKugbwrZ7RIOsgW1k5cVTkvbRLWDICjXvfUQ60/edit?tab=t.0" },
+      { pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Installation Procedure", link: "https://docs.google.com/document/d/1xzAKXMiD2eyGp9R4xfNLRTdhrOk92-Cdb4Sx2pazwQE/edit?tab=t.0" },
+      { pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Release Notes", link: "https://docs.google.com/document/d/1_OeGOTnVSgh84uEH5q7nGy35Oo3u3uZ-3_iwRrRN1_E/edit?tab=t.0#heading=h.33ebwiv13lft" },
+      { pkg: "Other", ver: "Other", type: "Production Checklist", link: "https://docs.google.com/spreadsheets/d/1hb_bFG5AB5OST8K6l7kZrqJZNO8Fvn4z/edit?gid=1020191051#gid=1020191051" },
+      { pkg: "Other", ver: "Other", type: "Estimation Template", link: "https://docs.google.com/spreadsheets/d/1e50bRJxcbc3k_bI2WD1733xgv4sxZMleO09EwPClugU/edit?gid=0#gid=0" },
+      { pkg: "Other", ver: "Other", type: "OOB IDF template", link: "https://docs.google.com/document/d/10hxmDD0DOwIVe2ObxgOaEEbJFA9uCoh2KeGn--6dldk/edit?tab=t.0#heading=h.gjdgxs" },
+      { pkg: "Other", ver: "Other", type: "Fields updated by clicking on 'Data Sync' button (IFI import)", link: "https://docs.google.com/spreadsheets/d/1FAKrv_VfK75gxdzzyoyCce3vXhPoVY_aSwj-AsiwAfA/edit?gid=0#gid=0" },
+      { pkg: "Other", ver: "Other", type: "Encryption and field tracking doc", link: "https://docs.google.com/spreadsheets/d/1_H5i1sHYWIeE6iA5x-cqibG97fYeqZgaDfwRwkOOceY/edit?gid=1277242720#gid=1277242720" },
+      { pkg: "Other", ver: "Other", type: "Salesforce Shield Platform Encryption", link: "https://docs.google.com/presentation/d/1AgTXlLsyh-buIzKlnrwSR1GBuMk94n0ivpASf7bSTf4/edit#slide=id.p" },
+      { pkg: "Other", ver: "Other", type: "Turning off - OOB Status updation", link: "https://docs.google.com/document/d/1viGZjOQC15qfd3It-YwgGEcIx1UjD4HM/edit" },
+      { pkg: "Other", ver: "Other", type: "Symphony LF - Data Upload Steps/Guideline", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "Rules by Case Type", link: "https://docs.google.com/document/d/1_IeSJf_8idS_WCLP3Ua0H_TtozwzrEZEvIhoGmUi0Tw/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "Reminder object data for LF", link: "https://drive.google.com/drive/folders/1-FtZUh7lP5WQm0jT7vcLx4z_nnCylPde?usp=sharing" },
+      { pkg: "Other", ver: "Other", type: "Schedule Jobs - All Packages", link: "https://docs.google.com/spreadsheets/d/1NZSbNl44jviJpYmAKwpyFGATJXqSSp7T/edit?gid=1001576285#gid=1001576285" },
+      { pkg: "Other", ver: "Other", type: "Technical PTO document (from PE)", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.vdqd05xcieik" },
+      { pkg: "Other", ver: "Other", type: "Symphony-List of Processes & Details", link: "https://docs.google.com/spreadsheets/d/1jT24l1SDvVkNsrN1PZV4wulD_e7lkrs059LOrsOnSg0/edit?gid=1810542744#gid=1810542744" },
+      { pkg: "Other", ver: "Other", type: "Patent field description", link: "https://docs.google.com/spreadsheets/d/1u3ngTQfzKslP5za1-uF8JrY0ou-2aCMUkE7n4jUDTok/edit?gid=1042587126#gid=1042587126" },
+      { pkg: "Other", ver: "Other", type: "OOB email templates", link: "https://docs.google.com/document/d/17_WuOjbpkbAX9VQcRrrUAu4_qO6PT3epTGcwu5UDfsI/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "Glossary and Number Formats for Symphony", link: "https://docs.google.com/spreadsheets/d/1gX7mHK1rnjfRUgznFZ_ahwvmv4KWNoUR/edit?gid=1452062042#gid=1452062042" },
+      { pkg: "Other", ver: "Other", type: "MaxForms List Old", link: "https://docs.google.com/spreadsheets/d/1Kyt3D24WY-t8RXjy4GsDuAuYsA6zdDfmIGTsEilcQSg/edit?gid=0#gid=0" },
+      { pkg: "Other", ver: "Other", type: "Prosecution Analytics Requirement Definition Document", link: "https://docs.google.com/document/d/16fefj0Mr4q1u-jxrPNykY-ZE_P1Pw0Z1/edit?usp=sharing" },
+      { pkg: "Other", ver: "Other", type: "Prosecution Analytics & History Doc", link: "https://docs.google.com/document/d/1EJ270FIDMS5eRTsokPeV8x4zovO6WsCt8sSjsOeNQKo/edit?usp=sharing" },
+      { pkg: "Other", ver: "Other", type: "Prosecution Analytics- Api Integration", link: "https://drive.google.com/file/d/1QZGbpZEhgPsdDDyz8_X24ordjNURJfIC/view?usp=sharing" },
+      { pkg: "Other", ver: "Other", type: "Support checklist document Template", link: "https://docs.google.com/spreadsheets/d/1S7fqp95TLsLXdI6VMQWSj8ffLu34uJYClceJMGKo5x4/edit?gid=2105910797#gid=2105910797" },
+      { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 1", link: "https://docs.google.com/document/d/1BeMcpIbVNIP0etuufO-Duc_SXznyEqJo_yQaB-ah-2Y/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 2", link: "https://docs.google.com/document/d/1YA0f1BRx5tB1UXB3Q74e_LdrQ0lyKrphEnNYEp0rw30/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "Law Firm OOB features", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "DKIM Setup Document", link: "https://docs.google.com/document/d/1mSO7qCLeEx3ZSMb3upBh5bEbm0w978JC/edit" },
+      { pkg: "Other", ver: "Other", type: "Post Installation Steps", link: "https://docs.google.com/spreadsheets/d/1VVZZtIYXpzAd_-dGjt-JDOjhnehh5Uawe5WZJ7eN96c/edit?gid=0#gid=0" },
+      { pkg: "Other", ver: "Other", type: "USPTO sponsorship - Patent Center", link: "https://drive.google.com/file/d/17L3Zk12DOm33_tb77ZLO41E6dWKtr_nH/view" },
+      { pkg: "Other", ver: "Other", type: "PTO Sync document", link: "https://docs.google.com/document/d/1aaI7LNgQx2ccEhru7qYAA9EOSh9JuyE5HIurhWHvah4/edit?usp=sharing" },
+      { pkg: "Other", ver: "Other", type: "E-Billing recording", link: "https://drive.google.com/drive/folders/1g4ydUD4rj2gLYQBH3A_z4u0-FhwoD-Bd" },
+      { pkg: "Other", ver: "Other", type: "Errors & Fixes", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "PTO Doc codes", link: "https://docs.google.com/document/d/1HF42RGxJIs97wTHlUSbfXwPFIXskys3vO6xilNYPVnI/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "Symphony Prosecution sync data flow diagram", link: "https://drive.google.com/file/d/1Q3q_v-XNr4_DToS2qiw_lqnS9VCwSbz1/view?usp=drive_link" },
+      { pkg: "Other", ver: "Other", type: "Renewals doc", link: "https://docs.google.com/spreadsheets/d/1WLc0EHyljjffbDHebQu0AttDdDV03oDE/edit" },
+      { pkg: "Other", ver: "Other", type: "Renewal Guide for Annuity", link: "https://docs.google.com/document/d/1gHFV9ixVcZCuE8y00eeRk5TFSw2yboeVbqgGG3ES7jU/edit?tab=t.0" },
+      { pkg: "Other", ver: "Other", type: "UPC Folder", link: "https://drive.google.com/drive/folders/1a6FgPCByxI1ibEPehvKLM_d2K6IV8u2s" },
+      { pkg: "Other", ver: "Other", type: "New Object/Fields Request Template", link: "https://docs.google.com/spreadsheets/d/1tvaTEMsruZ4mrylN8sGb1w6DnKxhgKR8nPFPyTUQZkQ/edit?gid=526926240#gid=526926240" },
+      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring PPT", link: "https://docs.google.com/presentation/d/1jmw9iCRUUKnLwFzMGPWu21X0V5Zk9olXsdFHK7BEGcM/edit#slide=id.g2e29f102836_0_70" },
+      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
+    ];
+/* DOC_DATA_END */
+
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
+    let selectedModule = localStorage.getItem('user_pref_module_v17') || 'ALL';
+    let searchQuery = '';
+    let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v17') || 'ALL';
+    let docSearchQuery = '';
+    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
+
+    const categoryColors = {
+      'intellectual property': { bg: '#feefe3', color: '#b06000' },
+      'introduction to symphony': { bg: '#f3e8fd', color: '#9334e6' },
+      'invention module': { bg: '#e8f0fe', color: '#1a73e8' },
+      'patent module': { bg: '#e6f4ea', color: '#1e8e3e' },
+      'renewals': { bg: '#fef7e0', color: '#b06000' },
+      'trademark': { bg: '#fce8e6', color: '#c5221f' },
+      'assessment': { bg: '#e8f0fe', color: '#1a73e8' },
+      'additional reference materials': { bg: '#feefe3', color: '#b06000' },
+      'default': { bg: '#f1f3f4', color: '#5f6368' }
+    };
+
+    function notifyIframeHeight() {
+      if (window.parent && window.parent !== window) {
+        const height = document.documentElement.scrollHeight || document.body.scrollHeight;
+        window.parent.postMessage({ type: 'kc-iframe-height', height: height }, '*');
+      }
+    }
 
     function checkUserLoginState() {
       if (!currentUser || !currentUser.toLowerCase().includes('@maxval.com')) {
@@ -419,6 +606,8 @@
       updateUserBadgeDisplay();
       closeModal('loginModalOverlay');
       showInlineBanner(`Signed in as: ${currentUser}`);
+      renderLearningHub();
+      renderDocumentHub();
     }
 
     function updateUserBadgeDisplay() {
@@ -428,14 +617,134 @@
       }
     }
 
+    function getUserAnalytics() {
+      return JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
+    }
+
+    function saveAnalytics(data) {
+      localStorage.setItem('kc_user_analytics_v7', JSON.stringify(data));
+    }
+
+    function toggleTopicCompletion(resId) {
+      if (!currentUser) { openLoginModal(); return; }
+      const analytics = getUserAnalytics();
+      if (!analytics.users[currentUser]) {
+        analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+      }
+      const userRecord = analytics.users[currentUser];
+      if (!userRecord.completedTopics) userRecord.completedTopics = [];
+
+      const idx = userRecord.completedTopics.indexOf(resId);
+      if (idx > -1) { userRecord.completedTopics.splice(idx, 1); } 
+      else { userRecord.completedTopics.push(resId); }
+
+      saveAnalytics(analytics);
+      renderLearningHub();
+    }
+
+    function trackDocView(pkgName, docType) {
+      if (!currentUser) return;
+      const analytics = getUserAnalytics();
+      if (!analytics.users[currentUser]) {
+        analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+      }
+      const userRecord = analytics.users[currentUser];
+      if (!userRecord.seenDocs) userRecord.seenDocs = [];
+
+      userRecord.seenDocs.push({ pkg: pkgName, type: docType, timestamp: new Date().toLocaleString() });
+      saveAnalytics(analytics);
+    }
+
+    function openUserAnalyticsDashboard() {
+      const tbody = document.getElementById('userAnalyticsTableBody');
+      const analytics = getUserAnalytics();
+      const users = analytics.users || {};
+      const userKeys = Object.keys(users);
+      const totalTopicsAvailable = dataset.length;
+
+      if (userKeys.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
+      } else {
+        tbody.innerHTML = userKeys.map(email => {
+          const u = users[email];
+          const completedCount = u.completedTopics ? u.completedTopics.length : 0;
+          const viewCount = u.seenDocs ? u.seenDocs.length : 0;
+
+          return `
+            <tr>
+              <td><strong>${email}</strong></td>
+              <td>${u.lastLogin || 'N/A'}</td>
+              <td>
+                <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
+                  ${completedCount} / ${totalTopicsAvailable} Completed
+                </span>
+              </td>
+              <td>
+                <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
+                  ${viewCount} Viewed
+                </span>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('userDashboardModalOverlay').classList.add('open');
+      setTimeout(notifyIframeHeight, 100);
+    }
+
+    function syncDropdownOptions() {
+      const existingCats = new Set([...DEFAULT_CATEGORIES, ...dataset.map(d => d.category)]);
+      const mainSelect = document.getElementById('moduleSelect');
+      mainSelect.innerHTML = `<option value="ALL">-- All Learning Modules --</option>` +
+        Array.from(existingCats).map(cat => `<option value="${cat}">${cat}</option>`).join('');
+      mainSelect.value = selectedModule;
+    }
+
+    function syncDocPackageOptions() {
+      const packages = new Set(docDataset.map(d => d.pkg));
+      const select = document.getElementById('docPackageSelect');
+      select.innerHTML = `<option value="ALL">-- All Packages --</option>` +
+        Array.from(packages).map(p => `<option value="${p}">${p}</option>`).join('');
+      select.value = selectedDocPackage;
+    }
+
+    function switchTab(tabId, el) {
+      activeTab = tabId;
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      el.classList.add('active');
+      
+      const bookmarkContainer = document.getElementById('bookmarkContainer');
+      bookmarkContainer.style.display = (tabId === 'learningHubTab') ? 'inline-flex' : 'none';
+
+      renderLearningHub();
+      renderDocumentHub();
+      setTimeout(notifyIframeHeight, 50);
+    }
+
+    function toggleFormFields(target) {
+      if (target === 'learning') {
+        document.getElementById('learningFields').style.display = 'block';
+        document.getElementById('documentFields').style.display = 'none';
+      } else {
+        document.getElementById('learningFields').style.display = 'none';
+        document.getElementById('documentFields').style.display = 'block';
+      }
+      setTimeout(notifyIframeHeight, 50);
+    }
+
     function openAddModal() {
       if (!currentUser) { openLoginModal(); return; }
       document.getElementById('submitterEmail').value = currentUser;
       document.getElementById('addModalOverlay').classList.add('open');
+      setTimeout(notifyIframeHeight, 100);
     }
 
     function closeModal(modalId) {
       document.getElementById(modalId).classList.remove('open');
+      setTimeout(notifyIframeHeight, 100);
     }
 
     function showInlineBanner(msg) {
@@ -445,49 +754,131 @@
       setTimeout(() => { banner.style.display = 'none'; }, 4500);
     }
 
-    /* BACKGROUND ASYNCHRONOUS DUAL-SERVICE EMAIL WORKER (NO PAGE NAVIGATION) */
+    function toggleBookmark(id) {
+      if (bookmarkedIds.has(id)) { bookmarkedIds.delete(id); } else { bookmarkedIds.add(id); }
+      localStorage.setItem('user_private_bookmarks_v17', JSON.stringify(Array.from(bookmarkedIds)));
+      renderLearningHub();
+    }
+
+    function getCategoryStyle(category) {
+      const key = category.toLowerCase().trim();
+      return categoryColors[key] || categoryColors['default'];
+    }
+
+    function renderLearningHub() {
+      const grid = document.getElementById('resourcesGrid');
+      const filtered = dataset.filter(res => {
+        const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
+        const matchesSearch = res.name.toLowerCase().includes(searchQuery) || res.category.toLowerCase().includes(searchQuery);
+        return matchesModule && matchesSearch;
+      });
+
+      document.getElementById('learningActiveCount').textContent = filtered.length;
+      document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:1.5rem;"><span class="material-icons-outlined" style="font-size:32px;">search_off</span><h3>No matching learning items found</h3></div>`;
+        setTimeout(notifyIframeHeight, 50);
+        return;
+      }
+
+      const analytics = getUserAnalytics();
+      const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
+
+      grid.innerHTML = filtered.map(res => {
+        const style = getCategoryStyle(res.category);
+        const isBookmarked = bookmarkedIds.has(res.id);
+        const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
+
+        return `
+          <article class="resource-card" onclick="toggleTileActive(this)">
+            <div>
+              <div class="card-header">
+                <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
+                <div class="action-icons" onclick="event.stopPropagation()">
+                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Completed' : 'Mark as Complete'}">
+                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
+                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                    </span>
+                  </button>
+                  <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark">
+                    <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
+                  </button>
+                </div>
+              </div>
+              <h3 class="card-title">${res.name}</h3>
+            </div>
+            <div class="card-actions" onclick="event.stopPropagation()">
+              <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
+                <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+              </a>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      setTimeout(notifyIframeHeight, 50);
+    }
+
+    function renderDocumentHub() {
+      const tbody = document.getElementById('docTableBody');
+      const filteredWithIndex = docDataset.map((doc, idx) => ({ ...doc, originalIndex: idx })).filter(doc => {
+        const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
+        const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) ||
+                            doc.ver.toLowerCase().includes(docSearchQuery) ||
+                            doc.type.toLowerCase().includes(docSearchQuery);
+        return matchesPkg && matchesSearch;
+      });
+
+      document.getElementById('docActiveCount').textContent = filteredWithIndex.length;
+
+      if (filteredWithIndex.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 1.25rem;">No matching documents found.</td></tr>`;
+        setTimeout(notifyIframeHeight, 50);
+        return;
+      }
+
+      tbody.innerHTML = filteredWithIndex.map(doc => `
+        <tr onclick="toggleTileActive(this)">
+          <td><strong>${doc.pkg}</strong></td>
+          <td>${doc.ver}</td>
+          <td><span class="doc-type-tag">${doc.type}</span></td>
+          <td onclick="event.stopPropagation()">
+            <div style="display: flex; align-items: center; gap: 0.4rem;">
+              <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
+                <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+              </a>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      setTimeout(notifyIframeHeight, 50);
+    }
+
+    function toggleTileActive(cardElement) {
+      document.querySelectorAll('.resource-card, .doc-table tr').forEach(el => el.classList.remove('selected-active'));
+      cardElement.classList.add('selected-active');
+    }
+
     async function sendNotificationEmail(details) {
-      const messageBody = `Hello MaxVal Team,\n\nA new resource link was published in Knowledge Center.\n\nRelease Summary:\n• Target Hub: ${details.hubName}\n• Title: ${details.title}\n• Link: ${details.link}\n• Published By: ${details.submitter}\n\nPortal: https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`;
+      const messageBody = `Hello MaxVal Team,\n\nA new resource link was published in Knowledge Center.\n\nRelease Summary:\n• Target Hub: ${details.hubName}\n• Title: ${details.title}\n• Link: ${details.link}\n• Published By: ${details.submitter}\n\nAccess: https://prabhaharan1137.github.io/knowledge-center/Knowledge_Center.html`;
 
-      // Endpoint 1: Formspree (Background No-Cors)
       try {
-        const payload1 = new FormData();
-        payload1.append("email", details.dlAddress);
-        payload1.append("submitter", details.submitter);
-        payload1.append("message", messageBody);
-        payload1.append("_subject", `🔔 MaxVal Release: ${details.title}`);
+        const payload = new FormData();
+        payload.append("access_key", "a1d3f3f0-4628-4e8c-8f4b-871d37ff0990");
+        payload.append("subject", `🔔 Release Notification: ${details.title}`);
+        payload.append("from_name", "MaxVal Knowledge Center");
+        payload.append("to_email", details.dlAddress);
+        payload.append("replyto", details.submitter);
+        payload.append("message", messageBody);
 
-        await fetch("https://formspree.io/f/mqakvode", {
-          method: "POST",
-          body: payload1,
-          mode: "no-cors"
-        });
-      } catch (e) { console.warn("Primary endpoint skipped."); }
-
-      // Endpoint 2: Web3Forms (Silent Background Backup)
-      try {
-        const payload2 = new FormData();
-        payload2.append("access_key", "a1d3f3f0-4628-4e8c-8f4b-871d37ff0990");
-        payload2.append("subject", `🔔 Release Notification: ${details.title}`);
-        payload2.append("from_name", "MaxVal Knowledge Center");
-        payload2.append("to_email", details.dlAddress);
-        payload2.append("replyto", details.submitter);
-        payload2.append("message", messageBody);
-
-        await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          body: payload2,
-          mode: "no-cors"
-        });
-      } catch (e) { console.warn("Secondary endpoint skipped."); }
+        await fetch("https://api.web3forms.com/submit", { method: "POST", body: payload, mode: "no-cors" });
+      } catch (e) { console.warn("Email service notice:", e); }
     }
 
     async function handleAddSubmission(e) {
-      // PREVENT DEFAULT PAGE NAVIGATION/RELOAD ENTIRELY
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
+      if (e) { e.preventDefault(); e.stopPropagation(); }
 
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.textContent = "Publishing & Delivering Email...";
@@ -505,7 +896,6 @@
       
       let releaseDetails = { hubName: targetHub, title, link, submitter: submitterEmail, dlAddress };
 
-      // Dispatch email in background without opening blank window
       if (shouldSend) {
         await sendNotificationEmail(releaseDetails);
       }
@@ -520,6 +910,38 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       checkUserLoginState();
+      syncDropdownOptions();
+      syncDocPackageOptions();
+      renderLearningHub();
+      renderDocumentHub();
+
+      document.getElementById('loginForm').addEventListener('submit', handleLoginSubmission);
+      document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
+
+      document.getElementById('moduleSelect').addEventListener('change', (e) => {
+        selectedModule = e.target.value;
+        localStorage.setItem('user_pref_module_v17', selectedModule);
+        renderLearningHub();
+      });
+
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase();
+        renderLearningHub();
+      });
+
+      document.getElementById('docPackageSelect').addEventListener('change', (e) => {
+        selectedDocPackage = e.target.value;
+        localStorage.setItem('user_pref_doc_package_v17', selectedDocPackage);
+        renderDocumentHub();
+      });
+
+      document.getElementById('docSearchInput').addEventListener('input', (e) => {
+        docSearchQuery = e.target.value.toLowerCase();
+        renderDocumentHub();
+      });
+      
+      window.addEventListener('resize', notifyIframeHeight);
+      setTimeout(notifyIframeHeight, 200);
     });
   </script>
 </body>
