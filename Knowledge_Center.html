@@ -39,29 +39,33 @@
       overflow-x: hidden;
     }
 
-    /* MANDATORY SIGN-IN LOCK OVERLAY */
+    /* MANDATORY SIGN-IN LOCK OVERLAY - FIXED AT TOP */
     .app-lock-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 16, 18, 0.82);
+      background: rgba(15, 16, 18, 0.85);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       z-index: 9999999;
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* Keeps box anchored near top */
       justify-content: center;
-      padding: 1rem;
+      padding-top: 40px;
+      overflow-y: auto;
     }
 
     .app-lock-card {
+      position: fixed;
+      top: 40px;
       background: #ffffff;
       border-radius: 16px;
       padding: 2rem;
       max-width: 440px;
-      width: 100%;
+      width: 90%;
       box-shadow: 0 12px 32px rgba(0,0,0,0.35);
       text-align: center;
       border: 1px solid var(--border-color);
+      z-index: 10000000;
     }
 
     .top-hero-header {
@@ -219,7 +223,7 @@
 </head>
 <body>
 
-  <!-- MANDATORY SIGN-IN LOCK OVERLAY -->
+  <!-- FIXED MANDATORY SIGN-IN LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
