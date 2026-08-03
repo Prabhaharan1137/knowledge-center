@@ -194,7 +194,7 @@
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
   <!-- HIDDEN BACKGROUND FORM TARGETING UPDATED GOOGLE APPS SCRIPT DEPLOYMENT -->
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbx3_B-WkfQBoqVfVs4yihotCf-SCHaCyHoMCkR4M2bCuU26A5oxNz9eabOWVQdPEGxd/exec" method="POST" target="hidden_email_iframe" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxuDvuhyKOM6UF-Z3NYM9Spf8iy9KjB1T04uj8LY_WFhTYQwTUUaLxL42W8gh3sEWYv/exec" method="POST" target="hidden_email_iframe" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -565,9 +565,9 @@
     ];
 /* DOC_DATA_END */
 
-    const savedDataset = localStorage.getItem('kc_learning_dataset_v22');
+    const savedDataset = localStorage.getItem('kc_learning_dataset_v23');
     if (savedDataset) { try { dataset = JSON.parse(savedDataset); } catch(e){} }
-    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v22');
+    const savedDocDataset = localStorage.getItem('kc_doc_dataset_v23');
     if (savedDocDataset) { try { docDataset = JSON.parse(savedDocDataset); } catch(e){} }
 
     let activeTab = 'learningHubTab';
@@ -909,7 +909,7 @@
         // Add new link to active dataset immediately so it shows live on portal
         const newItem = { id: 'res_custom_' + Date.now(), name: title, category: category, link: link };
         dataset.unshift(newItem);
-        localStorage.setItem('kc_learning_dataset_v22', JSON.stringify(dataset));
+        localStorage.setItem('kc_learning_dataset_v23', JSON.stringify(dataset));
         
         syncDropdownOptions();
         renderLearningHub();
@@ -925,7 +925,7 @@
         // Add new doc link to dataset immediately
         const newItem = { pkg: pkg, ver: ver, type: type, link: link };
         docDataset.unshift(newItem);
-        localStorage.setItem('kc_doc_dataset_v22', JSON.stringify(docDataset));
+        localStorage.setItem('kc_doc_dataset_v23', JSON.stringify(docDataset));
 
         syncDocPackageOptions();
         renderDocumentHub();
