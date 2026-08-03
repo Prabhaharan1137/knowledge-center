@@ -40,24 +40,24 @@
       position: relative;
     }
 
-    /* MANDATORY SIGN-IN LOCK OVERLAY - FIXED AT TOP VIA STICKY VIEWPORT ANCHOR */
+    /* FROSTED GLASS BACKGROUND BLUR OVERLAY (PINNED AT TOP) */
     .app-lock-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 16, 18, 0.88);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(15, 16, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 9999999;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 20px;
+      padding-top: 30px;
       overflow-y: auto;
     }
 
     .app-lock-card {
-      position: relative;
-      margin-top: 20px;
+      position: fixed;
+      top: 30px;
       background: #ffffff;
       border-radius: 16px;
       padding: 2rem;
@@ -165,11 +165,25 @@
     .tab-content { display: none; flex-direction: column; }
     .tab-content.active { display: flex; }
 
-    .filter-card-highlight { background: #ffffff; border: 1.5px solid var(--google-blue); border-radius: var(--radius); padding: 0.6rem 0.85rem; margin-bottom: 0.65rem; }
-    .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.25rem; }
+    .filter-card-highlight { 
+      background: #ffffff; 
+      border: 1.5px solid var(--google-blue); 
+      border-radius: var(--radius); 
+      padding: 0.6rem 0.85rem; 
+      margin-bottom: 0.65rem; 
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .filter-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; }
     .styled-dropdown-catchy { width: 100%; padding: 0.4rem 0.7rem; font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 500; border: 1.5px solid var(--border-color); border-radius: 6px; outline: none; }
 
-    .active-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.45rem; font-size: 0.75rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.2rem 0.55rem; border-radius: 6px; }
+    .active-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.2rem 0.55rem; border-radius: 6px; }
 
     .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.4rem 0.7rem; margin-bottom: 0.65rem; }
     .search-box { position: relative; width: 100%; }
@@ -177,20 +191,28 @@
     .search-input { width: 100%; padding: 0.35rem 1rem 0.35rem 2.1rem; border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.82rem; outline: none; }
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
-    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; }
     .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
+    .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
 
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.45rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.88rem; font-weight: 500; }
     .category-badge { font-size: 0.65rem; font-weight: 500; padding: 0.12rem 0.4rem; border-radius: 10px; }
     .card-actions { margin-top: 0.6rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.35rem; }
     .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.78rem; }
-    .action-icons { display: flex; gap: 0.15rem; align-items: center; }
+    .action-icons { display: flex; gap: 0.25rem; align-items: center; }
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; }
     .action-btn:hover { background: rgba(0, 0, 0, 0.05); }
     .action-btn.delete-btn:hover { color: var(--google-red); }
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
+
+    .item-select-checkbox {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--google-red);
+    }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
@@ -200,8 +222,10 @@
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(32, 33, 36, 0.65);
-      display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow-y: auto;
+      background: rgba(15, 16, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 30px 1rem; overflow-y: auto;
     }
     .modal-overlay.open { display: flex; }
     .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.25rem; box-shadow: var(--shadow-md); margin-top: 10px; }
@@ -214,7 +238,7 @@
     .form-group input, .form-group select { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
     .checkbox-group { display: flex; align-items: center; gap: 0.5rem; background: var(--google-blue-light); padding: 0.55rem 0.75rem; border-radius: 6px; }
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
-    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
+    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
     
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
@@ -224,7 +248,7 @@
 </head>
 <body>
 
-  <!-- MANDATORY SIGN-IN LOCK OVERLAY -->
+  <!-- FIXED MANDATORY SIGN-IN LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
@@ -241,8 +265,8 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <!-- FORM TARGET FOR GOOGLE APPS SCRIPT -->
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwU0ZyOOr4EjN-gz8iuTTKqHC7zFMFd6PaxcNBoMFwypwNWC33XqzvJz1YSevUrH874/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <!-- FORM TARGET FOR UPDATED GOOGLE APPS SCRIPT -->
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycby5i8pL2dt8TFdRRlIjoA4IoV4bsi7P61FDSXINm6XeGiVMQRmcXoPizpPYwQ-pN2UE/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -309,7 +333,13 @@
     <!-- LEARNING HUB TAB -->
     <div id="learningHubTab" class="tab-content active">
       <section class="filter-card-highlight">
-        <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
+        <div class="filter-header-row">
+          <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
+          <button id="learningBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="promptBulkDelete('learning')">
+            <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
+            <span>Delete Selected (<strong id="learningSelectedCount">0</strong>)</span>
+          </button>
+        </div>
         <select id="moduleSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Learning Modules --</option>
         </select>
@@ -328,7 +358,13 @@
     <!-- DOCUMENT HUB TAB -->
     <div id="documentHubTab" class="tab-content">
       <section class="filter-card-highlight">
-        <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY NAME</label>
+        <div class="filter-header-row">
+          <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY NAME</label>
+          <button id="docBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="promptBulkDelete('document')">
+            <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
+            <span>Delete Selected (<strong id="docSelectedCount">0</strong>)</span>
+          </button>
+        </div>
         <select id="docPackageSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Packages --</option>
         </select>
@@ -345,7 +381,7 @@
       <div class="table-container">
         <table class="doc-table">
           <thead>
-            <tr><th>Package Name</th><th>Package Version</th><th>Type of Doc</th><th>Actions</th></tr>
+            <tr><th><input type="checkbox" id="selectAllDocsCheckbox" onchange="toggleSelectAllDocs(this)"></th><th>Package Name</th><th>Package Version</th><th>Type of Doc</th><th>Actions</th></tr>
           </thead>
           <tbody id="docTableBody"></tbody>
         </table>
@@ -364,8 +400,8 @@
         <span class="material-icons-outlined" style="font-size: 56px; color: var(--google-green);">account_circle</span>
         <p style="font-size: 0.95rem; font-weight: 700; margin-top: 0.5rem;" id="modalProfileEmail">user@maxval.com</p>
         <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Logged in to Symphony Knowledge Hub</p>
-        <button type="button" class="btn-danger" style="width: 100%;" onclick="handleSignOut()">
-          <span class="material-icons-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">logout</span>Sign Out
+        <button type="button" class="btn-danger" style="width: 100%; justify-content: center; padding: 0.65rem;" onclick="handleSignOut()">
+          <span class="material-icons-outlined" style="font-size: 16px;">logout</span><span>Sign Out</span>
         </button>
       </div>
     </div>
@@ -647,6 +683,10 @@
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
 
+    // Multi-select tracking sets
+    let selectedLearningIndices = new Set();
+    let selectedDocIndices = new Set();
+
     let pendingAction = null; 
 
     const categoryColors = {
@@ -896,11 +936,80 @@
       return categoryColors[key] || categoryColors['default'];
     }
 
+    /* MULTI-SELECT CHECKBOX HANDLERS */
+    function toggleLearningSelect(index, event) {
+      event.stopPropagation();
+      if (selectedLearningIndices.has(index)) {
+        selectedLearningIndices.delete(index);
+      } else {
+        selectedLearningIndices.add(index);
+      }
+      updateLearningBulkUI();
+    }
+
+    function updateLearningBulkUI() {
+      const count = selectedLearningIndices.size;
+      const btn = document.getElementById('learningBulkDeleteBtn');
+      document.getElementById('learningSelectedCount').textContent = count;
+      btn.style.display = count > 0 ? 'inline-flex' : 'none';
+
+      document.querySelectorAll('#resourcesGrid .resource-card').forEach(card => {
+        const idx = parseInt(card.getAttribute('data-index'), 10);
+        if (selectedLearningIndices.has(idx)) {
+          card.classList.add('selected-card');
+        } else {
+          card.classList.remove('selected-card');
+        }
+      });
+    }
+
+    function toggleDocSelect(index, event) {
+      event.stopPropagation();
+      if (selectedDocIndices.has(index)) {
+        selectedDocIndices.delete(index);
+      } else {
+        selectedDocIndices.add(index);
+      }
+      updateDocBulkUI();
+    }
+
+    function toggleSelectAllDocs(masterCheckbox) {
+      selectedDocIndices.clear();
+      if (masterCheckbox.checked) {
+        document.querySelectorAll('#docTableBody .item-select-checkbox').forEach(cb => {
+          const idx = parseInt(cb.getAttribute('data-index'), 10);
+          selectedDocIndices.add(idx);
+          cb.checked = true;
+        });
+      } else {
+        document.querySelectorAll('#docTableBody .item-select-checkbox').forEach(cb => {
+          cb.checked = false;
+        });
+      }
+      updateDocBulkUI();
+    }
+
+    function updateDocBulkUI() {
+      const count = selectedDocIndices.size;
+      const btn = document.getElementById('docBulkDeleteBtn');
+      document.getElementById('docSelectedCount').textContent = count;
+      btn.style.display = count > 0 ? 'inline-flex' : 'none';
+    }
+
+    function promptBulkDelete(hub) {
+      if (!currentUser) { checkUserLoginState(); return; }
+      pendingAction = { type: 'bulk_delete', hub };
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinModalOverlay').classList.add('open');
+      scrollParentToTop();
+    }
+
     function promptPinForAction(type, index, hub) {
       if (!currentUser) { checkUserLoginState(); return; }
       pendingAction = { type, index, hub };
       document.getElementById('pinInput').value = '';
       document.getElementById('pinModalOverlay').classList.add('open');
+      scrollParentToTop();
     }
 
     function handlePinSubmission(e) {
@@ -921,6 +1030,8 @@
 
       if (type === 'delete') {
         executeDeleteItem(hub, index);
+      } else if (type === 'bulk_delete') {
+        executeBulkDeleteItem(hub);
       } else if (type === 'edit') {
         executeEditItem(hub, index);
       }
@@ -931,16 +1042,45 @@
     function executeDeleteItem(hub, index) {
       if (hub === 'learning') {
         dataset.splice(index, 1);
+        selectedLearningIndices.delete(index);
         const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
         localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
+        updateLearningBulkUI();
         renderLearningHub();
       } else {
         docDataset.splice(index, 1);
+        selectedDocIndices.delete(index);
         const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
         localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
+        updateDocBulkUI();
         renderDocumentHub();
       }
       showInlineBanner("Item successfully deleted.");
+    }
+
+    function executeBulkDeleteItem(hub) {
+      if (hub === 'learning') {
+        const sortedIndices = Array.from(selectedLearningIndices).sort((a, b) => b - a);
+        sortedIndices.forEach(idx => dataset.splice(idx, 1));
+        selectedLearningIndices.clear();
+        
+        const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
+        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
+        
+        updateLearningBulkUI();
+        renderLearningHub();
+      } else {
+        const sortedIndices = Array.from(selectedDocIndices).sort((a, b) => b - a);
+        sortedIndices.forEach(idx => docDataset.splice(idx, 1));
+        selectedDocIndices.clear();
+
+        const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
+        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
+
+        updateDocBulkUI();
+        renderDocumentHub();
+      }
+      showInlineBanner("Selected items successfully deleted.");
     }
 
     function executeEditItem(hub, index) {
@@ -965,6 +1105,7 @@
 
       document.getElementById('submitterEmail').value = currentUser;
       document.getElementById('addModalOverlay').classList.add('open');
+      scrollParentToTop();
     }
 
     function renderLearningHub() {
@@ -991,13 +1132,15 @@
         const style = getCategoryStyle(res.category);
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
+        const isSelected = selectedLearningIndices.has(res.originalIndex);
 
         return `
-          <article class="resource-card" onclick="toggleTileActive(this)">
+          <article class="resource-card ${isSelected ? 'selected-card' : ''}" data-index="${res.originalIndex}" onclick="toggleTileActive(this)">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
                 <div class="action-icons" onclick="event.stopPropagation()">
+                  <input type="checkbox" class="item-select-checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLearningSelect(${res.originalIndex}, event)" title="Select Item">
                   <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Completed' : 'Mark as Complete'}">
                     <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
                       ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
@@ -1043,33 +1186,39 @@
       document.getElementById('docActiveCount').textContent = filteredWithIndex.length;
 
       if (filteredWithIndex.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 1.25rem;">No matching documents found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No matching documents found.</td></tr>`;
         setTimeout(notifyIframeHeight, 50);
         return;
       }
 
-      tbody.innerHTML = filteredWithIndex.map(doc => `
-        <tr onclick="toggleTileActive(this)">
-          <td><strong>${doc.pkg}</strong></td>
-          <td>${doc.ver}</td>
-          <td><span class="doc-type-tag">${doc.type}</span></td>
-          <td onclick="event.stopPropagation()">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
-                <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-              </a>
-              <div class="action-icons">
-                <button class="action-btn edit-btn" onclick="promptPinForAction('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
-                  <span class="material-icons-outlined" style="font-size:18px;">edit</span>
-                </button>
-                <button class="action-btn delete-btn" onclick="promptPinForAction('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
-                  <span class="material-icons-outlined" style="font-size:18px;">delete</span>
-                </button>
+      tbody.innerHTML = filteredWithIndex.map(doc => {
+        const isSelected = selectedDocIndices.has(doc.originalIndex);
+        return `
+          <tr onclick="toggleTileActive(this)">
+            <td onclick="event.stopPropagation()">
+              <input type="checkbox" class="item-select-checkbox" data-index="${doc.originalIndex}" ${isSelected ? 'checked' : ''} onchange="toggleDocSelect(${doc.originalIndex}, event)">
+            </td>
+            <td><strong>${doc.pkg}</strong></td>
+            <td>${doc.ver}</td>
+            <td><span class="doc-type-tag">${doc.type}</span></td>
+            <td onclick="event.stopPropagation()">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
+                  <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+                </a>
+                <div class="action-icons">
+                  <button class="action-btn edit-btn" onclick="promptPinForAction('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
+                    <span class="material-icons-outlined" style="font-size:18px;">edit</span>
+                  </button>
+                  <button class="action-btn delete-btn" onclick="promptPinForAction('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
+                    <span class="material-icons-outlined" style="font-size:18px;">delete</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-      `).join('');
+            </td>
+          </tr>
+        `;
+      }).join('');
 
       setTimeout(notifyIframeHeight, 50);
     }
