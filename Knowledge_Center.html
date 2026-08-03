@@ -193,8 +193,8 @@
   <!-- HIDDEN IFRAME TARGET TO PREVENT BLANK PAGE REDIRECTS -->
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <!-- HIDDEN BACKGROUND FORM TARGETING GOOGLE APPS SCRIPT -->
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwsFqMBMf--7g_TkbUq14fhB7O4j6lBm-DR5TlNGCbMVpqzM19o2W3YyV1hK78i1VFy/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <!-- HIDDEN BACKGROUND FORM TARGETING UPDATED GOOGLE APPS SCRIPT -->
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxhCL825N8-jsjB9k5EB-BER5-OnrF6ojk-aS7eForc6Qra40veh_I1PPxg8kxKNxWB/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -588,7 +588,6 @@
       'default': { bg: '#f1f3f4', color: '#5f6368' }
     };
 
-    // Clean text strings to avoid replacement character errors () in emails
     function cleanAsciiText(str) {
       if (!str) return '';
       return str
@@ -947,7 +946,7 @@
       submitBtn.textContent = "Publish Link Live";
       submitBtn.disabled = false;
 
-      // Clear input fields for next entry
+      // Reset form fields
       document.getElementById('newTitle').value = '';
       document.getElementById('newPkg').value = '';
       document.getElementById('newVer').value = '';
