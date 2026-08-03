@@ -193,7 +193,7 @@
   <!-- HIDDEN IFRAME TARGET TO PREVENT BLANK PAGE REDIRECTS -->
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <!-- HIDDEN BACKGROUND FORM TARGETING UPDATED GOOGLE APPS SCRIPT -->
+  <!-- HIDDEN BACKGROUND FORM TARGETING GOOGLE APPS SCRIPT -->
   <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxhCL825N8-jsjB9k5EB-BER5-OnrF6ojk-aS7eForc6Qra40veh_I1PPxg8kxKNxWB/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
@@ -561,7 +561,7 @@
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
     ];
 
-    // Read stored dynamic additions so published items persist on reload
+    // Load locally persisted dynamic additions
     let localCustomDataset = JSON.parse(localStorage.getItem('kc_custom_learning_v17') || '[]');
     let localCustomDocs = JSON.parse(localStorage.getItem('kc_custom_docs_v17') || '[]');
 
@@ -594,7 +594,8 @@
         .replace(/[\u2018\u2019]/g, "'")
         .replace(/[\u201C\u201D]/g, '"')
         .replace(/[\u2013\u2014]/g, '-')
-        .replace(/[^\x00-\x7F]/g, '');
+        .replace(/[^\x00-\x7F]/g, '')
+        .trim();
     }
 
     function notifyIframeHeight() {
@@ -889,7 +890,7 @@
       document.getElementById('gas_submitter').value = cleanAsciiText(details.submitter);
       document.getElementById('gas_title').value = cleanAsciiText(details.title);
       document.getElementById('gas_hubName').value = cleanAsciiText(details.hubName);
-      document.getElementById('gas_link').value = details.link;
+      document.getElementById('gas_link').value = details.link.trim();
 
       document.getElementById('hiddenGasForm').submit();
     }
