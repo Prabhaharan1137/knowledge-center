@@ -194,7 +194,7 @@
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
   <!-- HIDDEN BACKGROUND FORM TARGETING GOOGLE APPS SCRIPT -->
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwsFqMBMf--7g_TkbUq14fhB7O4j6lBm-DR5TlNGCbMVpqzM19o2W3YyV1hK78i1VFy/exec" method="POST" target="hidden_email_iframe" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwsFqMBMf--7g_TkbUq14fhB7O4j6lBm-DR5TlNGCbMVpqzM19o2W3YyV1hK78i1VFy/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -588,6 +588,16 @@
       'default': { bg: '#f1f3f4', color: '#5f6368' }
     };
 
+    // Clean text strings to avoid replacement character errors () in emails
+    function cleanAsciiText(str) {
+      if (!str) return '';
+      return str
+        .replace(/[\u2018\u2019]/g, "'")
+        .replace(/[\u201C\u201D]/g, '"')
+        .replace(/[\u2013\u2014]/g, '-')
+        .replace(/[^\x00-\x7F]/g, '');
+    }
+
     function notifyIframeHeight() {
       if (window.parent && window.parent !== window) {
         const height = document.documentElement.scrollHeight || document.body.scrollHeight;
@@ -876,10 +886,10 @@
     }
 
     function sendNotificationEmail(details) {
-      document.getElementById('gas_dlAddress').value = details.dlAddress;
-      document.getElementById('gas_submitter').value = details.submitter;
-      document.getElementById('gas_title').value = details.title;
-      document.getElementById('gas_hubName').value = details.hubName;
+      document.getElementById('gas_dlAddress').value = cleanAsciiText(details.dlAddress);
+      document.getElementById('gas_submitter').value = cleanAsciiText(details.submitter);
+      document.getElementById('gas_title').value = cleanAsciiText(details.title);
+      document.getElementById('gas_hubName').value = cleanAsciiText(details.hubName);
       document.getElementById('gas_link').value = details.link;
 
       document.getElementById('hiddenGasForm').submit();
@@ -898,10 +908,12 @@
       const shouldSend = document.getElementById('sendEmailCheckbox').checked;
       const dlAddress = document.getElementById('dlEmailAddress').value.trim();
 
+      let releaseTitle = "";
+
       if (targetHub === 'learning') {
-        const title = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
+        releaseTitle = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
         const category = document.getElementById('newModule').value;
-        const newResource = { id: `res_custom_${Date.now()}`, name: title, category: category, link: link };
+        const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link };
         
         dataset.push(newResource);
         localCustomDataset.push(newResource);
@@ -913,6 +925,8 @@
         const pkg = document.getElementById('newPkg').value.trim() || 'New Package';
         const ver = document.getElementById('newVer').value.trim() || 'v1.0';
         const type = document.getElementById('newDocType').value.trim() || 'Document';
+        releaseTitle = `${pkg} (${ver}) - ${type}`;
+
         const newDoc = { pkg, ver, type, link };
 
         docDataset.push(newDoc);
@@ -923,12 +937,8 @@
         renderDocumentHub();
       }
 
-      let title = targetHub === 'learning' 
-        ? (document.getElementById('newTitle').value.trim() || 'New Learning Resource') 
-        : (document.getElementById('newPkg').value.trim() || 'New Document Package');
-      
       if (shouldSend) {
-        sendNotificationEmail({ hubName: targetHub, title, link, submitter: submitterEmail, dlAddress });
+        sendNotificationEmail({ hubName: targetHub, title: releaseTitle, link, submitter: submitterEmail, dlAddress });
       }
 
       closeModal('addModalOverlay');
@@ -936,6 +946,14 @@
       
       submitBtn.textContent = "Publish Link Live";
       submitBtn.disabled = false;
+
+      // Clear input fields for next entry
+      document.getElementById('newTitle').value = '';
+      document.getElementById('newPkg').value = '';
+      document.getElementById('newVer').value = '';
+      document.getElementById('newDocType').value = '';
+      document.getElementById('newLink').value = '';
+
       return false;
     }
 
