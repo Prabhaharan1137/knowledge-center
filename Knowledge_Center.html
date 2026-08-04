@@ -311,7 +311,7 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwOfqmnhXsY1mpnhfpGXxGWlfUXVN32i4uPqkUtzv7tawbo9z-9Q7wGUE2CIRTRDSsI/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbyMM5rJYOA5s4wag4QlHzd22ePktbDaEkKyCSNB_yrr6VudpCajGQAhxYSQZdf7vRJI/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -634,7 +634,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwOfqmnhXsY1mpnhfpGXxGWlfUXVN32i4uPqkUtzv7tawbo9z-9Q7wGUE2CIRTRDSsI/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyMM5rJYOA5s4wag4QlHzd22ePktbDaEkKyCSNB_yrr6VudpCajGQAhxYSQZdf7vRJI/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -854,19 +854,47 @@
       }
     }
 
+    /* JSONP HELPER TO PREVENT CORS BLOCKS */
+    function callGasJsonp(params, callback) {
+      const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      window[cbName] = function(data) {
+        try {
+          callback(data);
+        } finally {
+          delete window[cbName];
+          const script = document.getElementById(cbName);
+          if (script) script.remove();
+        }
+      };
+
+      const queryString = Object.keys(params)
+        .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
+        .join('&');
+
+      const script = document.createElement('script');
+      script.id = cbName;
+      script.src = GAS_ENDPOINT_URL + '?' + queryString + '&callback=' + cbName;
+      script.onerror = function() {
+        delete window[cbName];
+        script.remove();
+        callback({ status: 'FAILED', message: 'Connection to verification server failed.' });
+      };
+      document.body.appendChild(script);
+    }
+
     /* GOOGLE SSO & EMAIL VALIDATION WITH OTP LOCK */
     function detectGoogleSessionAccount() {
-      fetch(GAS_ENDPOINT_URL + "?action=GET_ACTIVE_EMAIL")
-        .then(res => res.json())
-        .then(data => {
-          if (data && data.email && data.email.includes('@maxval.com')) {
-            authenticatedSessionEmail = data.email.toLowerCase().trim();
-            document.getElementById('detectedEmailAddress').textContent = authenticatedSessionEmail;
-            document.getElementById('detectedEmailBox').style.display = 'block';
-            document.getElementById('loginEmailInput').value = authenticatedSessionEmail;
-          }
-        })
-        .catch(err => console.log("Google Session fetch silent pass:", err));
+      callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
+        if (data && data.email && data.email.includes('@maxval.com')) {
+          authenticatedSessionEmail = data.email.toLowerCase().trim();
+          document.getElementById('detectedEmailAddress').textContent = authenticatedSessionEmail;
+          document.getElementById('detectedEmailBox').style.display = 'block';
+          document.getElementById('loginEmailInput').value = authenticatedSessionEmail;
+        }
+        if (data && data.powerUsers) {
+          data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
+        }
+      });
     }
 
     function checkUserLoginState() {
@@ -903,23 +931,16 @@
 
       pendingOtpEmail = input;
 
-      fetch(GAS_ENDPOINT_URL + "?action=SEND_LOGIN_OTP&email=" + encodeURIComponent(pendingOtpEmail))
-        .then(res => res.json())
-        .then(data => {
-          btn.textContent = "Send OTP Passcode to Inbox";
-          btn.disabled = false;
-          if (data && data.status === "SUCCESS") {
-            document.getElementById('otpRequestForm').style.display = 'none';
-            document.getElementById('otpVerifyForm').style.display = 'flex';
-          } else {
-            alert(data.message || "Failed to send OTP code.");
-          }
-        })
-        .catch(err => {
-          btn.textContent = "Send OTP Passcode to Inbox";
-          btn.disabled = false;
-          alert("Error connecting to verification server.");
-        });
+      callGasJsonp({ action: 'SEND_LOGIN_OTP', email: pendingOtpEmail }, function(data) {
+        btn.textContent = "Send OTP Passcode to Inbox";
+        btn.disabled = false;
+        if (data && data.status === "SUCCESS") {
+          document.getElementById('otpRequestForm').style.display = 'none';
+          document.getElementById('otpVerifyForm').style.display = 'flex';
+        } else {
+          alert(data.message || "Failed to send OTP code.");
+        }
+      });
     }
 
     function handleVerifyOtp(e) {
@@ -930,38 +951,31 @@
       btn.textContent = "Verifying Code...";
       btn.disabled = true;
 
-      fetch(GAS_ENDPOINT_URL + "?action=VERIFY_LOGIN_OTP&email=" + encodeURIComponent(pendingOtpEmail) + "&otp=" + encodeURIComponent(enteredOtp))
-        .then(res => res.json())
-        .then(data => {
-          btn.textContent = "Verify OTP & Access Portal";
-          btn.disabled = false;
-          if (data && data.status === "SUCCESS") {
-            currentUser = pendingOtpEmail;
-            localStorage.setItem('kc_user_maxval_email', currentUser);
-            
-            const analytics = getUserAnalytics();
-            if (!analytics.users[currentUser]) {
-              analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
-            } else {
-              analytics.users[currentUser].lastLogin = new Date().toLocaleString();
-            }
-            saveAnalytics(analytics);
-
-            document.getElementById('mandatoryLockOverlay').style.display = 'none';
-            updateUserBadgeDisplay();
-            updatePowerUserUIElements();
-            showInlineBanner(`Verified & Signed In: ${currentUser}`);
-            renderLearningHub();
-            renderDocumentHub();
+      callGasJsonp({ action: 'VERIFY_LOGIN_OTP', email: pendingOtpEmail, otp: enteredOtp }, function(data) {
+        btn.textContent = "Verify OTP & Access Portal";
+        btn.disabled = false;
+        if (data && data.status === "SUCCESS") {
+          currentUser = pendingOtpEmail;
+          localStorage.setItem('kc_user_maxval_email', currentUser);
+          
+          const analytics = getUserAnalytics();
+          if (!analytics.users[currentUser]) {
+            analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
           } else {
-            alert(data.message || "Invalid OTP entered.");
+            analytics.users[currentUser].lastLogin = new Date().toLocaleString();
           }
-        })
-        .catch(err => {
-          btn.textContent = "Verify OTP & Access Portal";
-          btn.disabled = false;
-          alert("Verification error occurred.");
-        });
+          saveAnalytics(analytics);
+
+          document.getElementById('mandatoryLockOverlay').style.display = 'none';
+          updateUserBadgeDisplay();
+          updatePowerUserUIElements();
+          showInlineBanner(`Verified & Signed In: ${currentUser}`);
+          renderLearningHub();
+          renderDocumentHub();
+        } else {
+          alert(data.message || "Invalid OTP entered.");
+        }
+      });
     }
 
     function resetOtpForm() {
@@ -1030,7 +1044,7 @@
 
       if (currentUser && data.users[currentUser]) {
         var payload = JSON.stringify(data.users[currentUser]);
-        fetch(GAS_ENDPOINT_URL + "?action=SYNC_USER_ANALYTICS&email=" + encodeURIComponent(currentUser) + "&data=" + encodeURIComponent(payload));
+        callGasJsonp({ action: 'SYNC_USER_ANALYTICS', email: currentUser, data: payload }, function(){});
       }
     }
 
@@ -1089,16 +1103,11 @@
       const tbody = document.getElementById('userAnalyticsTableBody');
       const titleElem = document.getElementById('dashboardModalTitle');
 
-      fetch(GAS_ENDPOINT_URL + "?action=GET_GLOBAL_ANALYTICS")
-        .then(res => res.json())
-        .then(remoteAnalytics => {
-          let currentLocal = getUserAnalytics();
-          let merged = { users: { ...remoteAnalytics.users, ...currentLocal.users } };
-          renderDashboardTable(merged);
-        })
-        .catch(err => {
-          renderDashboardTable(getUserAnalytics());
-        });
+      callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(remoteAnalytics) {
+        let currentLocal = getUserAnalytics();
+        let merged = { users: { ...remoteAnalytics.users, ...currentLocal.users } };
+        renderDashboardTable(merged);
+      });
 
       function renderDashboardTable(analytics) {
         const users = analytics.users || {};
@@ -1197,8 +1206,9 @@
         if (globalLog.users && globalLog.users[cleanedTarget]) delete globalLog.users[cleanedTarget];
         localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
-        fetch(GAS_ENDPOINT_URL + "?action=DELETE_USER_ANALYTICS&email=" + encodeURIComponent(cleanedTarget))
-          .then(() => openUserAnalyticsDashboard());
+        callGasJsonp({ action: 'DELETE_USER_ANALYTICS', email: cleanedTarget }, function() {
+          openUserAnalyticsDashboard();
+        });
 
         showInlineBanner(`Deleted record for ${cleanedTarget}`);
       }
@@ -1304,7 +1314,7 @@
       powerUsers.add(input);
       localStorage.setItem('kc_power_users_v17', JSON.stringify(Array.from(powerUsers)));
       
-      fetch(GAS_ENDPOINT_URL + "?action=NOTIFY_POWER_USER&email=" + encodeURIComponent(input) + "&grantedBy=" + encodeURIComponent(currentUser));
+      callGasJsonp({ action: 'NOTIFY_POWER_USER', email: input, grantedBy: currentUser }, function(){});
 
       document.getElementById('newPowerUserEmail').value = '';
       renderPowerUsersList();
