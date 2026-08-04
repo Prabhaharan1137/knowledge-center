@@ -289,6 +289,10 @@
         Enter your official <strong>@maxval.com</strong> email. A 1-time passcode (OTP) will be sent to your inbox to verify your identity.
       </p>
 
+      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.6rem; font-size:0.85rem; margin-bottom:1rem; font-weight:600; color:var(--google-blue-hover);">
+        Verified Session: <span id="detectedEmailAddress">...</span>
+      </div>
+
       <!-- STEP 1: REQUEST OTP FORM -->
       <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
         <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
@@ -899,11 +903,7 @@
 
       pendingOtpEmail = input;
 
-      const formData = new FormData();
-      formData.append('action', 'SEND_LOGIN_OTP');
-      formData.append('email', pendingOtpEmail);
-
-      fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData })
+      fetch(GAS_ENDPOINT_URL + "?action=SEND_LOGIN_OTP&email=" + encodeURIComponent(pendingOtpEmail))
         .then(res => res.json())
         .then(data => {
           btn.textContent = "Send OTP Passcode to Inbox";
@@ -930,12 +930,7 @@
       btn.textContent = "Verifying Code...";
       btn.disabled = true;
 
-      const formData = new FormData();
-      formData.append('action', 'VERIFY_LOGIN_OTP');
-      formData.append('email', pendingOtpEmail);
-      formData.append('otp', enteredOtp);
-
-      fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData })
+      fetch(GAS_ENDPOINT_URL + "?action=VERIFY_LOGIN_OTP&email=" + encodeURIComponent(pendingOtpEmail) + "&otp=" + encodeURIComponent(enteredOtp))
         .then(res => res.json())
         .then(data => {
           btn.textContent = "Verify OTP & Access Portal";
@@ -1033,13 +1028,10 @@
       globalLog.users = { ...globalLog.users, ...data.users };
       localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
-      // Push to GAS Script Properties DB for multi-device Power User dashboards
+      // Sync via GET parameter payload to avoid CORS pre-flight blocks
       if (currentUser && data.users[currentUser]) {
-        var formData = new FormData();
-        formData.append('action', 'SYNC_USER_ANALYTICS');
-        formData.append('email', currentUser);
-        formData.append('data', JSON.stringify(data.users[currentUser]));
-        fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData });
+        var payload = JSON.stringify(data.users[currentUser]);
+        fetch(GAS_ENDPOINT_URL + "?action=SYNC_USER_ANALYTICS&email=" + encodeURIComponent(currentUser) + "&data=" + encodeURIComponent(payload));
       }
     }
 
@@ -1098,7 +1090,6 @@
       const tbody = document.getElementById('userAnalyticsTableBody');
       const titleElem = document.getElementById('dashboardModalTitle');
 
-      // Fetch global logs from backend first
       fetch(GAS_ENDPOINT_URL + "?action=GET_GLOBAL_ANALYTICS")
         .then(res => res.json())
         .then(remoteAnalytics => {
@@ -1208,11 +1199,7 @@
         if (globalLog.users && globalLog.users[cleanedTarget]) delete globalLog.users[cleanedTarget];
         localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
-        // Send Delete request to GAS Backend DB
-        var formData = new FormData();
-        formData.append('action', 'DELETE_USER_ANALYTICS');
-        formData.append('email', cleanedTarget);
-        fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData })
+        fetch(GAS_ENDPOINT_URL + "?action=DELETE_USER_ANALYTICS&email=" + encodeURIComponent(cleanedTarget))
           .then(() => openUserAnalyticsDashboard());
 
         showInlineBanner(`Deleted record for ${cleanedTarget}`);
@@ -1319,18 +1306,12 @@
       powerUsers.add(input);
       localStorage.setItem('kc_power_users_v17', JSON.stringify(Array.from(powerUsers)));
       
-      // Dispatch notification email to the newly designated Power User
-      const formData = new FormData();
-      formData.append('action', 'NOTIFY_POWER_USER');
-      formData.append('email', input);
-      formData.append('grantedBy', currentUser);
-      fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData });
+      fetch(GAS_ENDPOINT_URL + "?action=NOTIFY_POWER_USER&email=" + encodeURIComponent(input) + "&grantedBy=" + encodeURIComponent(currentUser));
 
       document.getElementById('newPowerUserEmail').value = '';
       renderPowerUsersList();
       updatePowerUserUIElements();
 
-      // Auto sign-out if the added power user is currently active to refresh their rights
       if (input === currentUser) {
         alert("Your account has been granted Power User privileges! The system will now sign you out. Please sign in again to activate your admin privileges.");
         handleSignOut();
