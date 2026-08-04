@@ -215,7 +215,6 @@
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    /* CHECKBOXES HIDDEN BY DEFAULT */
     .item-select-checkbox {
       width: 16px;
       height: 16px;
@@ -260,6 +259,14 @@
       padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
       border: 1px solid rgba(147, 52, 230, 0.2);
     }
+
+    .detail-list {
+      list-style: none; padding: 0; margin: 0; max-height: 180px; overflow-y: auto; font-size: 0.82rem; border: 1px solid var(--border-color); border-radius: 6px;
+    }
+    .detail-list li {
+      padding: 0.4rem 0.65rem; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between;
+    }
+    .detail-list li:last-child { border-bottom: none; }
 
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
@@ -473,6 +480,34 @@
     </div>
   </div>
 
+  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL -->
+  <div class="modal-overlay" id="powerUserDetailModalOverlay">
+    <div class="modal-content" style="max-width:540px;">
+      <div class="modal-header">
+        <h2>User Detail Breakdown</h2>
+        <button class="modal-close-btn" onclick="closeModal('powerUserDetailModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <p style="font-size: 0.85rem; font-weight: 700; color: var(--google-blue);" id="detailUserEmailDisplay">user@maxval.com</p>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--google-green); display: block; margin-bottom: 0.25rem;">Completed Topics:</label>
+          <ul class="detail-list" id="detailCompletedList"></ul>
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--google-red); display: block; margin-bottom: 0.25rem;">Pending Topics:</label>
+          <ul class="detail-list" id="detailPendingList"></ul>
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--google-purple); display: block; margin-bottom: 0.25rem;">Viewed Documents Log:</label>
+          <ul class="detail-list" id="detailDocsViewedList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ADD LINK MODAL -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
@@ -557,7 +592,7 @@
 
   <!-- PROGRESS DASHBOARD -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
-    <div class="modal-content" style="max-width: 620px;">
+    <div class="modal-content" style="max-width: 680px;">
       <div class="modal-header">
         <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
         <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -565,7 +600,7 @@
       <div class="table-container">
         <table class="doc-table">
           <thead>
-            <tr><th>MaxVal User Email</th><th>Last Active</th><th>Completed Topics</th><th>Docs Viewed</th></tr>
+            <tr><th>MaxVal User Email</th><th>Last Active</th><th>Completed Topics</th><th>Docs Viewed</th><th id="dashboardActionColHeader">Action</th></tr>
           </thead>
           <tbody id="userAnalyticsTableBody"></tbody>
         </table>
@@ -911,7 +946,7 @@
         const userKeys = Object.keys(users);
 
         if (userKeys.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
         } else {
           tbody.innerHTML = userKeys.map(email => {
             const u = users[email];
@@ -931,6 +966,11 @@
                   <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
                     ${viewCount} Viewed
                   </span>
+                </td>
+                <td>
+                  <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${email}')">
+                    <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>View Details</span>
+                  </button>
                 </td>
               </tr>
             `;
@@ -956,11 +996,70 @@
                 ${viewCount} Viewed
               </span>
             </td>
+            <td>N/A</td>
           </tr>
         `;
       }
 
       document.getElementById('userDashboardModalOverlay').classList.add('open');
+      scrollParentToTop();
+      setTimeout(notifyIframeHeight, 100);
+    }
+
+    /* POWER USER DRILL-DOWN BREAKDOWN MODAL */
+    function viewUserDetailBreakdown(email) {
+      const analytics = getUserAnalytics();
+      const u = (analytics.users && analytics.users[email]) ? analytics.users[email] : { completedTopics: [], seenDocs: [] };
+
+      document.getElementById('detailUserEmailDisplay').textContent = `User Progress Details for: ${email}`;
+
+      // 1. Completed List
+      const completedListElem = document.getElementById('detailCompletedList');
+      const completedIds = u.completedTopics || [];
+      const completedItems = dataset.filter(d => completedIds.includes(d.id));
+
+      if (completedItems.length === 0) {
+        completedListElem.innerHTML = `<li><span style="color:var(--text-secondary);">No completed topics recorded yet.</span></li>`;
+      } else {
+        completedListElem.innerHTML = completedItems.map(item => `
+          <li>
+            <span><strong>${item.name}</strong> (${item.category})</span>
+            <span class="material-icons-outlined" style="color:var(--google-green); font-size:16px;">check_circle</span>
+          </li>
+        `).join('');
+      }
+
+      // 2. Pending List
+      const pendingListElem = document.getElementById('detailPendingList');
+      const pendingItems = dataset.filter(d => !completedIds.includes(d.id));
+
+      if (pendingItems.length === 0) {
+        pendingListElem.innerHTML = `<li><span style="color:var(--google-green);">All available topics completed!</span></li>`;
+      } else {
+        pendingListElem.innerHTML = pendingItems.map(item => `
+          <li>
+            <span>${item.name} (${item.category})</span>
+            <span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">radio_button_unchecked</span>
+          </li>
+        `).join('');
+      }
+
+      // 3. Viewed Docs List
+      const docsListElem = document.getElementById('detailDocsViewedList');
+      const seenDocs = u.seenDocs || [];
+
+      if (seenDocs.length === 0) {
+        docsListElem.innerHTML = `<li><span style="color:var(--text-secondary);">No document viewing history recorded yet.</span></li>`;
+      } else {
+        docsListElem.innerHTML = seenDocs.map(doc => `
+          <li>
+            <span><strong>${doc.pkg}</strong> - ${doc.type}</span>
+            <span style="font-size:0.75rem; color:var(--text-secondary);">${doc.timestamp || ''}</span>
+          </li>
+        `).join('');
+      }
+
+      document.getElementById('powerUserDetailModalOverlay').classList.add('open');
       scrollParentToTop();
       setTimeout(notifyIframeHeight, 100);
     }
