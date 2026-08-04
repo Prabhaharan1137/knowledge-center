@@ -215,7 +215,6 @@
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    /* CHECKBOXES HIDDEN BY DEFAULT */
     .item-select-checkbox {
       width: 16px;
       height: 16px;
@@ -282,24 +281,23 @@
 </head>
 <body>
 
-  <!-- FIXED MANDATORY SIGN-IN LOCK OVERLAY -->
+  <!-- MANDATORY SIGN-IN LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
-      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Sign In Required</h2>
+      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Sign In Verification</h2>
       <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
-        Please sign in with your official <strong>@maxval.com</strong> account to access the Symphony Learning & Documentation Hub.
+        Verification requires entering your actual Google account email associated with <strong>@maxval.com</strong>.
       </p>
       <form id="mandatoryLoginForm" onsubmit="handleMandatoryLogin(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
         <input type="email" id="mandatoryEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
-        <button type="submit" class="btn-submit" style="padding: 0.65rem; font-size: 0.9rem;">Sign In to Start Portal</button>
+        <button type="submit" class="btn-submit" id="signInSubmitBtn" style="padding: 0.65rem; font-size: 0.9rem;">Verify & Start Portal</button>
       </form>
     </div>
   </div>
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <!-- FORM TARGET FOR GOOGLE APPS SCRIPT -->
   <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwML5FuqG9desRcyYL3ght8J7nLjUsK-yostendqkNsHpNKz_7dWzh6muOTMx7X0hao/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
@@ -487,7 +485,7 @@
     </div>
   </div>
 
-  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL (STACKS OVER DASHBOARD) -->
+  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL -->
   <div class="modal-overlay" id="powerUserDetailModalOverlay">
     <div class="modal-content" style="max-width:540px;">
       <div class="modal-header">
@@ -840,6 +838,7 @@
       }
     }
 
+    /* MANDATORY SIGN-IN GATE HANDLERS */
     function checkUserLoginState() {
       const lockOverlay = document.getElementById('mandatoryLockOverlay');
       if (!currentUser || !currentUser.toLowerCase().includes('@maxval.com')) {
@@ -879,7 +878,10 @@
     }
 
     function openProfileModal() {
-      if (!currentUser) { checkUserLoginState(); return; }
+      if (!currentUser) {
+        checkUserLoginState();
+        return;
+      }
       document.getElementById('modalProfileEmail').textContent = currentUser;
       document.getElementById('profileModalOverlay').classList.add('open');
       scrollParentToTop();
@@ -1068,31 +1070,31 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    // Exposed to window so the onclick can find it without scope issues
+    // Explicit window binding for reliable execution in embedded iframes
     window.deleteUserProgressRecord = function(targetEmail, event) {
-      if (event) event.stopPropagation();
-      if (!isPowerUser(currentUser)) return;
-      
-      if (targetEmail === currentUser) {
-         alert("You cannot delete your own active session record.");
-         return;
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
       }
+      if (!isPowerUser(currentUser)) return;
 
-      if (confirm(`Are you sure you want to permanently delete the progress record for ${targetEmail}?`)) {
-        const targetKey = targetEmail.trim().toLowerCase();
-        
+      const cleanedTarget = targetEmail.trim().toLowerCase();
+
+      if (confirm(`Are you sure you want to delete the progress record for ${cleanedTarget}?`)) {
         let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
-        if (!localData.users) localData.users = {};
-        delete localData.users[targetKey];
+        if (localData.users && localData.users[cleanedTarget]) {
+          delete localData.users[cleanedTarget];
+        }
         localStorage.setItem('kc_user_analytics_v7', JSON.stringify(localData));
 
         let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
-        if (!globalLog.users) globalLog.users = {};
-        delete globalLog.users[targetKey];
+        if (globalLog.users && globalLog.users[cleanedTarget]) {
+          delete globalLog.users[cleanedTarget];
+        }
         localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
-        openUserAnalyticsDashboard();
-        showInlineBanner(`Progress record deleted for ${targetEmail}`);
+        openUserAnalyticsDashboard(); // Instant re-render
+        showInlineBanner(`Deleted record for ${cleanedTarget}`);
       }
     };
 
