@@ -215,7 +215,6 @@
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    /* CHECKBOXES HIDDEN BY DEFAULT */
     .item-select-checkbox {
       width: 16px;
       height: 16px;
@@ -797,8 +796,10 @@
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
 
-    // Configurable Power Users List
-    let powerUsers = new Set(JSON.parse(localStorage.getItem('kc_power_users_v17') || '["admin@maxval.com", "prabhaharan.j@maxval.com"]'));
+    // Shared Fallback List of Power Users
+    const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
+    let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
+    let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
 
     // Selection mode state flags
     let isLearningSelectionMode = false;
@@ -868,7 +869,7 @@
       currentUser = input;
       localStorage.setItem('kc_user_maxval_email', currentUser);
       
-      // Track login analytics
+      // Sync login session locally and across shared user activity logs
       const analytics = getUserAnalytics();
       if (!analytics.users[currentUser]) {
         analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
@@ -929,12 +930,23 @@
       }
     }
 
+    /* GLOBAL ANALYTICS PERSISTENCE */
     function getUserAnalytics() {
-      return JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
+      let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
+      let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
+      
+      // Merge local and global user logs
+      let mergedUsers = { ...globalLog.users, ...localData.users };
+      return { users: mergedUsers };
     }
 
     function saveAnalytics(data) {
       localStorage.setItem('kc_user_analytics_v7', JSON.stringify(data));
+      
+      // Update persistent global log for cross-session power user views
+      let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
+      globalLog.users = { ...globalLog.users, ...data.users };
+      localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
     }
 
     /* MODULE COMPLETION REQUIREMENT VALIDATION */
@@ -948,8 +960,9 @@
       if (!userRecord.completedTopics) userRecord.completedTopics = [];
       if (!userRecord.seenDocs) userRecord.seenDocs = [];
 
-      // Check if user has viewed the item first
-      const hasViewed = userRecord.seenDocs.some(doc => doc.pkg === resId || doc.type === resId || doc.pkg === getResourceTitleById(resId));
+      // Check if user opened/viewed the module resource link first
+      const resourceTitle = getResourceTitleById(resId);
+      const hasViewed = userRecord.seenDocs.some(doc => doc.pkg === resId || doc.type === resId || doc.pkg === resourceTitle);
 
       if (!hasViewed) {
         alert("Please complete the module by opening the link first.");
@@ -1071,17 +1084,21 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    /* POWER USER DELETE USER PROGRESS RECORD */
+    /* FIXED POWER USER DELETE USER PROGRESS RECORD */
     function deleteUserProgressRecord(email) {
       if (!isPowerUser(currentUser)) return;
       if (confirm(`Are you sure you want to delete the progress record for ${email}?`)) {
-        const analytics = getUserAnalytics();
-        if (analytics.users && analytics.users[email]) {
-          delete analytics.users[email];
-          saveAnalytics(analytics);
-          openUserAnalyticsDashboard(); // Refresh table view
-          showInlineBanner(`Deleted progress record for ${email}`);
-        }
+        let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
+        let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
+
+        if (localData.users && localData.users[email]) delete localData.users[email];
+        if (globalLog.users && globalLog.users[email]) delete globalLog.users[email];
+
+        localStorage.setItem('kc_user_analytics_v7', JSON.stringify(localData));
+        localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
+
+        openUserAnalyticsDashboard(); // Instant re-render
+        showInlineBanner(`Successfully deleted progress record for ${email}`);
       }
     }
 
