@@ -40,7 +40,6 @@
       position: relative;
     }
 
-    /* FROSTED GLASS BACKGROUND BLUR OVERLAY */
     .app-lock-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -61,7 +60,7 @@
       background: #ffffff;
       border-radius: 16px;
       padding: 2rem;
-      max-width: 440px;
+      max-width: 460px;
       width: 90%;
       box-shadow: 0 12px 32px rgba(0,0,0,0.45);
       text-align: center;
@@ -281,14 +280,19 @@
 </head>
 <body>
 
-  <!-- MANDATORY SIGN-IN LOCK OVERLAY -->
+  <!-- MANDATORY SIGN-IN LOCK OVERLAY WITH VERIFIED ACCOUNT DETECTION -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
-      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Sign In Verification</h2>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
-        Verification requires entering your actual Google account email associated with <strong>@maxval.com</strong>.
+      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Google SSO Verification</h2>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        Sign-in requires entering your authentic Google Account email ending in <strong>@maxval.com</strong>.
       </p>
+
+      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.6rem; font-size:0.85rem; margin-bottom:1rem; font-weight:600; color:var(--google-blue-hover);">
+        Verified Session: <span id="detectedEmailAddress">...</span>
+      </div>
+
       <form id="mandatoryLoginForm" onsubmit="handleMandatoryLogin(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
         <input type="email" id="mandatoryEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
         <button type="submit" class="btn-submit" id="signInSubmitBtn" style="padding: 0.65rem; font-size: 0.9rem;">Verify & Start Portal</button>
@@ -298,7 +302,7 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwML5FuqG9desRcyYL3ght8J7nLjUsK-yostendqkNsHpNKz_7dWzh6muOTMx7X0hao/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxQ-8lR4BGnrpG-XUol_6wWm36tbzhQpVIZXPr6KLcXdL_AZLKjqHaT8EaHf3ZwHOLf/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -621,6 +625,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwML5FuqG9desRcyYL3ght8J7nLjUsK-yostendqkNsHpNKz_7dWzh6muOTMx7X0hao/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -789,6 +794,7 @@
 
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
+    let authenticatedSessionEmail = "";
     let selectedModule = localStorage.getItem('user_pref_module_v17') || 'ALL';
     let searchQuery = '';
     let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v17') || 'ALL';
@@ -838,12 +844,27 @@
       }
     }
 
-    /* MANDATORY SIGN-IN GATE HANDLERS */
+    /* GOOGLE SSO & EMAIL VALIDATION */
+    function detectGoogleSessionAccount() {
+      fetch(GAS_ENDPOINT_URL)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.email && data.email.includes('@maxval.com')) {
+            authenticatedSessionEmail = data.email.toLowerCase().trim();
+            document.getElementById('detectedEmailAddress').textContent = authenticatedSessionEmail;
+            document.getElementById('detectedEmailBox').style.display = 'block';
+            document.getElementById('mandatoryEmailInput').value = authenticatedSessionEmail;
+          }
+        })
+        .catch(err => console.log("Google Session fetch silent pass:", err));
+    }
+
     function checkUserLoginState() {
       const lockOverlay = document.getElementById('mandatoryLockOverlay');
       if (!currentUser || !currentUser.toLowerCase().includes('@maxval.com')) {
         lockOverlay.style.display = 'flex';
         scrollParentToTop();
+        detectGoogleSessionAccount();
       } else {
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
@@ -854,10 +875,19 @@
     function handleMandatoryLogin(e) {
       e.preventDefault();
       let input = document.getElementById('mandatoryEmailInput').value.trim().toLowerCase();
+      
       if (!input.includes('@maxval.com')) {
         const prefix = input.split('@')[0];
         input = `${prefix}@maxval.com`;
       }
+
+      // Restrict login spoofing if session detection returned a valid Google account
+      if (authenticatedSessionEmail && input !== authenticatedSessionEmail) {
+        alert(`Access Denied: You must sign in using your authenticated Google email (${authenticatedSessionEmail}).`);
+        document.getElementById('mandatoryEmailInput').value = authenticatedSessionEmail;
+        return;
+      }
+
       currentUser = input;
       localStorage.setItem('kc_user_maxval_email', currentUser);
       
@@ -872,16 +902,13 @@
       document.getElementById('mandatoryLockOverlay').style.display = 'none';
       updateUserBadgeDisplay();
       updatePowerUserUIElements();
-      showInlineBanner(`Welcome! Signed in as: ${currentUser}`);
+      showInlineBanner(`Welcome! Verified as: ${currentUser}`);
       renderLearningHub();
       renderDocumentHub();
     }
 
     function openProfileModal() {
-      if (!currentUser) {
-        checkUserLoginState();
-        return;
-      }
+      if (!currentUser) { checkUserLoginState(); return; }
       document.getElementById('modalProfileEmail').textContent = currentUser;
       document.getElementById('profileModalOverlay').classList.add('open');
       scrollParentToTop();
@@ -1080,17 +1107,13 @@
 
       const cleanedTarget = targetEmail.trim().toLowerCase();
 
-      if (confirm(`Are you sure you want to delete the progress record for ${cleanedTarget}?`)) {
+      if (confirm(`Are you sure you want to permanently delete the progress record for ${cleanedTarget}?`)) {
         let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
-        if (localData.users && localData.users[cleanedTarget]) {
-          delete localData.users[cleanedTarget];
-        }
+        if (localData.users && localData.users[cleanedTarget]) delete localData.users[cleanedTarget];
         localStorage.setItem('kc_user_analytics_v7', JSON.stringify(localData));
 
         let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
-        if (globalLog.users && globalLog.users[cleanedTarget]) {
-          delete globalLog.users[cleanedTarget];
-        }
+        if (globalLog.users && globalLog.users[cleanedTarget]) delete globalLog.users[cleanedTarget];
         localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
         openUserAnalyticsDashboard(); // Instant re-render
@@ -1200,7 +1223,7 @@
       document.getElementById('newPowerUserEmail').value = '';
       renderPowerUsersList();
       updatePowerUserUIElements();
-      showInlineBanner(`Added ${input} to Power Users.`);
+      showInlineBanner(`Power User ${input} added! Please notify them to refresh their page to see Power Admin options.`);
     }
 
     function handleRemovePowerUser(email) {
