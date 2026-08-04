@@ -487,7 +487,7 @@
     </div>
   </div>
 
-  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL (HIGHER Z-INDEX TO STACK OVER DASHBOARD) -->
+  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL (STACKS OVER DASHBOARD) -->
   <div class="modal-overlay" id="powerUserDetailModalOverlay">
     <div class="modal-content" style="max-width:540px;">
       <div class="modal-header">
@@ -1036,7 +1036,7 @@
         if (analytics.users && analytics.users[email]) {
           delete analytics.users[email];
           saveAnalytics(analytics);
-          openUserAnalyticsDashboard(); // Refresh dashboard
+          openUserAnalyticsDashboard(); // Refresh table view
           showInlineBanner(`Deleted progress record for ${email}`);
         }
       }
