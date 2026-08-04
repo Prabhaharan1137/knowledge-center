@@ -311,7 +311,7 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbw58yVB5uXHF_9TlI6rJLwgvncsUHJ3BBl0O4WDF8TTyYBm6hBjOkmbTQJVhPa-l5-O/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbwOfqmnhXsY1mpnhfpGXxGWlfUXVN32i4uPqkUtzv7tawbo9z-9Q7wGUE2CIRTRDSsI/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -634,7 +634,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbw58yVB5uXHF_9TlI6rJLwgvncsUHJ3BBl0O4WDF8TTyYBm6hBjOkmbTQJVhPa-l5-O/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwOfqmnhXsY1mpnhfpGXxGWlfUXVN32i4uPqkUtzv7tawbo9z-9Q7wGUE2CIRTRDSsI/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1028,7 +1028,6 @@
       globalLog.users = { ...globalLog.users, ...data.users };
       localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
-      // Sync via GET parameter payload to avoid CORS pre-flight blocks
       if (currentUser && data.users[currentUser]) {
         var payload = JSON.stringify(data.users[currentUser]);
         fetch(GAS_ENDPOINT_URL + "?action=SYNC_USER_ANALYTICS&email=" + encodeURIComponent(currentUser) + "&data=" + encodeURIComponent(payload));
@@ -1180,7 +1179,6 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    // Explicit window binding for reliable execution in embedded iframes
     window.deleteUserProgressRecord = function(targetEmail, event) {
       if (event) {
         event.preventDefault();
