@@ -242,7 +242,6 @@
     }
     .modal-overlay.open { display: flex; }
     
-    /* HIGHER Z-INDEX FOR USER DETAIL BREAKDOWN TO OVERLAY DASHBOARD */
     #powerUserDetailModalOverlay {
       z-index: 10000005 !important;
     }
@@ -339,7 +338,8 @@
         <span class="material-icons-outlined" style="font-size:15px;">insights</span><span>User Progress Dashboard</span>
       </button>
 
-      <button type="button" class="top-utility-btn accent-settings" onclick="promptPowerUserSettings()">
+      <!-- POWER USER TAB (HIDDEN FOR REGULAR USERS) -->
+      <button type="button" class="top-utility-btn accent-settings" id="powerUsersTabBtn" style="display:none;" onclick="promptPowerUserSettings()">
         <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Users</span>
       </button>
 
@@ -375,7 +375,7 @@
       <section class="filter-card-highlight">
         <div class="filter-header-row">
           <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
-          <div class="filter-actions-group">
+          <div class="filter-actions-group" id="learningAdminActions" style="display:none;">
             <button id="toggleLearningSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('learning')">
               <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
               <span id="learningSelectBtnLabel">Select Multiple to Delete</span>
@@ -406,7 +406,7 @@
       <section class="filter-card-highlight">
         <div class="filter-header-row">
           <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY NAME</label>
-          <div class="filter-actions-group">
+          <div class="filter-actions-group" id="docAdminActions" style="display:none;">
             <button id="toggleDocSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('document')">
               <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
               <span id="docSelectBtnLabel">Select Multiple to Delete</span>
@@ -487,7 +487,7 @@
     </div>
   </div>
 
-  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL (STACKS OVER DASHBOARD) -->
+  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL -->
   <div class="modal-overlay" id="powerUserDetailModalOverlay">
     <div class="modal-content" style="max-width:540px;">
       <div class="modal-header">
@@ -854,6 +854,7 @@
       } else {
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
+        updatePowerUserUIElements();
       }
     }
 
@@ -867,8 +868,18 @@
       currentUser = input;
       localStorage.setItem('kc_user_maxval_email', currentUser);
       
+      // Track login analytics
+      const analytics = getUserAnalytics();
+      if (!analytics.users[currentUser]) {
+        analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+      } else {
+        analytics.users[currentUser].lastLogin = new Date().toLocaleString();
+      }
+      saveAnalytics(analytics);
+
       document.getElementById('mandatoryLockOverlay').style.display = 'none';
       updateUserBadgeDisplay();
+      updatePowerUserUIElements();
       showInlineBanner(`Welcome! Signed in as: ${currentUser}`);
       renderLearningHub();
       renderDocumentHub();
@@ -902,6 +913,22 @@
       }
     }
 
+    function updatePowerUserUIElements() {
+      const powerTabBtn = document.getElementById('powerUsersTabBtn');
+      const learningAdminActions = document.getElementById('learningAdminActions');
+      const docAdminActions = document.getElementById('docAdminActions');
+
+      if (isPowerUser(currentUser)) {
+        if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
+        if (learningAdminActions) learningAdminActions.style.display = 'flex';
+        if (docAdminActions) docAdminActions.style.display = 'flex';
+      } else {
+        if (powerTabBtn) powerTabBtn.style.display = 'none';
+        if (learningAdminActions) learningAdminActions.style.display = 'none';
+        if (docAdminActions) docAdminActions.style.display = 'none';
+      }
+    }
+
     function getUserAnalytics() {
       return JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
     }
@@ -910,7 +937,8 @@
       localStorage.setItem('kc_user_analytics_v7', JSON.stringify(data));
     }
 
-    function toggleTopicCompletion(resId) {
+    /* MODULE COMPLETION REQUIREMENT VALIDATION */
+    function toggleTopicCompletion(resId, isDoc = false) {
       if (!currentUser) { checkUserLoginState(); return; }
       const analytics = getUserAnalytics();
       if (!analytics.users[currentUser]) {
@@ -918,6 +946,15 @@
       }
       const userRecord = analytics.users[currentUser];
       if (!userRecord.completedTopics) userRecord.completedTopics = [];
+      if (!userRecord.seenDocs) userRecord.seenDocs = [];
+
+      // Check if user has viewed the item first
+      const hasViewed = userRecord.seenDocs.some(doc => doc.pkg === resId || doc.type === resId || doc.pkg === getResourceTitleById(resId));
+
+      if (!hasViewed) {
+        alert("Please complete the module by opening the link first.");
+        return;
+      }
 
       const idx = userRecord.completedTopics.indexOf(resId);
       if (idx > -1) { userRecord.completedTopics.splice(idx, 1); } 
@@ -925,6 +962,11 @@
 
       saveAnalytics(analytics);
       renderLearningHub();
+    }
+
+    function getResourceTitleById(resId) {
+      const found = dataset.find(d => d.id === resId);
+      return found ? found.name : resId;
     }
 
     function trackDocView(pkgName, docType) {
@@ -938,6 +980,7 @@
 
       userRecord.seenDocs.push({ pkg: pkgName, type: docType, timestamp: new Date().toLocaleString() });
       saveAnalytics(analytics);
+      renderLearningHub();
     }
 
     /* POWER USER CHECK */
@@ -1148,6 +1191,7 @@
       localStorage.setItem('kc_power_users_v17', JSON.stringify(Array.from(powerUsers)));
       document.getElementById('newPowerUserEmail').value = '';
       renderPowerUsersList();
+      updatePowerUserUIElements();
       showInlineBanner(`Added ${input} to Power Users.`);
     }
 
@@ -1155,6 +1199,7 @@
       powerUsers.delete(email);
       localStorage.setItem('kc_power_users_v17', JSON.stringify(Array.from(powerUsers)));
       renderPowerUsersList();
+      updatePowerUserUIElements();
       showInlineBanner(`Removed ${email} from Power Users.`);
     }
 
@@ -1471,6 +1516,7 @@
 
       const analytics = getUserAnalytics();
       const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
+      const powerUserActive = isPowerUser(currentUser);
 
       grid.innerHTML = filtered.map(res => {
         const style = getCategoryStyle(res.category);
@@ -1501,14 +1547,16 @@
               <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
                 <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
-              <div class="action-icons">
-                <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')" title="Edit Resource">
-                  <span class="material-icons-outlined" style="font-size:18px;">edit</span>
-                </button>
-                <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')" title="Delete Resource">
-                  <span class="material-icons-outlined" style="font-size:18px;">delete</span>
-                </button>
-              </div>
+              ${powerUserActive ? `
+                <div class="action-icons">
+                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')" title="Edit Resource">
+                    <span class="material-icons-outlined" style="font-size:18px;">edit</span>
+                  </button>
+                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')" title="Delete Resource">
+                    <span class="material-icons-outlined" style="font-size:18px;">delete</span>
+                  </button>
+                </div>
+              ` : ''}
             </div>
           </article>
         `;
@@ -1535,6 +1583,8 @@
         return;
       }
 
+      const powerUserActive = isPowerUser(currentUser);
+
       tbody.innerHTML = filteredWithIndex.map(doc => {
         const isSelected = selectedDocIndices.has(doc.originalIndex);
         return `
@@ -1550,14 +1600,16 @@
                 <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
                   <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
                 </a>
-                <div class="action-icons">
-                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
-                    <span class="material-icons-outlined" style="font-size:18px;">edit</span>
-                  </button>
-                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
-                    <span class="material-icons-outlined" style="font-size:18px;">delete</span>
-                  </button>
-                </div>
+                ${powerUserActive ? `
+                  <div class="action-icons">
+                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
+                      <span class="material-icons-outlined" style="font-size:18px;">edit</span>
+                    </button>
+                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
+                      <span class="material-icons-outlined" style="font-size:18px;">delete</span>
+                    </button>
+                  </div>
+                ` : ''}
               </div>
             </td>
           </tr>
