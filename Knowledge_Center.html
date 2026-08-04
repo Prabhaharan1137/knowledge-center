@@ -280,29 +280,34 @@
 </head>
 <body>
 
-  <!-- MANDATORY SIGN-IN LOCK OVERLAY WITH VERIFIED ACCOUNT DETECTION -->
+  <!-- MANDATORY OTP SECURITY VERIFICATION LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
-      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Google SSO Verification</h2>
+      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Email Passcode Verification</h2>
       <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-        Sign-in requires entering your authentic Google Account email ending in <strong>@maxval.com</strong>.
+        Enter your official <strong>@maxval.com</strong> email. A 1-time passcode (OTP) will be sent to your inbox to verify your identity.
       </p>
 
-      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.6rem; font-size:0.85rem; margin-bottom:1rem; font-weight:600; color:var(--google-blue-hover);">
-        Verified Session: <span id="detectedEmailAddress">...</span>
-      </div>
+      <!-- STEP 1: REQUEST OTP FORM -->
+      <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
+        <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.65rem; font-size: 0.9rem;">Send OTP Passcode to Inbox</button>
+      </form>
 
-      <form id="mandatoryLoginForm" onsubmit="handleMandatoryLogin(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <input type="email" id="mandatoryEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
-        <button type="submit" class="btn-submit" id="signInSubmitBtn" style="padding: 0.65rem; font-size: 0.9rem;">Verify & Start Portal</button>
+      <!-- STEP 2: VERIFY OTP FORM (HIDDEN INITIALLY) -->
+      <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
+        <p style="font-size: 0.8rem; color: var(--google-green); font-weight: 600;">OTP sent! Check your inbox for the 6-digit code.</p>
+        <input type="text" id="otpCodeInput" placeholder="6-Digit OTP Code" required maxlength="6" style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.2rem; text-align: center; font-weight: 700; letter-spacing: 6px; outline: none;">
+        <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.65rem; font-size: 0.9rem; background: var(--google-green);">Verify OTP & Access Portal</button>
+        <button type="button" class="btn-secondary" onclick="resetOtpForm()" style="justify-content: center;">Use Different Email</button>
       </form>
     </div>
   </div>
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxQ-8lR4BGnrpG-XUol_6wWm36tbzhQpVIZXPr6KLcXdL_AZLKjqHaT8EaHf3ZwHOLf/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbw58yVB5uXHF_9TlI6rJLwgvncsUHJ3BBl0O4WDF8TTyYBm6hBjOkmbTQJVhPa-l5-O/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -625,7 +630,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwML5FuqG9desRcyYL3ght8J7nLjUsK-yostendqkNsHpNKz_7dWzh6muOTMx7X0hao/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbw58yVB5uXHF_9TlI6rJLwgvncsUHJ3BBl0O4WDF8TTyYBm6hBjOkmbTQJVhPa-l5-O/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -794,6 +799,7 @@
 
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
+    let pendingOtpEmail = "";
     let authenticatedSessionEmail = "";
     let selectedModule = localStorage.getItem('user_pref_module_v17') || 'ALL';
     let searchQuery = '';
@@ -844,16 +850,16 @@
       }
     }
 
-    /* GOOGLE SSO & EMAIL VALIDATION */
+    /* GOOGLE SSO & EMAIL VALIDATION WITH OTP LOCK */
     function detectGoogleSessionAccount() {
-      fetch(GAS_ENDPOINT_URL)
+      fetch(GAS_ENDPOINT_URL + "?action=GET_ACTIVE_EMAIL")
         .then(res => res.json())
         .then(data => {
           if (data && data.email && data.email.includes('@maxval.com')) {
             authenticatedSessionEmail = data.email.toLowerCase().trim();
             document.getElementById('detectedEmailAddress').textContent = authenticatedSessionEmail;
             document.getElementById('detectedEmailBox').style.display = 'block';
-            document.getElementById('mandatoryEmailInput').value = authenticatedSessionEmail;
+            document.getElementById('loginEmailInput').value = authenticatedSessionEmail;
           }
         })
         .catch(err => console.log("Google Session fetch silent pass:", err));
@@ -872,39 +878,101 @@
       }
     }
 
-    function handleMandatoryLogin(e) {
+    function handleRequestOtp(e) {
       e.preventDefault();
-      let input = document.getElementById('mandatoryEmailInput').value.trim().toLowerCase();
+      let input = document.getElementById('loginEmailInput').value.trim().toLowerCase();
       
       if (!input.includes('@maxval.com')) {
         const prefix = input.split('@')[0];
         input = `${prefix}@maxval.com`;
       }
 
-      // Restrict login spoofing if session detection returned a valid Google account
       if (authenticatedSessionEmail && input !== authenticatedSessionEmail) {
-        alert(`Access Denied: You must sign in using your authenticated Google email (${authenticatedSessionEmail}).`);
-        document.getElementById('mandatoryEmailInput').value = authenticatedSessionEmail;
+        alert(`Access Denied: You must sign in using your active Google Account email (${authenticatedSessionEmail}).`);
+        document.getElementById('loginEmailInput').value = authenticatedSessionEmail;
         return;
       }
 
-      currentUser = input;
-      localStorage.setItem('kc_user_maxval_email', currentUser);
-      
-      const analytics = getUserAnalytics();
-      if (!analytics.users[currentUser]) {
-        analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
-      } else {
-        analytics.users[currentUser].lastLogin = new Date().toLocaleString();
-      }
-      saveAnalytics(analytics);
+      const btn = document.getElementById('sendOtpBtn');
+      btn.textContent = "Sending Passcode...";
+      btn.disabled = true;
 
-      document.getElementById('mandatoryLockOverlay').style.display = 'none';
-      updateUserBadgeDisplay();
-      updatePowerUserUIElements();
-      showInlineBanner(`Welcome! Verified as: ${currentUser}`);
-      renderLearningHub();
-      renderDocumentHub();
+      pendingOtpEmail = input;
+
+      const formData = new FormData();
+      formData.append('action', 'SEND_LOGIN_OTP');
+      formData.append('email', pendingOtpEmail);
+
+      fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+          btn.textContent = "Send OTP Passcode to Inbox";
+          btn.disabled = false;
+          if (data && data.status === "SUCCESS") {
+            document.getElementById('otpRequestForm').style.display = 'none';
+            document.getElementById('otpVerifyForm').style.display = 'flex';
+          } else {
+            alert(data.message || "Failed to send OTP code.");
+          }
+        })
+        .catch(err => {
+          btn.textContent = "Send OTP Passcode to Inbox";
+          btn.disabled = false;
+          alert("Error connecting to verification server.");
+        });
+    }
+
+    function handleVerifyOtp(e) {
+      e.preventDefault();
+      const enteredOtp = document.getElementById('otpCodeInput').value.trim();
+      const btn = document.getElementById('verifyOtpBtn');
+
+      btn.textContent = "Verifying Code...";
+      btn.disabled = true;
+
+      const formData = new FormData();
+      formData.append('action', 'VERIFY_LOGIN_OTP');
+      formData.append('email', pendingOtpEmail);
+      formData.append('otp', enteredOtp);
+
+      fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+          btn.textContent = "Verify OTP & Access Portal";
+          btn.disabled = false;
+          if (data && data.status === "SUCCESS") {
+            currentUser = pendingOtpEmail;
+            localStorage.setItem('kc_user_maxval_email', currentUser);
+            
+            const analytics = getUserAnalytics();
+            if (!analytics.users[currentUser]) {
+              analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+            } else {
+              analytics.users[currentUser].lastLogin = new Date().toLocaleString();
+            }
+            saveAnalytics(analytics);
+
+            document.getElementById('mandatoryLockOverlay').style.display = 'none';
+            updateUserBadgeDisplay();
+            updatePowerUserUIElements();
+            showInlineBanner(`Verified & Signed In: ${currentUser}`);
+            renderLearningHub();
+            renderDocumentHub();
+          } else {
+            alert(data.message || "Invalid OTP entered.");
+          }
+        })
+        .catch(err => {
+          btn.textContent = "Verify OTP & Access Portal";
+          btn.disabled = false;
+          alert("Verification error occurred.");
+        });
+    }
+
+    function resetOtpForm() {
+      document.getElementById('otpRequestForm').style.display = 'flex';
+      document.getElementById('otpVerifyForm').style.display = 'none';
+      document.getElementById('otpCodeInput').value = '';
     }
 
     function openProfileModal() {
@@ -918,7 +986,8 @@
       currentUser = null;
       localStorage.removeItem('kc_user_maxval_email');
       closeModal('profileModalOverlay');
-      document.getElementById('mandatoryEmailInput').value = '';
+      document.getElementById('loginEmailInput').value = '';
+      resetOtpForm();
       checkUserLoginState();
       showInlineBanner("Signed out successfully.");
     }
@@ -963,6 +1032,15 @@
       let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
       globalLog.users = { ...globalLog.users, ...data.users };
       localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
+
+      // Push to GAS Script Properties DB for multi-device Power User dashboards
+      if (currentUser && data.users[currentUser]) {
+        var formData = new FormData();
+        formData.append('action', 'SYNC_USER_ANALYTICS');
+        formData.append('email', currentUser);
+        formData.append('data', JSON.stringify(data.users[currentUser]));
+        fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData });
+      }
     }
 
     function toggleTopicCompletion(resId, isDoc = false) {
@@ -1019,77 +1097,91 @@
       if (!currentUser) { checkUserLoginState(); return; }
       const tbody = document.getElementById('userAnalyticsTableBody');
       const titleElem = document.getElementById('dashboardModalTitle');
-      const analytics = getUserAnalytics();
-      const users = analytics.users || {};
-      const totalTopicsAvailable = dataset.length;
 
-      if (isPowerUser(currentUser)) {
-        titleElem.textContent = "Power User - Organization Dashboard";
-        const userKeys = Object.keys(users);
+      // Fetch global logs from backend first
+      fetch(GAS_ENDPOINT_URL + "?action=GET_GLOBAL_ANALYTICS")
+        .then(res => res.json())
+        .then(remoteAnalytics => {
+          let currentLocal = getUserAnalytics();
+          let merged = { users: { ...remoteAnalytics.users, ...currentLocal.users } };
+          renderDashboardTable(merged);
+        })
+        .catch(err => {
+          renderDashboardTable(getUserAnalytics());
+        });
 
-        if (userKeys.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
+      function renderDashboardTable(analytics) {
+        const users = analytics.users || {};
+        const totalTopicsAvailable = dataset.length;
+
+        if (isPowerUser(currentUser)) {
+          titleElem.textContent = "Power User - Organization Dashboard";
+          const userKeys = Object.keys(users);
+
+          if (userKeys.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
+          } else {
+            tbody.innerHTML = userKeys.map(email => {
+              const u = users[email];
+              const completedCount = u.completedTopics ? u.completedTopics.length : 0;
+              const viewCount = u.seenDocs ? u.seenDocs.length : 0;
+
+              return `
+                <tr>
+                  <td><strong>${email}</strong></td>
+                  <td>${u.lastLogin || 'N/A'}</td>
+                  <td>
+                    <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
+                      ${completedCount} / ${totalTopicsAvailable} Completed
+                    </span>
+                  </td>
+                  <td>
+                    <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
+                      ${viewCount} Viewed
+                    </span>
+                  </td>
+                  <td>
+                    <div style="display:flex; gap:0.25rem; align-items:center;">
+                      <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${email}', event)">
+                        <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>Details</span>
+                      </button>
+                      <button type="button" class="btn-danger" style="padding:0.25rem 0.4rem; font-size:0.75rem;" onclick="window.deleteUserProgressRecord('${email}', event)" title="Delete User Progress Record">
+                        <span class="material-icons-outlined" style="font-size:14px;">delete</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join('');
+          }
         } else {
-          tbody.innerHTML = userKeys.map(email => {
-            const u = users[email];
-            const completedCount = u.completedTopics ? u.completedTopics.length : 0;
-            const viewCount = u.seenDocs ? u.seenDocs.length : 0;
+          titleElem.textContent = "My Progress Dashboard";
+          const u = users[currentUser] || { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+          const completedCount = u.completedTopics ? u.completedTopics.length : 0;
+          const viewCount = u.seenDocs ? u.seenDocs.length : 0;
 
-            return `
-              <tr>
-                <td><strong>${email}</strong></td>
-                <td>${u.lastLogin || 'N/A'}</td>
-                <td>
-                  <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
-                    ${completedCount} / ${totalTopicsAvailable} Completed
-                  </span>
-                </td>
-                <td>
-                  <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
-                    ${viewCount} Viewed
-                  </span>
-                </td>
-                <td>
-                  <div style="display:flex; gap:0.25rem; align-items:center;">
-                    <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${email}', event)">
-                      <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>Details</span>
-                    </button>
-                    <button type="button" class="btn-danger" style="padding:0.25rem 0.4rem; font-size:0.75rem;" onclick="window.deleteUserProgressRecord('${email}', event)" title="Delete User Progress Record">
-                      <span class="material-icons-outlined" style="font-size:14px;">delete</span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            `;
-          }).join('');
+          tbody.innerHTML = `
+            <tr>
+              <td><strong>${currentUser} (You)</strong></td>
+              <td>${u.lastLogin || 'Active Now'}</td>
+              <td>
+                <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
+                  ${completedCount} / ${totalTopicsAvailable} Completed
+                </span>
+              </td>
+              <td>
+                <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
+                  ${viewCount} Viewed
+                </span>
+              </td>
+              <td>
+                <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${currentUser}', event)">
+                  <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>My Details</span>
+                </button>
+              </td>
+            </tr>
+          `;
         }
-      } else {
-        titleElem.textContent = "My Progress Dashboard";
-        const u = users[currentUser] || { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
-        const completedCount = u.completedTopics ? u.completedTopics.length : 0;
-        const viewCount = u.seenDocs ? u.seenDocs.length : 0;
-
-        tbody.innerHTML = `
-          <tr>
-            <td><strong>${currentUser} (You)</strong></td>
-            <td>${u.lastLogin || 'Active Now'}</td>
-            <td>
-              <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
-                ${completedCount} / ${totalTopicsAvailable} Completed
-              </span>
-            </td>
-            <td>
-              <span class="doc-type-tag" style="background:var(--google-blue-light); color:var(--google-blue);">
-                ${viewCount} Viewed
-              </span>
-            </td>
-            <td>
-              <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${currentUser}', event)">
-                <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>My Details</span>
-              </button>
-            </td>
-          </tr>
-        `;
       }
 
       document.getElementById('userDashboardModalOverlay').classList.add('open');
@@ -1116,7 +1208,13 @@
         if (globalLog.users && globalLog.users[cleanedTarget]) delete globalLog.users[cleanedTarget];
         localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
-        openUserAnalyticsDashboard(); // Instant re-render
+        // Send Delete request to GAS Backend DB
+        var formData = new FormData();
+        formData.append('action', 'DELETE_USER_ANALYTICS');
+        formData.append('email', cleanedTarget);
+        fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData })
+          .then(() => openUserAnalyticsDashboard());
+
         showInlineBanner(`Deleted record for ${cleanedTarget}`);
       }
     };
@@ -1220,10 +1318,25 @@
       }
       powerUsers.add(input);
       localStorage.setItem('kc_power_users_v17', JSON.stringify(Array.from(powerUsers)));
+      
+      // Dispatch notification email to the newly designated Power User
+      const formData = new FormData();
+      formData.append('action', 'NOTIFY_POWER_USER');
+      formData.append('email', input);
+      formData.append('grantedBy', currentUser);
+      fetch(GAS_ENDPOINT_URL, { method: 'POST', body: formData });
+
       document.getElementById('newPowerUserEmail').value = '';
       renderPowerUsersList();
       updatePowerUserUIElements();
-      showInlineBanner(`Power User ${input} added! Please notify them to refresh their page to see Power Admin options.`);
+
+      // Auto sign-out if the added power user is currently active to refresh their rights
+      if (input === currentUser) {
+        alert("Your account has been granted Power User privileges! The system will now sign you out. Please sign in again to activate your admin privileges.");
+        handleSignOut();
+      } else {
+        showInlineBanner(`Power User notification email sent to ${input}. Please notify them to log in again.`);
+      }
     }
 
     function handleRemovePowerUser(email) {
