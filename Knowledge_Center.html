@@ -60,7 +60,7 @@
       background: #ffffff;
       border-radius: 16px;
       padding: 2rem;
-      max-width: 460px;
+      max-width: 440px;
       width: 90%;
       box-shadow: 0 12px 32px rgba(0,0,0,0.45);
       text-align: center;
@@ -280,38 +280,25 @@
 </head>
 <body>
 
-  <!-- MANDATORY OTP SECURITY VERIFICATION LOCK OVERLAY -->
+  <!-- MANDATORY DIRECT SIGN-IN LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
-      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Email Passcode Verification</h2>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-        Enter your official <strong>@maxval.com</strong> email. A 1-time passcode (OTP) will be sent to your inbox to verify your identity.
+      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Sign In Required</h2>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+        Please enter your official <strong>@maxval.com</strong> email to access the Symphony Learning & Documentation Hub.
       </p>
 
-      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.6rem; font-size:0.85rem; margin-bottom:1rem; font-weight:600; color:var(--google-blue-hover);">
-        Verified Session: <span id="detectedEmailAddress">...</span>
-      </div>
-
-      <!-- STEP 1: REQUEST OTP FORM -->
-      <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
-        <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.65rem; font-size: 0.9rem;">Send OTP Passcode to Inbox</button>
-      </form>
-
-      <!-- STEP 2: VERIFY OTP FORM (HIDDEN INITIALLY) -->
-      <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
-        <p style="font-size: 0.8rem; color: var(--google-green); font-weight: 600;">OTP sent! Check your inbox for the 6-digit code.</p>
-        <input type="text" id="otpCodeInput" placeholder="6-Digit OTP Code" required maxlength="6" style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.2rem; text-align: center; font-weight: 700; letter-spacing: 6px; outline: none;">
-        <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.65rem; font-size: 0.9rem; background: var(--google-green);">Verify OTP & Access Portal</button>
-        <button type="button" class="btn-secondary" onclick="resetOtpForm()" style="justify-content: center;">Use Different Email</button>
+      <form id="mandatoryLoginForm" onsubmit="handleDirectLogin(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <input type="email" id="mandatoryEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
+        <button type="submit" class="btn-submit" style="padding: 0.65rem; font-size: 0.9rem;">Sign In to Portal</button>
       </form>
     </div>
   </div>
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbyMM5rJYOA5s4wag4QlHzd22ePktbDaEkKyCSNB_yrr6VudpCajGQAhxYSQZdf7vRJI/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbzT6FyxJl_jn6ooChGBjlXNoxghD9AV-vXH7hF9MVkfE6aazkWO1zJSy_FDI9dyOqED/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -634,7 +621,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyMM5rJYOA5s4wag4QlHzd22ePktbDaEkKyCSNB_yrr6VudpCajGQAhxYSQZdf7vRJI/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzT6FyxJl_jn6ooChGBjlXNoxghD9AV-vXH7hF9MVkfE6aazkWO1zJSy_FDI9dyOqED/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -803,8 +790,6 @@
 
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
-    let pendingOtpEmail = "";
-    let authenticatedSessionEmail = "";
     let selectedModule = localStorage.getItem('user_pref_module_v17') || 'ALL';
     let searchQuery = '';
     let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v17') || 'ALL';
@@ -854,12 +839,12 @@
       }
     }
 
-    /* JSONP HELPER TO PREVENT CORS BLOCKS */
+    /* JSONP HELPER FOR BACKEND COMMUNICATON */
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
       window[cbName] = function(data) {
         try {
-          callback(data);
+          if (callback) callback(data);
         } finally {
           delete window[cbName];
           const script = document.getElementById(cbName);
@@ -877,24 +862,9 @@
       script.onerror = function() {
         delete window[cbName];
         script.remove();
-        callback({ status: 'FAILED', message: 'Connection to verification server failed.' });
+        if (callback) callback({ status: 'FAILED', message: 'Server communication error.' });
       };
       document.body.appendChild(script);
-    }
-
-    /* GOOGLE SSO & EMAIL VALIDATION WITH OTP LOCK */
-    function detectGoogleSessionAccount() {
-      callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
-        if (data && data.email && data.email.includes('@maxval.com')) {
-          authenticatedSessionEmail = data.email.toLowerCase().trim();
-          document.getElementById('detectedEmailAddress').textContent = authenticatedSessionEmail;
-          document.getElementById('detectedEmailBox').style.display = 'block';
-          document.getElementById('loginEmailInput').value = authenticatedSessionEmail;
-        }
-        if (data && data.powerUsers) {
-          data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
-        }
-      });
     }
 
     function checkUserLoginState() {
@@ -902,7 +872,6 @@
       if (!currentUser || !currentUser.toLowerCase().includes('@maxval.com')) {
         lockOverlay.style.display = 'flex';
         scrollParentToTop();
-        detectGoogleSessionAccount();
       } else {
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
@@ -910,78 +879,32 @@
       }
     }
 
-    function handleRequestOtp(e) {
+    function handleDirectLogin(e) {
       e.preventDefault();
-      let input = document.getElementById('loginEmailInput').value.trim().toLowerCase();
+      let input = document.getElementById('mandatoryEmailInput').value.trim().toLowerCase();
       
       if (!input.includes('@maxval.com')) {
         const prefix = input.split('@')[0];
         input = `${prefix}@maxval.com`;
       }
 
-      if (authenticatedSessionEmail && input !== authenticatedSessionEmail) {
-        alert(`Access Denied: You must sign in using your active Google Account email (${authenticatedSessionEmail}).`);
-        document.getElementById('loginEmailInput').value = authenticatedSessionEmail;
-        return;
+      currentUser = input;
+      localStorage.setItem('kc_user_maxval_email', currentUser);
+      
+      const analytics = getUserAnalytics();
+      if (!analytics.users[currentUser]) {
+        analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
+      } else {
+        analytics.users[currentUser].lastLogin = new Date().toLocaleString();
       }
+      saveAnalytics(analytics);
 
-      const btn = document.getElementById('sendOtpBtn');
-      btn.textContent = "Sending Passcode...";
-      btn.disabled = true;
-
-      pendingOtpEmail = input;
-
-      callGasJsonp({ action: 'SEND_LOGIN_OTP', email: pendingOtpEmail }, function(data) {
-        btn.textContent = "Send OTP Passcode to Inbox";
-        btn.disabled = false;
-        if (data && data.status === "SUCCESS") {
-          document.getElementById('otpRequestForm').style.display = 'none';
-          document.getElementById('otpVerifyForm').style.display = 'flex';
-        } else {
-          alert(data.message || "Failed to send OTP code.");
-        }
-      });
-    }
-
-    function handleVerifyOtp(e) {
-      e.preventDefault();
-      const enteredOtp = document.getElementById('otpCodeInput').value.trim();
-      const btn = document.getElementById('verifyOtpBtn');
-
-      btn.textContent = "Verifying Code...";
-      btn.disabled = true;
-
-      callGasJsonp({ action: 'VERIFY_LOGIN_OTP', email: pendingOtpEmail, otp: enteredOtp }, function(data) {
-        btn.textContent = "Verify OTP & Access Portal";
-        btn.disabled = false;
-        if (data && data.status === "SUCCESS") {
-          currentUser = pendingOtpEmail;
-          localStorage.setItem('kc_user_maxval_email', currentUser);
-          
-          const analytics = getUserAnalytics();
-          if (!analytics.users[currentUser]) {
-            analytics.users[currentUser] = { lastLogin: new Date().toLocaleString(), completedTopics: [], seenDocs: [] };
-          } else {
-            analytics.users[currentUser].lastLogin = new Date().toLocaleString();
-          }
-          saveAnalytics(analytics);
-
-          document.getElementById('mandatoryLockOverlay').style.display = 'none';
-          updateUserBadgeDisplay();
-          updatePowerUserUIElements();
-          showInlineBanner(`Verified & Signed In: ${currentUser}`);
-          renderLearningHub();
-          renderDocumentHub();
-        } else {
-          alert(data.message || "Invalid OTP entered.");
-        }
-      });
-    }
-
-    function resetOtpForm() {
-      document.getElementById('otpRequestForm').style.display = 'flex';
-      document.getElementById('otpVerifyForm').style.display = 'none';
-      document.getElementById('otpCodeInput').value = '';
+      document.getElementById('mandatoryLockOverlay').style.display = 'none';
+      updateUserBadgeDisplay();
+      updatePowerUserUIElements();
+      showInlineBanner(`Signed in as: ${currentUser}`);
+      renderLearningHub();
+      renderDocumentHub();
     }
 
     function openProfileModal() {
@@ -995,8 +918,7 @@
       currentUser = null;
       localStorage.removeItem('kc_user_maxval_email');
       closeModal('profileModalOverlay');
-      document.getElementById('loginEmailInput').value = '';
-      resetOtpForm();
+      document.getElementById('mandatoryEmailInput').value = '';
       checkUserLoginState();
       showInlineBanner("Signed out successfully.");
     }
@@ -1105,7 +1027,7 @@
 
       callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(remoteAnalytics) {
         let currentLocal = getUserAnalytics();
-        let merged = { users: { ...remoteAnalytics.users, ...currentLocal.users } };
+        let merged = { users: { ...(remoteAnalytics ? remoteAnalytics.users : {}), ...currentLocal.users } };
         renderDashboardTable(merged);
       });
 
