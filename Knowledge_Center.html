@@ -215,6 +215,7 @@
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
+    /* CHECKBOXES HIDDEN BY DEFAULT */
     .item-select-checkbox {
       width: 16px;
       height: 16px;
@@ -240,6 +241,12 @@
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 30px 1rem; overflow-y: auto;
     }
     .modal-overlay.open { display: flex; }
+    
+    /* HIGHER Z-INDEX FOR USER DETAIL BREAKDOWN TO OVERLAY DASHBOARD */
+    #powerUserDetailModalOverlay {
+      z-index: 10000005 !important;
+    }
+
     .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.25rem; box-shadow: var(--shadow-md); margin-top: 10px; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
     .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1.05rem; }
@@ -480,7 +487,7 @@
     </div>
   </div>
 
-  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL -->
+  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL (HIGHER Z-INDEX TO STACK OVER DASHBOARD) -->
   <div class="modal-overlay" id="powerUserDetailModalOverlay">
     <div class="modal-content" style="max-width:540px;">
       <div class="modal-header">
@@ -590,9 +597,9 @@
     </div>
   </div>
 
-  <!-- PROGRESS DASHBOARD -->
+  <!-- PROGRESS DASHBOARD MODAL -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
-    <div class="modal-content" style="max-width: 680px;">
+    <div class="modal-content" style="max-width: 720px;">
       <div class="modal-header">
         <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
         <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -600,7 +607,13 @@
       <div class="table-container">
         <table class="doc-table">
           <thead>
-            <tr><th>MaxVal User Email</th><th>Last Active</th><th>Completed Topics</th><th>Docs Viewed</th><th id="dashboardActionColHeader">Action</th></tr>
+            <tr>
+              <th>MaxVal User Email</th>
+              <th>Last Active</th>
+              <th>Completed Topics</th>
+              <th>Docs Viewed</th>
+              <th>Actions</th>
+            </tr>
           </thead>
           <tbody id="userAnalyticsTableBody"></tbody>
         </table>
@@ -968,9 +981,14 @@
                   </span>
                 </td>
                 <td>
-                  <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${email}')">
-                    <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>View Details</span>
-                  </button>
+                  <div style="display:flex; gap:0.25rem; align-items:center;">
+                    <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${email}')">
+                      <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>Details</span>
+                    </button>
+                    <button type="button" class="btn-danger" style="padding:0.25rem 0.4rem; font-size:0.75rem;" onclick="deleteUserProgressRecord('${email}')" title="Delete User Progress Record">
+                      <span class="material-icons-outlined" style="font-size:14px;">delete</span>
+                    </button>
+                  </div>
                 </td>
               </tr>
             `;
@@ -996,7 +1014,11 @@
                 ${viewCount} Viewed
               </span>
             </td>
-            <td>N/A</td>
+            <td>
+              <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${currentUser}')">
+                <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>My Details</span>
+              </button>
+            </td>
           </tr>
         `;
       }
@@ -1004,6 +1026,20 @@
       document.getElementById('userDashboardModalOverlay').classList.add('open');
       scrollParentToTop();
       setTimeout(notifyIframeHeight, 100);
+    }
+
+    /* POWER USER DELETE USER PROGRESS RECORD */
+    function deleteUserProgressRecord(email) {
+      if (!isPowerUser(currentUser)) return;
+      if (confirm(`Are you sure you want to delete the progress record for ${email}?`)) {
+        const analytics = getUserAnalytics();
+        if (analytics.users && analytics.users[email]) {
+          delete analytics.users[email];
+          saveAnalytics(analytics);
+          openUserAnalyticsDashboard(); // Refresh dashboard
+          showInlineBanner(`Deleted progress record for ${email}`);
+        }
+      }
     }
 
     /* POWER USER DRILL-DOWN BREAKDOWN MODAL */
