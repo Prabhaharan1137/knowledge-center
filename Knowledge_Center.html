@@ -311,7 +311,7 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbzYP-HmluWBz_oHvd1G2uDdiY_o5awMzH2BwttLDgYkB3nOw5PBo1wD8pljyQxE19mh/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbzZNycR1iHoA2pUt_DREVZZia1LXL1wKeyZeE7kjDChAItPJrx93z-c74UnFi8RaqEm/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -634,7 +634,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzYP-HmluWBz_oHvd1G2uDdiY_o5awMzH2BwttLDgYkB3nOw5PBo1wD8pljyQxE19mh/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzZNycR1iHoA2pUt_DREVZZia1LXL1wKeyZeE7kjDChAItPJrx93z-c74UnFi8RaqEm/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -854,7 +854,7 @@
       }
     }
 
-    /* JSONP COMMUNICATOR */
+    /* JSONP HELPER TO PREVENT CORS BLOCKS & SPEED UP RENDERING */
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
       window[cbName] = function(data) {
@@ -1188,7 +1188,7 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    /* CONFIRMATION DIALOG & PERMANENT USER DASHBOARD DELETION */
+    /* DASHBOARD DELETE WITH POPUP CONFIRMATION MODAL */
     window.deleteUserProgressRecord = function(targetEmail, event) {
       if (event) {
         event.preventDefault();
@@ -1198,7 +1198,7 @@
 
       const cleanedTarget = targetEmail.trim().toLowerCase();
 
-      // NATIVE POPUP CONFIRMATION MODAL
+      // POPUP CONFIRMATION BOX
       if (confirm(`Are you sure you want to permanently delete the progress record for ${cleanedTarget}?`)) {
         let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
         if (localData.users && localData.users[cleanedTarget]) delete localData.users[cleanedTarget];
@@ -1209,7 +1209,7 @@
         localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
         callGasJsonp({ action: 'DELETE_USER_ANALYTICS', email: cleanedTarget }, function() {
-          openUserAnalyticsDashboard(); // Dynamic Re-render
+          openUserAnalyticsDashboard(); // Re-render table dynamically
         });
 
         showInlineBanner(`Deleted record for ${cleanedTarget}`);
@@ -1306,7 +1306,7 @@
       `).join('');
     }
 
-    /* POWER USER ADDITION WITH AUTOMATED EMAIL & AUTO SIGN-OUT */
+    /* POWER USER ADDITION WITH AUTOMATIC EMAIL NOTIFICATION & AUTO LOGOUT */
     function handleAddPowerUser(e) {
       e.preventDefault();
       const input = document.getElementById('newPowerUserEmail').value.trim().toLowerCase();
