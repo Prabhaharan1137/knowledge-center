@@ -40,7 +40,7 @@
       position: relative;
     }
 
-    /* SAME DAY RELEASE TICKER BANNER */
+    /* LIVE TICKER BANNER FOR SAME-DAY RELEASES */
     .release-ticker-bar {
       display: none;
       background: linear-gradient(90deg, #1a73e8, #9334e6);
@@ -232,7 +232,7 @@
       flex-direction: column; 
       justify-content: space-between; 
       cursor: pointer; 
-      transition: all 0.25rem ease; 
+      transition: all 0.25s ease; 
       position: relative;
     }
     .resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: var(--google-blue); }
@@ -306,7 +306,7 @@
       padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
     }
 
-    /* CONGRATULATIONS ANIMATION OVERLAY */
+    /* CONGRATULATIONS CELEBRATION OVERLAY */
     .congrats-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none; z-index: 99999999; display: none;
@@ -333,7 +333,7 @@
 </head>
 <body>
 
-  <!-- LIVE SAME-DAY RELEASE TICKER BANNER -->
+  <!-- LIVE TICKER BANNER FOR SAME-DAY RELEASES -->
   <div id="releaseTickerBar" class="release-ticker-bar">
     <div class="ticker-content" id="releaseTickerContent">🎉 New Updates Published Today!</div>
   </div>
