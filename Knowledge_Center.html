@@ -40,6 +40,30 @@
       position: relative;
     }
 
+    /* SAME DAY RELEASE TICKER BANNER */
+    .release-ticker-bar {
+      display: none;
+      background: linear-gradient(90deg, #1a73e8, #9334e6);
+      color: #ffffff;
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .ticker-content {
+      display: inline-block;
+      padding-left: 100%;
+      animation: tickerAnimation 22s linear infinite;
+    }
+    .ticker-content:hover { animation-play-state: paused; cursor: pointer; }
+    @keyframes tickerAnimation {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+
     .app-lock-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -116,7 +140,9 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
       font-size: 0.8rem;
+      transition: transform 0.15s ease, background 0.2s ease;
     }
+    .top-utility-btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.2); }
     .top-utility-btn.accent-add { background: var(--google-blue); border-color: var(--google-blue); margin-left: auto; }
     .top-utility-btn.accent-analytics { background: var(--google-purple); border-color: var(--google-purple); }
     .top-utility-btn.accent-settings { background: #5f6368; border-color: #5f6368; }
@@ -147,6 +173,7 @@
       align-items: center;
       gap: 0.4rem;
       border-radius: 20px;
+      transition: all 0.2s ease;
     }
     .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); }
     .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); }
@@ -184,11 +211,7 @@
       flex-wrap: wrap;
       gap: 0.5rem;
     }
-    .filter-actions-group {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
+    .filter-actions-group { display: flex; align-items: center; gap: 0.4rem; }
     .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; }
     .styled-dropdown-catchy { width: 100%; padding: 0.4rem 0.7rem; font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 500; border: 1.5px solid var(--border-color); border-radius: 6px; outline: none; }
 
@@ -200,8 +223,19 @@
     .search-input { width: 100%; padding: 0.35rem 1rem 0.35rem 2.1rem; border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.82rem; outline: none; }
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
-    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; }
-    .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
+    .resource-card { 
+      background: var(--bg-card); 
+      border: 1px solid var(--border-color); 
+      border-radius: var(--radius); 
+      padding: 0.8rem; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: space-between; 
+      cursor: pointer; 
+      transition: all 0.25rem ease; 
+      position: relative;
+    }
+    .resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: var(--google-blue); }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
 
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.45rem; }
@@ -210,51 +244,19 @@
     .card-actions { margin-top: 0.6rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.35rem; }
     .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.78rem; }
     .action-icons { display: flex; gap: 0.25rem; align-items: center; }
-    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; }
-    .action-btn:hover { background: rgba(0, 0, 0, 0.05); }
+    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; transition: transform 0.15s ease; }
+    .action-btn:hover { background: rgba(0, 0, 0, 0.05); transform: scale(1.1); }
     .action-btn.delete-btn:hover { color: var(--google-red); }
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    .item-select-checkbox {
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-      accent-color: var(--google-red);
-      display: none;
-    }
-    .selection-mode-active .item-select-checkbox {
-      display: inline-block;
-    }
+    .item-select-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--google-red); display: none; }
+    .selection-mode-active .item-select-checkbox { display: inline-block; }
 
-    .table-container { 
-      background: var(--bg-card); 
-      border: 1px solid var(--border-color); 
-      border-radius: var(--radius); 
-      overflow-x: auto; 
-      width: 100%;
-    }
-    .doc-table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      font-size: 0.83rem; 
-      table-layout: fixed; 
-      min-width: 680px; 
-    }
-    .doc-table th, .doc-table td { 
-      padding: 0.65rem 0.75rem; 
-      text-align: left; 
-      vertical-align: middle; 
-      border-bottom: 1px solid #f1f3f4; 
-      word-wrap: break-word; 
-      overflow: hidden;
-    }
-    .doc-table th { 
-      background: var(--bg-body); 
-      font-weight: 600; 
-      color: var(--text-secondary); 
-      border-bottom: 1px solid var(--border-color); 
-    }
+    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; table-layout: fixed; min-width: 680px; }
+    .doc-table th, .doc-table td { padding: 0.65rem 0.75rem; text-align: left; vertical-align: middle; border-bottom: 1px solid #f1f3f4; word-wrap: break-word; overflow: hidden; }
+    .doc-table th { background: var(--bg-body); font-weight: 600; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); }
     .doc-table th.col-checkbox, .doc-table td.doc-checkbox-td { width: 45px; text-align: center; }
     .doc-table th.col-pkg, .doc-table td.col-pkg { width: 28%; }
     .doc-table th.col-ver, .doc-table td.col-ver { width: 18%; }
@@ -269,8 +271,9 @@
       -webkit-backdrop-filter: blur(12px);
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow-y: auto;
     }
-    .modal-overlay.open { display: flex; }
-    
+    .modal-overlay.open { display: flex; animation: fadeInModal 0.2s ease-out; }
+    @keyframes fadeInModal { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
     #powerUserDetailModalOverlay { z-index: 10000005 !important; }
     #deleteConfirmModalOverlay { z-index: 10000010 !important; }
 
@@ -294,18 +297,27 @@
       border: 1px solid rgba(147, 52, 230, 0.2);
     }
 
-    .detail-list {
-      list-style: none; padding: 0; margin: 0; max-height: 180px; overflow-y: auto; font-size: 0.82rem; border: 1px solid var(--border-color); border-radius: 6px;
-    }
-    .detail-list li {
-      padding: 0.4rem 0.65rem; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between;
-    }
+    .detail-list { list-style: none; padding: 0; margin: 0; max-height: 180px; overflow-y: auto; font-size: 0.82rem; border: 1px solid var(--border-color); border-radius: 6px; }
+    .detail-list li { padding: 0.4rem 0.65rem; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between; }
     .detail-list li:last-child { border-bottom: none; }
 
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
       padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
     }
+
+    /* CONGRATULATIONS ANIMATION OVERLAY */
+    .congrats-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; z-index: 99999999; display: none;
+      align-items: center; justify-content: center; text-align: center;
+    }
+    .congrats-card {
+      background: #ffffff; padding: 1.5rem 2rem; border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3); border: 2px solid var(--google-green);
+      animation: popInCongrats 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popInCongrats { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
     @media (max-width: 600px) {
       .animated-brand-title { font-size: 0.95rem; }
@@ -320,6 +332,20 @@
   </style>
 </head>
 <body>
+
+  <!-- LIVE SAME-DAY RELEASE TICKER BANNER -->
+  <div id="releaseTickerBar" class="release-ticker-bar">
+    <div class="ticker-content" id="releaseTickerContent">🎉 New Updates Published Today!</div>
+  </div>
+
+  <!-- CONGRATULATIONS CELEBRATION OVERLAY -->
+  <div id="congratsOverlay" class="congrats-overlay">
+    <div class="congrats-card">
+      <span class="material-icons-outlined" style="font-size: 54px; color: var(--google-green);">emoji_events</span>
+      <h2 style="font-family:'Google Sans', sans-serif; color:var(--google-green); margin-top:0.25rem;">Module Completed!</h2>
+      <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.25rem;" id="congratsModuleTitle">Great job finishing this topic.</p>
+    </div>
+  </div>
 
   <!-- MANDATORY OTP SECURITY VERIFICATION LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
@@ -382,7 +408,7 @@
         <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Users</span>
       </button>
 
-      <!-- SUBMIT NEW LINK: ACCESSIBLE TO ALL LOGGED-IN USERS -->
+      <!-- SUBMIT NEW LINK ACCESSIBLE TO ALL LOGGED-IN USERS -->
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" style="display:none;" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:15px;">add_circle</span><span>Submit New Link Live</span>
       </button>
@@ -655,12 +681,17 @@
     </div>
   </div>
 
-  <!-- PROGRESS DASHBOARD MODAL -->
+  <!-- PROGRESS DASHBOARD MODAL WITH REAL-TIME REFRESH -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
-    <div class="modal-content" style="max-width: 740px;">
+    <div class="modal-content" style="max-width: 760px;">
       <div class="modal-header">
         <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
-        <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <button type="button" class="btn-secondary" style="padding:0.3rem 0.6rem; font-size:0.75rem;" onclick="openUserAnalyticsDashboard()" title="Refresh Data Live">
+            <span class="material-icons-outlined" style="font-size:14px;">refresh</span><span>Refresh</span>
+          </button>
+          <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
+        </div>
       </div>
       <div class="table-container">
         <table class="doc-table">
@@ -681,7 +712,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyHOHfQjMNBl9UlJLR517b_cGZfXtGz7ZaCRqMSvGSeziwFTicl1vj9wfM9JPCSjGxv/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyPc7wfL6nPoTwowiikXzkwmw9cBqr1C46wbPlnIiANZvhOQ-yVtJ0epEIYZXdS_cT7/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -901,6 +932,27 @@
       }
     }
 
+    function triggerCongratsAnimation(moduleTitle) {
+      const overlay = document.getElementById('congratsOverlay');
+      document.getElementById('congratsModuleTitle').textContent = `Completed: ${moduleTitle}`;
+      overlay.style.display = 'flex';
+      setTimeout(() => { overlay.style.display = 'none'; }, 2500);
+    }
+
+    function checkSameDayReleases() {
+      const todayStr = new Date().toLocaleDateString();
+      const newItems = localCustomDataset.concat(localCustomDocs).filter(item => item.releaseDate === todayStr);
+      const tickerBar = document.getElementById('releaseTickerBar');
+      const tickerContent = document.getElementById('releaseTickerContent');
+
+      if (newItems.length > 0) {
+        tickerContent.textContent = `🚀 Fresh Release Today (${todayStr}): ` + newItems.map(i => i.name || `${i.pkg} (${i.type})`).join("  •  ");
+        tickerBar.style.display = "block";
+      } else {
+        tickerBar.style.display = "none";
+      }
+    }
+
     /* JSONP COMMUNICATOR */
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
@@ -1058,21 +1110,18 @@
       }
     }
 
-    /* SUBMIT LINK BUTTON ENABLED FOR ALL LOGGED-IN USERS */
     function updatePowerUserUIElements() {
       const powerTabBtn = document.getElementById('powerUsersTabBtn');
       const submitLinkBtn = document.getElementById('submitNewLinkBtn');
       const learningAdminActions = document.getElementById('learningAdminActions');
       const docAdminActions = document.getElementById('docAdminActions');
 
-      // Submit link button visible to ALL authenticated users
       if (currentUser) {
         if (submitLinkBtn) submitLinkBtn.style.display = 'inline-flex';
       } else {
         if (submitLinkBtn) submitLinkBtn.style.display = 'none';
       }
 
-      // Admin tabs and bulk deletion controls remain exclusive to Power Users
       if (isPowerUser(currentUser)) {
         if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
         if (learningAdminActions) learningAdminActions.style.display = 'flex';
@@ -1124,13 +1173,17 @@
       const hasViewed = userRecord.seenDocs.some(doc => doc.pkg === resId || doc.type === resId || doc.pkg === resourceTitle);
 
       if (!hasViewed) {
-        alert("Please complete the module by opening the link first.");
+        alert("Verification Required: Please open and review the link first before marking it as complete.");
         return;
       }
 
       const idx = userRecord.completedTopics.indexOf(resId);
-      if (idx > -1) { userRecord.completedTopics.splice(idx, 1); } 
-      else { userRecord.completedTopics.push(resId); }
+      if (idx > -1) { 
+        userRecord.completedTopics.splice(idx, 1); 
+      } else { 
+        userRecord.completedTopics.push(resId);
+        triggerCongratsAnimation(resourceTitle);
+      }
 
       saveAnalytics(analytics);
       renderLearningHub();
@@ -1160,7 +1213,7 @@
       return powerUsers.has(email.toLowerCase().trim());
     }
 
-    /* REAL-TIME GLOBAL CROSS-DEVICE PROGRESS TRACKING FOR POWER USERS */
+    /* REAL-TIME GLOBAL CROSS-DEVICE DASHBOARD SORTED BY LAST VIEWED DATE */
     function openUserAnalyticsDashboard() {
       if (!currentUser) { checkUserLoginState(); return; }
       const tbody = document.getElementById('userAnalyticsTableBody');
@@ -1184,7 +1237,14 @@
 
         if (isPowerUser(currentUser)) {
           titleElem.textContent = "Power User - Organization Dashboard";
-          const userKeys = Object.keys(users);
+          let userKeys = Object.keys(users);
+
+          // SORT USERS BY LAST VIEWED TIMESTAMP (MOST RECENT FIRST)
+          userKeys.sort((a, b) => {
+            const dateA = users[a].seenDocs && users[a].seenDocs.length > 0 ? new Date(users[a].seenDocs[users[a].seenDocs.length - 1].timestamp) : 0;
+            const dateB = users[b].seenDocs && users[b].seenDocs.length > 0 ? new Date(users[b].seenDocs[users[b].seenDocs.length - 1].timestamp) : 0;
+            return dateB - dateA;
+          });
 
           if (userKeys.length === 0) {
             tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
@@ -1256,7 +1316,6 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    /* CUSTOM DELETE CONFIRMATION POPUP FOR DASHBOARD & ITEMS */
     function promptDeleteUserProgressRecord(targetEmail, event) {
       if (event) { event.preventDefault(); event.stopPropagation(); }
       if (!isPowerUser(currentUser)) return;
@@ -1755,20 +1814,21 @@
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
         const isSelected = selectedLearningIndices.has(res.originalIndex);
+        const autoDescription = `Comprehensive training guide covering ${res.name} under the ${res.category} module. Click to view training materials.`;
 
         return `
-          <article class="resource-card ${isSelected ? 'selected-card' : ''}" data-index="${res.originalIndex}" onclick="toggleTileActive(this)">
+          <article class="resource-card ${isSelected ? 'selected-card' : ''}" data-index="${res.originalIndex}" title="${autoDescription}" onclick="toggleTileActive(this)">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
                 <div class="action-icons" onclick="event.stopPropagation()">
                   <input type="checkbox" class="item-select-checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLearningSelect(${res.originalIndex}, event)" title="Select Item">
-                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Completed' : 'Mark as Complete'}">
+                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Marked as Completed' : 'Click to complete (Requires opening link first)'}">
                     <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
                       ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
                     </span>
                   </button>
-                  <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark">
+                  <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark Resource">
                     <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
                 </div>
@@ -1819,8 +1879,10 @@
 
       tbody.innerHTML = filteredWithIndex.map(doc => {
         const isSelected = selectedDocIndices.has(doc.originalIndex);
+        const docDescription = `Official technical document: ${doc.type} for package ${doc.pkg} (${doc.ver}). Click to access.`;
+
         return `
-          <tr onclick="toggleTileActive(this)">
+          <tr title="${docDescription}" onclick="toggleTileActive(this)">
             <td class="doc-checkbox-td" style="display:${isDocSelectionMode ? 'table-cell' : 'none'};" onclick="event.stopPropagation()">
               <input type="checkbox" class="item-select-checkbox" data-index="${doc.originalIndex}" ${isSelected ? 'checked' : ''} onchange="toggleDocSelect(${doc.originalIndex}, event)">
             </td>
@@ -1896,7 +1958,7 @@
           dataset[editIndex].category = category;
           dataset[editIndex].link = link;
         } else {
-          const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link };
+          const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link, releaseDate: currentDateStr };
           dataset.push(newResource);
           localCustomDataset.push(newResource);
         }
@@ -1916,7 +1978,7 @@
           docDataset[editIndex].type = type;
           docDataset[editIndex].link = link;
         } else {
-          const newDoc = { pkg, ver, type, link };
+          const newDoc = { pkg, ver, type, link, releaseDate: currentDateStr };
           docDataset.push(newDoc);
           localCustomDocs.push(newDoc);
         }
@@ -1940,6 +2002,8 @@
         document.getElementById('newVer').value = '';
         document.getElementById('newDocType').value = '';
         document.getElementById('newLink').value = '';
+
+        checkSameDayReleases();
       }
 
       if (shouldSend) {
@@ -1966,6 +2030,7 @@
       syncDocPackageOptions();
       renderLearningHub();
       renderDocumentHub();
+      checkSameDayReleases();
 
       document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
 
