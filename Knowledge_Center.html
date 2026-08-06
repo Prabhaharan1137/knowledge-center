@@ -227,7 +227,7 @@
       display: inline-block;
     }
 
-    /* DOCUMENT TAB TABLE ALIGNMENT & RESPONSIVENESS */
+    /* DOCUMENT HUB TABLE ALIGNMENT & RESPONSIVENESS */
     .table-container { 
       background: var(--bg-card); 
       border: 1px solid var(--border-color); 
@@ -308,7 +308,6 @@
       padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
     }
 
-    /* MOBILE RESPONSIVE OPTIMIZATIONS */
     @media (max-width: 600px) {
       .animated-brand-title { font-size: 0.95rem; }
       .top-utility-nav { gap: 0.35rem; }
@@ -354,7 +353,7 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbzRO1W90IDtb5-yJABCdrc-28SFUTaAKIozpXULgjm4F8DT-dn9K6QmZ7yEL0n1wnJC/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxllfiLzbIDy3lyokrUtLuz8L8NGDYAy6yu2UuRwgQUN21zvbty-oTuFmO0IjGL97w/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -693,7 +692,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzRO1W90IDtb5-yJABCdrc-28SFUTaAKIozpXULgjm4F8DT-dn9K6QmZ7yEL0n1wnJC/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxllfiLzbIDy3lyokrUtLuz8L8NGDYAy6yu2UuRwgQUN21zvbty-oTuFmO0IjGL97w/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -881,7 +880,7 @@
     let selectedDocIndices = new Set();
 
     let pendingAction = null; 
-    let cachedGlobalAnalytics = { users: {} }; // Store global server analytics state
+    let cachedGlobalAnalytics = { users: {} };
 
     const categoryColors = {
       'intellectual property': { bg: '#feefe3', color: '#b06000' },
