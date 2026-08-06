@@ -382,6 +382,7 @@
         <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Users</span>
       </button>
 
+      <!-- SUBMIT LINK BUTTON: VISIBLE TO ALL AUTHENTICATED USERS -->
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" style="display:none;" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:15px;">add_circle</span><span>Submit New Link Live</span>
       </button>
@@ -680,7 +681,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyVGTqdV7tui9fWxKLx7UPI2CGLSZjxIPl57oOYJV2YMEvA1IJrCM9t_pWrNiqo4UD1/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyHOHfQjMNBl9UlJLR517b_cGZfXtGz7ZaCRqMSvGSeziwFTicl1vj9wfM9JPCSjGxv/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1057,20 +1058,27 @@
       }
     }
 
+    /* SUBMIT LINK BUTTON ENABLED FOR ALL LOGGED-IN USERS */
     function updatePowerUserUIElements() {
       const powerTabBtn = document.getElementById('powerUsersTabBtn');
       const submitLinkBtn = document.getElementById('submitNewLinkBtn');
       const learningAdminActions = document.getElementById('learningAdminActions');
       const docAdminActions = document.getElementById('docAdminActions');
 
+      // Submit link is available for ANY logged-in user
+      if (currentUser) {
+        if (submitLinkBtn) submitLinkBtn.style.display = 'inline-flex';
+      } else {
+        if (submitLinkBtn) submitLinkBtn.style.display = 'none';
+      }
+
+      // Power user tabs & bulk delete remain exclusive to Power Users
       if (isPowerUser(currentUser)) {
         if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
-        if (submitLinkBtn) submitLinkBtn.style.display = 'inline-flex';
         if (learningAdminActions) learningAdminActions.style.display = 'flex';
         if (docAdminActions) docAdminActions.style.display = 'flex';
       } else {
         if (powerTabBtn) powerTabBtn.style.display = 'none';
-        if (submitLinkBtn) submitLinkBtn.style.display = 'none';
         if (learningAdminActions) learningAdminActions.style.display = 'none';
         if (docAdminActions) docAdminActions.style.display = 'none';
       }
