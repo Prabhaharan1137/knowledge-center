@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Symphony Implementation - Learning & Documentation Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
@@ -50,22 +50,22 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 30px;
+      padding: 20px 10px;
       overflow-y: auto;
     }
 
     .app-lock-card {
-      position: fixed;
-      top: 30px;
+      position: relative;
       background: #ffffff;
       border-radius: 16px;
-      padding: 2rem;
-      max-width: 460px;
-      width: 90%;
+      padding: 1.75rem 1.25rem;
+      max-width: 440px;
+      width: 100%;
       box-shadow: 0 12px 32px rgba(0,0,0,0.45);
       text-align: center;
       border: 1px solid var(--border-color);
       z-index: 10000000;
+      margin-top: 10px;
     }
 
     .top-hero-header {
@@ -77,7 +77,7 @@
 
     .animated-brand-title {
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 800;
       background: linear-gradient(90deg, #4285f4, #a142f4, #34a853, #fbbc05, #4285f4);
       background-size: 300% 100%;
@@ -97,12 +97,12 @@
 
     .top-utility-bar {
       background-color: #28292c;
-      padding: 0.4rem 1.25rem;
+      padding: 0.5rem 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .top-utility-nav { display: flex; align-items: center; gap: 0.6rem; width: 100%; flex-wrap: wrap; }
+    .top-utility-nav { display: flex; align-items: center; gap: 0.5rem; width: 100%; flex-wrap: wrap; }
     .top-utility-link, .top-utility-btn {
       color: #ffffff;
       text-decoration: none;
@@ -110,12 +110,12 @@
       align-items: center;
       gap: 0.3rem;
       font-weight: 500;
-      padding: 0.35rem 0.75rem;
+      padding: 0.35rem 0.65rem;
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
     .top-utility-btn.accent-add { background: var(--google-blue); border-color: var(--google-blue); margin-left: auto; }
     .top-utility-btn.accent-analytics { background: var(--google-purple); border-color: var(--google-purple); }
@@ -125,19 +125,21 @@
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      padding: 0.45rem 1.25rem;
+      padding: 0.5rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
     
-    .nav-tabs { display: flex; gap: 0.75rem; align-items: center; }
+    .nav-tabs { display: flex; gap: 0.5rem; align-items: center; }
     .tab-btn {
       background: #f1f3f4;
       border: 1px solid var(--border-color);
-      padding: 0.4rem 1rem;
+      padding: 0.4rem 0.85rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
@@ -161,7 +163,7 @@
       font-weight: 600;
     }
 
-    .container { width: 100%; padding: 0.75rem 1.25rem; display: flex; flex-direction: column; }
+    .container { width: 100%; padding: 0.75rem 1rem; display: flex; flex-direction: column; }
     .tab-content { display: none; flex-direction: column; }
     .tab-content.active { display: flex; }
 
@@ -197,7 +199,7 @@
     .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 18px; }
     .search-input { width: 100%; padding: 0.35rem 1rem 0.35rem 2.1rem; border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.82rem; outline: none; }
 
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
     .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; }
     .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
@@ -225,24 +227,53 @@
       display: inline-block;
     }
 
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-    .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border-color); }
-    .doc-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f3f4; }
-    .doc-type-tag { padding: 0.12rem 0.4rem; border-radius: 4px; font-size: 0.7rem; font-weight: 500; background: #e8eaed; }
+    /* DOCUMENT TAB TABLE ALIGNMENT & RESPONSIVENESS */
+    .table-container { 
+      background: var(--bg-card); 
+      border: 1px solid var(--border-color); 
+      border-radius: var(--radius); 
+      overflow-x: auto; 
+      width: 100%;
+    }
+    .doc-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      font-size: 0.83rem; 
+      table-layout: fixed; 
+      min-width: 680px; 
+    }
+    .doc-table th, .doc-table td { 
+      padding: 0.65rem 0.75rem; 
+      text-align: left; 
+      vertical-align: middle; 
+      border-bottom: 1px solid #f1f3f4; 
+      word-wrap: break-word; 
+      overflow: hidden;
+    }
+    .doc-table th { 
+      background: var(--bg-body); 
+      font-weight: 600; 
+      color: var(--text-secondary); 
+      border-bottom: 1px solid var(--border-color); 
+    }
+    .doc-table th.col-checkbox, .doc-table td.doc-checkbox-td { width: 45px; text-align: center; }
+    .doc-table th.col-pkg, .doc-table td.col-pkg { width: 28%; }
+    .doc-table th.col-ver, .doc-table td.col-ver { width: 18%; }
+    .doc-table th.col-type, .doc-table td.col-type { width: 27%; }
+    .doc-table th.col-actions, .doc-table td.col-actions { width: 27%; text-align: right; }
+    .doc-type-tag { padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.72rem; font-weight: 500; background: #e8eaed; display: inline-block; }
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 16, 18, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 30px 1rem; overflow-y: auto;
+      display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow-y: auto;
     }
     .modal-overlay.open { display: flex; }
     
-    #powerUserDetailModalOverlay {
-      z-index: 10000005 !important;
-    }
+    #powerUserDetailModalOverlay { z-index: 10000005 !important; }
+    #deleteConfirmModalOverlay { z-index: 10000010 !important; }
 
     .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.25rem; box-shadow: var(--shadow-md); margin-top: 10px; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
@@ -276,6 +307,18 @@
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
       padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
     }
+
+    /* MOBILE RESPONSIVE OPTIMIZATIONS */
+    @media (max-width: 600px) {
+      .animated-brand-title { font-size: 0.95rem; }
+      .top-utility-nav { gap: 0.35rem; }
+      .top-utility-link, .top-utility-btn { font-size: 0.75rem; padding: 0.3rem 0.5rem; }
+      .app-lock-card { padding: 1.25rem 1rem; }
+      #otpCodeInput { font-size: 1.1rem !important; letter-spacing: 4px !important; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .filter-header-row { flex-direction: column; align-items: flex-start; }
+      .filter-actions-group { width: 100%; justify-content: space-between; }
+    }
   </style>
 </head>
 <body>
@@ -284,9 +327,9 @@
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
-      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Email Passcode Verification</h2>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-        Enter your official <strong>@maxval.com</strong> email. A 1-time passcode (OTP) will be sent to your inbox to verify your identity.
+      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.2rem; margin-bottom: 0.5rem;">Email Passcode Verification</h2>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        Enter your official <strong>@maxval.com</strong> email. A 1-time passcode (OTP) will be sent to your inbox.
       </p>
 
       <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.6rem; font-size:0.85rem; margin-bottom:1rem; font-weight:600; color:var(--google-blue-hover);">
@@ -295,14 +338,14 @@
 
       <!-- STEP 1: REQUEST OTP FORM -->
       <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
+        <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required inputmode="email" autocomplete="email" style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
         <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.65rem; font-size: 0.9rem;">Send OTP Passcode to Inbox</button>
       </form>
 
-      <!-- STEP 2: VERIFY OTP FORM (HIDDEN INITIALLY) -->
+      <!-- STEP 2: VERIFY OTP FORM (OPTIMIZED FOR MOBILE OTP KEYPAD) -->
       <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
         <p style="font-size: 0.8rem; color: var(--google-green); font-weight: 600;">OTP sent! Check your inbox for the 6-digit code.</p>
-        <input type="text" id="otpCodeInput" placeholder="6-Digit OTP Code" required maxlength="6" style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.2rem; text-align: center; font-weight: 700; letter-spacing: 6px; outline: none;">
+        <input type="text" id="otpCodeInput" placeholder="6-Digit OTP Code" required maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.2rem; text-align: center; font-weight: 700; letter-spacing: 6px; outline: none;">
         <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.65rem; font-size: 0.9rem; background: var(--google-green);">Verify OTP & Access Portal</button>
         <button type="button" class="btn-secondary" onclick="resetOtpForm()" style="justify-content: center;">Use Different Email</button>
       </form>
@@ -322,7 +365,7 @@
 
   <div class="top-hero-header">
     <div class="animated-brand-title">
-      <span class="material-icons-outlined" style="font-size:24px;">folder_special</span>
+      <span class="material-icons-outlined" style="font-size:22px;">folder_special</span>
       <span>Symphony Implementation - Learning & Documentation Hub</span>
     </div>
   </div>
@@ -339,7 +382,6 @@
         <span class="material-icons-outlined" style="font-size:15px;">table_chart</span><span>Implementation Tracker</span>
       </a>
 
-      <!-- USER PROFILE BADGE -->
       <button type="button" class="top-utility-btn user-profile-badge" onclick="openProfileModal()">
         <span class="material-icons-outlined" style="font-size:15px;">account_circle</span>
         <span id="activeUserDisplay">Sign In (@maxval.com)</span>
@@ -349,7 +391,6 @@
         <span class="material-icons-outlined" style="font-size:15px;">insights</span><span>User Progress Dashboard</span>
       </button>
 
-      <!-- POWER USER TAB (HIDDEN FOR REGULAR USERS) -->
       <button type="button" class="top-utility-btn accent-settings" id="powerUsersTabBtn" style="display:none;" onclick="promptPowerUserSettings()">
         <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Users</span>
       </button>
@@ -445,12 +486,30 @@
         <table class="doc-table">
           <thead>
             <tr>
-              <th class="doc-checkbox-th" style="display:none;"><input type="checkbox" id="selectAllDocsCheckbox" class="item-select-checkbox" onchange="toggleSelectAllDocs(this)"></th>
-              <th>Package Name</th><th>Package Version</th><th>Type of Doc</th><th>Actions</th>
+              <th class="col-checkbox doc-checkbox-th" style="display:none;"><input type="checkbox" id="selectAllDocsCheckbox" class="item-select-checkbox" onchange="toggleSelectAllDocs(this)"></th>
+              <th class="col-pkg">Package Name</th>
+              <th class="col-ver">Package Version</th>
+              <th class="col-type">Type of Doc</th>
+              <th class="col-actions">Actions</th>
             </tr>
           </thead>
           <tbody id="docTableBody"></tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM DELETE CONFIRMATION MODAL POPUP -->
+  <div class="modal-overlay" id="deleteConfirmModalOverlay">
+    <div class="modal-content" style="max-width:400px; text-align:center;">
+      <div class="modal-header" style="justify-content: center;">
+        <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-red);">warning_amber</span>
+      </div>
+      <h3 style="font-family:'Google Sans', sans-serif; font-size:1.1rem; margin-bottom:0.5rem;">Confirm Delete Action</h3>
+      <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1.25rem;" id="deleteConfirmMessage">Are you sure you want to delete this record?</p>
+      <div style="display:flex; gap:0.5rem; justify-content:center;">
+        <button type="button" class="btn-secondary" style="flex:1; justify-content:center; padding:0.55rem;" onclick="closeModal('deleteConfirmModalOverlay')">Cancel</button>
+        <button type="button" class="btn-danger" id="confirmDeleteSubmitBtn" style="flex:1; justify-content:center; padding:0.55rem;">Delete Record</button>
       </div>
     </div>
   </div>
@@ -610,7 +669,7 @@
 
   <!-- PROGRESS DASHBOARD MODAL -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
-    <div class="modal-content" style="max-width: 720px;">
+    <div class="modal-content" style="max-width: 740px;">
       <div class="modal-header">
         <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
         <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -623,7 +682,7 @@
               <th>Last Active</th>
               <th>Completed Topics</th>
               <th>Docs Viewed</th>
-              <th>Actions</th>
+              <th style="text-align:right;">Actions</th>
             </tr>
           </thead>
           <tbody id="userAnalyticsTableBody"></tbody>
@@ -811,7 +870,6 @@
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
 
-    // Configurable Power Users List
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
     let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
@@ -823,6 +881,7 @@
     let selectedDocIndices = new Set();
 
     let pendingAction = null; 
+    let cachedGlobalAnalytics = { users: {} }; // Store global server analytics state
 
     const categoryColors = {
       'intellectual property': { bg: '#feefe3', color: '#b06000' },
@@ -907,6 +966,7 @@
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
         updatePowerUserUIElements();
+        syncCurrentAnalyticsToBackend();
       }
     }
 
@@ -1032,7 +1092,7 @@
     function getUserAnalytics() {
       let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
       let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
-      let mergedUsers = { ...globalLog.users, ...localData.users };
+      let mergedUsers = { ...cachedGlobalAnalytics.users, ...globalLog.users, ...localData.users };
       return { users: mergedUsers };
     }
 
@@ -1042,9 +1102,16 @@
       globalLog.users = { ...globalLog.users, ...data.users };
       localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
-      if (currentUser && data.users[currentUser]) {
-        var payload = JSON.stringify(data.users[currentUser]);
-        callGasJsonp({ action: 'SYNC_USER_ANALYTICS', email: currentUser, data: payload }, function(){});
+      syncCurrentAnalyticsToBackend();
+    }
+
+    function syncCurrentAnalyticsToBackend() {
+      if (currentUser) {
+        let analytics = getUserAnalytics();
+        if (analytics.users[currentUser]) {
+          var payload = JSON.stringify(analytics.users[currentUser]);
+          callGasJsonp({ action: 'SYNC_USER_ANALYTICS', email: currentUser, data: payload }, function(){});
+        }
       }
     }
 
@@ -1098,15 +1165,22 @@
       return powerUsers.has(email.toLowerCase().trim());
     }
 
+    /* REAL-TIME GLOBAL CROSS-DEVICE PROGRESS TRACKING FOR POWER USERS */
     function openUserAnalyticsDashboard() {
       if (!currentUser) { checkUserLoginState(); return; }
       const tbody = document.getElementById('userAnalyticsTableBody');
       const titleElem = document.getElementById('dashboardModalTitle');
 
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">Fetching live user progress across organization...</td></tr>`;
+      document.getElementById('userDashboardModalOverlay').classList.add('open');
+
       callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(remoteAnalytics) {
+        if (remoteAnalytics && remoteAnalytics.users) {
+          cachedGlobalAnalytics = remoteAnalytics;
+        }
         let currentLocal = getUserAnalytics();
-        let merged = { users: { ...(remoteAnalytics ? remoteAnalytics.users : {}), ...currentLocal.users } };
-        renderDashboardTable(merged);
+        let mergedUsers = { ...(remoteAnalytics ? remoteAnalytics.users : {}), ...currentLocal.users };
+        renderDashboardTable({ users: mergedUsers });
       });
 
       function renderDashboardTable(analytics) {
@@ -1139,12 +1213,12 @@
                       ${viewCount} Viewed
                     </span>
                   </td>
-                  <td>
-                    <div style="display:flex; gap:0.25rem; align-items:center;">
+                  <td style="text-align:right;">
+                    <div style="display:inline-flex; gap:0.25rem; align-items:center;">
                       <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${email}', event)">
                         <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>Details</span>
                       </button>
-                      <button type="button" class="btn-danger" style="padding:0.25rem 0.4rem; font-size:0.75rem;" onclick="window.deleteUserProgressRecord('${email}', event)" title="Delete User Progress Record">
+                      <button type="button" class="btn-danger" style="padding:0.25rem 0.4rem; font-size:0.75rem;" onclick="promptDeleteUserProgressRecord('${email}', event)" title="Delete User Record">
                         <span class="material-icons-outlined" style="font-size:14px;">delete</span>
                       </button>
                     </div>
@@ -1173,7 +1247,7 @@
                   ${viewCount} Viewed
                 </span>
               </td>
-              <td>
+              <td style="text-align:right;">
                 <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${currentUser}', event)">
                   <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>My Details</span>
                 </button>
@@ -1183,38 +1257,48 @@
         }
       }
 
-      document.getElementById('userDashboardModalOverlay').classList.add('open');
       scrollParentToTop();
       setTimeout(notifyIframeHeight, 100);
     }
 
-    /* CONFIRMATION POPUP & USER DASHBOARD DELETION */
-    window.deleteUserProgressRecord = function(targetEmail, event) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+    /* CUSTOM DELETE CONFIRMATION POPUP FOR DASHBOARD & ITEMS */
+    function promptDeleteUserProgressRecord(targetEmail, event) {
+      if (event) { event.preventDefault(); event.stopPropagation(); }
       if (!isPowerUser(currentUser)) return;
 
       const cleanedTarget = targetEmail.trim().toLowerCase();
+      document.getElementById('deleteConfirmMessage').textContent = `Are you sure you want to permanently delete the progress record for ${cleanedTarget}?`;
+      
+      const confirmBtn = document.getElementById('confirmDeleteSubmitBtn');
+      confirmBtn.onclick = function() {
+        executeUserProgressDeletion(cleanedTarget);
+      };
 
-      // POPUP CONFIRMATION DIALOG
-      if (confirm(`Are you sure you want to permanently delete the progress record for ${cleanedTarget}?`)) {
-        let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
-        if (localData.users && localData.users[cleanedTarget]) delete localData.users[cleanedTarget];
-        localStorage.setItem('kc_user_analytics_v7', JSON.stringify(localData));
+      document.getElementById('deleteConfirmModalOverlay').classList.add('open');
+      scrollParentToTop();
+    }
 
-        let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
-        if (globalLog.users && globalLog.users[cleanedTarget]) delete globalLog.users[cleanedTarget];
-        localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
+    function executeUserProgressDeletion(cleanedTarget) {
+      closeModal('deleteConfirmModalOverlay');
 
-        callGasJsonp({ action: 'DELETE_USER_ANALYTICS', email: cleanedTarget }, function() {
-          openUserAnalyticsDashboard(); // Re-render table dynamically
-        });
+      let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
+      if (localData.users && localData.users[cleanedTarget]) delete localData.users[cleanedTarget];
+      localStorage.setItem('kc_user_analytics_v7', JSON.stringify(localData));
 
-        showInlineBanner(`Deleted record for ${cleanedTarget}`);
+      let globalLog = JSON.parse(localStorage.getItem('kc_global_user_activity_v17')) || { users: {} };
+      if (globalLog.users && globalLog.users[cleanedTarget]) delete globalLog.users[cleanedTarget];
+      localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
+
+      if (cachedGlobalAnalytics.users && cachedGlobalAnalytics.users[cleanedTarget]) {
+        delete cachedGlobalAnalytics.users[cleanedTarget];
       }
-    };
+
+      callGasJsonp({ action: 'DELETE_USER_ANALYTICS', email: cleanedTarget }, function() {
+        openUserAnalyticsDashboard();
+      });
+
+      showInlineBanner(`Deleted record for ${cleanedTarget}`);
+    }
 
     function viewUserDetailBreakdown(email, event) {
       if(event) event.stopPropagation();
@@ -1514,9 +1598,9 @@
 
       if (isPowerUser(currentUser)) {
         if (type === 'delete') {
-          executeDeleteItem(hub, index);
+          promptResourceDeletion(hub, index);
         } else if (type === 'bulk_delete') {
-          executeBulkDeleteItem(hub);
+          promptResourceBulkDeletion(hub);
         } else if (type === 'edit') {
           executeEditItem(hub, index);
         }
@@ -1526,6 +1610,28 @@
       pendingAction = { type, index, hub };
       document.getElementById('pinInput').value = '';
       document.getElementById('pinModalOverlay').classList.add('open');
+      scrollParentToTop();
+    }
+
+    function promptResourceDeletion(hub, index) {
+      document.getElementById('deleteConfirmMessage').textContent = "Are you sure you want to delete this resource?";
+      const confirmBtn = document.getElementById('confirmDeleteSubmitBtn');
+      confirmBtn.onclick = function() {
+        closeModal('deleteConfirmModalOverlay');
+        executeDeleteItem(hub, index);
+      };
+      document.getElementById('deleteConfirmModalOverlay').classList.add('open');
+      scrollParentToTop();
+    }
+
+    function promptResourceBulkDeletion(hub) {
+      document.getElementById('deleteConfirmMessage').textContent = "Are you sure you want to delete all selected resources?";
+      const confirmBtn = document.getElementById('confirmDeleteSubmitBtn');
+      confirmBtn.onclick = function() {
+        closeModal('deleteConfirmModalOverlay');
+        executeBulkDeleteItem(hub);
+      };
+      document.getElementById('deleteConfirmModalOverlay').classList.add('open');
       scrollParentToTop();
     }
 
@@ -1723,11 +1829,11 @@
             <td class="doc-checkbox-td" style="display:${isDocSelectionMode ? 'table-cell' : 'none'};" onclick="event.stopPropagation()">
               <input type="checkbox" class="item-select-checkbox" data-index="${doc.originalIndex}" ${isSelected ? 'checked' : ''} onchange="toggleDocSelect(${doc.originalIndex}, event)">
             </td>
-            <td><strong>${doc.pkg}</strong></td>
-            <td>${doc.ver}</td>
-            <td><span class="doc-type-tag">${doc.type}</span></td>
-            <td onclick="event.stopPropagation()">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
+            <td class="col-pkg"><strong>${doc.pkg}</strong></td>
+            <td class="col-ver">${doc.ver}</td>
+            <td class="col-type"><span class="doc-type-tag">${doc.type}</span></td>
+            <td class="col-actions" onclick="event.stopPropagation()">
+              <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap:0.5rem; width:100%;">
                 <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
                   <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
                 </a>
