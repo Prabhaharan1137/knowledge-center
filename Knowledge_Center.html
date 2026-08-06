@@ -341,7 +341,7 @@
         <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.65rem; font-size: 0.9rem;">Send OTP Passcode to Inbox</button>
       </form>
 
-      <!-- STEP 2: VERIFY OTP FORM (OPTIMIZED FOR MOBILE OTP KEYPAD) -->
+      <!-- STEP 2: VERIFY OTP FORM -->
       <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
         <p style="font-size: 0.8rem; color: var(--google-green); font-weight: 600;">OTP sent! Check your inbox for the 6-digit code.</p>
         <input type="text" id="otpCodeInput" placeholder="6-Digit OTP Code" required maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.2rem; text-align: center; font-weight: 700; letter-spacing: 6px; outline: none;">
@@ -353,7 +353,9 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
+  <!-- HIDDEN GAS POST FORM WITH ACTION PARAMETER -->
   <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxllfiLzbIDy3lyokrUtLuz8L8NGDYAy6yu2UuRwgQUN21zvbty-oTuFmO0IjGL97w/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+    <input type="hidden" name="action" id="gas_action" value="SEND_PUBLISH_NOTIFICATION">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -1868,6 +1870,7 @@
       document.getElementById('gas_link').value = details.link.trim();
       document.getElementById('gas_releaseDate').value = details.releaseDate;
 
+      // Submit via hidden HTML form to execute doPost and send email
       document.getElementById('hiddenGasForm').submit();
     }
 
