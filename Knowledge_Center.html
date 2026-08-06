@@ -227,7 +227,6 @@
       display: inline-block;
     }
 
-    /* DOCUMENT HUB TABLE ALIGNMENT & RESPONSIVENESS */
     .table-container { 
       background: var(--bg-card); 
       border: 1px solid var(--border-color); 
@@ -350,19 +349,6 @@
       </form>
     </div>
   </div>
-
-  <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
-
-  <!-- HIDDEN GAS POST FORM WITH ACTION PARAMETER -->
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxllfiLzbIDy3lyokrUtLuz8L8NGDYAy6yu2UuRwgQUN21zvbty-oTuFmO0IjGL97w/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
-    <input type="hidden" name="action" id="gas_action" value="SEND_PUBLISH_NOTIFICATION">
-    <input type="hidden" name="dlAddress" id="gas_dlAddress">
-    <input type="hidden" name="submitter" id="gas_submitter">
-    <input type="hidden" name="title" id="gas_title">
-    <input type="hidden" name="hubName" id="gas_hubName">
-    <input type="hidden" name="link" id="gas_link">
-    <input type="hidden" name="releaseDate" id="gas_releaseDate">
-  </form>
 
   <div class="top-hero-header">
     <div class="animated-brand-title">
@@ -694,7 +680,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxllfiLzbIDy3lyokrUtLuz8L8NGDYAy6yu2UuRwgQUN21zvbty-oTuFmO0IjGL97w/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyn2-P6LUGtFPUBMl4J2n_g0MNhFSDW5tElB9RGPE3s8eWCw8lGZX3610-0yxwtX8cG/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1862,16 +1848,18 @@
       cardElement.classList.add('selected-active');
     }
 
-    function sendNotificationEmail(details) {
-      document.getElementById('gas_dlAddress').value = details.dlAddress;
-      document.getElementById('gas_submitter').value = cleanAsciiText(details.submitter);
-      document.getElementById('gas_title').value = cleanAsciiText(details.title);
-      document.getElementById('gas_hubName').value = cleanAsciiText(details.hubName);
-      document.getElementById('gas_link').value = details.link.trim();
-      document.getElementById('gas_releaseDate').value = details.releaseDate;
-
-      // Submit via hidden HTML form to execute doPost and send email
-      document.getElementById('hiddenGasForm').submit();
+    function sendNotificationEmail(details, callback) {
+      callGasJsonp({
+        action: 'SEND_PUBLISH_NOTIFICATION',
+        dlAddress: details.dlAddress,
+        submitter: details.submitter,
+        title: details.title,
+        hubName: details.hubName,
+        link: details.link,
+        releaseDate: details.releaseDate
+      }, function(response) {
+        if (callback) callback(response);
+      });
     }
 
     function handleAddSubmission(e) {
@@ -1930,6 +1918,22 @@
         renderDocumentHub();
       }
 
+      function finalizeFormUI() {
+        closeModal('addModalOverlay');
+        showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live and notification email sent.");
+        
+        submitBtn.textContent = "Publish Link Live";
+        submitBtn.disabled = false;
+
+        document.getElementById('editItemIndex').value = "";
+        document.getElementById('editItemType').value = "";
+        document.getElementById('newTitle').value = '';
+        document.getElementById('newPkg').value = '';
+        document.getElementById('newVer').value = '';
+        document.getElementById('newDocType').value = '';
+        document.getElementById('newLink').value = '';
+      }
+
       if (shouldSend) {
         sendNotificationEmail({
           hubName: targetHub,
@@ -1938,22 +1942,12 @@
           submitter: submitterEmail,
           dlAddress: dlAddress,
           releaseDate: currentDateStr
+        }, function() {
+          finalizeFormUI();
         });
+      } else {
+        finalizeFormUI();
       }
-
-      closeModal('addModalOverlay');
-      showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live and notification email sent.");
-      
-      submitBtn.textContent = "Publish Link Live";
-      submitBtn.disabled = false;
-
-      document.getElementById('editItemIndex').value = "";
-      document.getElementById('editItemType').value = "";
-      document.getElementById('newTitle').value = '';
-      document.getElementById('newPkg').value = '';
-      document.getElementById('newVer').value = '';
-      document.getElementById('newDocType').value = '';
-      document.getElementById('newLink').value = '';
 
       return false;
     }
