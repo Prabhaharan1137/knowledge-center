@@ -382,7 +382,7 @@
         <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Users</span>
       </button>
 
-      <!-- SUBMIT LINK BUTTON: VISIBLE TO ALL AUTHENTICATED USERS -->
+      <!-- SUBMIT NEW LINK: ACCESSIBLE TO ALL LOGGED-IN USERS -->
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" style="display:none;" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:15px;">add_circle</span><span>Submit New Link Live</span>
       </button>
@@ -1065,14 +1065,14 @@
       const learningAdminActions = document.getElementById('learningAdminActions');
       const docAdminActions = document.getElementById('docAdminActions');
 
-      // Submit link is available for ANY logged-in user
+      // Submit link button visible to ALL authenticated users
       if (currentUser) {
         if (submitLinkBtn) submitLinkBtn.style.display = 'inline-flex';
       } else {
         if (submitLinkBtn) submitLinkBtn.style.display = 'none';
       }
 
-      // Power user tabs & bulk delete remain exclusive to Power Users
+      // Admin tabs and bulk deletion controls remain exclusive to Power Users
       if (isPowerUser(currentUser)) {
         if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
         if (learningAdminActions) learningAdminActions.style.display = 'flex';
