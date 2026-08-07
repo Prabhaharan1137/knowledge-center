@@ -65,33 +65,24 @@
       100% { transform: translate3d(-100%, 0, 0); }
     }
 
-    /* ANIMATED SYMPHONY LOGO */
+    /* ANIMATED SYMPHONY DOTS LOGO */
     .symphony-logo-svg {
-      width: 28px;
-      height: 28px;
+      width: 38px;
+      height: 24px;
       vertical-align: middle;
-      animation: logoGlowPulse 3s ease-in-out infinite alternate;
     }
-    .logo-ring {
+    .symphony-dot {
       transform-origin: center;
-      animation: rotateRing 12s linear infinite;
+      animation: dotPulse 2s ease-in-out infinite alternate;
     }
-    .logo-core {
-      transform-origin: center;
-      animation: pulseCore 2s ease-in-out infinite alternate;
-    }
+    .symphony-dot.green { animation-delay: 0s; }
+    .symphony-dot.red { animation-delay: 0.3s; }
+    .symphony-dot.blue { animation-delay: 0.6s; }
+    .symphony-dot.yellow { animation-delay: 0.9s; }
 
-    @keyframes rotateRing {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes pulseCore {
-      0% { transform: scale(0.85); opacity: 0.8; }
-      100% { transform: scale(1.15); opacity: 1; }
-    }
-    @keyframes logoGlowPulse {
-      0% { filter: drop-shadow(0 0 2px rgba(66,133,244,0.4)); }
-      100% { filter: drop-shadow(0 0 8px rgba(161,66,244,0.8)); }
+    @keyframes dotPulse {
+      0% { transform: scale(0.8); opacity: 0.7; }
+      100% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 3px rgba(255,255,255,0.8)); }
     }
 
     .app-lock-overlay {
@@ -410,21 +401,34 @@
 
   <div class="top-hero-header">
     <div class="animated-brand-title">
-      <!-- DYNAMIC ANIMATED SYMPHONY LOGO -->
-      <svg class="symphony-logo-svg" viewBox="0 0 100 100">
-        <circle class="logo-ring" cx="50" cy="50" r="42" fill="none" stroke="url(#logoGradient)" stroke-width="8" stroke-dasharray="200 40" />
-        <circle class="logo-core" cx="50" cy="50" r="22" fill="url(#coreGradient)" />
-        <defs>
-          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#4285f4" />
-            <stop offset="50%" stop-color="#a142f4" />
-            <stop offset="100%" stop-color="#34a853" />
-          </linearGradient>
-          <linearGradient id="coreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#fbbc05" />
-            <stop offset="100%" stop-color="#ea4335" />
-          </linearGradient>
-        </defs>
+      <!-- VECTOR RECREATION OF SYMPHONY DOT ARCH LOGO -->
+      <svg class="symphony-logo-svg" viewBox="0 0 120 70">
+        <!-- Row 1: Outer Curve -->
+        <circle class="symphony-dot yellow" cx="15" cy="40" r="5" fill="#fbbc05" />
+        <circle class="symphony-dot green" cx="30" cy="28" r="5" fill="#34a853" />
+        <circle class="symphony-dot green" cx="46" cy="18" r="5" fill="#34a853" />
+        <circle class="symphony-dot red" cx="60" cy="14" r="5" fill="#ea4335" />
+        <circle class="symphony-dot red" cx="74" cy="18" r="5" fill="#ea4335" />
+        <circle class="symphony-dot blue" cx="90" cy="28" r="5" fill="#4285f4" />
+        <circle class="symphony-dot yellow" cx="105" cy="40" r="5" fill="#fbbc05" />
+
+        <!-- Row 2: Middle Curve -->
+        <circle class="symphony-dot yellow" cx="25" cy="50" r="5" fill="#fbbc05" />
+        <circle class="symphony-dot green" cx="38" cy="38" r="5" fill="#34a853" />
+        <circle class="symphony-dot red" cx="52" cy="30" r="5" fill="#ea4335" />
+        <circle class="symphony-dot red" cx="68" cy="30" r="5" fill="#ea4335" />
+        <circle class="symphony-dot blue" cx="82" cy="38" r="5" fill="#4285f4" />
+        <circle class="symphony-dot yellow" cx="95" cy="50" r="5" fill="#fbbc05" />
+
+        <!-- Row 3: Inner Curve -->
+        <circle class="symphony-dot green" cx="46" cy="52" r="5" fill="#34a853" />
+        <circle class="symphony-dot red" cx="56" cy="44" r="5" fill="#ea4335" />
+        <circle class="symphony-dot red" cx="64" cy="44" r="5" fill="#ea4335" />
+        <circle class="symphony-dot blue" cx="74" cy="52" r="5" fill="#4285f4" />
+
+        <!-- Bottom Base Dots -->
+        <circle class="symphony-dot yellow" cx="50" cy="62" r="5" fill="#fbbc05" />
+        <circle class="symphony-dot yellow" cx="70" cy="62" r="5" fill="#fbbc05" />
       </svg>
       <span>Symphony Implementation - Learning & Documentation Hub</span>
     </div>
