@@ -52,16 +52,46 @@
       white-space: nowrap;
       position: relative;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
     }
     .ticker-content {
       display: inline-block;
       padding-left: 100%;
       animation: tickerAnimation 22s linear infinite;
     }
-    .ticker-content:hover { animation-play-state: paused; cursor: pointer; }
+    .ticker-content:hover { animation-play-state: paused; }
     @keyframes tickerAnimation {
       0% { transform: translate3d(0, 0, 0); }
       100% { transform: translate3d(-100%, 0, 0); }
+    }
+
+    /* ANIMATED SYMPHONY LOGO */
+    .symphony-logo-svg {
+      width: 28px;
+      height: 28px;
+      vertical-align: middle;
+      animation: logoGlowPulse 3s ease-in-out infinite alternate;
+    }
+    .logo-ring {
+      transform-origin: center;
+      animation: rotateRing 12s linear infinite;
+    }
+    .logo-core {
+      transform-origin: center;
+      animation: pulseCore 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulseCore {
+      0% { transform: scale(0.85); opacity: 0.8; }
+      100% { transform: scale(1.15); opacity: 1; }
+    }
+    @keyframes logoGlowPulse {
+      0% { filter: drop-shadow(0 0 2px rgba(66,133,244,0.4)); }
+      100% { filter: drop-shadow(0 0 8px rgba(161,66,244,0.8)); }
     }
 
     .app-lock-overlay {
@@ -110,7 +140,7 @@
       animation: gradientFlow 5s linear infinite;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
 
     @keyframes gradientFlow {
@@ -140,9 +170,9 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
       font-size: 0.8rem;
-      transition: transform 0.15s ease, background 0.2s ease;
+      transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
     }
-    .top-utility-btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.2); }
+    .top-utility-btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.22); box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
     .top-utility-btn.accent-add { background: var(--google-blue); border-color: var(--google-blue); margin-left: auto; }
     .top-utility-btn.accent-analytics { background: var(--google-purple); border-color: var(--google-purple); }
     .top-utility-btn.accent-settings { background: #5f6368; border-color: #5f6368; }
@@ -232,10 +262,12 @@
       flex-direction: column; 
       justify-content: space-between; 
       cursor: pointer; 
-      transition: all 0.25s ease; 
+      transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1); 
       position: relative;
     }
-    .resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: var(--google-blue); }
+    .resource-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); border-color: var(--google-blue); }
+    .resource-card.highlight-new { animation: pulseNewCard 2.5s infinite alternate; }
+    @keyframes pulseNewCard { 0% { border-color: var(--google-blue); box-shadow: 0 0 4px var(--google-blue); } 100% { border-color: var(--google-purple); box-shadow: 0 0 12px var(--google-purple); } }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
 
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.45rem; }
@@ -245,7 +277,7 @@
     .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.78rem; }
     .action-icons { display: flex; gap: 0.25rem; align-items: center; }
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; transition: transform 0.15s ease; }
-    .action-btn:hover { background: rgba(0, 0, 0, 0.05); transform: scale(1.1); }
+    .action-btn:hover { background: rgba(0, 0, 0, 0.05); transform: scale(1.15); }
     .action-btn.delete-btn:hover { color: var(--google-red); }
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
@@ -271,8 +303,8 @@
       -webkit-backdrop-filter: blur(12px);
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow-y: auto;
     }
-    .modal-overlay.open { display: flex; animation: fadeInModal 0.2s ease-out; }
-    @keyframes fadeInModal { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+    .modal-overlay.open { display: flex; animation: fadeInModal 0.25s ease-out; }
+    @keyframes fadeInModal { from { opacity: 0; transform: translateY(-10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
     #powerUserDetailModalOverlay { z-index: 10000005 !important; }
     #deleteConfirmModalOverlay { z-index: 10000010 !important; }
@@ -334,7 +366,7 @@
 <body>
 
   <!-- LIVE TICKER BANNER FOR SAME-DAY RELEASES -->
-  <div id="releaseTickerBar" class="release-ticker-bar">
+  <div id="releaseTickerBar" class="release-ticker-bar" onclick="navigateToLatestRelease()">
     <div class="ticker-content" id="releaseTickerContent">🎉 New Updates Published Today!</div>
   </div>
 
@@ -378,7 +410,22 @@
 
   <div class="top-hero-header">
     <div class="animated-brand-title">
-      <span class="material-icons-outlined" style="font-size:22px;">folder_special</span>
+      <!-- DYNAMIC ANIMATED SYMPHONY LOGO -->
+      <svg class="symphony-logo-svg" viewBox="0 0 100 100">
+        <circle class="logo-ring" cx="50" cy="50" r="42" fill="none" stroke="url(#logoGradient)" stroke-width="8" stroke-dasharray="200 40" />
+        <circle class="logo-core" cx="50" cy="50" r="22" fill="url(#coreGradient)" />
+        <defs>
+          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#4285f4" />
+            <stop offset="50%" stop-color="#a142f4" />
+            <stop offset="100%" stop-color="#34a853" />
+          </linearGradient>
+          <linearGradient id="coreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbbc05" />
+            <stop offset="100%" stop-color="#ea4335" />
+          </linearGradient>
+        </defs>
+      </svg>
       <span>Symphony Implementation - Learning & Documentation Hub</span>
     </div>
   </div>
@@ -712,7 +759,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzcg7hBHzK29ntFj7golu2I_k9fxU8Lrr2wwwZKAsuMZQ4Q1rdlYlgBaq8TA-uGS5Ju/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzjhiD9jXvtMLWcxJYwRHkJi-D7pfthXVyEIesgThdZaKxON8QVvlFJ8v2pBGSq0JE6/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -873,11 +920,11 @@
       { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
     ];
 
-    let localCustomDataset = JSON.parse(localStorage.getItem('kc_custom_learning_v17') || '[]');
-    let localCustomDocs = JSON.parse(localStorage.getItem('kc_custom_docs_v17') || '[]');
+    let globalCustomLearning = [];
+    let globalCustomDocs = [];
 
-    let dataset = [...baseDataset, ...localCustomDataset];
-    let docDataset = [...baseDocDataset, ...localCustomDocs];
+    let dataset = [...baseDataset];
+    let docDataset = [...baseDocDataset];
 
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
@@ -901,6 +948,7 @@
 
     let pendingAction = null; 
     let cachedGlobalAnalytics = { users: {} };
+    let latestReleasedItem = null;
 
     const categoryColors = {
       'intellectual property': { bg: '#feefe3', color: '#b06000' },
@@ -941,16 +989,59 @@
 
     function checkSameDayReleases() {
       const todayStr = new Date().toLocaleDateString();
-      const newItems = localCustomDataset.concat(localCustomDocs).filter(item => item.releaseDate === todayStr);
+      const newItems = globalCustomLearning.concat(globalCustomDocs).filter(item => item.releaseDate === todayStr);
       const tickerBar = document.getElementById('releaseTickerBar');
       const tickerContent = document.getElementById('releaseTickerContent');
 
       if (newItems.length > 0) {
-        tickerContent.textContent = `🚀 Fresh Release Today (${todayStr}): ` + newItems.map(i => i.name || `${i.pkg} (${i.type})`).join("  •  ");
+        latestReleasedItem = newItems[newItems.length - 1];
+        tickerContent.textContent = `🚀 Fresh Release Today (${todayStr}): ` + newItems.map(i => i.name || `${i.pkg} (${i.type})`).join("  •  ") + " [Click to Navigate]";
         tickerBar.style.display = "block";
       } else {
         tickerBar.style.display = "none";
       }
+    }
+
+    function navigateToLatestRelease() {
+      if (!latestReleasedItem) return;
+      if (latestReleasedItem.category) {
+        switchTab('learningHubTab', document.querySelector('.learning-tab'));
+        selectedModule = 'ALL';
+        document.getElementById('moduleSelect').value = 'ALL';
+        renderLearningHub();
+      } else {
+        switchTab('documentHubTab', document.querySelector('.doc-tab'));
+        selectedDocPackage = 'ALL';
+        document.getElementById('docPackageSelect').value = 'ALL';
+        renderDocumentHub();
+      }
+
+      setTimeout(() => {
+        const highlighted = document.querySelector('.highlight-new');
+        if (highlighted) {
+          highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
+
+    /* FETCH CENTRALLY STORED CUSTOM LINKS FROM GAS BACKEND */
+    function loadGlobalCustomLinks(callback) {
+      callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
+        if (data && data.learning && data.docs) {
+          globalCustomLearning = data.learning;
+          globalCustomDocs = data.docs;
+
+          dataset = [...baseDataset, ...globalCustomLearning];
+          docDataset = [...baseDocDataset, ...globalCustomDocs];
+
+          syncDropdownOptions();
+          syncDocPackageOptions();
+          renderLearningHub();
+          renderDocumentHub();
+          checkSameDayReleases();
+        }
+        if (callback) callback();
+      });
     }
 
     /* JSONP COMMUNICATOR */
@@ -1007,6 +1098,7 @@
         updateUserBadgeDisplay();
         updatePowerUserUIElements();
         syncCurrentAnalyticsToBackend();
+        loadGlobalCustomLinks();
       }
     }
 
@@ -1070,8 +1162,7 @@
           updateUserBadgeDisplay();
           updatePowerUserUIElements();
           showInlineBanner(`Verified & Signed In: ${currentUser}`);
-          renderLearningHub();
-          renderDocumentHub();
+          loadGlobalCustomLinks();
         } else {
           alert(data.message || "Invalid OTP entered.");
         }
@@ -1213,7 +1304,7 @@
       return powerUsers.has(email.toLowerCase().trim());
     }
 
-    /* REAL-TIME GLOBAL CROSS-DEVICE DASHBOARD SORTED BY LAST VIEWED DATE */
+    /* REAL-TIME GLOBAL DASHBOARD SORTED BY LAST VIEWED DATE */
     function openUserAnalyticsDashboard() {
       if (!currentUser) { checkUserLoginState(); return; }
       const tbody = document.getElementById('userAnalyticsTableBody');
@@ -1239,7 +1330,6 @@
           titleElem.textContent = "Power User - Organization Dashboard";
           let userKeys = Object.keys(users);
 
-          // SORT USERS BY LAST VIEWED TIMESTAMP (MOST RECENT FIRST)
           userKeys.sort((a, b) => {
             const dateA = users[a].seenDocs && users[a].seenDocs.length > 0 ? new Date(users[a].seenDocs[users[a].seenDocs.length - 1].timestamp) : 0;
             const dateB = users[b].seenDocs && users[b].seenDocs.length > 0 ? new Date(users[b].seenDocs[users[b].seenDocs.length - 1].timestamp) : 0;
@@ -1497,7 +1587,7 @@
       document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
-      el.classList.add('active');
+      if (el) el.classList.add('active');
       
       const bookmarkContainer = document.getElementById('bookmarkContainer');
       bookmarkContainer.style.display = (tabId === 'learningHubTab') ? 'inline-flex' : 'none';
@@ -1721,19 +1811,21 @@
 
     function executeDeleteItem(hub, index) {
       if (hub === 'learning') {
+        const itemToDelete = dataset[index];
         dataset.splice(index, 1);
         selectedLearningIndices.delete(index);
-        const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
-        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
-        updateLearningBulkUI();
-        renderLearningHub();
+        
+        callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: 'learning', link: itemToDelete.link }, function() {
+          loadGlobalCustomLinks();
+        });
       } else {
+        const docToDelete = docDataset[index];
         docDataset.splice(index, 1);
         selectedDocIndices.delete(index);
-        const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
-        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
-        updateDocBulkUI();
-        renderDocumentHub();
+
+        callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: 'document', link: docToDelete.link }, function() {
+          loadGlobalCustomLinks();
+        });
       }
       showInlineBanner("Item successfully deleted.");
     }
@@ -1741,25 +1833,23 @@
     function executeBulkDeleteItem(hub) {
       if (hub === 'learning') {
         const sortedIndices = Array.from(selectedLearningIndices).sort((a, b) => b - a);
-        sortedIndices.forEach(idx => dataset.splice(idx, 1));
+        sortedIndices.forEach(idx => {
+          const item = dataset[idx];
+          callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: 'learning', link: item.link }, function(){});
+        });
         selectedLearningIndices.clear();
-        
-        const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
-        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
-        
         toggleSelectionMode('learning');
-        renderLearningHub();
       } else {
         const sortedIndices = Array.from(selectedDocIndices).sort((a, b) => b - a);
-        sortedIndices.forEach(idx => docDataset.splice(idx, 1));
+        sortedIndices.forEach(idx => {
+          const doc = docDataset[idx];
+          callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: 'document', link: doc.link }, function(){});
+        });
         selectedDocIndices.clear();
-
-        const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
-        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
-
         toggleSelectionMode('document');
-        renderDocumentHub();
       }
+      
+      setTimeout(loadGlobalCustomLinks, 800);
       showInlineBanner("Selected items successfully deleted.");
     }
 
@@ -1808,16 +1898,18 @@
       const analytics = getUserAnalytics();
       const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
       const powerUserActive = isPowerUser(currentUser);
+      const todayStr = new Date().toLocaleDateString();
 
       grid.innerHTML = filtered.map(res => {
         const style = getCategoryStyle(res.category);
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
         const isSelected = selectedLearningIndices.has(res.originalIndex);
+        const isTodayRelease = res.releaseDate === todayStr;
         const autoDescription = `Comprehensive training guide covering ${res.name} under the ${res.category} module. Click to view training materials.`;
 
         return `
-          <article class="resource-card ${isSelected ? 'selected-card' : ''}" data-index="${res.originalIndex}" title="${autoDescription}" onclick="toggleTileActive(this)">
+          <article class="resource-card ${isSelected ? 'selected-card' : ''} ${isTodayRelease ? 'highlight-new' : ''}" data-index="${res.originalIndex}" title="${autoDescription}" onclick="toggleTileActive(this)">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
@@ -1876,13 +1968,15 @@
       }
 
       const powerUserActive = isPowerUser(currentUser);
+      const todayStr = new Date().toLocaleDateString();
 
       tbody.innerHTML = filteredWithIndex.map(doc => {
         const isSelected = selectedDocIndices.has(doc.originalIndex);
+        const isTodayRelease = doc.releaseDate === todayStr;
         const docDescription = `Official technical document: ${doc.type} for package ${doc.pkg} (${doc.ver}). Click to access.`;
 
         return `
-          <tr title="${docDescription}" onclick="toggleTileActive(this)">
+          <tr title="${docDescription}" class="${isTodayRelease ? 'highlight-new' : ''}" onclick="toggleTileActive(this)">
             <td class="doc-checkbox-td" style="display:${isDocSelectionMode ? 'table-cell' : 'none'};" onclick="event.stopPropagation()">
               <input type="checkbox" class="item-select-checkbox" data-index="${doc.originalIndex}" ${isSelected ? 'checked' : ''} onchange="toggleDocSelect(${doc.originalIndex}, event)">
             </td>
@@ -1936,7 +2030,7 @@
       if (e) { e.preventDefault(); e.stopPropagation(); }
 
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = "Publishing & Delivering Email...";
+      submitBtn.textContent = "Publishing Global Link & Email...";
       submitBtn.disabled = true;
 
       const editIndex = document.getElementById('editItemIndex').value;
@@ -1948,49 +2042,44 @@
       const currentDateStr = new Date().toLocaleDateString();
 
       let releaseTitle = "";
+      let payloadItem = {};
 
       if (targetHub === 'learning') {
         releaseTitle = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
         const category = document.getElementById('newModule').value;
-        
-        if (editIndex !== "") {
-          dataset[editIndex].name = releaseTitle;
-          dataset[editIndex].category = category;
-          dataset[editIndex].link = link;
-        } else {
-          const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link, releaseDate: currentDateStr };
-          dataset.push(newResource);
-          localCustomDataset.push(newResource);
-        }
-        
-        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(localCustomDataset));
-        syncDropdownOptions();
-        renderLearningHub();
+        payloadItem = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link, releaseDate: currentDateStr };
       } else {
         const pkg = document.getElementById('newPkg').value.trim() || 'New Package';
         const ver = document.getElementById('newVer').value.trim() || 'v1.0';
         const type = document.getElementById('newDocType').value.trim() || 'Document';
         releaseTitle = `${pkg} (${ver}) - ${type}`;
-
-        if (editIndex !== "") {
-          docDataset[editIndex].pkg = pkg;
-          docDataset[editIndex].ver = ver;
-          docDataset[editIndex].type = type;
-          docDataset[editIndex].link = link;
-        } else {
-          const newDoc = { pkg, ver, type, link, releaseDate: currentDateStr };
-          docDataset.push(newDoc);
-          localCustomDocs.push(newDoc);
-        }
-
-        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(localCustomDocs));
-        syncDocPackageOptions();
-        renderDocumentHub();
+        payloadItem = { pkg, ver, type, link, releaseDate: currentDateStr };
       }
+
+      callGasJsonp({
+        action: 'SAVE_CUSTOM_LINK',
+        hub: targetHub,
+        item: JSON.stringify(payloadItem)
+      }, function() {
+        if (shouldSend) {
+          sendNotificationEmail({
+            hubName: targetHub,
+            title: releaseTitle,
+            link: link,
+            submitter: submitterEmail,
+            dlAddress: dlAddress,
+            releaseDate: currentDateStr
+          }, function() {
+            finalizeFormUI();
+          });
+        } else {
+          finalizeFormUI();
+        }
+      });
 
       function finalizeFormUI() {
         closeModal('addModalOverlay');
-        showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live and notification email sent.");
+        showInlineBanner("Success! New link published globally and notification dispatched.");
         
         submitBtn.textContent = "Publish Link Live";
         submitBtn.disabled = false;
@@ -2003,22 +2092,7 @@
         document.getElementById('newDocType').value = '';
         document.getElementById('newLink').value = '';
 
-        checkSameDayReleases();
-      }
-
-      if (shouldSend) {
-        sendNotificationEmail({
-          hubName: targetHub,
-          title: releaseTitle,
-          link: link,
-          submitter: submitterEmail,
-          dlAddress: dlAddress,
-          releaseDate: currentDateStr
-        }, function() {
-          finalizeFormUI();
-        });
-      } else {
-        finalizeFormUI();
+        loadGlobalCustomLinks();
       }
 
       return false;
@@ -2028,9 +2102,6 @@
       checkUserLoginState();
       syncDropdownOptions();
       syncDocPackageOptions();
-      renderLearningHub();
-      renderDocumentHub();
-      checkSameDayReleases();
 
       document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
 
