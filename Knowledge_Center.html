@@ -37,7 +37,6 @@
       overflow-x: hidden;
     }
 
-    /* ANIMATED SYMPHONY LOGO */
     .symphony-logo-svg {
       width: 36px;
       height: 22px;
@@ -84,7 +83,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* TOP UTILITY HEADER BAR LAYOUT */
     .top-utility-bar {
       background-color: #28292c;
       padding: 0.45rem 1rem;
@@ -162,11 +160,6 @@
       user-select: none;
       transition: all 0.2s ease;
     }
-    .kpi-bookmark-small.filter-active {
-      background: #fef7e0;
-      border-color: var(--google-yellow);
-      box-shadow: 0 0 6px rgba(249, 171, 0, 0.4);
-    }
 
     .container { width: 100%; padding: 0.75rem 1rem 0.25rem 1rem; display: flex; flex-direction: column; }
     .tab-content { display: none; flex-direction: column; }
@@ -201,24 +194,6 @@
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.65rem; width: 100%; }
 
-    .resources-list-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.83rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .resources-list-table th, .resources-list-table td {
-      padding: 0.55rem 0.7rem;
-      text-align: left;
-      vertical-align: middle;
-      border-bottom: 1px solid #f1f3f4;
-      word-wrap: break-word;
-    }
-    .resources-list-table th { background: var(--bg-body); font-weight: 600; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); }
-
     .resource-card { 
       background: var(--bg-card); 
       border: 1px solid var(--border-color); 
@@ -232,22 +207,13 @@
       position: relative;
     }
     .resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--google-blue); }
-    .resource-card.selected-card { border-color: var(--google-red) !important; background-color: #fce8e6 !important; }
-
+    
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.35rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.88rem; font-weight: 500; }
     .card-description { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.3rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .category-badge { font-size: 0.65rem; font-weight: 500; padding: 0.12rem 0.4rem; border-radius: 10px; }
     .card-actions { margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.3rem; }
     .link-btn { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.78rem; }
-    
-    .action-icons { display: flex; gap: 0.25rem; align-items: center; }
-    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.2rem; border-radius: 50%; display: inline-flex; transition: transform 0.15s ease; }
-    .action-btn:hover { background: rgba(0, 0, 0, 0.05); transform: scale(1.1); }
-    .bookmark-btn.bookmarked { color: var(--google-yellow); }
-
-    .item-select-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--google-red); display: none; }
-    .selection-mode-active .item-select-checkbox { display: inline-block; }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; table-layout: fixed; min-width: 680px; }
@@ -260,25 +226,14 @@
       backdrop-filter: blur(8px);
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow-y: auto;
     }
-    .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.25rem; box-shadow: var(--shadow-md); margin-top: 10px; }
+    .modal-overlay.open { display: flex; }
+    .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.25rem; margin-top: 10px; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
-    .modal-form { display: flex; flex-direction: column; gap: 0.75rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
-    .form-group label { font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); }
-    .form-group input, .form-group select, .form-group textarea { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
-
-    .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
-    .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
-    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
 
     .app-lock-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 16, 18, 0.85); z-index: 9999999; display: flex; justify-content: center; align-items: flex-start; padding: 20px 10px; }
     .app-lock-card { background: #ffffff; border-radius: 16px; padding: 1.75rem; max-width: 420px; width: 100%; text-align: center; border: 1px solid var(--border-color); margin-top: 10px; }
 
-    /* VERIFIED EMAILS BADGE STYLING */
     .verified-user-pill {
       display: inline-flex;
       align-items: center;
@@ -291,14 +246,6 @@
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .verified-user-pill:hover { background: #d2e3fc; color: var(--google-blue); border-color: var(--google-blue); }
-
-    @media (max-width: 600px) {
-      .animated-brand-title { font-size: 0.95rem; }
-      .utility-group-center { display: none; }
-      .resources-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -313,27 +260,22 @@
         Enter your official <strong>@maxval.com</strong> email to receive your 1-time passcode.
       </p>
 
-      <!-- VERIFIED USERS LISTING -->
       <div id="verifiedUsersSection" style="display:none; margin-bottom: 1rem; text-align: left;">
         <label style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); display:block; margin-bottom:0.4rem;">
-          Recent Verified Members (Click to quick-select):
+          Recent Verified Members (Click to select):
         </label>
         <div id="verifiedUsersContainer" style="display:flex; flex-wrap:wrap; gap:0.4rem; max-height:80px; overflow-y:auto; padding:2px;"></div>
       </div>
 
-      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.6rem; font-size:0.85rem; margin-bottom:1rem; font-weight:600; color:var(--google-blue-hover);">
-        Verified Session: <span id="detectedEmailAddress">...</span>
-      </div>
-
       <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
         <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem; border: 1px solid var(--border-color); border-radius: 8px; text-align: center; font-size:0.9rem;">
-        <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.65rem;">Send OTP Passcode</button>
+        <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.65rem; background:var(--google-blue); color:#fff; border:none; border-radius:6px;">Send OTP Passcode</button>
       </form>
 
       <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
         <p style="font-size: 0.8rem; color: var(--google-green); font-weight: 600;">OTP sent! Check your inbox.</p>
         <input type="text" id="otpCodeInput" placeholder="6-Digit OTP" required maxlength="6" style="padding: 0.6rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.2rem; text-align: center; font-weight: 700; letter-spacing: 6px;">
-        <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.65rem; background: var(--google-green);">Verify OTP & Access Portal</button>
+        <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.65rem; background: var(--google-green); color:#fff; border:none; border-radius:6px;">Verify OTP & Access Portal</button>
       </form>
     </div>
   </div>
@@ -348,18 +290,6 @@
         <circle class="symphony-dot red" cx="74" cy="18" r="5" fill="#ea4335" />
         <circle class="symphony-dot blue" cx="90" cy="28" r="5" fill="#4285f4" />
         <circle class="symphony-dot yellow" cx="105" cy="40" r="5" fill="#fbbc05" />
-        <circle class="symphony-dot yellow" cx="25" cy="50" r="5" fill="#fbbc05" />
-        <circle class="symphony-dot green" cx="38" cy="38" r="5" fill="#34a853" />
-        <circle class="symphony-dot red" cx="52" cy="30" r="5" fill="#ea4335" />
-        <circle class="symphony-dot red" cx="68" cy="30" r="5" fill="#ea4335" />
-        <circle class="symphony-dot blue" cx="82" cy="38" r="5" fill="#4285f4" />
-        <circle class="symphony-dot yellow" cx="95" cy="50" r="5" fill="#fbbc05" />
-        <circle class="symphony-dot green" cx="46" cy="52" r="5" fill="#34a853" />
-        <circle class="symphony-dot red" cx="56" cy="44" r="5" fill="#ea4335" />
-        <circle class="symphony-dot red" cx="64" cy="44" r="5" fill="#ea4335" />
-        <circle class="symphony-dot blue" cx="74" cy="52" r="5" fill="#4285f4" />
-        <circle class="symphony-dot yellow" cx="50" cy="62" r="5" fill="#fbbc05" />
-        <circle class="symphony-dot yellow" cx="70" cy="62" r="5" fill="#fbbc05" />
       </svg>
       <span>Symphony Implementation - Learning & Documentation Hub</span>
     </div>
@@ -414,21 +344,11 @@
       <section class="filter-card-highlight">
         <div class="filter-header-row">
           <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
-          <div class="filter-actions-group" id="learningAdminActions" style="display:none;">
-            <button id="toggleLearningSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('learning')">
-              <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
-              <span id="learningSelectBtnLabel">Select Multiple to Delete</span>
-            </button>
-            <button id="learningBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="handleActionRequest('bulk_delete', null, 'learning')">
-              <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
-              <span>Delete Selected (<strong id="learningSelectedCount">0</strong>)</span>
-            </button>
-          </div>
         </div>
         <select id="moduleSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Learning Modules --</option>
         </select>
-        <div class="stats-badge-container">
+        <div class="stats-badge-container" style="margin-top:4px;">
           <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Documents: <strong id="learningActiveCount">0</strong></div>
         </div>
       </section>
@@ -437,14 +357,6 @@
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
           <input type="text" id="searchInput" class="search-input" placeholder="Search learning topics...">
-        </div>
-        <div class="view-toggle-group">
-          <button type="button" class="view-toggle-btn active" id="learningGridToggleBtn" onclick="setHubViewMode('learning', 'grid')">
-            <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
-          </button>
-          <button type="button" class="view-toggle-btn" id="learningListToggleBtn" onclick="setHubViewMode('learning', 'list')">
-            <span class="material-icons-outlined" style="font-size:18px;">view_list</span>
-          </button>
         </div>
       </section>
       <main id="resourcesGridContainer" class="resources-grid"></main>
@@ -455,21 +367,11 @@
       <section class="filter-card-highlight">
         <div class="filter-header-row">
           <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY NAME</label>
-          <div class="filter-actions-group" id="docAdminActions" style="display:none;">
-            <button id="toggleDocSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('document')">
-              <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
-              <span id="docSelectBtnLabel">Select Multiple to Delete</span>
-            </button>
-            <button id="docBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="handleActionRequest('bulk_delete', null, 'document')">
-              <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
-              <span>Delete Selected (<strong id="docSelectedCount">0</strong>)</span>
-            </button>
-          </div>
         </div>
         <select id="docPackageSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Packages --</option>
         </select>
-        <div class="stats-badge-container">
+        <div class="stats-badge-container" style="margin-top:4px;">
           <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Documents: <strong id="docActiveCount">0</strong></div>
         </div>
       </section>
@@ -479,21 +381,12 @@
           <span class="material-icons-outlined">search</span>
           <input type="text" id="docSearchInput" class="search-input" placeholder="Filter by document name, version, or type...">
         </div>
-        <div class="view-toggle-group">
-          <button type="button" class="view-toggle-btn active" id="docTableToggleBtn" onclick="setHubViewMode('document', 'table')">
-            <span class="material-icons-outlined" style="font-size:18px;">table_chart</span>
-          </button>
-          <button type="button" class="view-toggle-btn" id="docGridToggleBtn" onclick="setHubViewMode('document', 'grid')">
-            <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
-          </button>
-        </div>
       </section>
 
       <div class="table-container" id="docTableContainer">
         <table class="doc-table">
           <thead>
             <tr>
-              <th class="col-checkbox doc-checkbox-th" style="display:none;"><input type="checkbox" id="selectAllDocsCheckbox" class="item-select-checkbox" onchange="toggleSelectAllDocs(this)"></th>
               <th style="width:28%;">Package Name</th>
               <th style="width:18%;">Package Version</th>
               <th style="width:27%;">Type of Doc</th>
@@ -503,7 +396,6 @@
           <tbody id="docTableBody"></tbody>
         </table>
       </div>
-      <main class="resources-grid" id="docGridContainer" style="display:none;"></main>
     </div>
 
     <!-- QUICK LINKS TAB -->
@@ -511,20 +403,7 @@
       <section class="filter-card-highlight" style="border-color:var(--google-green);">
         <div class="filter-label-catchy" style="color:var(--google-green);"><span class="material-icons-outlined">bolt</span> FREQUENTLY ACCESSED TOOLS</div>
       </section>
-      <main class="resources-grid" id="quickLinksGrid">
-        <article class="resource-card" style="border-top: 3px solid var(--google-blue);">
-          <div>
-            <div class="card-header"><span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">PSO Portal</span></div>
-            <h3 class="card-title">PSO Org Access Request Portal</h3>
-            <p class="card-description">Request and manage org credentials for implementation environments.</p>
-          </div>
-          <div class="card-actions">
-            <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="link-btn">
-              <span>Open Access Portal</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-            </a>
-          </div>
-        </article>
-      </main>
+      <main class="resources-grid" id="quickLinksGrid"></main>
     </div>
   </div>
 
@@ -539,92 +418,87 @@
         <span class="material-icons-outlined" style="font-size: 56px; color: var(--google-green);">account_circle</span>
         <p style="font-size: 0.95rem; font-weight: 700; margin-top: 0.5rem;" id="modalProfileEmail">user@maxval.com</p>
         <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Signed in to Symphony Implementation Portal</p>
-        <button type="button" class="btn-danger" style="width: 100%; justify-content: center; padding: 0.6rem;" onclick="handleSignOut()">
-          <span class="material-icons-outlined" style="font-size: 16px;">logout</span><span>Sign Out</span>
-        </button>
+        <button type="button" style="background:var(--google-red); color:#fff; border:none; padding:0.6rem; border-radius:6px; width:100%; font-weight:600;" onclick="handleSignOut()">Sign Out</button>
       </div>
-    </div>
-  </div>
-
-  <!-- SUBMIT NEW LINK MODAL -->
-  <div class="modal-overlay" id="addModalOverlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="addModalTitle">Submit New Link</h2>
-        <button class="modal-close-btn" onclick="closeModal('addModalOverlay')"><span class="material-icons-outlined">close</span></button>
-      </div>
-
-      <form id="addResourceForm" class="modal-form">
-        <input type="hidden" id="editItemIndex" value="">
-        <input type="hidden" id="editItemType" value="">
-
-        <div class="form-group">
-          <label>Target Hub *</label>
-          <select id="targetHub" onchange="toggleFormFields(this.value)">
-            <option value="learning">Learning Hub</option>
-            <option value="document">Document Hub</option>
-            <option value="quick">Quick Links</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Your MaxVal Email *</label>
-          <input type="email" id="submitterEmail" readonly style="background:#f1f3f4;">
-        </div>
-
-        <div class="form-group" id="titleGroup">
-          <label id="titleGroupLabel">Resource Title *</label>
-          <input type="text" id="newTitle" placeholder="Enter title...">
-        </div>
-
-        <div class="form-group" id="moduleCategoryGroup">
-          <label>Module Category *</label>
-          <select id="newModule">
-            <option value="Intellectual Property">Intellectual Property</option>
-            <option value="Introduction to Symphony">Introduction to Symphony</option>
-            <option value="Invention Module">Invention Module</option>
-            <option value="Patent Module">Patent Module</option>
-            <option value="Renewals">Renewals</option>
-            <option value="Trademark">Trademark</option>
-            <option value="Assessment">Assessment</option>
-            <option value="Additional Reference Materials">Additional Reference Materials</option>
-          </select>
-        </div>
-
-        <div id="documentFields" style="display:none;">
-          <div class="form-group"><label>Package Name *</label><input type="text" id="newPkg" placeholder="e.g., Symphony LF"></div>
-          <div class="form-group"><label>Package Version *</label><input type="text" id="newVer" placeholder="e.g., v1.3.4"></div>
-          <div class="form-group"><label>Type of Doc *</label><input type="text" id="newDocType" placeholder="e.g., Installation Guide"></div>
-        </div>
-
-        <div class="form-group"><label>URL / Link *</label><input type="url" id="newLink" placeholder="https://..." required></div>
-
-        <div class="form-group">
-          <label>Description (Optional)</label>
-          <textarea id="newDescription" rows="2" placeholder="Brief details..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Notification Recipient Email(s) *</label>
-          <input type="text" id="dlEmailAddress" placeholder="e.g., team@maxval.com" required>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submitBtn">Publish Link Live</button>
-      </form>
     </div>
   </div>
 
   <script>
     const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyOmkBg2Z6MqE7d0zjp7Smu8N3bJKgYPqcuN-q4mJYmTgQRqmrHFctWP3Ud90yKWzgU/exec";
 
+    // RESTORED FULL DATASETS
     const baseDataset = [
       { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
       { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
-      { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229" }
+      { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
+      { id: 'res_4', name: "The Value of Intellectual Property", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_5', name: "Challenges in Managing IP", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_6', name: "The Symphony Solution", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_7', name: "Introduction to Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_8', name: "Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_9', name: "The Value of Capturing an Idea", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_10', name: "The Challenges in Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_11', name: "The Solution: Invention Disclosure in Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_12', name: "The Benefits for Users and Clients", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
+      { id: 'res_13', name: "IDF Invention Disclosure Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/19MWylq6fYMnMeaFnVlr5fCarEurIzyZ4" },
+      { id: 'res_14', name: "Invention Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
+      { id: 'res_15', name: "Invention Submission", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
+      { id: 'res_16', name: "Invention Review", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
+      { id: 'res_17', name: "Invention Decision", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
+      { id: 'res_18', name: "Patent Drafting and Filing", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
+      { id: 'res_19', name: "Patent Prosecution", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
+      { id: 'res_20', name: "Patent Search", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
+      { id: 'res_21', name: "Types of Patent Searches", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
+      { id: 'res_22', name: "AIA", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
+      { id: 'res_23', name: "Importance of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_24', name: "Tools we use", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_25', name: "Types of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_26', name: "PTO Rules for Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_27', name: "Handling Patent drawing rejections", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_28', name: "Overview of Patent Center", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=244" },
+      { id: 'res_29', name: "Overview of WIPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_30', name: "Overview of EPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
+      { id: 'res_31', name: "US Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231" },
+      { id: 'res_32', name: "PCT Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231" },
+      { id: 'res_33', name: "Overview of IDS", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232" },
+      { id: 'res_34', name: "IDS obligation and procedure", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232" },
+      { id: 'res_35', name: "Renewals Overview", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_36', name: "Duration of Asset Protection", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_37', name: "Patent term and renewal timeline", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_38', name: "Consequences of not renewing an asset", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_39', name: "Renewal Fee and mode of payment", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_40', name: "Who can pay the renewals", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
+      { id: 'res_41', name: "What is a Trademark?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_42', name: "What can be Trademarked?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_43', name: "Unconventional marks as a Trademark", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_44', name: "Types of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_45', name: "Trademarks Distinctiveness Spectrum", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_46', name: "Classification of Goods & Services", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_47', name: "Basis of Filings and Use Requirement", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_48', name: "Maintenance of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_49', name: "Trademark Life Cycle", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
+      { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8" },
+      { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m" }
     ];
 
     const baseDocDataset = [
-      { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" }
+      { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8" },
+      { pkg: "Symphony LF", ver: "Standard", type: "PTO Integration", link: "https://docs.google.com/document/d/1MiR6AGAMgPJHxmwySp4bap_tmQFHWATG66dB1X7B0bY/edit?tab=t.0#heading=h.gn2p9i53yy15" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Field Configuration", link: "https://docs.google.com/spreadsheets/d/1qZTCt4lbngMsRQ37JxkCiHfTOfhFlhCweXqsEZrCyJ8/edit?gid=0#gid=0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Data Uploads & Renewals", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0#heading=h.fvxjcsbrpisy" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Dates Component Config", link: "https://docs.google.com/document/d/1Lz90hLqDNZqNKay1CahffYgFMu9yX0tv7H8ijJgd0iE/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Family Tree Tech Doc", link: "https://docs.google.com/document/d/1oxMp3xiPkMttzt43dPVJJcfKd4OSAlPul7aajz75qfQ/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Related IP Matters - Configuration", link: "https://docs.google.com/document/d/1_-rbG5XfJUmNKNzbj_DEgOFjGeXiNuNqWDaDfs1oL_g/edit?hl=en&forcehl=1&tab=t.0#heading=h.x4tnm73un1bn" },
+      { pkg: "Symphony LF", ver: "Standard", type: "Update Term Name", link: "https://docs.google.com/document/d/1mkQQ--uSk3k2WX0RUkCdsT-4_85ggM0OyY3gfEOBPD0/edit?tab=t.0" },
+      { pkg: "Symphony LF", ver: "Standard", type: "PTO Doc Codes", link: "https://docs.google.com/document/d/1Y64tmdzbawTj8hHvr-P3jOLZeYtQwGEgteQKnBkR2r0/edit?tab=t.nn7xerowdjpb" },
+      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Configuration Steps", link: "https://docs.google.com/document/d/1USadU5-pzbZhLzYlvGEc2SPuUgjpxbOOVIgbnC_zoyY/edit?tab=t.0" },
+      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Upgrade Steps", link: "https://docs.google.com/document/d/1OvitBT0PemTnXxpue0MagvPjFGs8h0eNQ8pYE_FKrI4/edit?tab=t.0#heading=h.f6wmunhppk9w" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Release Notes", link: "https://docs.google.com/document/d/1UW30pnWjtAj30meb6XfuBXbKa0E0epf1CrJTKaAkg7U/edit?tab=t.3eyh0nlcm3z0#heading=h.529i7peg55gb" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Installation Doc", link: "https://docs.google.com/document/d/1z5P5YvE8pVtIgv1Y27khwNxZCLcpZgse23Qctfi61sg/edit?usp=sharing" },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Upgrade Doc", link: "https://docs.google.com/document/d/1wQoKpdDCyuORvtPxychos06PYPqJGTPrVazlCGel19c/edit?usp=sharing" }
     ];
 
     let dataset = [...baseDataset];
@@ -638,27 +512,14 @@
     let searchQuery = '';
     let selectedDocPackage = 'ALL';
     let docSearchQuery = '';
-    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
-    let filterOnlyBookmarks = false;
 
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let powerUsers = new Set([...DEFAULT_POWER_USERS]);
-    let isPowerUserViewMode = true;
-
-    let isLearningSelectionMode = false;
-    let isDocSelectionMode = false;
-    let selectedLearningIndices = new Set();
-    let selectedDocIndices = new Set();
-
-    let learningHubLayoutMode = 'grid';
-    let docHubLayoutMode = 'table';
 
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
       window[cbName] = function(data) {
-        try {
-          if (callback) callback(data);
-        } finally {
+        try { if (callback) callback(data); } finally {
           delete window[cbName];
           const script = document.getElementById(cbName);
           if (script) script.remove();
@@ -675,22 +536,33 @@
       document.body.appendChild(script);
     }
 
-    /* AUTO-DETECT GOOGLE SESSION & FETCH VERIFIED USERS LIST */
+    function loadGlobalCustomLinks() {
+      callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
+        if (data) {
+          dataset = [...baseDataset, ...(data.learning || [])];
+          docDataset = [...baseDocDataset, ...(data.docs || [])];
+          globalCustomQuick = data.quick || [];
+
+          syncDropdownOptions();
+          syncDocPackageOptions();
+          renderLearningHub();
+          renderDocumentHub();
+          renderQuickLinksHub();
+        }
+      });
+    }
+
     function checkUserLoginState() {
       const lockOverlay = document.getElementById('mandatoryLockOverlay');
       
       callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
         if (data) {
           if (data.email && data.email.includes('@maxval.com')) {
-            document.getElementById('detectedEmailAddress').textContent = data.email;
-            document.getElementById('detectedEmailBox').style.display = 'block';
             document.getElementById('loginEmailInput').value = data.email;
           }
-
           if (data.verifiedUsers && data.verifiedUsers.length > 0) {
             renderVerifiedUserBadges(data.verifiedUsers);
           }
-
           if (data.powerUsers) {
             data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
           }
@@ -702,8 +574,9 @@
       } else {
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
-        updatePowerUserUIElements();
       }
+
+      loadGlobalCustomLinks();
     }
 
     function renderVerifiedUserBadges(usersList) {
@@ -764,7 +637,6 @@
           
           document.getElementById('mandatoryLockOverlay').style.display = 'none';
           updateUserBadgeDisplay();
-          updatePowerUserUIElements();
         } else {
           alert(data.message || "Invalid OTP code entered.");
         }
@@ -778,29 +650,25 @@
       }
     }
 
-    function updatePowerUserUIElements() {
-      const powerTabBtn = document.getElementById('powerUsersTabBtn');
-      if (isPowerUser(currentUser)) {
-        if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
-      } else {
-        if (powerTabBtn) powerTabBtn.style.display = 'none';
-      }
+    function syncDropdownOptions() {
+      const cats = new Set(dataset.map(d => d.category));
+      const mainSelect = document.getElementById('moduleSelect');
+      mainSelect.innerHTML = `<option value="ALL">-- All Learning Modules --</option>` +
+        Array.from(cats).map(c => `<option value="${cat}">${cat}</option>`).join('');
+      mainSelect.value = selectedModule;
     }
 
-    function notifyIframeHeight() {
-      if (window.parent && window.parent !== window) {
-        const height = document.body.offsetHeight;
-        window.parent.postMessage({ type: 'kc-iframe-height', height: height }, '*');
-      }
-    }
-
-    function isPowerUser(email) {
-      return email && powerUsers.has(email.toLowerCase().trim());
+    function syncDocPackageOptions() {
+      const pkgs = new Set(docDataset.map(d => d.pkg));
+      const select = document.getElementById('docPackageSelect');
+      select.innerHTML = `<option value="ALL">-- All Packages --</option>` +
+        Array.from(pkgs).map(p => `<option value="${p}">${p}</option>`).join('');
+      select.value = selectedDocPackage;
     }
 
     function renderLearningHub() {
       const container = document.getElementById('resourcesGridContainer');
-      let filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
+      let filtered = dataset.filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery);
         return matchesModule && matchesSearch;
@@ -809,30 +677,34 @@
       document.getElementById('learningActiveCount').textContent = filtered.length;
 
       container.className = "resources-grid";
-      container.innerHTML = filtered.map(res => {
-        const isSelected = selectedLearningIndices.has(res.originalIndex);
-        return `
-          <article class="resource-card ${isSelected ? 'selected-card' : ''} ${isLearningSelectionMode ? 'selection-mode-active' : ''}" data-index="${res.originalIndex}">
-            <div>
-              <div class="card-header">
-                <span class="category-badge" style="background:#e8f0fe; color:#1a73e8;">${res.category}</span>
-                <input type="checkbox" class="item-select-checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLearningSelect(${res.originalIndex}, event)">
-              </div>
-              <h3 class="card-title">${res.name}</h3>
+      container.innerHTML = filtered.map(res => `
+        <article class="resource-card">
+          <div>
+            <div class="card-header">
+              <span class="category-badge" style="background:#e8f0fe; color:#1a73e8;">${res.category}</span>
             </div>
-            <div class="card-actions">
-              <a href="${res.link}" target="_blank" class="link-btn">Open Link <span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
-            </div>
-          </article>
-        `;
-      }).join('');
+            <h3 class="card-title">${res.name}</h3>
+          </div>
+          <div class="card-actions">
+            <a href="${res.link}" target="_blank" class="link-btn">Open Link <span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+          </div>
+        </article>
+      `).join('');
 
-      setTimeout(notifyIframeHeight, 50);
+      notifyIframeHeight();
     }
 
     function renderDocumentHub() {
       const tbody = document.getElementById('docTableBody');
-      tbody.innerHTML = docDataset.map((doc, idx) => `
+      let filtered = docDataset.filter(doc => {
+        const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
+        const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) || doc.type.toLowerCase().includes(docSearchQuery);
+        return matchesPkg && matchesSearch;
+      });
+
+      document.getElementById('docActiveCount').textContent = filtered.length;
+
+      tbody.innerHTML = filtered.map(doc => `
         <tr>
           <td><strong>${doc.pkg}</strong></td>
           <td>${doc.ver}</td>
@@ -840,7 +712,38 @@
           <td style="text-align:right;"><a href="${doc.link}" target="_blank" class="link-btn">View Doc</a></td>
         </tr>
       `).join('');
-      setTimeout(notifyIframeHeight, 50);
+
+      notifyIframeHeight();
+    }
+
+    function renderQuickLinksHub() {
+      const grid = document.getElementById('quickLinksGrid');
+      grid.innerHTML = `
+        <article class="resource-card" style="border-top: 3px solid var(--google-blue);">
+          <div>
+            <div class="card-header"><span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">PSO Portal</span></div>
+            <h3 class="card-title">PSO Org Access Request Portal</h3>
+            <p class="card-description">Request and manage org credentials for implementation environments.</p>
+          </div>
+          <div class="card-actions">
+            <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="link-btn">
+              <span>Open Access Portal</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+            </a>
+          </div>
+        </article>
+      ` + globalCustomQuick.map(q => `
+        <article class="resource-card" style="border-top: 3px solid var(--google-green);">
+          <div>
+            <h3 class="card-title">${q.title}</h3>
+            <p class="card-description">${q.description || 'Quick Access Tool'}</p>
+          </div>
+          <div class="card-actions">
+            <a href="${q.link}" target="_blank" class="link-btn">Open Tool Link</a>
+          </div>
+        </article>
+      `).join('');
+
+      notifyIframeHeight();
     }
 
     function switchTab(tabId, el) {
@@ -851,44 +754,24 @@
       if (el) el.classList.add('active');
       if (tabId === 'learningHubTab') renderLearningHub();
       if (tabId === 'documentHubTab') renderDocumentHub();
-      setTimeout(notifyIframeHeight, 50);
+      if (tabId === 'quickLinksTab') renderQuickLinksHub();
+      notifyIframeHeight();
     }
 
-    function toggleFormFields(target) {
-      const moduleCategoryGroup = document.getElementById('moduleCategoryGroup');
-      const documentFields = document.getElementById('documentFields');
-      const titleGroupLabel = document.getElementById('titleGroupLabel');
-
-      if (target === 'learning') {
-        titleGroupLabel.textContent = "Resource Title *";
-        moduleCategoryGroup.style.display = 'flex';
-        documentFields.style.display = 'none';
-      } else if (target === 'document') {
-        titleGroupLabel.textContent = "Resource Name *";
-        moduleCategoryGroup.style.display = 'none';
-        documentFields.style.display = 'block';
-      } else {
-        titleGroupLabel.textContent = "Quick Link Name *";
-        moduleCategoryGroup.style.display = 'none';
-        documentFields.style.display = 'none';
+    function notifyIframeHeight() {
+      if (window.parent && window.parent !== window) {
+        const height = document.body.offsetHeight;
+        window.parent.postMessage({ type: 'kc-iframe-height', height: height }, '*');
       }
-      setTimeout(notifyIframeHeight, 50);
-    }
-
-    function openAddModal() {
-      document.getElementById('addModalOverlay').classList.add('open');
-      document.getElementById('submitterEmail').value = currentUser || 'user@maxval.com';
-      setTimeout(notifyIframeHeight, 50);
-    }
-
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.remove('open');
-      setTimeout(notifyIframeHeight, 50);
     }
 
     function openProfileModal() {
       document.getElementById('modalProfileEmail').textContent = currentUser || 'user@maxval.com';
       document.getElementById('profileModalOverlay').classList.add('open');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('open');
     }
 
     function handleSignOut() {
@@ -900,7 +783,27 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       checkUserLoginState();
-      renderLearningHub();
+      
+      document.getElementById('moduleSelect').addEventListener('change', (e) => {
+        selectedModule = e.target.value;
+        renderLearningHub();
+      });
+
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase();
+        renderLearningHub();
+      });
+
+      document.getElementById('docPackageSelect').addEventListener('change', (e) => {
+        selectedDocPackage = e.target.value;
+        renderDocumentHub();
+      });
+
+      document.getElementById('docSearchInput').addEventListener('input', (e) => {
+        docSearchQuery = e.target.value.toLowerCase();
+        renderDocumentHub();
+      });
+
       window.addEventListener('resize', notifyIframeHeight);
       setTimeout(notifyIframeHeight, 200);
     });
