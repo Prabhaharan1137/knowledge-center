@@ -37,7 +37,6 @@
       overflow-x: hidden;
     }
 
-    /* ANIMATED SYMPHONY LOGO */
     .symphony-logo-svg {
       width: 36px;
       height: 22px;
@@ -84,7 +83,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* TOP UTILITY HEADER BAR LAYOUT */
     .top-utility-bar {
       background-color: #28292c;
       padding: 0.45rem 1rem;
@@ -244,7 +242,20 @@
     .action-icons { display: flex; gap: 0.25rem; align-items: center; }
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.2rem; border-radius: 50%; display: inline-flex; transition: transform 0.15s ease; }
     .action-btn:hover { background: rgba(0, 0, 0, 0.05); transform: scale(1.1); }
+    .action-btn.delete-btn:hover { color: var(--google-red); }
+    .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
+
+    .completion-btn .material-icons-outlined.completed-filled {
+      color: #ffffff !important;
+      background: var(--google-green);
+      border-radius: 50%;
+      font-size: 18px;
+      padding: 1px;
+    }
+
+    .item-select-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--google-red); display: none; }
+    .selection-mode-active .item-select-checkbox { display: inline-block; }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; table-layout: fixed; min-width: 680px; }
@@ -261,6 +272,14 @@
     .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.25rem; margin-top: 10px; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
+    .modal-form { display: flex; flex-direction: column; gap: 0.75rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
+    .form-group label { font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); }
+    .form-group input, .form-group select, .form-group textarea { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
+
+    .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
+    .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
+    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
 
     .app-lock-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 16, 18, 0.85); z-index: 9999999; display: flex; justify-content: center; align-items: flex-start; padding: 20px 10px; }
     .app-lock-card { background: #ffffff; border-radius: 16px; padding: 1.75rem; max-width: 420px; width: 100%; text-align: center; border: 1px solid var(--border-color); margin-top: 10px; }
@@ -277,6 +296,13 @@
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
+    }
+
+    .power-user-chip {
+      display: inline-flex; align-items: center; justify-content: space-between;
+      background: var(--google-purple-light); color: var(--google-purple);
+      padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+      border: 1px solid rgba(147, 52, 230, 0.2);
     }
 
     @media (max-width: 600px) {
@@ -332,7 +358,7 @@
     </div>
   </div>
 
-  <!-- TOP UTILITY BAR (USER FIRST NAME DISPLAY, SUBMIT LINK & POWER USER CONTROL) -->
+  <!-- TOP UTILITY BAR (USER FIRST NAME DISPLAY, SUBMIT LINK & POWER USER CONTROLS) -->
   <div class="top-utility-bar">
     <div class="utility-group-left">
       <button type="button" class="top-utility-btn user-icon-btn" onclick="openProfileModal()" title="View Active Profile">
@@ -354,7 +380,7 @@
 
     <!-- POWER USERS HEADER CONTROL -->
     <div class="utility-group-right">
-      <button type="button" class="top-utility-btn accent-settings" id="powerUsersTabBtn" style="display:none;" onclick="openProfileModal()">
+      <button type="button" class="top-utility-btn accent-settings" id="powerUsersTabBtn" style="display:none;" onclick="openPowerUsersModal()">
         <span class="material-icons-outlined" style="font-size:16px;">admin_panel_settings</span><span>Power Users</span>
       </button>
     </div>
@@ -476,6 +502,55 @@
         <p style="font-size: 0.95rem; font-weight: 700; margin-top: 0.5rem;" id="modalProfileEmail">user@maxval.com</p>
         <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Signed in to Symphony Implementation Portal</p>
         <button type="button" style="background:var(--google-red); color:#fff; border:none; padding:0.6rem; border-radius:6px; width:100%; font-weight:600; cursor:pointer;" onclick="handleSignOut()">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- USER PROGRESS DASHBOARD MODAL -->
+  <div class="modal-overlay" id="userDashboardModalOverlay">
+    <div class="modal-content" style="max-width: 760px;">
+      <div class="modal-header">
+        <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
+        <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div class="table-container">
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>MaxVal User Email</th>
+              <th>Last Active</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="userAnalyticsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- POWER USER CONTROL MODAL -->
+  <div class="modal-overlay" id="powerUserSettingsModalOverlay">
+    <div class="modal-content" style="max-width:500px;">
+      <div class="modal-header">
+        <h2>Power User Controls</h2>
+        <button class="modal-close-btn" onclick="closeModal('powerUserSettingsModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <button type="button" class="btn-secondary" style="background:var(--google-blue-light); border-color:var(--google-blue); color:var(--google-blue); justify-content:center; padding:0.6rem;" onclick="triggerBatchAiDescriptions()">
+          <span class="material-icons-outlined" style="font-size:16px;">auto_awesome</span>
+          <span>Generate AI Descriptions for All Tiles</span>
+        </button>
+        <p style="font-size: 0.8rem; color: var(--text-secondary);">
+          Power Users have privileges to manage resources and access full organization logs.
+        </p>
+        <form onsubmit="handleAddPowerUser(event)" style="display: flex; gap: 0.5rem;">
+          <input type="email" id="newPowerUserEmail" placeholder="user@maxval.com" required style="flex:1; padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.85rem;">
+          <button type="submit" class="btn-submit" style="padding: 0.45rem 0.85rem;">Add Power User</button>
+        </form>
+        <div style="margin-top: 0.5rem;">
+          <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">Authorized Power Users List:</label>
+          <div id="powerUserListContainer" style="display: flex; flex-direction: column; gap: 0.4rem; max-height: 180px; overflow-y: auto;"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -886,7 +961,7 @@
 
     function renderLearningHub() {
       const container = document.getElementById('resourcesGridContainer');
-      let filtered = dataset.filter(res => {
+      let filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery);
         const matchesBookmark = filterOnlyBookmarks ? bookmarkedIds.has(res.id) : true;
@@ -896,6 +971,8 @@
       document.getElementById('learningActiveCount').textContent = filtered.length;
       document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
 
+      const powerUserActive = isPowerUser(currentUser);
+
       if (learningHubLayoutMode === 'list') {
         container.className = "";
         container.innerHTML = `
@@ -904,8 +981,9 @@
               <tr>
                 <th style="width:6%; text-align:center;">Fav</th>
                 <th style="width:24%;">Module</th>
-                <th style="width:55%;">Title</th>
-                <th style="width:15%; text-align:right;">Open Link</th>
+                <th style="width:45%;">Title</th>
+                <th style="width:13%; text-align:right;">Open Link</th>
+                ${powerUserActive ? '<th style="width:12%; text-align:right;">Actions</th>' : ''}
               </tr>
             </thead>
             <tbody>
@@ -925,6 +1003,12 @@
                         <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
                       </a>
                     </td>
+                    ${powerUserActive ? `
+                      <td style="text-align:right;">
+                        <button class="action-btn edit-btn" onclick="executeEditItem('learning', ${res.originalIndex})"><span class="material-icons-outlined" style="font-size:18px;">edit</span></button>
+                        <button class="action-btn delete-btn" onclick="executeDeleteItem('learning', ${res.originalIndex})"><span class="material-icons-outlined" style="font-size:18px;">delete</span></button>
+                      </td>
+                    ` : ''}
                   </tr>
                 `;
               }).join('')}
@@ -948,6 +1032,12 @@
               </div>
               <div class="card-actions">
                 <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn">Open Link <span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+                ${powerUserActive ? `
+                  <div class="action-icons">
+                    <button class="action-btn edit-btn" onclick="executeEditItem('learning', ${res.originalIndex})"><span class="material-icons-outlined" style="font-size:18px;">edit</span></button>
+                    <button class="action-btn delete-btn" onclick="executeDeleteItem('learning', ${res.originalIndex})"><span class="material-icons-outlined" style="font-size:18px;">delete</span></button>
+                  </div>
+                ` : ''}
               </div>
             </article>
           `;
@@ -960,20 +1050,27 @@
     function renderDocumentHub() {
       const tbody = document.getElementById('docTableBody');
       const gridContainer = document.getElementById('docGridContainer');
-      let filtered = docDataset.filter(doc => {
+      let filtered = docDataset.map((doc, originalIndex) => ({ ...doc, originalIndex })).filter(doc => {
         const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
         const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) || doc.type.toLowerCase().includes(docSearchQuery);
         return matchesPkg && matchesSearch;
       });
 
       document.getElementById('docActiveCount').textContent = filtered.length;
+      const powerUserActive = isPowerUser(currentUser);
 
       tbody.innerHTML = filtered.map(doc => `
         <tr>
           <td><strong>${doc.pkg}</strong></td>
           <td>${doc.ver}</td>
           <td>${doc.type}</td>
-          <td style="text-align:right;"><a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">View Doc</a></td>
+          <td style="text-align:right;">
+            <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">View Doc</a>
+            ${powerUserActive ? `
+              <button class="action-btn edit-btn" onclick="executeEditItem('document', ${doc.originalIndex})"><span class="material-icons-outlined" style="font-size:18px;">edit</span></button>
+              <button class="action-btn delete-btn" onclick="executeDeleteItem('document', ${doc.originalIndex})"><span class="material-icons-outlined" style="font-size:18px;">delete</span></button>
+            ` : ''}
+          </td>
         </tr>
       `).join('');
 
@@ -987,6 +1084,12 @@
           </div>
           <div class="card-actions">
             <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">View Doc</a>
+            ${powerUserActive ? `
+              <div class="action-icons">
+                <button class="action-btn edit-btn" onclick="executeEditItem('document', ${doc.originalIndex})"><span class="material-icons-outlined" style="font-size:18px;">edit</span></button>
+                <button class="action-btn delete-btn" onclick="executeDeleteItem('document', ${doc.originalIndex})"><span class="material-icons-outlined" style="font-size:18px;">delete</span></button>
+              </div>
+            ` : ''}
           </div>
         </article>
       `).join('');
@@ -996,6 +1099,7 @@
 
     function renderQuickLinksHub() {
       const grid = document.getElementById('quickLinksGrid');
+      const powerUserActive = isPowerUser(currentUser);
       
       let defaultHtml = defaultQuickLinks.map(item => `
         <article class="resource-card" style="border-top: 3px solid ${item.color};">
@@ -1012,7 +1116,7 @@
         </article>
       `).join('');
 
-      let customHtml = globalCustomQuick.map(q => `
+      let customHtml = globalCustomQuick.map((q, idx) => `
         <article class="resource-card" style="border-top: 3px solid var(--google-green);">
           <div>
             <h3 class="card-title">${q.title}</h3>
@@ -1020,6 +1124,9 @@
           </div>
           <div class="card-actions">
             <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn">Open Tool Link</a>
+            ${powerUserActive ? `
+              <button class="action-btn delete-btn" onclick="executeDeleteItem('quick', ${idx})"><span class="material-icons-outlined" style="font-size:18px;">delete</span></button>
+            ` : ''}
           </div>
         </article>
       `).join('');
@@ -1029,7 +1136,120 @@
     }
 
     function openUserAnalyticsDashboard() {
-      openProfileModal();
+      const tbody = document.getElementById('userAnalyticsTableBody');
+      const titleElem = document.getElementById('dashboardModalTitle');
+
+      if (!currentUser) { checkUserLoginState(); return; }
+
+      tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 1.25rem;">Loading user progress metrics...</td></tr>`;
+      document.getElementById('userDashboardModalOverlay').classList.add('open');
+
+      callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(remoteAnalytics) {
+        const users = (remoteAnalytics && remoteAnalytics.users) ? remoteAnalytics.users : {};
+        
+        if (isPowerUser(currentUser)) {
+          titleElem.textContent = "Organization Progress Log (Power User)";
+          let userKeys = Object.keys(users);
+          if (userKeys.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 1rem;">No team log recorded yet.</td></tr>`;
+          } else {
+            tbody.innerHTML = userKeys.map(email => `
+              <tr>
+                <td><strong>${email}</strong></td>
+                <td>${users[email].lastLogin || 'N/A'}</td>
+                <td><span style="color:var(--google-green); font-weight:600;">Active</span></td>
+              </tr>
+            `).join('');
+          }
+        } else {
+          titleElem.textContent = "My Progress Overview";
+          const u = users[currentUser] || { lastLogin: new Date().toLocaleString() };
+          tbody.innerHTML = `
+            <tr>
+              <td><strong>${currentUser} (You)</strong></td>
+              <td>${u.lastLogin || 'Active Now'}</td>
+              <td><span style="color:var(--google-green); font-weight:600;">Active</span></td>
+            </tr>
+          `;
+        }
+      });
+    }
+
+    function openPowerUsersModal() {
+      if (!isPowerUser(currentUser)) return;
+      renderPowerUsersList();
+      document.getElementById('powerUserSettingsModalOverlay').classList.add('open');
+    }
+
+    function renderPowerUsersList() {
+      const container = document.getElementById('powerUserListContainer');
+      const list = Array.from(powerUsers);
+
+      container.innerHTML = list.map(email => `
+        <div class="power-user-chip">
+          <span>${email}</span>
+        </div>
+      `).join('');
+    }
+
+    function handleAddPowerUser(e) {
+      e.preventDefault();
+      const input = document.getElementById('newPowerUserEmail').value.trim().toLowerCase();
+      if (!input.includes('@maxval.com')) {
+        alert("Please enter a valid @maxval.com email.");
+        return;
+      }
+      powerUsers.add(input);
+      callGasJsonp({ action: 'NOTIFY_POWER_USER', email: input, grantedBy: currentUser }, function(){});
+      document.getElementById('newPowerUserEmail').value = '';
+      renderPowerUsersList();
+      alert("Granted Power User access to " + input);
+    }
+
+    function triggerBatchAiDescriptions() {
+      callGasJsonp({ action: 'BATCH_GENERATE_AI_DESCRIPTIONS' }, function(res) {
+        alert("AI descriptions successfully updated globally.");
+        loadGlobalCustomLinks();
+      });
+    }
+
+    function executeDeleteItem(hub, index) {
+      if (!confirm("Are you sure you want to delete this resource?")) return;
+      let targetLink = "";
+      if (hub === 'learning') targetLink = dataset[index].link;
+      else if (hub === 'document') targetLink = docDataset[index].link;
+      else targetLink = globalCustomQuick[index].link;
+
+      callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: hub, link: targetLink }, function() {
+        loadGlobalCustomLinks();
+      });
+    }
+
+    function executeEditItem(hub, index) {
+      document.getElementById('addModalTitle').textContent = "Edit Resource Link";
+      document.getElementById('editItemIndex').value = index;
+      document.getElementById('editItemType').value = hub;
+      document.getElementById('targetHub').value = hub;
+      toggleFormFields(hub);
+
+      if (hub === 'learning') {
+        const item = dataset[index];
+        document.getElementById('newTitle').value = item.name;
+        document.getElementById('newModule').value = item.category;
+        document.getElementById('newLink').value = item.link;
+        document.getElementById('newDescription').value = item.description || '';
+      } else if (hub === 'document') {
+        const doc = docDataset[index];
+        document.getElementById('newTitle').value = doc.pkg;
+        document.getElementById('newPkg').value = doc.pkg;
+        document.getElementById('newVer').value = doc.ver;
+        document.getElementById('newDocType').value = doc.type;
+        document.getElementById('newLink').value = doc.link;
+        document.getElementById('newDescription').value = doc.description || '';
+      }
+
+      document.getElementById('submitterEmail').value = currentUser;
+      document.getElementById('addModalOverlay').classList.add('open');
     }
 
     function switchTab(tabId, el) {
@@ -1069,6 +1289,9 @@
     }
 
     function openAddModal() {
+      document.getElementById('addModalTitle').textContent = "Submit New Link";
+      document.getElementById('editItemIndex').value = "";
+      document.getElementById('editItemType').value = "";
       document.getElementById('addModalOverlay').classList.add('open');
       document.getElementById('submitterEmail').value = currentUser || 'user@maxval.com';
       setTimeout(notifyIframeHeight, 50);
@@ -1094,7 +1317,7 @@
       if (e) { e.preventDefault(); e.stopPropagation(); }
 
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = "Publishing Link...";
+      submitBtn.textContent = "Generating AI Summary & Publishing...";
       submitBtn.disabled = true;
 
       const targetHub = document.getElementById('targetHub').value;
@@ -1105,18 +1328,28 @@
       const currentDateStr = new Date().toLocaleDateString();
 
       let releaseTitle = document.getElementById('newTitle').value.trim() || 'New Link';
-      let payload = { title: releaseTitle, link: link, description: userDescription, releaseDate: currentDateStr };
 
-      callGasJsonp({
-        action: 'SAVE_CUSTOM_LINK',
-        hub: targetHub,
-        item: JSON.stringify(payload)
-      }, function() {
-        closeModal('addModalOverlay');
-        submitBtn.textContent = "Publish Link Live";
-        submitBtn.disabled = false;
-        loadGlobalCustomLinks();
-      });
+      if (userDescription) {
+        saveAndDeliverLink(targetHub, { title: releaseTitle, name: releaseTitle, link: link, description: userDescription, releaseDate: currentDateStr });
+      } else {
+        callGasJsonp({ action: 'GENERATE_AI_DESCRIPTION', url: link, title: releaseTitle }, function(aiData) {
+          const aiSummary = (aiData && aiData.description) ? aiData.description : "";
+          saveAndDeliverLink(targetHub, { title: releaseTitle, name: releaseTitle, link: link, description: aiSummary, releaseDate: currentDateStr });
+        });
+      }
+
+      function saveAndDeliverLink(hub, payload) {
+        callGasJsonp({
+          action: 'SAVE_CUSTOM_LINK',
+          hub: hub,
+          item: JSON.stringify(payload)
+        }, function() {
+          closeModal('addModalOverlay');
+          submitBtn.textContent = "Publish Link Live";
+          submitBtn.disabled = false;
+          loadGlobalCustomLinks();
+        });
+      }
 
       return false;
     }
