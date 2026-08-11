@@ -251,7 +251,6 @@
 
     .stats-badge-container { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .active-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--google-blue); background: var(--google-blue-light); padding: 0.2rem 0.55rem; border-radius: 6px; }
-    .completed-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.2rem 0.55rem; border-radius: 6px; }
 
     .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.4rem 0.7rem; margin-bottom: 0.65rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
     .search-box { position: relative; flex: 1; }
@@ -297,6 +296,16 @@
     .action-btn.delete-btn:hover { color: var(--google-red); }
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
+
+    /* FILLED GREEN CHECKMARK ICON STYLING FOR COMPLETED ITEMS */
+    .completion-btn .material-icons-outlined.completed-filled {
+      color: #ffffff !important;
+      background: var(--google-green);
+      border-radius: 50%;
+      font-size: 18px;
+      padding: 1px;
+      box-shadow: 0 0 4px rgba(30, 142, 62, 0.4);
+    }
 
     .item-select-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--google-red); display: none; }
     .selection-mode-active .item-select-checkbox { display: inline-block; }
@@ -526,7 +535,6 @@
         </select>
         <div class="stats-badge-container">
           <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Documents: <strong id="learningActiveCount">0</strong></div>
-          <div class="completed-count-badge"><span class="material-icons-outlined" style="font-size:14px;">check_circle</span> Completed: <strong id="learningCompletedCount">0</strong></div>
         </div>
       </section>
 
@@ -568,7 +576,6 @@
         </select>
         <div class="stats-badge-container">
           <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Documents: <strong id="docActiveCount">0</strong></div>
-          <div class="completed-count-badge"><span class="material-icons-outlined" style="font-size:14px;">visibility</span> Viewed Docs: <strong id="docViewedCount">0</strong></div>
         </div>
       </section>
 
@@ -887,7 +894,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzAHZRgnpKXKYiCYPhd8XArqU9qTwn3qf_5RkKGUtvZlgz8CInW3oSk7OtEPzsjelaf/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwnfnQQpLppS__Maf8KaNsPsaVnQFiQW6lXe1RMQWGME-aGyBKMG4Q_XfqEVUXsb7uZ/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -2087,7 +2094,6 @@
       const completedList = userRecord.completedTopics || [];
 
       document.getElementById('learningActiveCount').textContent = filtered.length;
-      document.getElementById('learningCompletedCount').textContent = completedList.length;
       document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
 
       if (filtered.length === 0) {
@@ -2114,8 +2120,8 @@
                 <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
                 <div class="action-icons" onclick="event.stopPropagation()">
                   <input type="checkbox" class="item-select-checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLearningSelect(${res.originalIndex}, event)" title="Select Item">
-                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Marked as Completed' : 'Click to complete (Requires opening link first)'}">
-                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
+                  <button class="action-btn completion-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Marked as Completed' : 'Click to complete (Requires opening link first)'}">
+                    <span class="material-icons-outlined ${isCompleted ? 'completed-filled' : ''}" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
                       ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
                     </span>
                   </button>
@@ -2159,12 +2165,7 @@
         return matchesPkg && matchesSearch;
       });
 
-      const analytics = getUserAnalytics();
-      const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { seenDocs: [] };
-      const seenList = userRecord.seenDocs || [];
-
       document.getElementById('docActiveCount').textContent = filteredWithIndex.length;
-      document.getElementById('docViewedCount').textContent = seenList.length;
 
       if (filteredWithIndex.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No matching documents found.</td></tr>`;
