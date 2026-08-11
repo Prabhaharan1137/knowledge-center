@@ -113,7 +113,7 @@
     }
     .top-utility-btn:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(0,0,0,0.3); }
 
-    .user-icon-btn { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); border-radius: 50%; padding: 0.35rem; }
+    .user-icon-btn { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); font-weight: 600; }
     .accent-analytics { background: var(--google-green); border-color: var(--google-green); }
     .accent-add { background: var(--google-blue); border-color: var(--google-blue); font-weight: 600; }
     .accent-settings { background: var(--google-purple); border-color: var(--google-purple); }
@@ -162,6 +162,11 @@
       user-select: none;
       transition: all 0.2s ease;
     }
+    .kpi-bookmark-small.filter-active {
+      background: #fef7e0;
+      border-color: var(--google-yellow);
+      box-shadow: 0 0 6px rgba(249, 171, 0, 0.4);
+    }
 
     .container { width: 100%; padding: 0.75rem 1rem 0.25rem 1rem; display: flex; flex-direction: column; }
     .tab-content { display: none; flex-direction: column; }
@@ -178,6 +183,7 @@
       gap: 0.3rem;
     }
     .filter-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-actions-group { display: flex; align-items: center; gap: 0.4rem; }
     .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; }
     .styled-dropdown-catchy { width: 100%; padding: 0.35rem 0.65rem; font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 500; border: 1.5px solid var(--border-color); border-radius: 6px; outline: none; }
 
@@ -189,7 +195,29 @@
     .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 18px; }
     .search-input { width: 100%; padding: 0.35rem 1rem 0.35rem 2.1rem; border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.82rem; outline: none; }
 
+    .view-toggle-group { display: flex; background: #f1f3f4; border-radius: 6px; padding: 2px; border: 1px solid var(--border-color); }
+    .view-toggle-btn { background: none; border: none; padding: 0.2rem 0.45rem; border-radius: 4px; cursor: pointer; color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center; }
+    .view-toggle-btn.active { background: #ffffff; color: var(--google-blue); box-shadow: var(--shadow-sm); }
+
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.65rem; width: 100%; }
+
+    .resources-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .resources-list-table th, .resources-list-table td {
+      padding: 0.55rem 0.7rem;
+      text-align: left;
+      vertical-align: middle;
+      border-bottom: 1px solid #f1f3f4;
+      word-wrap: break-word;
+    }
+    .resources-list-table th { background: var(--bg-body); font-weight: 600; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); }
 
     .resource-card { 
       background: var(--bg-card); 
@@ -204,13 +232,19 @@
       position: relative;
     }
     .resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--google-blue); }
-    
+    .resource-card.selected-card { border-color: var(--google-red) !important; background-color: #fce8e6 !important; }
+
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.35rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.88rem; font-weight: 500; }
     .card-description { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.3rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .category-badge { font-size: 0.65rem; font-weight: 500; padding: 0.12rem 0.4rem; border-radius: 10px; }
     .card-actions { margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.3rem; }
     .link-btn { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.78rem; }
+    
+    .action-icons { display: flex; gap: 0.25rem; align-items: center; }
+    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.2rem; border-radius: 50%; display: inline-flex; transition: transform 0.15s ease; }
+    .action-btn:hover { background: rgba(0, 0, 0, 0.05); transform: scale(1.1); }
+    .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; table-layout: fixed; min-width: 680px; }
@@ -243,6 +277,12 @@
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .animated-brand-title { font-size: 0.95rem; }
+      .utility-group-center { display: none; }
+      .resources-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -292,24 +332,27 @@
     </div>
   </div>
 
-  <!-- TOP UTILITY BAR -->
+  <!-- TOP UTILITY BAR (USER FIRST NAME DISPLAY, SUBMIT LINK & POWER USER CONTROL) -->
   <div class="top-utility-bar">
     <div class="utility-group-left">
       <button type="button" class="top-utility-btn user-icon-btn" onclick="openProfileModal()" title="View Active Profile">
         <span class="material-icons-outlined" style="font-size:20px; color:#ffffff;">account_circle</span>
+        <span id="userDisplayName">User</span>
       </button>
 
-      <button type="button" class="top-utility-btn accent-analytics" onclick="openProfileModal()" title="User Progress Dashboard">
+      <button type="button" class="top-utility-btn accent-analytics" onclick="openUserAnalyticsDashboard()" title="User Progress Dashboard">
         <span class="material-icons-outlined" style="font-size:16px;">insights</span><span>User Progress</span>
       </button>
     </div>
 
+    <!-- SUBMIT NEW LINK AVAILABLE TO ALL LOGGED-IN USERS -->
     <div class="utility-group-center">
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:16px;">add_circle</span><span>Submit New Link</span>
       </button>
     </div>
 
+    <!-- POWER USERS HEADER CONTROL -->
     <div class="utility-group-right">
       <button type="button" class="top-utility-btn accent-settings" id="powerUsersTabBtn" style="display:none;" onclick="openProfileModal()">
         <span class="material-icons-outlined" style="font-size:16px;">admin_panel_settings</span><span>Power Users</span>
@@ -329,9 +372,9 @@
         <span class="material-icons-outlined" style="font-size:18px;">bolt</span><span>Quick Links</span>
       </button>
     </nav>
-    <div class="kpi-bookmark-small" id="bookmarkContainer">
+    <div class="kpi-bookmark-small" id="bookmarkContainer" onclick="toggleFilterOnlyBookmarks()" title="Click to filter bookmarked items">
       <span class="material-icons-outlined" style="color:var(--google-yellow);">star</span>
-      <span>Total Resources: <strong id="kpiBookmarks">0</strong></span>
+      <span>Bookmarks: <strong id="kpiBookmarks">0</strong></span>
     </div>
   </header>
 
@@ -346,7 +389,7 @@
           <option value="ALL">-- All Learning Modules --</option>
         </select>
         <div class="stats-badge-container" style="margin-top:4px;">
-          <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Modules: <strong id="learningActiveCount">0</strong></div>
+          <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Documents: <strong id="learningActiveCount">0</strong></div>
         </div>
       </section>
 
@@ -354,6 +397,14 @@
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
           <input type="text" id="searchInput" class="search-input" placeholder="Search learning topics...">
+        </div>
+        <div class="view-toggle-group">
+          <button type="button" class="view-toggle-btn active" id="learningGridToggleBtn" onclick="setHubViewMode('learning', 'grid')">
+            <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
+          </button>
+          <button type="button" class="view-toggle-btn" id="learningListToggleBtn" onclick="setHubViewMode('learning', 'list')">
+            <span class="material-icons-outlined" style="font-size:18px;">view_list</span>
+          </button>
         </div>
       </section>
       <main id="resourcesGridContainer" class="resources-grid"></main>
@@ -378,6 +429,14 @@
           <span class="material-icons-outlined">search</span>
           <input type="text" id="docSearchInput" class="search-input" placeholder="Filter by document name, version, or type...">
         </div>
+        <div class="view-toggle-group">
+          <button type="button" class="view-toggle-btn active" id="docTableToggleBtn" onclick="setHubViewMode('document', 'table')">
+            <span class="material-icons-outlined" style="font-size:18px;">table_chart</span>
+          </button>
+          <button type="button" class="view-toggle-btn" id="docGridToggleBtn" onclick="setHubViewMode('document', 'grid')">
+            <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
+          </button>
+        </div>
       </section>
 
       <div class="table-container" id="docTableContainer">
@@ -393,6 +452,7 @@
           <tbody id="docTableBody"></tbody>
         </table>
       </div>
+      <main class="resources-grid" id="docGridContainer" style="display:none;"></main>
     </div>
 
     <!-- QUICK LINKS TAB -->
@@ -420,10 +480,78 @@
     </div>
   </div>
 
-  <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwluhsKQWHx5xvZ6xXG58_oG9MvxNLaHpyvnknCXJytUJ2JBkr-aFBU7qlHV7irJfk/exec";
+  <!-- SUBMIT NEW LINK MODAL -->
+  <div class="modal-overlay" id="addModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="addModalTitle">Submit New Link</h2>
+        <button class="modal-close-btn" onclick="closeModal('addModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
 
-    // COMPLETE LEARNING HUB DATASET
+      <form id="addResourceForm" class="modal-form" onsubmit="handleAddSubmission(event)">
+        <input type="hidden" id="editItemIndex" value="">
+        <input type="hidden" id="editItemType" value="">
+
+        <div class="form-group">
+          <label>Target Hub *</label>
+          <select id="targetHub" onchange="toggleFormFields(this.value)">
+            <option value="learning">Learning Hub</option>
+            <option value="document">Document Hub</option>
+            <option value="quick">Quick Links</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Your MaxVal Email *</label>
+          <input type="email" id="submitterEmail" readonly style="background:#f1f3f4;">
+        </div>
+
+        <div class="form-group" id="titleGroup">
+          <label id="titleGroupLabel">Resource Title *</label>
+          <input type="text" id="newTitle" placeholder="Enter title..." required>
+        </div>
+
+        <div class="form-group" id="moduleCategoryGroup">
+          <label>Module Category *</label>
+          <select id="newModule">
+            <option value="Intellectual Property">Intellectual Property</option>
+            <option value="Introduction to Symphony">Introduction to Symphony</option>
+            <option value="Invention Module">Invention Module</option>
+            <option value="Patent Module">Patent Module</option>
+            <option value="Renewals">Renewals</option>
+            <option value="Trademark">Trademark</option>
+            <option value="Assessment">Assessment</option>
+            <option value="Additional Reference Materials">Additional Reference Materials</option>
+          </select>
+        </div>
+
+        <div id="documentFields" style="display:none;">
+          <div class="form-group"><label>Package Name *</label><input type="text" id="newPkg" placeholder="e.g., Symphony LF"></div>
+          <div class="form-group"><label>Package Version *</label><input type="text" id="newVer" placeholder="e.g., v1.3.4"></div>
+          <div class="form-group"><label>Type of Doc *</label><input type="text" id="newDocType" placeholder="e.g., Installation Guide"></div>
+        </div>
+
+        <div class="form-group"><label>URL / Link *</label><input type="url" id="newLink" placeholder="https://..." required></div>
+
+        <div class="form-group">
+          <label>Description (Optional)</label>
+          <textarea id="newDescription" rows="2" placeholder="Brief details..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Notification Recipient Email(s) *</label>
+          <input type="text" id="dlEmailAddress" placeholder="e.g., team@maxval.com" required>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn" style="background:var(--google-blue); color:#fff; border:none; padding:0.6rem; border-radius:6px; font-weight:600; cursor:pointer;">Publish Link Live</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyyqoHEnSaNKw-VOuUZsaj9d79hPhXQxx8gUlyYZJ1hM_A_gIj6LRPAQab4IAkk8siA/exec";
+
+    // UNTRUNCATED LEARNING HUB DATASET
     const baseDataset = [
       { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
       { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
@@ -478,7 +606,7 @@
       { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m" }
     ];
 
-    // COMPLETE DOCUMENT HUB DATASET
+    // UNTRUNCATED DOCUMENT HUB DATASET
     const baseDocDataset = [
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" },
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0" },
@@ -499,7 +627,7 @@
       { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Upgrade Doc", link: "https://docs.google.com/document/d/1wQoKpdDCyuORvtPxychos06PYPqJGTPrVazlCGel19c/edit?usp=sharing" }
     ];
 
-    // RESTORED DEFAULT QUICK LINKS
+    // DEFAULT QUICK LINKS
     const defaultQuickLinks = [
       {
         title: "PSO Org Access Request Portal",
@@ -542,9 +670,14 @@
     let searchQuery = '';
     let selectedDocPackage = 'ALL';
     let docSearchQuery = '';
+    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
+    let filterOnlyBookmarks = false;
 
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let powerUsers = new Set([...DEFAULT_POWER_USERS]);
+
+    let learningHubLayoutMode = 'grid';
+    let docHubLayoutMode = 'table';
 
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
@@ -564,6 +697,13 @@
       script.id = cbName;
       script.src = GAS_ENDPOINT_URL + '?' + queryString + '&callback=' + cbName;
       document.body.appendChild(script);
+    }
+
+    function getFirstNameFromEmail(email) {
+      if (!email) return "User";
+      var prefix = email.split("@")[0];
+      var rawName = prefix.split(".")[0];
+      return rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase();
     }
 
     function loadGlobalCustomLinks() {
@@ -677,9 +817,13 @@
     }
 
     function updateUserBadgeDisplay() {
-      const displayElem = document.getElementById('modalProfileEmail');
-      if (currentUser && displayElem) {
-        displayElem.textContent = currentUser;
+      const displayElem = document.getElementById('userDisplayName');
+      const profileModalEmail = document.getElementById('modalProfileEmail');
+      
+      if (currentUser) {
+        const firstName = getFirstNameFromEmail(currentUser);
+        if (displayElem) displayElem.textContent = firstName;
+        if (profileModalEmail) profileModalEmail.textContent = currentUser;
       }
     }
 
@@ -712,37 +856,110 @@
       select.value = selectedDocPackage;
     }
 
+    function toggleBookmark(id) {
+      if (bookmarkedIds.has(id)) { bookmarkedIds.delete(id); } else { bookmarkedIds.add(id); }
+      localStorage.setItem('user_private_bookmarks_v17', JSON.stringify(Array.from(bookmarkedIds)));
+      renderLearningHub();
+    }
+
+    function toggleFilterOnlyBookmarks() {
+      filterOnlyBookmarks = !filterOnlyBookmarks;
+      document.getElementById('bookmarkContainer').classList.toggle('filter-active', filterOnlyBookmarks);
+      renderLearningHub();
+    }
+
+    function setHubViewMode(hub, mode) {
+      if (hub === 'learning') {
+        learningHubLayoutMode = mode;
+        document.getElementById('learningGridToggleBtn').classList.toggle('active', mode === 'grid');
+        document.getElementById('learningListToggleBtn').classList.toggle('active', mode === 'list');
+        renderLearningHub();
+      } else {
+        docHubLayoutMode = mode;
+        document.getElementById('docTableToggleBtn').classList.toggle('active', mode === 'table');
+        document.getElementById('docGridToggleBtn').classList.toggle('active', mode === 'grid');
+        document.getElementById('docTableContainer').style.display = (mode === 'table') ? 'block' : 'none';
+        document.getElementById('docGridContainer').style.display = (mode === 'grid') ? 'grid' : 'none';
+        renderDocumentHub();
+      }
+    }
+
     function renderLearningHub() {
       const container = document.getElementById('resourcesGridContainer');
       let filtered = dataset.filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery);
-        return matchesModule && matchesSearch;
+        const matchesBookmark = filterOnlyBookmarks ? bookmarkedIds.has(res.id) : true;
+        return matchesModule && matchesSearch && matchesBookmark;
       });
 
       document.getElementById('learningActiveCount').textContent = filtered.length;
-      document.getElementById('kpiBookmarks').textContent = dataset.length;
+      document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
 
-      container.className = "resources-grid";
-      container.innerHTML = filtered.map(res => `
-        <article class="resource-card">
-          <div>
-            <div class="card-header">
-              <span class="category-badge" style="background:#e8f0fe; color:#1a73e8;">${res.category}</span>
-            </div>
-            <h3 class="card-title">${res.name}</h3>
-          </div>
-          <div class="card-actions">
-            <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn">Open Link <span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
-          </div>
-        </article>
-      `).join('');
+      if (learningHubLayoutMode === 'list') {
+        container.className = "";
+        container.innerHTML = `
+          <table class="resources-list-table">
+            <thead>
+              <tr>
+                <th style="width:6%; text-align:center;">Fav</th>
+                <th style="width:24%;">Module</th>
+                <th style="width:55%;">Title</th>
+                <th style="width:15%; text-align:right;">Open Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filtered.map(res => {
+                const isBookmarked = bookmarkedIds.has(res.id);
+                return `
+                  <tr>
+                    <td style="text-align:center;">
+                      <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
+                        <span class="material-icons-outlined" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                      </button>
+                    </td>
+                    <td><span class="category-badge" style="background:#e8f0fe; color:#1a73e8;">${res.category}</span></td>
+                    <td><strong>${res.name}</strong></td>
+                    <td style="text-align:right;">
+                      <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+                        <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+                      </a>
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      } else {
+        container.className = "resources-grid";
+        container.innerHTML = filtered.map(res => {
+          const isBookmarked = bookmarkedIds.has(res.id);
+          return `
+            <article class="resource-card">
+              <div>
+                <div class="card-header">
+                  <span class="category-badge" style="background:#e8f0fe; color:#1a73e8;">${res.category}</span>
+                  <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
+                    <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
+                  </button>
+                </div>
+                <h3 class="card-title">${res.name}</h3>
+              </div>
+              <div class="card-actions">
+                <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn">Open Link <span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
 
       notifyIframeHeight();
     }
 
     function renderDocumentHub() {
       const tbody = document.getElementById('docTableBody');
+      const gridContainer = document.getElementById('docGridContainer');
       let filtered = docDataset.filter(doc => {
         const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
         const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) || doc.type.toLowerCase().includes(docSearchQuery);
@@ -758,6 +975,20 @@
           <td>${doc.type}</td>
           <td style="text-align:right;"><a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">View Doc</a></td>
         </tr>
+      `).join('');
+
+      gridContainer.innerHTML = filtered.map(doc => `
+        <article class="resource-card">
+          <div>
+            <div class="card-header">
+              <span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">${doc.pkg}</span>
+            </div>
+            <h3 class="card-title">${doc.type} (${doc.ver})</h3>
+          </div>
+          <div class="card-actions">
+            <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn">View Doc</a>
+          </div>
+        </article>
       `).join('');
 
       notifyIframeHeight();
@@ -797,23 +1028,54 @@
       notifyIframeHeight();
     }
 
+    function openUserAnalyticsDashboard() {
+      openProfileModal();
+    }
+
     function switchTab(tabId, el) {
       activeTab = tabId;
       document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       if (el) el.classList.add('active');
+      
+      document.getElementById('bookmarkContainer').style.display = (tabId === 'learningHubTab') ? 'inline-flex' : 'none';
+
       if (tabId === 'learningHubTab') renderLearningHub();
       if (tabId === 'documentHubTab') renderDocumentHub();
       if (tabId === 'quickLinksTab') renderQuickLinksHub();
       notifyIframeHeight();
     }
 
-    function notifyIframeHeight() {
-      if (window.parent && window.parent !== window) {
-        const height = document.body.offsetHeight;
-        window.parent.postMessage({ type: 'kc-iframe-height', height: height }, '*');
+    function toggleFormFields(target) {
+      const moduleCategoryGroup = document.getElementById('moduleCategoryGroup');
+      const documentFields = document.getElementById('documentFields');
+      const titleGroupLabel = document.getElementById('titleGroupLabel');
+
+      if (target === 'learning') {
+        titleGroupLabel.textContent = "Resource Title *";
+        moduleCategoryGroup.style.display = 'flex';
+        documentFields.style.display = 'none';
+      } else if (target === 'document') {
+        titleGroupLabel.textContent = "Resource Name *";
+        moduleCategoryGroup.style.display = 'none';
+        documentFields.style.display = 'block';
+      } else {
+        titleGroupLabel.textContent = "Quick Link Name *";
+        moduleCategoryGroup.style.display = 'none';
+        documentFields.style.display = 'none';
       }
+      setTimeout(notifyIframeHeight, 50);
+    }
+
+    function openAddModal() {
+      document.getElementById('addModalOverlay').classList.add('open');
+      document.getElementById('submitterEmail').value = currentUser || 'user@maxval.com';
+      setTimeout(notifyIframeHeight, 50);
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('open');
     }
 
     function openProfileModal() {
@@ -821,15 +1083,49 @@
       document.getElementById('profileModalOverlay').classList.add('open');
     }
 
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.remove('open');
-    }
-
     function handleSignOut() {
       currentUser = null;
       localStorage.removeItem('kc_user_maxval_email');
       closeModal('profileModalOverlay');
       checkUserLoginState();
+    }
+
+    function handleAddSubmission(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.textContent = "Publishing Link...";
+      submitBtn.disabled = true;
+
+      const targetHub = document.getElementById('targetHub').value;
+      const submitterEmail = document.getElementById('submitterEmail').value.trim();
+      const link = document.getElementById('newLink').value.trim();
+      const userDescription = document.getElementById('newDescription').value.trim();
+      const dlAddress = document.getElementById('dlEmailAddress').value.trim();
+      const currentDateStr = new Date().toLocaleDateString();
+
+      let releaseTitle = document.getElementById('newTitle').value.trim() || 'New Link';
+      let payload = { title: releaseTitle, link: link, description: userDescription, releaseDate: currentDateStr };
+
+      callGasJsonp({
+        action: 'SAVE_CUSTOM_LINK',
+        hub: targetHub,
+        item: JSON.stringify(payload)
+      }, function() {
+        closeModal('addModalOverlay');
+        submitBtn.textContent = "Publish Link Live";
+        submitBtn.disabled = false;
+        loadGlobalCustomLinks();
+      });
+
+      return false;
+    }
+
+    function notifyIframeHeight() {
+      if (window.parent && window.parent !== window) {
+        const height = document.body.offsetHeight;
+        window.parent.postMessage({ type: 'kc-iframe-height', height: height }, '*');
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
