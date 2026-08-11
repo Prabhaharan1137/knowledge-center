@@ -198,6 +198,7 @@
     }
     .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); }
     .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); }
+    .tab-btn.quick-tab.active { background: #e6f4ea; color: var(--google-green); border-color: var(--google-green); }
 
     .kpi-bookmark-small {
       display: inline-flex;
@@ -236,14 +237,25 @@
     .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; }
     .styled-dropdown-catchy { width: 100%; padding: 0.4rem 0.7rem; font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 500; border: 1.5px solid var(--border-color); border-radius: 6px; outline: none; }
 
-    .active-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.2rem 0.55rem; border-radius: 6px; }
+    .stats-badge-container { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .active-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--google-blue); background: var(--google-blue-light); padding: 0.2rem 0.55rem; border-radius: 6px; }
+    .completed-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.2rem 0.55rem; border-radius: 6px; }
 
-    .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.4rem 0.7rem; margin-bottom: 0.65rem; }
-    .search-box { position: relative; width: 100%; }
+    .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.4rem 0.7rem; margin-bottom: 0.65rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+    .search-box { position: relative; flex: 1; }
     .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 18px; }
     .search-input { width: 100%; padding: 0.35rem 1rem 0.35rem 2.1rem; border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.82rem; outline: none; }
 
+    .view-toggle-group { display: flex; background: #f1f3f4; border-radius: 6px; padding: 2px; border: 1px solid var(--border-color); }
+    .view-toggle-btn { background: none; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center; }
+    .view-toggle-btn.active { background: #ffffff; color: var(--google-blue); box-shadow: var(--shadow-sm); }
+
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
+    .resources-grid.list-view-mode { display: flex; flex-direction: column; gap: 0.5rem; }
+    .resources-grid.list-view-mode .resource-card { flex-direction: row; align-items: center; justify-content: space-between; padding: 0.5rem 0.8rem; }
+    .resources-grid.list-view-mode .resource-card .card-header { margin-bottom: 0; flex: 1; align-items: center; }
+    .resources-grid.list-view-mode .resource-card .card-actions { margin-top: 0; border-top: none; padding-top: 0; }
+
     .resource-card { 
       background: var(--bg-card); 
       border: 1px solid var(--border-color); 
@@ -461,7 +473,7 @@
 
       <!-- SUBMIT NEW LINK ACCESSIBLE TO ALL LOGGED-IN USERS -->
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" style="display:none;" onclick="openAddModal()">
-        <span class="material-icons-outlined" style="font-size:15px;">add_circle</span><span>Submit New Link Live</span>
+        <span class="material-icons-outlined" style="font-size:15px;">add_circle</span><span>Submit New Link</span>
       </button>
     </div>
   </div>
@@ -473,6 +485,9 @@
       </button>
       <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
         <span class="material-icons-outlined" style="font-size:18px;">description</span><span>Document Hub</span>
+      </button>
+      <button class="tab-btn quick-tab" onclick="switchTab('quickLinksTab', this)">
+        <span class="material-icons-outlined" style="font-size:18px;">bolt</span><span>Quick Links</span>
       </button>
     </nav>
     <div class="kpi-bookmark-small" id="bookmarkContainer">
@@ -506,13 +521,24 @@
         <select id="moduleSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Learning Modules --</option>
         </select>
-        <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:14px;">visibility</span> Active View Items: <strong id="learningActiveCount">0</strong></div>
+        <div class="stats-badge-container">
+          <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Documents: <strong id="learningActiveCount">0</strong></div>
+          <div class="completed-count-badge"><span class="material-icons-outlined" style="font-size:14px;">check_circle</span> Completed: <strong id="learningCompletedCount">0</strong></div>
+        </div>
       </section>
 
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
           <input type="text" id="searchInput" class="search-input" placeholder="Search learning topics...">
+        </div>
+        <div class="view-toggle-group">
+          <button type="button" class="view-toggle-btn active" id="learningGridToggleBtn" onclick="setHubViewMode('learning', 'grid')" title="Grid View">
+            <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
+          </button>
+          <button type="button" class="view-toggle-btn" id="learningListToggleBtn" onclick="setHubViewMode('learning', 'list')" title="List View">
+            <span class="material-icons-outlined" style="font-size:18px;">view_list</span>
+          </button>
         </div>
       </section>
       <main class="resources-grid" id="resourcesGrid"></main>
@@ -537,7 +563,10 @@
         <select id="docPackageSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Packages --</option>
         </select>
-        <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);"><span class="material-icons-outlined" style="font-size:14px;">visibility</span> Active View Items: <strong id="docActiveCount">0</strong></div>
+        <div class="stats-badge-container">
+          <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Documents: <strong id="docActiveCount">0</strong></div>
+          <div class="completed-count-badge"><span class="material-icons-outlined" style="font-size:14px;">visibility</span> Viewed Docs: <strong id="docViewedCount">0</strong></div>
+        </div>
       </section>
 
       <section class="toolbar">
@@ -545,9 +574,17 @@
           <span class="material-icons-outlined">search</span>
           <input type="text" id="docSearchInput" class="search-input" placeholder="Filter by document name, version, or type...">
         </div>
+        <div class="view-toggle-group">
+          <button type="button" class="view-toggle-btn active" id="docTableToggleBtn" onclick="setHubViewMode('document', 'table')" title="Table View">
+            <span class="material-icons-outlined" style="font-size:18px;">table_chart</span>
+          </button>
+          <button type="button" class="view-toggle-btn" id="docGridToggleBtn" onclick="setHubViewMode('document', 'grid')" title="Grid Card View">
+            <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
+          </button>
+        </div>
       </section>
 
-      <div class="table-container">
+      <div class="table-container" id="docTableContainer">
         <table class="doc-table">
           <thead>
             <tr>
@@ -561,6 +598,77 @@
           <tbody id="docTableBody"></tbody>
         </table>
       </div>
+      <main class="resources-grid" id="docGridContainer" style="display:none;"></main>
+    </div>
+
+    <!-- QUICK LINKS TAB -->
+    <div id="quickLinksTab" class="tab-content">
+      <section class="filter-card-highlight" style="border-color:var(--google-green);">
+        <div class="filter-label-catchy" style="color:var(--google-green);"><span class="material-icons-outlined">bolt</span> FREQUENTLY ACCESSED TOOLS</div>
+        <p style="font-size:0.8rem; color:var(--text-secondary);">Direct links to essential Symphony management tools, access request portals, and tracking dashboards.</p>
+      </section>
+
+      <main class="resources-grid" id="quickLinksGrid">
+        <article class="resource-card" style="border-top: 3px solid var(--google-blue);">
+          <div>
+            <div class="card-header">
+              <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">PSO Portal</span>
+            </div>
+            <h3 class="card-title">PSO Org Access Request Portal</h3>
+            <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.4rem;">Request and manage org credentials for implementation environments.</p>
+          </div>
+          <div class="card-actions">
+            <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="link-btn">
+              <span>Open Access Portal</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="resource-card" style="border-top: 3px solid var(--google-purple);">
+          <div>
+            <div class="card-header">
+              <span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">Resource Allocation</span>
+            </div>
+            <h3 class="card-title">Project Allocation Sheet</h3>
+            <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.4rem;">Live team assignments, project allocations, and resource availability matrix.</p>
+          </div>
+          <div class="card-actions">
+            <a href="https://docs.google.com/spreadsheets/d/1bJju9VxH42h_WgtOka_Rz0CvKWbAHdLMdxNQj6YutxE/edit?gid=2110691200#gid=2110691200" target="_blank" rel="noopener noreferrer" class="link-btn" style="color:var(--google-purple);">
+              <span>Open Allocation Tracker</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="resource-card" style="border-top: 3px solid var(--google-yellow);">
+          <div>
+            <div class="card-header">
+              <span class="category-badge" style="background:#fef7e0; color:#b06000;">Implementation Status</span>
+            </div>
+            <h3 class="card-title">Implementation Tracker Sheet</h3>
+            <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.4rem;">Detailed project status logs, milestones, and deployment progress metrics.</p>
+          </div>
+          <div class="card-actions">
+            <a href="https://docs.google.com/spreadsheets/d/1OOm0wgAZdr21o9tPQJbwFBfDef73XCbH1ckOif5PjqQ/edit?gid=1957868564#gid=1957868564" target="_blank" rel="noopener noreferrer" class="link-btn" style="color:#b06000;">
+              <span>Open Implementation Tracker</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="resource-card" style="border-top: 3px solid var(--google-red);">
+          <div>
+            <div class="card-header">
+              <span class="category-badge" style="background:#fce8e6; color:#c5221f;">Analytics Dashboard</span>
+            </div>
+            <h3 class="card-title">Jira Tracker Looker Studio Report</h3>
+            <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.4rem;">Interactive Looker Studio dashboard tracking Jira issues, bugs, and resolution velocity.</p>
+          </div>
+          <div class="card-actions">
+            <a href="https://datastudio.google.com/reporting/13608382-2fcb-4f5b-8273-7caa1dc3abb9/page/c3dXF" target="_blank" rel="noopener noreferrer" class="link-btn" style="color:#c5221f;">
+              <span>Open Jira Tracker Report</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+            </a>
+          </div>
+        </article>
+      </main>
     </div>
   </div>
 
@@ -597,16 +705,29 @@
     </div>
   </div>
 
-  <!-- POWER USER CONFIGURATION MODAL -->
+  <!-- POWER USER CONFIGURATION MODAL WITH VIEW MODE TOGGLE -->
   <div class="modal-overlay" id="powerUserSettingsModalOverlay">
-    <div class="modal-content" style="max-width:480px;">
+    <div class="modal-content" style="max-width:500px;">
       <div class="modal-header">
-        <h2>Power Users Configuration</h2>
+        <h2>Power User Controls</h2>
         <button class="modal-close-btn" onclick="closeModal('powerUserSettingsModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
       <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+        
+        <!-- POWER USER VIEW SWITCHER OPTION -->
+        <div style="background:var(--google-purple-light); border:1px solid rgba(147, 52, 230, 0.3); border-radius:8px; padding:0.75rem; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong style="font-size:0.85rem; color:var(--google-purple);">Active View Mode:</strong>
+            <p style="font-size:0.75rem; color:var(--text-secondary);" id="activeModeTextDisplay">Power User Mode (Admin Privileges Active)</p>
+          </div>
+          <button type="button" class="btn-secondary" style="background:#ffffff; border-color:var(--google-purple); color:var(--google-purple);" onclick="togglePowerUserViewMode()">
+            <span class="material-icons-outlined" style="font-size:16px;">swap_horiz</span>
+            <span id="viewModeToggleLabel">Switch to Normal View</span>
+          </button>
+        </div>
+
         <p style="font-size: 0.8rem; color: var(--text-secondary);">
-          Power Users have full privileges to edit/delete items without entering a PIN and can view full organization progress metrics.
+          Power Users have full privileges to edit/delete items live and monitor organization progress metrics.
         </p>
         
         <form onsubmit="handleAddPowerUser(event)" style="display: flex; gap: 0.5rem;">
@@ -654,7 +775,7 @@
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="addModalTitle">Submit New Resource Link</h2>
+        <h2 id="addModalTitle">Submit New Link</h2>
         <button class="modal-close-btn" onclick="closeModal('addModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
 
@@ -943,9 +1064,15 @@
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
     let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
+    
+    // POWER USER VIEW MODE TOGGLE (TRUE = POWER MODE, FALSE = NORMAL USER VIEW)
+    let isPowerUserViewMode = true;
 
     let isLearningSelectionMode = false;
     let isDocSelectionMode = false;
+
+    let learningHubLayoutMode = 'grid'; // 'grid' or 'list'
+    let docHubLayoutMode = 'table'; // 'table' or 'grid'
 
     let selectedLearningIndices = new Set();
     let selectedDocIndices = new Set();
@@ -989,6 +1116,45 @@
       document.getElementById('congratsModuleTitle').textContent = `Completed: ${moduleTitle}`;
       overlay.style.display = 'flex';
       setTimeout(() => { overlay.style.display = 'none'; }, 2500);
+    }
+
+    function setHubViewMode(hub, mode) {
+      if (hub === 'learning') {
+        learningHubLayoutMode = mode;
+        document.getElementById('learningGridToggleBtn').classList.toggle('active', mode === 'grid');
+        document.getElementById('learningListToggleBtn').classList.toggle('active', mode === 'list');
+        const grid = document.getElementById('resourcesGrid');
+        grid.classList.toggle('list-view-mode', mode === 'list');
+        renderLearningHub();
+      } else {
+        docHubLayoutMode = mode;
+        document.getElementById('docTableToggleBtn').classList.toggle('active', mode === 'table');
+        document.getElementById('docGridToggleBtn').classList.toggle('active', mode === 'grid');
+        document.getElementById('docTableContainer').style.display = (mode === 'table') ? 'block' : 'none';
+        document.getElementById('docGridContainer').style.display = (mode === 'grid') ? 'grid' : 'none';
+        renderDocumentHub();
+      }
+    }
+
+    function togglePowerUserViewMode() {
+      isPowerUserViewMode = !isPowerUserViewMode;
+      const displayLabel = document.getElementById('viewModeToggleLabel');
+      const textDisplay = document.getElementById('activeModeTextDisplay');
+
+      if (isPowerUserViewMode) {
+        displayLabel.textContent = "Switch to Normal View";
+        textDisplay.textContent = "Power User Mode (Admin Privileges Active)";
+        textDisplay.style.color = "var(--google-purple)";
+      } else {
+        displayLabel.textContent = "Switch to Power Mode";
+        textDisplay.textContent = "Normal User View (Admin Options Hidden)";
+        textDisplay.style.color = "var(--google-blue)";
+      }
+
+      updatePowerUserUIElements();
+      renderLearningHub();
+      renderDocumentHub();
+      showInlineBanner(isPowerUserViewMode ? "Switched to Power User Mode" : "Switched to Normal User View");
     }
 
     function checkSameDayReleases() {
@@ -1217,10 +1383,14 @@
         if (submitLinkBtn) submitLinkBtn.style.display = 'none';
       }
 
-      if (isPowerUser(currentUser)) {
+      if (isPowerUser(currentUser) && isPowerUserViewMode) {
         if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
         if (learningAdminActions) learningAdminActions.style.display = 'flex';
         if (docAdminActions) docAdminActions.style.display = 'flex';
+      } else if (isPowerUser(currentUser) && !isPowerUserViewMode) {
+        if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
+        if (learningAdminActions) learningAdminActions.style.display = 'none';
+        if (docAdminActions) docAdminActions.style.display = 'none';
       } else {
         if (powerTabBtn) powerTabBtn.style.display = 'none';
         if (learningAdminActions) learningAdminActions.style.display = 'none';
@@ -1282,6 +1452,7 @@
 
       saveAnalytics(analytics);
       renderLearningHub();
+      renderDocumentHub();
     }
 
     function getResourceTitleById(resId) {
@@ -1301,6 +1472,7 @@
       userRecord.seenDocs.push({ pkg: pkgName, type: docType, timestamp: new Date().toLocaleString() });
       saveAnalytics(analytics);
       renderLearningHub();
+      renderDocumentHub();
     }
 
     function isPowerUser(email) {
@@ -1330,7 +1502,7 @@
         const users = analytics.users || {};
         const totalTopicsAvailable = dataset.length;
 
-        if (isPowerUser(currentUser)) {
+        if (isPowerUser(currentUser) && isPowerUserViewMode) {
           titleElem.textContent = "Power User - Organization Dashboard";
           let userKeys = Object.keys(users);
 
@@ -1596,8 +1768,8 @@
       const bookmarkContainer = document.getElementById('bookmarkContainer');
       bookmarkContainer.style.display = (tabId === 'learningHubTab') ? 'inline-flex' : 'none';
 
-      renderLearningHub();
-      renderDocumentHub();
+      if (tabId === 'learningHubTab') renderLearningHub();
+      if (tabId === 'documentHubTab') renderDocumentHub();
       setTimeout(notifyIframeHeight, 50);
     }
 
@@ -1614,7 +1786,7 @@
 
     function openAddModal() {
       if (!currentUser) { checkUserLoginState(); return; }
-      document.getElementById('addModalTitle').textContent = "Submit New Resource Link";
+      document.getElementById('addModalTitle').textContent = "Submit New Link";
       document.getElementById('editItemIndex').value = "";
       document.getElementById('editItemType').value = "";
       document.getElementById('submitterEmail').value = currentUser;
@@ -1744,7 +1916,7 @@
     function handleActionRequest(type, index, hub) {
       if (!currentUser) { checkUserLoginState(); return; }
 
-      if (isPowerUser(currentUser)) {
+      if (isPowerUser(currentUser) && isPowerUserViewMode) {
         if (type === 'delete') {
           promptResourceDeletion(hub, index);
         } else if (type === 'bulk_delete') {
@@ -1884,13 +2056,25 @@
 
     function renderLearningHub() {
       const grid = document.getElementById('resourcesGrid');
-      const filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
+      let filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery) || res.category.toLowerCase().includes(searchQuery);
         return matchesModule && matchesSearch;
       });
 
+      // SORT BOOKMARKED ITEMS TO THE VERY TOP FOR INDIVIDUAL USER
+      filtered.sort((a, b) => {
+        const aBookmarked = bookmarkedIds.has(a.id) ? 1 : 0;
+        const bBookmarked = bookmarkedIds.has(b.id) ? 1 : 0;
+        return bBookmarked - aBookmarked;
+      });
+
+      const analytics = getUserAnalytics();
+      const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
+      const completedList = userRecord.completedTopics || [];
+
       document.getElementById('learningActiveCount').textContent = filtered.length;
+      document.getElementById('learningCompletedCount').textContent = completedList.length;
       document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
 
       if (filtered.length === 0) {
@@ -1899,15 +2083,13 @@
         return;
       }
 
-      const analytics = getUserAnalytics();
-      const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
-      const powerUserActive = isPowerUser(currentUser);
+      const powerUserActive = isPowerUser(currentUser) && isPowerUserViewMode;
       const todayStr = new Date().toLocaleDateString();
 
       grid.innerHTML = filtered.map(res => {
         const style = getCategoryStyle(res.category);
         const isBookmarked = bookmarkedIds.has(res.id);
-        const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
+        const isCompleted = completedList.includes(res.id);
         const isSelected = selectedLearningIndices.has(res.originalIndex);
         const isTodayRelease = res.releaseDate === todayStr;
         const autoDescription = `Comprehensive training guide covering ${res.name} under the ${res.category} module. Click to view training materials.`;
@@ -1955,6 +2137,7 @@
 
     function renderDocumentHub() {
       const tbody = document.getElementById('docTableBody');
+      const gridContainer = document.getElementById('docGridContainer');
       const filteredWithIndex = docDataset.map((doc, idx) => ({ ...doc, originalIndex: idx })).filter(doc => {
         const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
         const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) ||
@@ -1963,17 +2146,24 @@
         return matchesPkg && matchesSearch;
       });
 
+      const analytics = getUserAnalytics();
+      const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { seenDocs: [] };
+      const seenList = userRecord.seenDocs || [];
+
       document.getElementById('docActiveCount').textContent = filteredWithIndex.length;
+      document.getElementById('docViewedCount').textContent = seenList.length;
 
       if (filteredWithIndex.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No matching documents found.</td></tr>`;
+        gridContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:1.5rem;"><span class="material-icons-outlined" style="font-size:32px;">search_off</span><h3>No matching documents found</h3></div>`;
         setTimeout(notifyIframeHeight, 50);
         return;
       }
 
-      const powerUserActive = isPowerUser(currentUser);
+      const powerUserActive = isPowerUser(currentUser) && isPowerUserViewMode;
       const todayStr = new Date().toLocaleDateString();
 
+      // RENDER TABLE VIEW
       tbody.innerHTML = filteredWithIndex.map(doc => {
         const isSelected = selectedDocIndices.has(doc.originalIndex);
         const isTodayRelease = doc.releaseDate === todayStr;
@@ -2005,6 +2195,40 @@
               </div>
             </td>
           </tr>
+        `;
+      }).join('');
+
+      // RENDER GRID VIEW FOR DOCUMENT HUB
+      gridContainer.innerHTML = filteredWithIndex.map(doc => {
+        const isSelected = selectedDocIndices.has(doc.originalIndex);
+        const isTodayRelease = doc.releaseDate === todayStr;
+        const docDescription = `Official technical document: ${doc.type} for package ${doc.pkg} (${doc.ver}). Click to access.`;
+
+        return `
+          <article class="resource-card ${isSelected ? 'selected-card' : ''} ${isTodayRelease ? 'highlight-new' : ''}" data-index="${doc.originalIndex}" title="${docDescription}" onclick="toggleTileActive(this)">
+            <div>
+              <div class="card-header">
+                <span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">${doc.pkg}</span>
+                <span class="doc-type-tag">${doc.ver}</span>
+              </div>
+              <h3 class="card-title">${doc.type}</h3>
+            </div>
+            <div class="card-actions" onclick="event.stopPropagation()">
+              <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
+                <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+              </a>
+              ${powerUserActive ? `
+                <div class="action-icons">
+                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
+                    <span class="material-icons-outlined" style="font-size:18px;">edit</span>
+                  </button>
+                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
+                    <span class="material-icons-outlined" style="font-size:18px;">delete</span>
+                  </button>
+                </div>
+              ` : ''}
+            </div>
+          </article>
         `;
       }).join('');
 
