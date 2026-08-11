@@ -305,7 +305,7 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxwd69FiioF8_ah1_tpKuLltiEZwit4m5PSmg58RNMS6ATMB5BtCTopozmO_d2TWT7h/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbz_AVcQA_ml2sEOXnf3zKDjfY1rXa48P9Gp3PLn8w2T1AyiywgS-LmQaeVekke1W2tC/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -693,7 +693,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxwd69FiioF8_ah1_tpKuLltiEZwit4m5PSmg58RNMS6ATMB5BtCTopozmO_d2TWT7h/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbz_AVcQA_ml2sEOXnf3zKDjfY1rXa48P9Gp3PLn8w2T1AyiywgS-LmQaeVekke1W2tC/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -759,7 +759,99 @@
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0", desc: "Release updates, bug fixes, and new features in LF v1.3.4." },
       { pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8", desc: "Out-of-the-box standard functionality and configuration guide." },
       { pkg: "Symphony LF", ver: "Standard", type: "PTO Integration", link: "https://docs.google.com/document/d/1MiR6AGAMgPJHxmwySp4bap_tmQFHWATG66dB1X7B0bY/edit?tab=t.0#heading=h.gn2p9i53yy15", desc: "PTO API setup, docketing sync rules, and status mapping." },
-      { pkg: "Symphony LF", ver: "Standard", type: "Field Configuration", link: "https://docs.google.com/spreadsheets/d/1qZTCt4lbngMsRQ37JxkCiHfTOfhFlhCweXqsEZrCyJ8/edit?gid=0#gid=0", desc: "Field level security matrix, custom field rules, and layouts." }
+      { pkg: "Symphony LF", ver: "Standard", type: "Field Configuration", link: "https://docs.google.com/spreadsheets/d/1qZTCt4lbngMsRQ37JxkCiHfTOfhFlhCweXqsEZrCyJ8/edit?gid=0#gid=0", desc: "Field level security matrix, custom field rules, and layouts." },
+      { pkg: "Symphony LF", ver: "Standard", type: "Data Uploads & Renewals", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0#heading=h.fvxjcsbrpisy", desc: "Data import guidelines and automated renewal processing." },
+      { pkg: "Symphony LF", ver: "Standard", type: "Dates Component Config", link: "https://docs.google.com/document/d/1Lz90hLqDNZqNKay1CahffYgFMu9yX0tv7H8ijJgd0iE/edit?tab=t.0", desc: "Configuration guide for key statutory date tracking fields." },
+      { pkg: "Symphony LF", ver: "Standard", type: "Family Tree Tech Doc", link: "https://docs.google.com/document/d/1oxMp3xiPkMttzt43dPVJJcfKd4OSAlPul7aajz75qfQ/edit?tab=t.0", desc: "Patent family relationship visualization setup." },
+      { pkg: "Symphony LF", ver: "Standard", type: "Related IP Matters - Configuration", link: "https://docs.google.com/document/d/1_-rbG5XfJUmNKNzbj_DEgOFjGeXiNuNqWDaDfs1oL_g/edit?hl=en&forcehl=1&tab=t.0#heading=h.x4tnm73un1bn", desc: "Linking cross-matter dependencies and priority records." },
+      { pkg: "Symphony LF", ver: "Standard", type: "Update Term Name", link: "https://docs.google.com/document/d/1mkQQ--uSk3k2WX0RUkCdsT-4_85ggM0OyY3gfEOBPD0/edit?tab=t.0", desc: "Terminology customisation guide for system labels." },
+      { pkg: "Symphony LF", ver: "Standard", type: "PTO Doc Codes", link: "https://docs.google.com/document/d/1Y64tmdzbawTj8hHvr-P3jOLZeYtQwGEgteQKnBkR2r0/edit?tab=t.nn7xerowdjpb", desc: "Standardized USPTO and EPO document code mappings." },
+      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Configuration Steps", link: "https://docs.google.com/document/d/1USadU5-pzbZhLzYlvGEc2SPuUgjpxbOOVIgbnC_zoyY/edit?tab=t.0", desc: "Deployment setup for Symphony DF extensions." },
+      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Upgrade Steps", link: "https://docs.google.com/document/d/1OvitBT0PemTnXxpue0MagvPjFGs8h0eNQ8pYE_FKrI4/edit?tab=t.0#heading=h.f6wmunhppk9w", desc: "Upgrade checklist and database migration steps for v1.0.5." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Release Notes", link: "https://docs.google.com/document/d/1UW30pnWjtAj30meb6XfuBXbKa0E0epf1CrJTKaAkg7U/edit?tab=t.3eyh0nlcm3z0#heading=h.529i7peg55gb", desc: "Master release notes for Symphony IPMS v4.0 suite." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0", desc: "Architecture diagrams and technical specifications for v4.0." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Installation Doc", link: "https://docs.google.com/document/d/1z5P5YvE8pVtIgv1Y27khwNxZCLcpZgse23Qctfi61sg/edit?usp=sharing", desc: "System prerequisites and package installation steps." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Upgrade Doc", link: "https://docs.google.com/document/d/1wQoKpdDCyuORvtPxychos06PYPqJGTPrVazlCGel19c/edit?usp=sharing", desc: "Package upgrade path from v3.7 to v4.0." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Recordings Folder", link: "https://drive.google.com/drive/folders/1nPPwt0RvFvvzSKy2StbSNVP7lIM-CmNO", desc: "Video walkthroughs for v4.0 installation and configuration." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "User Guides & Technical Docs Folder", link: "https://drive.google.com/drive/folders/1AjCqtpHhEg9HpLhUY7mED_MuGb_8qJpb?usp=drive_link", desc: "Central repository of all v4.0 operational guides." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Installation Procedure", link: "https://docs.google.com/document/d/12t1TSmtTI7cT4p7VA3eG8ZuNgpCGLf0GruB5RSWN_gE/edit?tab=t.0", desc: "Deployment procedures for v3.7 environment." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes(Patch Updates)", link: "https://docs.google.com/document/d/1DSzp2roWj81PLDsgM1jzCm3kFOU7H5AqhKGAEyYB-w4/edit?tab=t.0#heading=h.doi0kxxzb3c6", desc: "Patch updates and bug fix history for v3.7." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "PTA & TD", link: "https://docs.google.com/document/d/1ZK_k1vmJ4S-B9pm9X3T_rAtB7Nuu_J4mPwioi6Ag1pk/edit?tab=t.0", desc: "Patent Term Adjustment and Terminal Disclaimer configuration." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes", link: "https://docs.google.com/document/d/1aMEtBF9hJ4LbsNBddzP3FBjdGblc-MIdx3C4eX9NK3k/edit?tab=t.0#heading=h.rv6hsfad8zu2", desc: "v3.7 major release specifications." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "TM Renewal & Maintenance workflow", link: "https://docs.google.com/document/d/1YYWUrchs1ofHUY4lhJbhfbazXUYko7eYZSgfGm-Xeok/edit?tab=t.0", desc: "Trademark renewal timeline and task automation rules." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Installation Procedure", link: "https://docs.google.com/document/d/15ojq7aUyBebs87Q5j_qOuJKbC4QN7q2OKeWURHbUO64/edit?tab=t.0", desc: "Legacy v3.6 installation documentation." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Release Notes", link: "https://docs.google.com/document/d/1nAxplj9o5V-gd-wK-hsQ_IVYE48bheTlphi2-v2nP_c/edit?tab=t.0#heading=h.rv6hsfad8zu2", desc: "Features and updates included in v3.6." },
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "FAQs", link: "https://docs.google.com/document/d/15eUk8aTdCMwxRXu-cO6ga9kD9lAeX6IqoVb0ZY01CwI/edit", desc: "Frequently asked technical and operational questions for v3.6." },
+      { pkg: "SymphonyIPM", ver: "Post Installation", type: "Template cloned org - Post Installation", link: "https://docs.google.com/document/d/1zFWAJflfnTFunMkCObs17UHBUdIoo3rKYXAfE8zc5Ow/edit?tab=t.0#heading=h.nxx749ly2sd1", desc: "Post-installation checklist for cloned target orgs." },
+      { pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Additional Steps", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0", desc: "Supplementary post-deployment configuration steps." },
+      { pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Post Installation", link: "https://docs.google.com/document/d/1TYoM38OwvqGUj2vIBf1cXrH07wIrkL6iYP8E1GGBNZ8/edit?tab=t.0", desc: "Out-of-the-box standard post-install setup." },
+      { pkg: "SymphonyIPM", ver: "Post Installation", type: "Post Installation Consolidated", link: "https://docs.google.com/spreadsheets/d/12-cra50RDo8BD5bkNql0wfn11CBLegFNbsW2reJS94k/edit?gid=0#gid=0", desc: "Master spreadsheet tracking all post-install tasks." },
+      { pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Installation Procedure", link: "https://docs.google.com/document/d/1sN0_8dLaGhSjFiDwiSvTZxf4aGHPACO4jo2cuep1Euc/edit?tab=t.0", desc: "Extension package installation steps." },
+      { pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Release Notes", link: "https://docs.google.com/document/d/16m5mOKx96X2dpQMmEYhTM-Vu4RBGRzadyByFbGWepEI/edit?tab=t.0#heading=h.afvb612sap42", desc: "Extension features and patch logs." },
+      { pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Release Notes", link: "https://docs.google.com/document/d/1k_aNNuBtpBS6bctW21TVKF5A1dmsqhuG_4kS57DvcUE/edit?tab=t.0#heading=h.z20ne1xmld5z", desc: "Docketing Framework Extension v1 release updates." },
+      { pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Installation Procedure", link: "https://drive.google.com/file/d/1fFiQUZu8ATOinYmH_zI-jr6J9UPS4f9E/view", desc: "PDF guide for installing Docketing Framework Extension." },
+      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Installation Procedure", link: "https://docs.google.com/document/d/18Rkm3Y_GGUjWToa_N-GtKLx2gZ-rrg48MubcU9W_xrE/edit?usp=sharing", desc: "Novelty Search package installation steps." },
+      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Release Notes", link: "https://docs.google.com/document/d/1s3xLP2YA0l2UG3sXJ8vk62Xolw1XiKl8Tx6QH2vp6zM/edit?usp=sharing", desc: "Novelty Search release highlights and API changes." },
+      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "User Guide", link: "https://docs.google.com/document/d/1d8KEX4fXKGU3jC8mNmGjIV5MHZ40gQJ2L5JwGcXj74g/edit?usp=sharing", desc: "End-user guide for conducting prior art searches." },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "Configuration & Setup", link: "https://docs.google.com/document/d/12O9E13nzhvUCf3G4tPJcCALdoU_-rNBe06Qwb555YVA/edit?tab=t.0#heading=h.w1f633o6rz3d", desc: "Connecting Symphony to PTO databases via API." },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Configuration ( Recent Changes )", link: "https://docs.google.com/document/d/17oQjYBs-7YXTbrt8w0xr9v7AVmeezISCGw4s-1hW0GE/edit?usp=sharing", desc: "Recent API updates and authentication protocol changes." },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO TM Configuration", link: "https://docs.google.com/document/d/1KNFCiqFxOYpreqQI6pzTSNFMKpIJcRUZg1fX7_-ZS3Q/edit?tab=t.0#heading=h.9j1x6qq0ikur", desc: "Trademark PTO sync rules and status mapping." },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "Symphony Corporate - Technical Document", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.3iawlk4gm5a9", desc: "Corporate architecture setup for multi-entity PTO syncing." },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration User guide", link: "https://docs.google.com/document/d/19U7qsSC6n9Umpz-ZVtcJ6TLeRwS1DUDE/edit", desc: "User manual for managing automated PTO docketing entries." },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "TM PTO Integration - User Guide", link: "https://docs.google.com/document/d/1x7pQZnZmd4PDr-S_U2BIN1NSs0Qhc_Ujiz8TwiKXpAc/edit?tab=t.0", desc: "Trademark-specific PTO sync user instructions." },
+      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration - FAQ", link: "https://docs.google.com/spreadsheets/d/12XkVFQoFoLbBDwW6o2Xn0ieAyptyS15HjETrPWSAeW8/edit?gid=0#gid=0", desc: "Troubleshooting common PTO API sync errors." },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 1", link: "https://docs.google.com/document/d/1xQSlTOKb1YlB4YgCkTbZrz5_yCHDND71rwyqVo9xk4U/edit?tab=t.0", desc: "Part 1 of MaRS Renewal Base package setup." },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 2", link: "https://docs.google.com/document/d/1TxknkBApfacf5IhmcIUFoTCOSqlwCTHx2nLTfPeXd7w/edit?tab=t.0", desc: "Part 2 of MaRS Renewal Base package setup." },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 3", link: "https://docs.google.com/document/d/1dR31w_O5cmKH1Hjg1GmH3F-dbvfE6xAosjd9AdeEiiI/edit?tab=t.0#heading=h.e8ns8op5dsap", desc: "Part 3 of MaRS Renewal Base package setup." },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Package details", link: "https://docs.google.com/spreadsheets/d/1sTxqq6GV5jN7zf_Bbsv2l7zOt_b_3x6tlM1QlTxzPZs/edit?gid=0#gid=0", desc: "Component inventory for MaRS v1.7.x." },
+      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Release Notes", link: "https://docs.google.com/document/d/1LRGEHLGKZ8ktQ4K-FALU6E-xwLTN37gleI5TWUB1aPc/edit?hl=en&forcehl=1&tab=t.0", desc: "MaRS v1.7.x release notes." },
+      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Installation Procedure", link: "https://docs.google.com/document/d/1uDOHTA1nAuptl50XVE8zroDriJvEC-vWaMlr-Qmul0k/edit?tab=t.0", desc: "Corsearch integration extension installation." },
+      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "User Guide", link: "https://docs.google.com/document/d/1x0Byh0sS7mjE3Mrtm0Qotq671hQvpPoMwccpgTDhw3k/edit?tab=t.0", desc: "User manual for Corsearch trademark clearance sync." },
+      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Release Notes", link: "https://docs.google.com/document/d/1QqwMgMNlzuTAThfFUunGB5sTo_Pj2OyECF0loyi4Nzs/edit?tab=t.0#heading=h.rv6hsfad8zu2", desc: "Corsearch extension release updates." },
+      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Package details", link: "https://docs.google.com/document/d/1Lsz2mprPkHYf58fmE6yQK81NAzlI7f3j/edit", desc: "Simba E-Billing package architecture and components." },
+      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Release Notes", link: "https://docs.google.com/document/d/1lXuZP5OL0ZaFQp_dqxz3i-WPh40HRGlqfB3y4cJ9-6E/edit?tab=t.0", desc: "Release updates for Simba v1.1." },
+      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "User Guide", link: "https://docs.google.com/document/d/1To_yiyqfyBO7_qVLqyADumWNaLsFwxTEaVqlDhPTzao/edit?tab=t.0", desc: "Outside counsel LEDES invoice upload and approval workflows." },
+      { pkg: "sIDS Docketing", ver: "sIDS Docketing", type: "User Guide", link: "https://docs.google.com/document/d/1CZDWmzKugbwrZ7RIOsgW1k5cVTkvbRLWDICjXvfUQ60/edit?tab=t.0", desc: "User manual for automated IDS docketing engine." },
+      { pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Installation Procedure", link: "https://docs.google.com/document/d/1xzAKXMiD2eyGp9R4xfNLRTdhrOk92-Cdb4Sx2pazwQE/edit?tab=t.0", desc: "Symphony Universal Portal developer installation steps." },
+      { pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Release Notes", link: "https://docs.google.com/document/d/1_OeGOTnVSgh84uEH5q7nGy35Oo3u3uZ-3_iwRrRN1_E/edit?tab=t.0#heading=h.33ebwiv13lft", desc: "Developer release notes for Universal Portal." },
+      { pkg: "Other", ver: "Other", type: "Production Checklist", link: "https://docs.google.com/spreadsheets/d/1hb_bFG5AB5OST8K6l7kZrqJZNO8Fvn4z/edit?gid=1020191051#gid=1020191051", desc: "Go-live verification checklist for production org deployments." },
+      { pkg: "Other", ver: "Other", type: "Estimation Template", link: "https://docs.google.com/spreadsheets/d/1e50bRJxcbc3k_bI2WD1733xgv4sxZMleO09EwPClugU/edit?gid=0#gid=0", desc: "Project scoping and implementation effort estimation matrix." },
+      { pkg: "Other", ver: "Other", type: "OOB IDF template", link: "https://docs.google.com/document/d/10hxmDD0DOwIVe2ObxgOaEEbJFA9uCoh2KeGn--6dldk/edit?tab=t.0#heading=h.gjdgxs", desc: "Standard Out-of-the-Box Invention Disclosure Form template." },
+      { pkg: "Other", ver: "Other", type: "Fields updated by clicking on 'Data Sync' button (IFI import)", link: "https://docs.google.com/spreadsheets/d/1FAKrv_VfK75gxdzzyoyCce3vXhPoVY_aSwj-AsiwAfA/edit?gid=0#gid=0", desc: "Mapping of fields refreshed during IFI CLAIMS data synchronization." },
+      { pkg: "Other", ver: "Other", type: "Encryption and field tracking doc", link: "https://docs.google.com/spreadsheets/d/1_H5i1sHYWIeE6iA5x-cqibG97fYeqZgaDfwRwkOOceY/edit?gid=1277242720#gid=1277242720", desc: "Field history tracking and Shield platform encryption setup." },
+      { pkg: "Other", ver: "Other", type: "Salesforce Shield Platform Encryption", link: "https://docs.google.com/presentation/d/1AgTXlLsyh-buIzKlnrwSR1GBuMk94n0ivpASf7bSTf4/edit#slide=id.p", desc: "Presentation deck on Shield Encryption compliance." },
+      { pkg: "Other", ver: "Other", type: "Turning off - OOB Status updation", link: "https://docs.google.com/document/d/1viGZjOQC15qfd3It-YwgGEcIx1UjD4HM/edit", desc: "Guide to disabling automated status automation rules." },
+      { pkg: "Other", ver: "Other", type: "Symphony LF - Data Upload Steps/Guideline", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0", desc: "Data migration and CSV upload procedures for Law Firm orgs." },
+      { pkg: "Other", ver: "Other", type: "Rules by Case Type", link: "https://docs.google.com/document/d/1_IeSJf_8idS_WCLP3Ua0H_TtozwzrEZEvIhoGmUi0Tw/edit?tab=t.0", desc: "Configuring docketing rules according to specific IP case types." },
+      { pkg: "Other", ver: "Other", type: "Reminder object data for LF", link: "https://drive.google.com/drive/folders/1-FtZUh7lP5WQm0jT7vcLx4z_nnCylPde?usp=sharing", desc: "Automated email reminder templates and trigger configurations." },
+      { pkg: "Other", ver: "Other", type: "Schedule Jobs - All Packages", link: "https://docs.google.com/spreadsheets/d/1NZSbNl44jviJpYmAKwpyFGATJXqSSp7T/edit?gid=1001576285#gid=1001576285", desc: "Master list of scheduled Apex jobs across all Symphony packages." },
+      { pkg: "Other", ver: "Other", type: "Technical PTO document (from PE)", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.vdqd05xcieik", desc: "Product engineering technical reference for PTO integrations." },
+      { pkg: "Other", ver: "Other", type: "Symphony-List of Processes & Details", link: "https://docs.google.com/spreadsheets/d/1jT24l1SDvVkNsrN1PZV4wulD_e7lkrs059LOrsOnSg0/edit?gid=1810542744#gid=1810542744", desc: "Process flows and automation trigger documentation." },
+      { pkg: "Other", ver: "Other", type: "Patent field description", link: "https://docs.google.com/spreadsheets/d/1u3ngTQfzKslP5za1-uF8JrY0ou-2aCMUkE7n4jUDTok/edit?gid=1042587126#gid=1042587126", desc: "Comprehensive data dictionary describing all Patent object fields." },
+      { pkg: "Other", ver: "Other", type: "OOB email templates", link: "https://docs.google.com/document/d/17_WuOjbpkbAX9VQcRrrUAu4_qO6PT3epTGcwu5UDfsI/edit?tab=t.0", desc: "Standard Out-of-the-Box email templates for notification triggers." },
+      { pkg: "Other", ver: "Other", type: "Glossary and Number Formats for Symphony", link: "https://docs.google.com/spreadsheets/d/1gX7mHK1rnjfRUgznFZ_ahwvmv4KWNoUR/edit?gid=1452062042#gid=1452062042", desc: "Terminology definitions and auto-numbering format standards." },
+      { pkg: "Other", ver: "Other", type: "MaxForms List Old", link: "https://docs.google.com/spreadsheets/d/1Kyt3D24WY-t8RXjy4GsDuAuYsA6zdDfmIGTsEilcQSg/edit?gid=0#gid=0", desc: "Legacy MaxForms component inventory." },
+      { pkg: "Other", ver: "Other", type: "Prosecution Analytics Requirement Definition Document", link: "https://docs.google.com/document/d/16fefj0Mr4q1u-jxrPNykY-ZE_P1Pw0Z1/edit?usp=sharing", desc: "Functional requirements for Prosecution Analytics module." },
+      { pkg: "Other", ver: "Other", type: "Prosecution Analytics & History Doc", link: "https://docs.google.com/document/d/1EJ270FIDMS5eRTsokPeV8x4zovO6WsCt8sSjsOeNQKo/edit?usp=sharing", desc: "Historical data analysis and examiner metrics documentation." },
+      { pkg: "Other", ver: "Other", type: "Prosecution Analytics- Api Integration", link: "https://drive.google.com/file/d/1QZGbpZEhgPsdDDyz8_X24ordjNURJfIC/view?usp=sharing", desc: "API endpoint specifications for analytics integration." },
+      { pkg: "Other", ver: "Other", type: "Support checklist document Template", link: "https://docs.google.com/spreadsheets/d/1S7fqp95TLsLXdI6VMQWSj8ffLu34uJYClceJMGKo5x4/edit?gid=2105910797#gid=2105910797", desc: "Level 1 and Level 2 customer support resolution checklist." },
+      { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 1", link: "https://docs.google.com/document/d/1BeMcpIbVNIP0etuufO-Duc_SXznyEqJo_yQaB-ah-2Y/edit?tab=t.0", desc: "Field audit trail purging procedure Part 1." },
+      { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 2", link: "https://docs.google.com/document/d/1YA0f1BRx5tB1UXB3Q74e_LdrQ0lyKrphEnNYEp0rw30/edit?tab=t.0", desc: "Field audit trail purging procedure Part 2." },
+      { pkg: "Other", ver: "Other", type: "Law Firm OOB features", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0", desc: "Summary of out-of-the-box features for law firm deployments." },
+      { pkg: "Other", ver: "Other", type: "DKIM Setup Document", link: "https://docs.google.com/document/d/1mSO7qCLeEx3ZSMb3upBh5bEbm0w978JC/edit", desc: "Configuring email deliverability and DKIM keys in Salesforce." },
+      { pkg: "Other", ver: "Other", type: "Post Installation Steps", link: "https://docs.google.com/spreadsheets/d/1VVZZtIYXpzAd_-dGjt-JDOjhnehh5Uawe5WZJ7eN96c/edit?gid=0#gid=0", desc: "Quick verification spreadsheet for post-install setup." },
+      { pkg: "Other", ver: "Other", type: "USPTO sponsorship - Patent Center", link: "https://drive.google.com/file/d/17L3Zk12DOm33_tb77ZLO41E6dWKtr_nH/view", desc: "Guide to practitioner sponsorship in USPTO Patent Center." },
+      { pkg: "Other", ver: "Other", type: "PTO Sync document", link: "https://docs.google.com/document/d/1aaI7LNgQx2ccEhru7qYAA9EOSh9JuyE5HIurhWHvah4/edit?usp=sharing", desc: "Automated PTO scraping and synchronization workflow." },
+      { pkg: "Other", ver: "Other", type: "E-Billing recording", link: "https://drive.google.com/drive/folders/1g4ydUD4rj2gLYQBH3A_z4u0-FhwoD-Bd", desc: "Video recordings covering E-Billing module setup." },
+      { pkg: "Other", ver: "Other", type: "Errors & Fixes", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0", desc: "Troubleshooting repository for common error messages." },
+      { pkg: "Other", ver: "Other", type: "PTO Doc codes", link: "https://docs.google.com/document/d/1HF42RGxJIs97wTHlUSbfXwPFIXskys3vO6xilNYPVnI/edit?tab=t.0", desc: "Reference dictionary for USPTO document action codes." },
+      { pkg: "Other", ver: "Other", type: "Symphony Prosecution sync data flow diagram", link: "https://drive.google.com/file/d/1Q3q_v-XNr4_DToS2qiw_lqnS9VCwSbz1/view?usp=drive_link", desc: "Data flow architecture diagram for prosecution sync." },
+      { pkg: "Other", ver: "Other", type: "Renewals doc", link: "https://docs.google.com/spreadsheets/d/1WLc0EHyljjffbDHebQu0AttDdDV03oDE/edit", desc: "Annuity schedule tracking spreadsheet." },
+      { pkg: "Other", ver: "Other", type: "Renewal Guide for Annuity", link: "https://docs.google.com/document/d/1gHFV9ixVcZCuE8y00eeRk5TFSw2yboeVbqgGG3ES7jU/edit?tab=t.0", desc: "Step-by-step user guide for annuity renewal processing." },
+      { pkg: "Other", ver: "Other", type: "UPC Folder", link: "https://drive.google.com/drive/folders/1a6FgPCByxI1ibEPehvKLM_d2K6IV8u2s", desc: "Unified Patent Court (UPC) opt-out documentation and guides." },
+      { pkg: "Other", ver: "Other", type: "New Object/Fields Request Template", link: "https://docs.google.com/spreadsheets/d/1tvaTEMsruZ4mrylN8sGb1w6DnKxhgKR8nPFPyTUQZkQ/edit?gid=526926240#gid=526926240", desc: "Formal request template for custom schema modifications." },
+      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring PPT", link: "https://docs.google.com/presentation/d/1jmw9iCRUUKnLwFzMGPWu21X0V5Zk9olXsdFHK7BEGcM/edit#slide=id.g2e29f102836_0_70", desc: "Security and audit compliance presentation deck." },
+      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing", desc: "Demo recording showcasing Event Monitoring setups." }
     ];
 
     const baseQuickLinks = [
@@ -796,7 +888,7 @@
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
     let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
-    let powerUserOverride = localStorage.getItem('kc_power_override') !== 'normal'; // Mode switcher
+    let powerUserOverride = localStorage.getItem('kc_power_override') !== 'normal';
 
     let isLearningSelectionMode = false;
     let isDocSelectionMode = false;
@@ -1001,7 +1093,7 @@
 
     function isPowerUser(email) {
       if (!email) return false;
-      if (!powerUserOverride) return false; // Respect Mode Switcher
+      if (!powerUserOverride) return false;
       return powerUsers.has(email.toLowerCase().trim());
     }
 
@@ -1031,7 +1123,7 @@
         if (learningAdminActions) learningAdminActions.style.display = 'flex';
         if (docAdminActions) docAdminActions.style.display = 'flex';
       } else {
-        if (powerTabBtn) powerTabBtn.style.display = 'inline-flex'; // Always visible to Power Users to switch back
+        if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
         if (submitLinkBtn) submitLinkBtn.style.display = 'none';
         if (learningAdminActions) learningAdminActions.style.display = 'none';
         if (docAdminActions) docAdminActions.style.display = 'none';
