@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Symphony Implementation - Learning & Documentation Hub</title>
+  <title>Symphony Knowledge Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <style>
@@ -29,8 +29,9 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    body {
+    html, body {
       width: 100%;
+      min-height: 100vh;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
@@ -165,6 +166,7 @@
     }
     .top-utility-btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.22); box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
     .top-utility-btn.accent-add { background: var(--google-blue); border-color: var(--google-blue); margin-left: auto; }
+    .top-utility-btn.accent-ai { background: linear-gradient(90deg, #9334e6, #1a73e8); border: none; }
     .top-utility-btn.accent-analytics { background: var(--google-purple); border-color: var(--google-purple); }
     .top-utility-btn.accent-settings { background: #5f6368; border-color: #5f6368; }
     .user-profile-badge { background: rgba(52, 168, 83, 0.25) !important; border-color: #34a853 !important; font-weight: 700 !important; }
@@ -224,8 +226,8 @@
       box-shadow: 0 0 6px rgba(249, 171, 0, 0.4);
     }
 
-    .container { width: 100%; padding: 0.75rem 1rem; display: flex; flex-direction: column; }
-    .tab-content { display: none; flex-direction: column; }
+    .container { width: 100%; padding: 0.75rem 1rem; display: flex; flex-direction: column; flex: 1; }
+    .tab-content { display: none; flex-direction: column; flex: 1; }
     .tab-content.active { display: flex; }
 
     .filter-card-highlight { 
@@ -318,7 +320,6 @@
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    /* FILLED GREEN CHECKMARK ICON STYLING FOR COMPLETED ITEMS */
     .completion-btn .material-icons-outlined.completed-filled {
       color: #ffffff !important;
       background: var(--google-green);
@@ -362,7 +363,7 @@
     .modal-form { display: flex; flex-direction: column; gap: 0.75rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
     .form-group label { font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); }
-    .form-group input, .form-group select { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
+    .form-group input, .form-group select, .form-group textarea { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
     .checkbox-group { display: flex; align-items: center; gap: 0.5rem; background: var(--google-blue-light); padding: 0.55rem 0.75rem; border-radius: 6px; }
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
     .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
@@ -384,7 +385,6 @@
       padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
     }
 
-    /* CONGRATULATIONS CELEBRATION OVERLAY */
     .congrats-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none; z-index: 99999999; display: none;
@@ -444,21 +444,18 @@
         <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.65rem; font-size: 0.9rem;">Send OTP Passcode to Inbox</button>
       </form>
 
-      <!-- STEP 2: VERIFY OTP FORM -->
+      <!-- STEP 2: VERIFY OTP FORM (REMOVED DIFFERENT EMAIL BUTTON) -->
       <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
         <p style="font-size: 0.8rem; color: var(--google-green); font-weight: 600;">OTP sent! Check your inbox for the 6-digit code.</p>
         <input type="text" id="otpCodeInput" placeholder="6-Digit OTP Code" required maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.2rem; text-align: center; font-weight: 700; letter-spacing: 6px; outline: none;">
         <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.65rem; font-size: 0.9rem; background: var(--google-green);">Verify OTP & Access Portal</button>
-        <button type="button" class="btn-secondary" onclick="resetOtpForm()" style="justify-content: center;">Use Different Email</button>
       </form>
     </div>
   </div>
 
   <div class="top-hero-header">
     <div class="animated-brand-title">
-      <!-- VECTOR RECREATION OF SYMPHONY DOT ARCH LOGO -->
       <svg class="symphony-logo-svg" viewBox="0 0 120 70">
-        <!-- Row 1: Outer Curve -->
         <circle class="symphony-dot yellow" cx="15" cy="40" r="5" fill="#fbbc05" />
         <circle class="symphony-dot green" cx="30" cy="28" r="5" fill="#34a853" />
         <circle class="symphony-dot green" cx="46" cy="18" r="5" fill="#34a853" />
@@ -467,7 +464,6 @@
         <circle class="symphony-dot blue" cx="90" cy="28" r="5" fill="#4285f4" />
         <circle class="symphony-dot yellow" cx="105" cy="40" r="5" fill="#fbbc05" />
 
-        <!-- Row 2: Middle Curve -->
         <circle class="symphony-dot yellow" cx="25" cy="50" r="5" fill="#fbbc05" />
         <circle class="symphony-dot green" cx="38" cy="38" r="5" fill="#34a853" />
         <circle class="symphony-dot red" cx="52" cy="30" r="5" fill="#ea4335" />
@@ -475,17 +471,15 @@
         <circle class="symphony-dot blue" cx="82" cy="38" r="5" fill="#4285f4" />
         <circle class="symphony-dot yellow" cx="95" cy="50" r="5" fill="#fbbc05" />
 
-        <!-- Row 3: Inner Curve -->
         <circle class="symphony-dot green" cx="46" cy="52" r="5" fill="#34a853" />
         <circle class="symphony-dot red" cx="56" cy="44" r="5" fill="#ea4335" />
         <circle class="symphony-dot red" cx="64" cy="44" r="5" fill="#ea4335" />
         <circle class="symphony-dot blue" cx="74" cy="52" r="5" fill="#4285f4" />
 
-        <!-- Bottom Base Dots -->
         <circle class="symphony-dot yellow" cx="50" cy="62" r="5" fill="#fbbc05" />
         <circle class="symphony-dot yellow" cx="70" cy="62" r="5" fill="#fbbc05" />
       </svg>
-      <span>Symphony Implementation - Learning & Documentation Hub</span>
+      <span>Symphony Knowledge Hub</span>
     </div>
   </div>
 
@@ -496,6 +490,10 @@
         <span id="activeUserDisplay">Sign In (@maxval.com)</span>
       </button>
 
+      <button type="button" class="top-utility-btn accent-ai" onclick="openAiSearchModal()">
+        <span class="material-icons-outlined" style="font-size:15px;">auto_awesome</span><span>AI Smart Search</span>
+      </button>
+
       <button type="button" class="top-utility-btn accent-analytics" onclick="openUserAnalyticsDashboard()">
         <span class="material-icons-outlined" style="font-size:15px;">insights</span><span>User Progress Dashboard</span>
       </button>
@@ -504,7 +502,6 @@
         <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Users</span>
       </button>
 
-      <!-- SUBMIT NEW LINK ACCESSIBLE TO ALL LOGGED-IN USERS -->
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" style="display:none;" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:15px;">add_circle</span><span>Submit New Link</span>
       </button>
@@ -703,6 +700,24 @@
     </div>
   </div>
 
+  <!-- AUTO-CLOSING AI SEARCH MODAL -->
+  <div class="modal-overlay" id="aiSearchModalOverlay">
+    <div class="modal-content" style="max-width:480px;">
+      <div class="modal-header">
+        <h2 style="display:flex; align-items:center; gap:0.4rem; color:var(--google-purple);">
+          <span class="material-icons-outlined">auto_awesome</span> AI Knowledge Search
+        </h2>
+        <button class="modal-close-btn" onclick="closeModal('aiSearchModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div class="form-group">
+        <label>Type your question or query across all hubs:</label>
+        <input type="text" id="aiSearchQueryInput" placeholder="e.g. Patent Filing, Release Notes, Access Portal..." onkeyup="executeAiSearchQuery(event)">
+      </div>
+      <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.4rem;">Clicking any search result below will automatically navigate you to the tile and close this search dialog.</p>
+      <div id="aiSearchResultsContainer" style="margin-top:0.75rem; max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:0.4rem;"></div>
+    </div>
+  </div>
+
   <!-- CUSTOM DELETE CONFIRMATION MODAL POPUP -->
   <div class="modal-overlay" id="deleteConfirmModalOverlay">
     <div class="modal-content" style="max-width:400px; text-align:center;">
@@ -736,7 +751,7 @@
     </div>
   </div>
 
-  <!-- POWER USER CONFIGURATION MODAL WITH VIEW MODE TOGGLE & AI DESCRIPTION BATCH GENERATOR -->
+  <!-- POWER USER CONFIGURATION MODAL -->
   <div class="modal-overlay" id="powerUserSettingsModalOverlay">
     <div class="modal-content" style="max-width:500px;">
       <div class="modal-header">
@@ -744,8 +759,6 @@
         <button class="modal-close-btn" onclick="closeModal('powerUserSettingsModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
       <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-        
-        <!-- POWER USER VIEW SWITCHER OPTION -->
         <div style="background:var(--google-purple-light); border:1px solid rgba(147, 52, 230, 0.3); border-radius:8px; padding:0.75rem; display:flex; justify-content:space-between; align-items:center;">
           <div>
             <strong style="font-size:0.85rem; color:var(--google-purple);">Active View Mode:</strong>
@@ -757,7 +770,6 @@
           </button>
         </div>
 
-        <!-- AI BATCH DESCRIPTION RE-GENERATOR BUTTON -->
         <button type="button" class="btn-secondary" style="background:var(--google-blue-light); border-color:var(--google-blue); color:var(--google-blue); justify-content:center; padding:0.6rem;" onclick="triggerBatchAiDescriptions()">
           <span class="material-icons-outlined" style="font-size:16px;">auto_awesome</span>
           <span>Generate AI Descriptions for All Tiles</span>
@@ -808,7 +820,7 @@
     </div>
   </div>
 
-  <!-- ADD LINK MODAL (DYNAMICALLY ADJUSTS FIELDS PER TAB) -->
+  <!-- SUBMIT NEW LINK MODAL (SIMPLIFIED FOR QUICK LINKS AND OPTIONAL DESCRIPTION) -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -834,23 +846,28 @@
           <input type="email" id="submitterEmail" readonly style="background:#f1f3f4;">
         </div>
 
-        <div id="learningFields">
-          <div class="form-group"><label>Resource Title *</label><input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims"></div>
-          <div class="form-group">
-            <label>Module Category *</label>
-            <select id="newModule">
-              <option value="Intellectual Property">Intellectual Property</option>
-              <option value="Introduction to Symphony">Introduction to Symphony</option>
-              <option value="Invention Module">Invention Module</option>
-              <option value="Patent Module">Patent Module</option>
-              <option value="Renewals">Renewals</option>
-              <option value="Trademark">Trademark</option>
-              <option value="Assessment">Assessment</option>
-              <option value="Additional Reference Materials">Additional Reference Materials</option>
-            </select>
-          </div>
+        <!-- COMMON NAME / TITLE FIELD -->
+        <div class="form-group" id="titleGroup">
+          <label id="titleGroupLabel">Resource Title *</label>
+          <input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims">
         </div>
 
+        <!-- LEARNING SPECIFIC CATEGORY DROPDOWN -->
+        <div class="form-group" id="moduleCategoryGroup">
+          <label>Module Category *</label>
+          <select id="newModule">
+            <option value="Intellectual Property">Intellectual Property</option>
+            <option value="Introduction to Symphony">Introduction to Symphony</option>
+            <option value="Invention Module">Invention Module</option>
+            <option value="Patent Module">Patent Module</option>
+            <option value="Renewals">Renewals</option>
+            <option value="Trademark">Trademark</option>
+            <option value="Assessment">Assessment</option>
+            <option value="Additional Reference Materials">Additional Reference Materials</option>
+          </select>
+        </div>
+
+        <!-- DOCUMENT SPECIFIC FIELDS -->
         <div id="documentFields" style="display:none;">
           <div class="form-group"><label>Package Name *</label><input type="text" id="newPkg" placeholder="e.g., Symphony LF"></div>
           <div class="form-group"><label>Package Version *</label><input type="text" id="newVer" placeholder="e.g., v1.3.4"></div>
@@ -858,6 +875,12 @@
         </div>
 
         <div class="form-group"><label>URL / Link *</label><input type="url" id="newLink" placeholder="https://..." required></div>
+
+        <!-- NON-MANDATORY DESCRIPTION FIELD -->
+        <div class="form-group">
+          <label>Description (Optional)</label>
+          <textarea id="newDescription" rows="2" placeholder="Brief summary of the link..."></textarea>
+        </div>
 
         <div class="checkbox-group">
           <input type="checkbox" id="sendEmailCheckbox" checked>
@@ -891,7 +914,7 @@
     </div>
   </div>
 
-  <!-- PROGRESS DASHBOARD MODAL WITH REAL-TIME REFRESH -->
+  <!-- PROGRESS DASHBOARD MODAL -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 760px;">
       <div class="modal-header">
@@ -922,7 +945,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwGfPtv_Ol2qAUMdQr3ZHPZZOUaS3F701dWPTlmFxzD8AoRXpyLInKVfQZye_5qtqBH/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxCXxxvvGhOa9Oiol9CLf5jET2MtdSBmr-D0E9FKbU97rR8WBzozuFdogP7T2DN_NIL/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1179,6 +1202,7 @@
         document.getElementById('docGridContainer').style.display = (mode === 'grid') ? 'grid' : 'none';
         renderDocumentHub();
       }
+      setTimeout(notifyIframeHeight, 50);
     }
 
     function togglePowerUserViewMode() {
@@ -1250,7 +1274,6 @@
       }, 300);
     }
 
-    /* FETCH CENTRALLY STORED CUSTOM LINKS FROM GAS BACKEND */
     function loadGlobalCustomLinks(callback) {
       callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
         if (data && data.learning && data.docs) {
@@ -1272,7 +1295,6 @@
       });
     }
 
-    /* JSONP COMMUNICATOR */
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
       window[cbName] = function(data) {
@@ -1300,7 +1322,6 @@
       document.body.appendChild(script);
     }
 
-    /* GOOGLE SSO & EMAIL VALIDATION WITH OTP LOCK */
     function detectGoogleSessionAccount() {
       callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
         if (data && data.email && data.email.includes('@maxval.com')) {
@@ -1397,12 +1418,6 @@
       });
     }
 
-    function resetOtpForm() {
-      document.getElementById('otpRequestForm').style.display = 'flex';
-      document.getElementById('otpVerifyForm').style.display = 'none';
-      document.getElementById('otpCodeInput').value = '';
-    }
-
     function openProfileModal() {
       if (!currentUser) { checkUserLoginState(); return; }
       document.getElementById('modalProfileEmail').textContent = currentUser;
@@ -1415,7 +1430,6 @@
       localStorage.removeItem('kc_user_maxval_email');
       closeModal('profileModalOverlay');
       document.getElementById('loginEmailInput').value = '';
-      resetOtpForm();
       checkUserLoginState();
       showInlineBanner("Signed out successfully.");
     }
@@ -1538,7 +1552,70 @@
       return powerUsers.has(email.toLowerCase().trim());
     }
 
-    /* REAL-TIME GLOBAL DASHBOARD SORTED BY LAST VIEWED DATE */
+    /* AI SEARCH DIALOG AUTO-CLOSING SYSTEM */
+    function openAiSearchModal() {
+      document.getElementById('aiSearchQueryInput').value = "";
+      document.getElementById('aiSearchResultsContainer').innerHTML = "<p style='font-size:0.8rem; color:var(--text-secondary);'>Type a query to search topics across Learning, Documents, and Quick Links.</p>";
+      document.getElementById('aiSearchModalOverlay').classList.add('open');
+      scrollParentToTop();
+    }
+
+    function executeAiSearchQuery(e) {
+      const query = e.target.value.trim().toLowerCase();
+      const container = document.getElementById('aiSearchResultsContainer');
+      if (!query) {
+        container.innerHTML = "<p style='font-size:0.8rem; color:var(--text-secondary);'>Type a query to search topics across Learning, Documents, and Quick Links.</p>";
+        return;
+      }
+
+      let results = [];
+
+      dataset.forEach(d => {
+        if (d.name.toLowerCase().includes(query) || d.category.toLowerCase().includes(query)) {
+          results.push({ title: d.name, sub: `Learning Hub • ${d.category}`, target: 'learning', id: d.id, module: d.category });
+        }
+      });
+
+      docDataset.forEach(d => {
+        if (d.pkg.toLowerCase().includes(query) || d.type.toLowerCase().includes(query)) {
+          results.push({ title: `${d.pkg} (${d.ver})`, sub: `Document Hub • ${d.type}`, target: 'document', pkg: d.pkg });
+        }
+      });
+
+      if (results.length === 0) {
+        container.innerHTML = "<p style='font-size:0.8rem; color:var(--google-red);'>No matching results found across hubs.</p>";
+        return;
+      }
+
+      container.innerHTML = results.map(r => `
+        <div style="padding:0.45rem 0.65rem; border:1px solid var(--border-color); border-radius:6px; cursor:pointer; background:#ffffff;" onclick="selectAiSearchResult('${r.target}', '${r.module || r.pkg || ''}')">
+          <strong style="font-size:0.82rem; color:var(--google-blue);">${r.title}</strong>
+          <p style="font-size:0.72rem; color:var(--text-secondary);">${r.sub}</p>
+        </div>
+      `).join('');
+    }
+
+    function selectAiSearchResult(targetHub, filterVal) {
+      closeModal('aiSearchModalOverlay');
+      if (targetHub === 'learning') {
+        switchTab('learningHubTab', document.querySelector('.learning-tab'));
+        if (filterVal) {
+          selectedModule = filterVal;
+          document.getElementById('moduleSelect').value = filterVal;
+        }
+        renderLearningHub();
+      } else if (targetHub === 'document') {
+        switchTab('documentHubTab', document.querySelector('.doc-tab'));
+        if (filterVal) {
+          selectedDocPackage = filterVal;
+          document.getElementById('docPackageSelect').value = filterVal;
+        }
+        renderDocumentHub();
+      } else {
+        switchTab('quickLinksTab', document.querySelector('.quick-tab'));
+      }
+    }
+
     function openUserAnalyticsDashboard() {
       if (!currentUser) { checkUserLoginState(); return; }
       const tbody = document.getElementById('userAnalyticsTableBody');
@@ -1832,16 +1909,25 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
+    /* UPDATED DYNAMIC FORM FIELDS LOGIC FOR SUBMIT NEW LINK (QUICK LINKS SIMPLIFIED & OPTIONAL DESCRIPTION) */
     function toggleFormFields(target) {
+      const moduleCategoryGroup = document.getElementById('moduleCategoryGroup');
+      const documentFields = document.getElementById('documentFields');
+      const titleGroupLabel = document.getElementById('titleGroupLabel');
+
       if (target === 'learning') {
-        document.getElementById('learningFields').style.display = 'block';
-        document.getElementById('documentFields').style.display = 'none';
+        titleGroupLabel.textContent = "Resource Title *";
+        moduleCategoryGroup.style.display = 'flex';
+        documentFields.style.display = 'none';
       } else if (target === 'document') {
-        document.getElementById('learningFields').style.display = 'none';
-        document.getElementById('documentFields').style.display = 'block';
+        titleGroupLabel.textContent = "Resource Name *";
+        moduleCategoryGroup.style.display = 'none';
+        documentFields.style.display = 'block';
       } else {
-        document.getElementById('learningFields').style.display = 'block';
-        document.getElementById('documentFields').style.display = 'none';
+        // Quick Links Selected: Requires ONLY Name and Link (Module Category completely removed)
+        titleGroupLabel.textContent = "Quick Link Name *";
+        moduleCategoryGroup.style.display = 'none';
+        documentFields.style.display = 'none';
       }
       setTimeout(notifyIframeHeight, 50);
     }
@@ -1860,6 +1946,7 @@
       document.getElementById('editItemIndex').value = "";
       document.getElementById('editItemType').value = "";
       document.getElementById('submitterEmail').value = currentUser;
+      document.getElementById('newDescription').value = "";
       
       const dlField = document.getElementById('dlEmailAddress');
       if (!dlField.value) dlField.value = currentUser;
@@ -1922,6 +2009,7 @@
         updateDocBulkUI();
         renderDocumentHub();
       }
+      setTimeout(notifyIframeHeight, 50);
     }
 
     function toggleLearningSelect(index, event) {
@@ -2116,16 +2204,20 @@
         document.getElementById('newTitle').value = item.name;
         document.getElementById('newModule').value = item.category;
         document.getElementById('newLink').value = item.link;
+        document.getElementById('newDescription').value = item.description || '';
       } else if (hub === 'document') {
         const doc = docDataset[index];
+        document.getElementById('newTitle').value = doc.pkg;
         document.getElementById('newPkg').value = doc.pkg;
         document.getElementById('newVer').value = doc.ver;
         document.getElementById('newDocType').value = doc.type;
         document.getElementById('newLink').value = doc.link;
+        document.getElementById('newDescription').value = doc.description || '';
       } else {
         const quick = globalCustomQuick[index];
         document.getElementById('newTitle').value = quick.title;
         document.getElementById('newLink').value = quick.link;
+        document.getElementById('newDescription').value = quick.description || '';
       }
 
       document.getElementById('submitterEmail').value = currentUser;
@@ -2133,6 +2225,7 @@
       scrollParentToTop();
     }
 
+    /* LIST VIEW UPDATED WITH BOOKMARK OPTION */
     function renderLearningHub() {
       const container = document.getElementById('resourcesGridContainer');
       let filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
@@ -2142,7 +2235,6 @@
         return matchesModule && matchesSearch && matchesBookmark;
       });
 
-      // SORT BOOKMARKED ITEMS TO THE VERY TOP FOR INDIVIDUAL USER
       filtered.sort((a, b) => {
         const aBookmarked = bookmarkedIds.has(a.id) ? 1 : 0;
         const bBookmarked = bookmarkedIds.has(b.id) ? 1 : 0;
@@ -2166,15 +2258,16 @@
       const powerUserActive = isPowerUser(currentUser) && isPowerUserViewMode;
       const todayStr = new Date().toLocaleDateString();
 
-      // RENDER LIST VIEW MODE AS STRUCTURED TABLE
+      // RENDER LIST VIEW MODE WITH BOOKMARK STAR BUTTON INCLUDED
       if (learningHubLayoutMode === 'list') {
         container.className = "";
         container.innerHTML = `
           <table class="resources-list-table">
             <thead>
               <tr>
+                <th style="width:5%; text-align:center;">Fav</th>
                 <th style="width:20%;">Module</th>
-                <th style="width:45%;">Title & Summary Description</th>
+                <th style="width:40%;">Title & Description</th>
                 <th style="width:12%; text-align:center;">Completed</th>
                 <th style="width:13%;">Open Link</th>
                 ${powerUserActive ? '<th style="width:10%; text-align:right;">Actions</th>' : ''}
@@ -2189,6 +2282,11 @@
 
                 return `
                   <tr title="${autoDescription}" onclick="toggleTileActive(this)">
+                    <td style="text-align:center;" onclick="event.stopPropagation()">
+                      <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark Resource">
+                        <span class="material-icons-outlined" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                      </button>
+                    </td>
                     <td><span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span></td>
                     <td>
                       <strong>${res.name}</strong>
@@ -2221,7 +2319,6 @@
           </table>
         `;
       } else {
-        // RENDER GRID VIEW MODE AS CARDS
         container.className = "resources-grid";
         container.innerHTML = filtered.map(res => {
           const style = getCategoryStyle(res.category);
@@ -2297,11 +2394,10 @@
       const powerUserActive = isPowerUser(currentUser) && isPowerUserViewMode;
       const todayStr = new Date().toLocaleDateString();
 
-      // RENDER TABLE VIEW
       tbody.innerHTML = filteredWithIndex.map(doc => {
         const isSelected = selectedDocIndices.has(doc.originalIndex);
         const isTodayRelease = doc.releaseDate === todayStr;
-        const docDescription = `Official technical document: ${doc.type} for package ${doc.pkg} (${doc.ver}). Click to access.`;
+        const docDescription = doc.description || `Official technical document: ${doc.type} for package ${doc.pkg} (${doc.ver}). Click to access.`;
 
         return `
           <tr title="${docDescription}" class="${isTodayRelease ? 'highlight-new' : ''}" onclick="toggleTileActive(this)">
@@ -2332,11 +2428,10 @@
         `;
       }).join('');
 
-      // RENDER GRID VIEW FOR DOCUMENT HUB
       gridContainer.innerHTML = filteredWithIndex.map(doc => {
         const isSelected = selectedDocIndices.has(doc.originalIndex);
         const isTodayRelease = doc.releaseDate === todayStr;
-        const docDescription = `Official technical document: ${doc.type} for package ${doc.pkg} (${doc.ver}). Click to access.`;
+        const docDescription = doc.description || `Official technical document: ${doc.type} for package ${doc.pkg} (${doc.ver}). Click to access.`;
 
         return `
           <article class="resource-card ${isSelected ? 'selected-card' : ''} ${isTodayRelease ? 'highlight-new' : ''}" data-index="${doc.originalIndex}" title="${docDescription}" onclick="toggleTileActive(this)">
@@ -2380,7 +2475,7 @@
               <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">Custom Quick Link</span>
             </div>
             <h3 class="card-title">${item.title}</h3>
-            <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.4rem;">User-submitted quick access tool link.</p>
+            <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.4rem;">${item.description || 'Quick access resource link.'}</p>
           </div>
           <div class="card-actions">
             <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
@@ -2403,7 +2498,7 @@
     }
 
     function toggleTileActive(cardElement) {
-      document.querySelectorAll('.resource-card, .doc-table tr').forEach(el => el.classList.remove('selected-active'));
+      document.querySelectorAll('.resource-card, .doc-table tr, .resources-list-table tr').forEach(el => el.classList.remove('selected-active'));
       cardElement.classList.add('selected-active');
     }
 
@@ -2421,17 +2516,19 @@
       });
     }
 
+    /* SUBMISSION HANDLER SUPPORTING OPTIONAL DESCRIPTIONS */
     function handleAddSubmission(e) {
       if (e) { e.preventDefault(); e.stopPropagation(); }
 
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = "Generating AI Summary & Publishing Link...";
+      submitBtn.textContent = "Publishing Link...";
       submitBtn.disabled = true;
 
       const editIndex = document.getElementById('editItemIndex').value;
       const targetHub = document.getElementById('targetHub').value;
       const submitterEmail = document.getElementById('submitterEmail').value.trim();
       const link = document.getElementById('newLink').value.trim();
+      const userDescription = document.getElementById('newDescription').value.trim();
       const shouldSend = document.getElementById('sendEmailCheckbox').checked;
       const dlAddress = document.getElementById('dlEmailAddress').value.trim();
       const currentDateStr = new Date().toLocaleDateString();
@@ -2442,24 +2539,28 @@
         releaseTitle = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
         const category = document.getElementById('newModule').value;
 
-        // FETCH AI AUTOMATED DESCRIPTION BEFORE SAVING
-        callGasJsonp({ action: 'GENERATE_AI_DESCRIPTION', url: link, title: releaseTitle }, function(aiData) {
-          const aiSummary = (aiData && aiData.description) ? aiData.description : "";
-          const payloadItem = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link, description: aiSummary, releaseDate: currentDateStr };
-
+        if (userDescription) {
+          const payloadItem = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link, description: userDescription, releaseDate: currentDateStr };
           saveAndDeliverLink('learning', payloadItem);
-        });
+        } else {
+          callGasJsonp({ action: 'GENERATE_AI_DESCRIPTION', url: link, title: releaseTitle }, function(aiData) {
+            const aiSummary = (aiData && aiData.description) ? aiData.description : "";
+            const payloadItem = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link, description: aiSummary, releaseDate: currentDateStr };
+            saveAndDeliverLink('learning', payloadItem);
+          });
+        }
       } else if (targetHub === 'document') {
         const pkg = document.getElementById('newPkg').value.trim() || 'New Package';
         const ver = document.getElementById('newVer').value.trim() || 'v1.0';
         const type = document.getElementById('newDocType').value.trim() || 'Document';
         releaseTitle = `${pkg} (${ver}) - ${type}`;
-        const payloadItem = { pkg, ver, type, link, releaseDate: currentDateStr };
+        const payloadItem = { pkg, ver, type, link, description: userDescription, releaseDate: currentDateStr };
 
         saveAndDeliverLink('document', payloadItem);
       } else {
+        // Quick Links (No Module Category needed, optional description)
         releaseTitle = document.getElementById('newTitle').value.trim() || 'New Quick Link';
-        const payloadItem = { title: releaseTitle, link, releaseDate: currentDateStr };
+        const payloadItem = { title: releaseTitle, link, description: userDescription, releaseDate: currentDateStr };
 
         saveAndDeliverLink('quick', payloadItem);
       }
@@ -2489,7 +2590,7 @@
 
       function finalizeFormUI() {
         closeModal('addModalOverlay');
-        showInlineBanner("Success! New link published globally with automated AI description.");
+        showInlineBanner("Success! New link published live.");
         
         submitBtn.textContent = "Publish Link Live";
         submitBtn.disabled = false;
@@ -2501,6 +2602,7 @@
         document.getElementById('newVer').value = '';
         document.getElementById('newDocType').value = '';
         document.getElementById('newLink').value = '';
+        document.getElementById('newDescription').value = '';
 
         loadGlobalCustomLinks();
       }
