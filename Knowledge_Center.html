@@ -22,9 +22,7 @@
       --bg-body: #f8f9fa;
       --bg-card: #ffffff;
       --border-color: #dadce0;
-      --shadow-sm: 0 1px 3px rgba(60,64,67,0.12);
-      --shadow-md: 0 8px 24px rgba(60,64,67,0.28);
-      --radius: 10px;
+      --radius: 8px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,17 +48,17 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 30px;
+      padding-top: 20px;
       overflow-y: auto;
     }
 
     .app-lock-card {
       position: fixed;
-      top: 30px;
+      top: 20px;
       background: #ffffff;
       border-radius: 16px;
-      padding: 2rem;
-      max-width: 460px;
+      padding: 1.5rem;
+      max-width: 440px;
       width: 90%;
       box-shadow: 0 12px 32px rgba(0,0,0,0.45);
       text-align: center;
@@ -68,86 +66,90 @@
       z-index: 10000000;
     }
 
+    /* TOP ANIMATED HEADER & LOGO */
     .top-hero-header {
-      background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
-      padding: 0.75rem 1.25rem;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      padding: 0.5rem 1rem;
       border-bottom: 2px solid var(--google-blue);
-      text-align: center;
-    }
-
-    .animated-brand-title {
-      font-family: 'Google Sans', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 800;
-      background: linear-gradient(90deg, #4285f4, #a142f4, #34a853, #fbbc05, #4285f4);
-      background-size: 300% 100%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientFlow 5s linear infinite;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: center;
+      gap: 1rem;
     }
 
-    @keyframes gradientFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* SVG Animation Keyframes */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.3; transform: scale(0.98); }
+      50% { opacity: 0.8; transform: scale(1.02); }
     }
+    @keyframes rotateRing {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes floatLight {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .glow-bg { animation: pulseGlow 3s ease-in-out infinite; transform-origin: center; }
+    .orbit-ring { animation: rotateRing 12s linear infinite; transform-origin: 200px 110px; }
+    .idea-node { animation: floatLight 2.5s ease-in-out infinite; transform-origin: center; }
 
     .top-utility-bar {
-      background-color: #28292c;
-      padding: 0.4rem 1.25rem;
+      background-color: #1e293b;
+      padding: 0.25rem 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid #334155;
     }
-    .top-utility-nav { display: flex; align-items: center; gap: 0.6rem; width: 100%; flex-wrap: wrap; }
-    .top-utility-link, .top-utility-btn {
+    .top-utility-nav { display: flex; align-items: center; gap: 0.5rem; width: 100%; flex-wrap: wrap; }
+    .top-utility-btn {
       color: #ffffff;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
       font-weight: 500;
-      padding: 0.35rem 0.75rem;
+      padding: 0.25rem 0.6rem;
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
     }
     .top-utility-btn.accent-add { background: var(--google-blue); border-color: var(--google-blue); margin-left: auto; }
     .top-utility-btn.accent-analytics { background: var(--google-purple); border-color: var(--google-purple); }
-    .top-utility-btn.accent-settings { background: #5f6368; border-color: #5f6368; }
+    .top-utility-btn.accent-settings { background: #475569; border-color: #475569; }
     .user-profile-badge { background: rgba(52, 168, 83, 0.25) !important; border-color: #34a853 !important; font-weight: 700 !important; }
 
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      padding: 0.45rem 1.25rem;
+      padding: 0.35rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     
-    .nav-tabs { display: flex; gap: 0.75rem; align-items: center; }
+    .nav-tabs { display: flex; gap: 0.5rem; align-items: center; }
     .tab-btn {
       background: #f1f3f4;
       border: 1px solid var(--border-color);
-      padding: 0.4rem 1rem;
+      padding: 0.35rem 0.85rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      border-radius: 20px;
+      gap: 0.35rem;
+      border-radius: 16px;
     }
     .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); }
     .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); }
+    .tab-btn.quick-tab.active { background: #e6f4ea; color: var(--google-green); border-color: var(--google-green); }
 
     .kpi-bookmark-small {
       display: inline-flex;
@@ -159,151 +161,143 @@
       padding: 0.15rem 0.5rem;
       font-size: 0.73rem;
       font-weight: 600;
+      cursor: pointer;
+    }
+    .kpi-bookmark-small.filter-active {
+      background: var(--google-blue-light);
+      border-color: var(--google-blue);
+      color: var(--google-blue);
     }
 
-    .container { width: 100%; padding: 0.75rem 1.25rem; display: flex; flex-direction: column; }
+    .container { width: 100%; padding: 0.5rem 1rem; display: flex; flex-direction: column; }
     .tab-content { display: none; flex-direction: column; }
     .tab-content.active { display: flex; }
 
     .filter-card-highlight { 
       background: #ffffff; 
-      border: 1.5px solid var(--google-blue); 
+      border: 1px solid var(--border-color); 
       border-radius: var(--radius); 
-      padding: 0.6rem 0.85rem; 
-      margin-bottom: 0.65rem; 
+      padding: 0.5rem 0.75rem; 
+      margin-bottom: 0.5rem; 
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
     }
-    .filter-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .filter-actions-group {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; }
-    .styled-dropdown-catchy { width: 100%; padding: 0.4rem 0.7rem; font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 500; border: 1.5px solid var(--border-color); border-radius: 6px; outline: none; }
+    .filter-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-actions-group { display: flex; align-items: center; gap: 0.4rem; }
+    .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; }
+    .styled-dropdown-catchy { width: 100%; padding: 0.35rem 0.6rem; font-family: 'Google Sans', sans-serif; font-size: 0.82rem; font-weight: 500; border: 1px solid var(--border-color); border-radius: 6px; outline: none; }
 
-    .active-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.2rem 0.55rem; border-radius: 6px; }
+    .active-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.73rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.15rem 0.5rem; border-radius: 6px; }
 
-    .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.4rem 0.7rem; margin-bottom: 0.65rem; }
-    .search-box { position: relative; width: 100%; }
+    .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.35rem 0.6rem; margin-bottom: 0.5rem; display: flex; gap: 0.5rem; align-items: center; }
+    .search-box { position: relative; flex: 1; }
     .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 18px; }
-    .search-input { width: 100%; padding: 0.35rem 1rem 0.35rem 2.1rem; border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.82rem; outline: none; }
+    .search-input { width: 100%; padding: 0.3rem 1rem 0.3rem 2.1rem; border: 1px solid var(--border-color); border-radius: 16px; font-size: 0.8rem; outline: none; }
 
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
-    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; }
+    .view-mode-toggle { display: flex; border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; }
+    .view-btn { background: #ffffff; border: none; padding: 0.25rem 0.5rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
+    .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: bold; }
+
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.6rem; }
+    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.7rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; }
     .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
 
-    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.45rem; }
-    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.88rem; font-weight: 500; }
-    .category-badge { font-size: 0.65rem; font-weight: 500; padding: 0.12rem 0.4rem; border-radius: 10px; }
-    .card-actions { margin-top: 0.6rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.35rem; }
-    .link-btn { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.78rem; }
-    .action-icons { display: flex; gap: 0.25rem; align-items: center; }
-    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.35rem; }
+    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+    .card-desc { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; line-height: 1.3; }
+    .category-badge { font-size: 0.63rem; font-weight: 500; padding: 0.1rem 0.35rem; border-radius: 8px; }
+    .card-actions { margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.3rem; }
+    .link-btn { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.75rem; }
+    .action-icons { display: flex; gap: 0.2rem; align-items: center; }
+    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.2rem; border-radius: 50%; display: inline-flex; }
     .action-btn:hover { background: rgba(0, 0, 0, 0.05); }
     .action-btn.delete-btn:hover { color: var(--google-red); }
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    .item-select-checkbox {
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-      accent-color: var(--google-red);
-      display: none;
-    }
-    .selection-mode-active .item-select-checkbox {
-      display: inline-block;
-    }
+    .item-select-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--google-red); display: none; }
+    .selection-mode-active .item-select-checkbox { display: inline-block; }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-    .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border-color); }
-    .doc-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f3f4; }
-    .doc-type-tag { padding: 0.12rem 0.4rem; border-radius: 4px; font-size: 0.7rem; font-weight: 500; background: #e8eaed; }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .doc-table th { background: var(--bg-body); font-weight: 600; color: var(--text-secondary); padding: 0.45rem 0.65rem; border-bottom: 1px solid var(--border-color); text-align: left; }
+    .doc-table td { padding: 0.45rem 0.65rem; border-bottom: 1px solid #f1f3f4; }
+    .doc-type-tag { padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.68rem; font-weight: 500; background: #e8eaed; }
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 16, 18, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 30px 1rem; overflow-y: auto;
+      display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow-y: auto;
     }
     .modal-overlay.open { display: flex; }
     
-    #powerUserDetailModalOverlay {
-      z-index: 10000005 !important;
-    }
+    #powerUserDetailModalOverlay { z-index: 10000005 !important; }
 
-    .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.25rem; box-shadow: var(--shadow-md); margin-top: 10px; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
-    .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1.05rem; }
+    .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 10px; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+    .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1rem; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
-    .modal-form { display: flex; flex-direction: column; gap: 0.75rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
-    .form-group label { font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); }
-    .form-group input, .form-group select { padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
-    .checkbox-group { display: flex; align-items: center; gap: 0.5rem; background: var(--google-blue-light); padding: 0.55rem 0.75rem; border-radius: 6px; }
-    .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
-    .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
-    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
+    .modal-form { display: flex; flex-direction: column; gap: 0.65rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.2rem; }
+    .form-group label { font-size: 0.75rem; font-weight: 500; color: var(--text-secondary); }
+    .form-group input, .form-group select { padding: 0.4rem 0.65rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.82rem; outline: none; }
+    .checkbox-group { display: flex; align-items: center; gap: 0.5rem; background: var(--google-blue-light); padding: 0.45rem 0.65rem; border-radius: 6px; }
+    .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.5rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
+    .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.35rem 0.65rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; }
+    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.35rem 0.65rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; }
     
     .power-user-chip {
       display: inline-flex; align-items: center; justify-content: space-between;
       background: var(--google-purple-light); color: var(--google-purple);
-      padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+      padding: 0.3rem 0.55rem; border-radius: 6px; font-size: 0.78rem; font-weight: 500;
       border: 1px solid rgba(147, 52, 230, 0.2);
     }
 
-    .detail-list {
-      list-style: none; padding: 0; margin: 0; max-height: 180px; overflow-y: auto; font-size: 0.82rem; border: 1px solid var(--border-color); border-radius: 6px;
-    }
-    .detail-list li {
-      padding: 0.4rem 0.65rem; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between;
-    }
+    .detail-list { list-style: none; padding: 0; margin: 0; max-height: 160px; overflow-y: auto; font-size: 0.8rem; border: 1px solid var(--border-color); border-radius: 6px; }
+    .detail-list li { padding: 0.35rem 0.55rem; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between; }
     .detail-list li:last-child { border-bottom: none; }
 
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
-      padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.65rem; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 500; margin-bottom: 0.5rem; align-items: center; gap: 0.5rem;
+    }
+
+    .mode-switch-card {
+      background: var(--google-purple-light); border: 1px solid var(--google-purple); padding: 0.6rem; border-radius: 8px; margin-bottom: 0.75rem;
+      display: flex; align-items: center; justify-content: space-between;
     }
   </style>
 </head>
 <body>
 
-  <!-- MANDATORY OTP SECURITY VERIFICATION LOCK OVERLAY -->
+  <!-- MANDATORY PASSCODE VERIFICATION LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
-      <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-blue); margin-bottom: 0.5rem;">lock</span>
-      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Email Passcode Verification</h2>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-        Enter your official <strong>@maxval.com</strong> email. A 1-time passcode (OTP) will be sent to your inbox to verify your identity.
+      <span class="material-icons-outlined" style="font-size: 40px; color: var(--google-blue); margin-bottom: 0.4rem;">lock</span>
+      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.2rem; margin-bottom: 0.4rem;">Security Passcode Verification</h2>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.85rem;">
+        Enter your official <strong>@maxval.com</strong> email. A 1-time passcode will be sent to your inbox to verify identity.
       </p>
 
-      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.6rem; font-size:0.85rem; margin-bottom:1rem; font-weight:600; color:var(--google-blue-hover);">
+      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.5rem; font-size:0.8rem; margin-bottom:0.85rem; font-weight:600; color:var(--google-blue-hover);">
         Verified Session: <span id="detectedEmailAddress">...</span>
       </div>
 
-      <!-- STEP 1: REQUEST OTP FORM -->
-      <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; text-align: center; font-weight: 500; outline: none;">
-        <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.65rem; font-size: 0.9rem;">Send OTP Passcode to Inbox</button>
+      <!-- STEP 1: REQUEST PASSCODE FORM -->
+      <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.65rem;">
+        <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.55rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.85rem; text-align: center; font-weight: 500; outline: none;">
+        <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.55rem; font-size: 0.85rem;">Send Passcode to Inbox</button>
       </form>
 
-      <!-- STEP 2: VERIFY OTP FORM (HIDDEN INITIALLY) -->
-      <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
-        <p style="font-size: 0.8rem; color: var(--google-green); font-weight: 600;">OTP sent! Check your inbox for the 6-digit code.</p>
-        <input type="text" id="otpCodeInput" placeholder="6-Digit OTP Code" required maxlength="6" style="padding: 0.6rem 0.85rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.2rem; text-align: center; font-weight: 700; letter-spacing: 6px; outline: none;">
-        <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.65rem; font-size: 0.9rem; background: var(--google-green);">Verify OTP & Access Portal</button>
+      <!-- STEP 2: VERIFY PASSCODE FORM -->
+      <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.65rem; margin-top: 0.4rem;">
+        <p style="font-size: 0.78rem; color: var(--google-green); font-weight: 600;">Passcode sent! Check your inbox for the 6-digit code.</p>
+        <input type="text" id="otpCodeInput" placeholder="6-Digit Passcode" required maxlength="6" style="padding: 0.55rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.1rem; text-align: center; font-weight: 700; letter-spacing: 5px; outline: none;">
+        <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.55rem; font-size: 0.85rem; background: var(--google-green);">Verify Passcode & Access Portal</button>
         <button type="button" class="btn-secondary" onclick="resetOtpForm()" style="justify-content: center;">Use Different Email</button>
       </form>
     </div>
@@ -311,7 +305,7 @@
 
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbzTZd9aO0fvmnZN6qiswlY7pZa8MwvLyvTmcfDenN5fyRhg4yTHt29a35VV7vpiZ3-0/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbxwd69FiioF8_ah1_tpKuLltiEZwit4m5PSmg58RNMS6ATMB5BtCTopozmO_d2TWT7h/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -320,42 +314,66 @@
     <input type="hidden" name="releaseDate" id="gas_releaseDate">
   </form>
 
+  <!-- ANIMATED HEADER WITH SYMPHONY SVG LOGO -->
   <div class="top-hero-header">
-    <div class="animated-brand-title">
-      <span class="material-icons-outlined" style="font-size:24px;">folder_special</span>
-      <span>Symphony Implementation - Learning & Documentation Hub</span>
-    </div>
+    <svg width="220" height="70" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#10b981" stop-opacity="0.05"/>
+        </linearGradient>
+      </defs>
+      <circle class="glow-bg" cx="200" cy="65" r="55" fill="url(#glowGrad)" />
+      <g class="orbit-ring">
+        <circle cx="200" cy="65" r="48" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="6, 8" opacity="0.6"/>
+        <circle cx="248" cy="65" r="4" fill="#3b82f6" />
+        <circle cx="152" cy="65" r="4" fill="#10b981" />
+      </g>
+      <g id="symphony-dots">
+        <circle cx="180" cy="50" r="4" fill="#10b981" />
+        <circle cx="195" cy="45" r="4" fill="#ef4444" />
+        <circle cx="210" cy="45" r="4" fill="#ef4444" />
+        <circle cx="225" cy="50" r="4" fill="#3b82f6" />
+        <circle cx="170" cy="62" r="4" fill="#f59e0b" />
+        <circle cx="185" cy="60" r="4" fill="#10b981" />
+        <circle cx="200" cy="57" r="4" fill="#ef4444" />
+        <circle cx="215" cy="60" r="4" fill="#3b82f6" />
+        <circle cx="230" cy="62" r="4" fill="#3b82f6" />
+        <circle cx="180" cy="74" r="4" fill="#10b981" />
+        <circle cx="195" cy="71" r="4" fill="#ef4444" />
+        <circle cx="210" cy="71" r="4" fill="#ef4444" />
+        <circle cx="225" cy="74" r="4" fill="#3b82f6" />
+        <circle cx="200" cy="85" r="4" fill="#f59e0b" />
+      </g>
+      <g class="idea-node">
+        <path d="M 200,15 A 10,10 0 0,1 210,25 C 210,30 206,33 204,36 L 196,36 C 194,33 190,30 190,25 A 10,10 0 0,1 200,15 Z" fill="#3b82f6" />
+        <rect x="196" y="37" width="8" height="2" rx="1" fill="#1e293b" />
+        <text x="200" y="27" font-size="8" font-weight="bold" fill="#ffffff" text-anchor="middle">P</text>
+      </g>
+      <text x="200" y="120" class="text-title" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="2" text-anchor="middle">SYMPHONY</text>
+      <text x="200" y="136" class="text-subtitle" font-size="9" font-weight="600" fill="#94a3b8" letter-spacing="1" text-anchor="middle">IMPLEMENTATION | LEARNING | DOCUMENTATION HUB</text>
+    </svg>
   </div>
 
   <div class="top-utility-bar">
     <div class="top-utility-nav">
-      <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">key</span><span>PSO Org Access</span>
-      </a>
-      <a href="https://docs.google.com/spreadsheets/d/1bJju9VxH42h_WgtOka_Rz0CvKWbAHdLMdxNQj6YutxE/edit?gid=2110691200#gid=2110691200" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">assignment_ind</span><span>Project Allocation</span>
-      </a>
-      <a href="https://docs.google.com/spreadsheets/d/1OOm0wgAZdr21o9tPQJbwFBfDef73XCbH1ckOif5PjqQ/edit?gid=1957868564#gid=1957868564" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">table_chart</span><span>Implementation Tracker</span>
-      </a>
-
       <!-- USER PROFILE BADGE -->
       <button type="button" class="top-utility-btn user-profile-badge" onclick="openProfileModal()">
-        <span class="material-icons-outlined" style="font-size:15px;">account_circle</span>
+        <span class="material-icons-outlined" style="font-size:14px;">account_circle</span>
         <span id="activeUserDisplay">Sign In (@maxval.com)</span>
       </button>
 
       <button type="button" class="top-utility-btn accent-analytics" onclick="openUserAnalyticsDashboard()">
-        <span class="material-icons-outlined" style="font-size:15px;">insights</span><span>User Progress Dashboard</span>
+        <span class="material-icons-outlined" style="font-size:14px;">insights</span><span>User Progress Dashboard</span>
       </button>
 
-      <!-- POWER USER TAB (HIDDEN FOR REGULAR USERS) -->
+      <!-- POWER USER CONTROLS -->
       <button type="button" class="top-utility-btn accent-settings" id="powerUsersTabBtn" style="display:none;" onclick="promptPowerUserSettings()">
-        <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Users</span>
+        <span class="material-icons-outlined" style="font-size:14px;">admin_panel_settings</span><span>Power Controls</span>
       </button>
 
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" style="display:none;" onclick="openAddModal()">
-        <span class="material-icons-outlined" style="font-size:15px;">add_circle</span><span>Submit New Link Live</span>
+        <span class="material-icons-outlined" style="font-size:14px;">add_circle</span><span>Submit New Link</span>
       </button>
     </div>
   </div>
@@ -363,14 +381,21 @@
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:18px;">school</span><span>Learning Hub</span>
+        <span class="material-icons-outlined" style="font-size:16px;">school</span><span>Learning Hub</span>
       </button>
       <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:18px;">description</span><span>Document Hub</span>
+        <span class="material-icons-outlined" style="font-size:16px;">description</span><span>Document Hub</span>
+      </button>
+
+      <!-- RE-LOCATED QUICK LINKS TAB -->
+      <button class="tab-btn quick-tab" onclick="switchTab('quickLinksTab', this)">
+        <span class="material-icons-outlined" style="font-size:16px;">link</span><span>Quick Links</span>
       </button>
     </nav>
-    <div class="kpi-bookmark-small" id="bookmarkContainer">
-      <span class="material-icons-outlined" style="color:var(--google-yellow);">star</span>
+
+    <!-- BOOKMARK FILTER TOGGLE -->
+    <div class="kpi-bookmark-small" id="bookmarkContainer" onclick="toggleBookmarkOnlyFilter()" title="Click to filter bookmarked items">
+      <span class="material-icons-outlined" style="color:var(--google-yellow); font-size:16px;">star</span>
       <span>Bookmarks: <strong id="kpiBookmarks">0</strong></span>
     </div>
   </header>
@@ -388,11 +413,11 @@
           <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
           <div class="filter-actions-group" id="learningAdminActions" style="display:none;">
             <button id="toggleLearningSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('learning')">
-              <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
+              <span class="material-icons-outlined" style="font-size:15px;">checklist</span>
               <span id="learningSelectBtnLabel">Select Multiple to Delete</span>
             </button>
             <button id="learningBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="handleActionRequest('bulk_delete', null, 'learning')">
-              <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
+              <span class="material-icons-outlined" style="font-size:15px;">delete_sweep</span>
               <span>Delete Selected (<strong id="learningSelectedCount">0</strong>)</span>
             </button>
           </div>
@@ -400,7 +425,7 @@
         <select id="moduleSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Learning Modules --</option>
         </select>
-        <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:14px;">visibility</span> Active View Items: <strong id="learningActiveCount">0</strong></div>
+        <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:13px;">visibility</span> Status: <strong id="learningActiveCount">0</strong></div>
       </section>
 
       <section class="toolbar">
@@ -408,22 +433,27 @@
           <span class="material-icons-outlined">search</span>
           <input type="text" id="searchInput" class="search-input" placeholder="Search learning topics...">
         </div>
+        <!-- GRID / LIST VIEW SWITCHER -->
+        <div class="view-mode-toggle">
+          <button class="view-btn active" id="learningGridBtn" onclick="switchViewMode('learning', 'grid')" title="Grid View"><span class="material-icons-outlined">grid_view</span></button>
+          <button class="view-btn" id="learningListBtn" onclick="switchViewMode('learning', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
+        </div>
       </section>
-      <main class="resources-grid" id="resourcesGrid"></main>
+      <main id="learningViewContainer"></main>
     </div>
 
     <!-- DOCUMENT HUB TAB -->
     <div id="documentHubTab" class="tab-content">
       <section class="filter-card-highlight">
         <div class="filter-header-row">
-          <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY NAME</label>
+          <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY PACKAGE</label>
           <div class="filter-actions-group" id="docAdminActions" style="display:none;">
             <button id="toggleDocSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('document')">
-              <span class="material-icons-outlined" style="font-size:16px;">checklist</span>
+              <span class="material-icons-outlined" style="font-size:15px;">checklist</span>
               <span id="docSelectBtnLabel">Select Multiple to Delete</span>
             </button>
             <button id="docBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="handleActionRequest('bulk_delete', null, 'document')">
-              <span class="material-icons-outlined" style="font-size:16px;">delete_sweep</span>
+              <span class="material-icons-outlined" style="font-size:15px;">delete_sweep</span>
               <span>Delete Selected (<strong id="docSelectedCount">0</strong>)</span>
             </button>
           </div>
@@ -431,7 +461,7 @@
         <select id="docPackageSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Packages --</option>
         </select>
-        <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);"><span class="material-icons-outlined" style="font-size:14px;">visibility</span> Active View Items: <strong id="docActiveCount">0</strong></div>
+        <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);"><span class="material-icons-outlined" style="font-size:13px;">visibility</span> Status: <strong id="docActiveCount">0</strong></div>
       </section>
 
       <section class="toolbar">
@@ -439,19 +469,23 @@
           <span class="material-icons-outlined">search</span>
           <input type="text" id="docSearchInput" class="search-input" placeholder="Filter by document name, version, or type...">
         </div>
+        <div class="view-mode-toggle">
+          <button class="view-btn" id="docGridBtn" onclick="switchViewMode('document', 'grid')" title="Grid View"><span class="material-icons-outlined">grid_view</span></button>
+          <button class="view-btn active" id="docListBtn" onclick="switchViewMode('document', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
+        </div>
       </section>
+      <main id="docViewContainer"></main>
+    </div>
 
-      <div class="table-container">
-        <table class="doc-table">
-          <thead>
-            <tr>
-              <th class="doc-checkbox-th" style="display:none;"><input type="checkbox" id="selectAllDocsCheckbox" class="item-select-checkbox" onchange="toggleSelectAllDocs(this)"></th>
-              <th>Package Name</th><th>Package Version</th><th>Type of Doc</th><th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="docTableBody"></tbody>
-        </table>
-      </div>
+    <!-- QUICK LINKS TAB -->
+    <div id="quickLinksTab" class="tab-content">
+      <section class="toolbar">
+        <div class="search-box">
+          <span class="material-icons-outlined">search</span>
+          <input type="text" id="quickSearchInput" class="search-input" placeholder="Filter quick links...">
+        </div>
+      </section>
+      <main class="resources-grid" id="quickLinksContainer"></main>
     </div>
   </div>
 
@@ -462,71 +496,91 @@
         <h2>Active User Profile</h2>
         <button class="modal-close-btn" onclick="closeModal('profileModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <div style="padding: 1rem 0;">
-        <span class="material-icons-outlined" style="font-size: 56px; color: var(--google-green);">account_circle</span>
-        <p style="font-size: 0.95rem; font-weight: 700; margin-top: 0.5rem;" id="modalProfileEmail">user@maxval.com</p>
-        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Logged in to Symphony Knowledge Hub</p>
-        <button type="button" class="btn-danger" style="width: 100%; justify-content: center; padding: 0.65rem;" onclick="handleSignOut()">
-          <span class="material-icons-outlined" style="font-size: 16px;">logout</span><span>Sign Out</span>
+      <div style="padding: 0.5rem 0;">
+        <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-green);">account_circle</span>
+        <p style="font-size: 0.95rem; font-weight: 700; margin-top: 0.3rem;" id="modalProfileDisplay">Prabhaharan</p>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1rem;" id="modalProfileEmail">user@maxval.com</p>
+        <button type="button" class="btn-danger" style="width: 100%; justify-content: center; padding: 0.55rem;" onclick="handleSignOut()">
+          <span class="material-icons-outlined" style="font-size: 15px;">logout</span><span>Sign Out</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- POWER USER CONFIGURATION MODAL -->
+  <!-- POWER USER CONTROLS MODAL -->
   <div class="modal-overlay" id="powerUserSettingsModalOverlay">
-    <div class="modal-content" style="max-width:480px;">
+    <div class="modal-content" style="max-width:500px;">
       <div class="modal-header">
-        <h2>Power Users Configuration</h2>
+        <h2>Power User Controls & Configuration</h2>
         <button class="modal-close-btn" onclick="closeModal('powerUserSettingsModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-        <p style="font-size: 0.8rem; color: var(--text-secondary);">
-          Power Users have full privileges to edit/delete items without entering a PIN and can view full organization progress metrics.
-        </p>
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         
-        <form onsubmit="handleAddPowerUser(event)" style="display: flex; gap: 0.5rem;">
-          <input type="email" id="newPowerUserEmail" placeholder="user@maxval.com" required style="flex:1; padding: 0.45rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.85rem;">
-          <button type="submit" class="btn-submit" style="padding: 0.45rem 0.85rem;">Add Power User</button>
+        <!-- POWER USER MODE SWITCHER -->
+        <div class="mode-switch-card">
+          <div>
+            <strong style="font-size:0.85rem; color:var(--google-purple);">Active View Mode:</strong>
+            <p style="font-size:0.75rem; color:var(--text-secondary);" id="activeModeLabel">Power User Admin Mode</p>
+          </div>
+          <button type="button" class="btn-secondary" onclick="togglePowerUserModeOverride()">
+            <span class="material-icons-outlined" style="font-size:15px;">swap_horiz</span>
+            <span id="modeSwitchBtnText">Switch to Normal Mode</span>
+          </button>
+        </div>
+
+        <!-- AI DESCRIPTION GENERATOR TRIGGER -->
+        <div style="background:var(--google-blue-light); border:1px solid var(--google-blue); padding:0.6rem; border-radius:8px; display:flex; align-items:center; justify-space-between;">
+          <div>
+            <strong style="font-size:0.82rem; color:var(--google-blue-hover);">AI Description Synthesizer</strong>
+            <p style="font-size:0.73rem; color:var(--text-secondary);">Auto-generate detailed AI descriptions across all cards.</p>
+          </div>
+          <button type="button" class="btn-submit" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="triggerAiDescriptionEngine()">
+            <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>Generate AI Descs</span>
+          </button>
+        </div>
+
+        <form onsubmit="handleAddPowerUser(event)" style="display: flex; gap: 0.4rem; margin-top:0.25rem;">
+          <input type="email" id="newPowerUserEmail" placeholder="user@maxval.com" required style="flex:1; padding: 0.4rem 0.65rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.82rem;">
+          <button type="submit" class="btn-submit" style="padding: 0.4rem 0.75rem; font-size:0.8rem;">Add Power User</button>
         </form>
 
-        <div style="margin-top: 0.5rem;">
-          <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">Authorized Power Users List:</label>
-          <div id="powerUserListContainer" style="display: flex; flex-direction: column; gap: 0.4rem; max-height: 180px; overflow-y: auto;"></div>
+        <div>
+          <label style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Authorized Power Users Roster:</label>
+          <div id="powerUserListContainer" style="display: flex; flex-direction: column; gap: 0.35rem; max-height: 140px; overflow-y: auto;"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- POWER USER DRILL-DOWN USER DETAILS MODAL -->
+  <!-- POWER USER DRILL-DOWN MODAL -->
   <div class="modal-overlay" id="powerUserDetailModalOverlay">
     <div class="modal-content" style="max-width:540px;">
       <div class="modal-header">
         <h2>User Detail Breakdown</h2>
         <button class="modal-close-btn" onclick="closeModal('powerUserDetailModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         <p style="font-size: 0.85rem; font-weight: 700; color: var(--google-blue);" id="detailUserEmailDisplay">user@maxval.com</p>
 
         <div>
-          <label style="font-size: 0.78rem; font-weight: 700; color: var(--google-green); display: block; margin-bottom: 0.25rem;">Completed Topics:</label>
+          <label style="font-size: 0.75rem; font-weight: 700; color: var(--google-green); display: block; margin-bottom: 0.2rem;">Completed Topics:</label>
           <ul class="detail-list" id="detailCompletedList"></ul>
         </div>
 
         <div>
-          <label style="font-size: 0.78rem; font-weight: 700; color: var(--google-red); display: block; margin-bottom: 0.25rem;">Pending Topics:</label>
+          <label style="font-size: 0.75rem; font-weight: 700; color: var(--google-red); display: block; margin-bottom: 0.2rem;">Pending Topics:</label>
           <ul class="detail-list" id="detailPendingList"></ul>
         </div>
 
         <div>
-          <label style="font-size: 0.78rem; font-weight: 700; color: var(--google-purple); display: block; margin-bottom: 0.25rem;">Viewed Documents Log:</label>
+          <label style="font-size: 0.75rem; font-weight: 700; color: var(--google-purple); display: block; margin-bottom: 0.2rem;">Viewed Documents Log:</label>
           <ul class="detail-list" id="detailDocsViewedList"></ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ADD LINK MODAL -->
+  <!-- ADD / EDIT LINK MODAL -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -543,6 +597,7 @@
           <select id="targetHub" onchange="toggleFormFields(this.value)">
             <option value="learning">Learning Hub</option>
             <option value="document">Document Hub</option>
+            <option value="quick">Quick Links</option>
           </select>
         </div>
 
@@ -574,6 +629,10 @@
           <div class="form-group"><label>Type of Doc *</label><input type="text" id="newDocType" placeholder="e.g., Installation Guide"></div>
         </div>
 
+        <div id="quickFields" style="display:none;">
+          <div class="form-group"><label>Link Name *</label><input type="text" id="newQuickName" placeholder="e.g., Project Allocation Tracker"></div>
+        </div>
+
         <div class="form-group"><label>URL / Link *</label><input type="url" id="newLink" placeholder="https://..." required></div>
 
         <div class="checkbox-group">
@@ -583,7 +642,7 @@
 
         <div class="form-group">
           <label>Notification Recipient Email(s) *</label>
-          <input type="text" id="dlEmailAddress" placeholder="e.g., team@maxval.com, colleague@maxval.com" required>
+          <input type="text" id="dlEmailAddress" placeholder="e.g., team@maxval.com" required>
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Publish Link Live</button>
@@ -593,15 +652,15 @@
 
   <!-- PIN VERIFICATION MODAL -->
   <div class="modal-overlay" id="pinModalOverlay">
-    <div class="modal-content" style="max-width:380px;">
+    <div class="modal-content" style="max-width:360px;">
       <div class="modal-header">
         <h2>Admin Security Verification</h2>
         <button class="modal-close-btn" onclick="closeModal('pinModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
       <form id="pinForm" class="modal-form" onsubmit="handlePinSubmission(event)">
         <div class="form-group">
-          <label>Enter Security PIN to proceed *</label>
-          <input type="password" id="pinInput" placeholder="Enter PIN (Default: 1234)" required maxlength="8" style="text-align:center; font-size:1.2rem; letter-spacing:4px;">
+          <label>Enter Security PIN *</label>
+          <input type="password" id="pinInput" placeholder="Enter PIN (Default: 1234)" required maxlength="8" style="text-align:center; font-size:1.1rem; letter-spacing:4px;">
         </div>
         <button type="submit" class="btn-submit">Verify PIN</button>
       </form>
@@ -610,7 +669,7 @@
 
   <!-- PROGRESS DASHBOARD MODAL -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
-    <div class="modal-content" style="max-width: 720px;">
+    <div class="modal-content" style="max-width: 700px;">
       <div class="modal-header">
         <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
         <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -634,7 +693,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzTZd9aO0fvmnZN6qiswlY7pZa8MwvLyvTmcfDenN5fyRhg4yTHt29a35VV7vpiZ3-0/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxwd69FiioF8_ah1_tpKuLltiEZwit4m5PSmg58RNMS6ATMB5BtCTopozmO_d2TWT7h/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -642,164 +701,80 @@
     ];
 
     const baseDataset = [
-      { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
-      { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
-      { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
-      { id: 'res_4', name: "The Value of Intellectual Property", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_5', name: "Challenges in Managing IP", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_6', name: "The Symphony Solution", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_7', name: "Introduction to Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_8', name: "Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_9', name: "The Value of Capturing an Idea", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_10', name: "The Challenges in Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_11', name: "The Solution: Invention Disclosure in Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_12', name: "The Benefits for Users and Clients", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_13', name: "IDF Invention Disclosure Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/19MWylq6fYMnMeaFnVlr5fCarEurIzyZ4" },
-      { id: 'res_14', name: "Invention Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
-      { id: 'res_15', name: "Invention Submission", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
-      { id: 'res_16', name: "Invention Review", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
-      { id: 'res_17', name: "Invention Decision", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
-      { id: 'res_18', name: "Patent Drafting and Filing", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
-      { id: 'res_19', name: "Patent Prosecution", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
-      { id: 'res_20', name: "Patent Search", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
-      { id: 'res_21', name: "Types of Patent Searches", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
-      { id: 'res_22', name: "AIA", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
-      { id: 'res_23', name: "Importance of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_24', name: "Tools we use", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_25', name: "Types of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_26', name: "PTO Rules for Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_27', name: "Handling Patent drawing rejections", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_28', name: "Overview of Patent Center", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=244" },
-      { id: 'res_29', name: "Overview of WIPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_30', name: "Overview of EPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_31', name: "US Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231" },
-      { id: 'res_32', name: "PCT Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231" },
-      { id: 'res_33', name: "Overview of IDS", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232" },
-      { id: 'res_34', name: "IDS obligation and procedure", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232" },
-      { id: 'res_35', name: "Renewals Overview", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_36', name: "Duration of Asset Protection", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_37', name: "Patent term and renewal timeline", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_38', name: "Consequences of not renewing an asset", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_39', name: "Renewal Fee and mode of payment", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_40', name: "Who can pay the renewals", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_41', name: "What is a Trademark?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_42', name: "What can be Trademarked?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_43', name: "Unconventional marks as a Trademark", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_44', name: "Types of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_45', name: "Trademarks Distinctiveness Spectrum", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_46', name: "Classification of Goods & Services", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_47', name: "Basis of Filings and Use Requirement", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_48', name: "Maintenance of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_49', name: "Trademark Life Cycle", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8" },
-      { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m" }
+      { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228", desc: "Comprehensive guide covering foundational IP legal frameworks, asset protection types, and corporate IP strategy." },
+      { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228", desc: "Foundational breakdown of patents, trademarks, copyrights, and trade secrets." },
+      { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229", desc: "Explores operational friction points in IP management and modern software solutions." },
+      { id: 'res_4', name: "The Value of Intellectual Property", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Strategic view on leveraging corporate IP assets for market advantage." },
+      { id: 'res_5', name: "Challenges in Managing IP", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Risk analysis on docketing errors, annuity defaults, and compliance pitfalls." },
+      { id: 'res_6', name: "The Symphony Solution", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Overview of Symphony IPMS automation tools and core architecture." },
+      { id: 'res_7', name: "Introduction to Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Onboarding module explaining navigation, user roles, and dashboard features." },
+      { id: 'res_8', name: "Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Workflow guide on capturing innovation ideas via Symphony portal." },
+      { id: 'res_9', name: "The Value of Capturing an Idea", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Best practices for R&D teams submitting clean invention disclosures." },
+      { id: 'res_10', name: "The Challenges in Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Addressing delays, missing data, and evaluation backlog." },
+      { id: 'res_11', name: "The Solution: Invention Disclosure in Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Automated review board workflows and submission pipelines." },
+      { id: 'res_12', name: "The Benefits for Users and Clients", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", desc: "Quantifying speed, compliance, and ROI gains." },
+      { id: 'res_13', name: "IDF Invention Disclosure Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/19MWylq6fYMnMeaFnVlr5fCarEurIzyZ4", desc: "Folder containing IDF workflow charts, configuration rules, and forms." },
+      { id: 'res_14', name: "Invention Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP", desc: "Invention lifecycle setup guidelines and field customisation rules." },
+      { id: 'res_15', name: "Invention Submission", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229", desc: "Walkthrough of inventor portal submission forms and attachments." },
+      { id: 'res_16', name: "Invention Review", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229", desc: "Patent committee evaluation routines and scoring matrices." },
+      { id: 'res_17', name: "Invention Decision", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229", desc: "Filing decisions, foreign filing options, and abandonment logs." },
+      { id: 'res_18', name: "Patent Drafting and Filing", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP", desc: "Outside counsel handoff, specification drafting, and USPTO filing records." },
+      { id: 'res_19', name: "Patent Prosecution", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP", desc: "Tracking office actions, response deadlines, and claims adjustments." },
+      { id: 'res_20', name: "Patent Search", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230", desc: "Prior art search integration and landscape analysis." },
+      { id: 'res_21', name: "Types of Patent Searches", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230", desc: "Novelty, freedom-to-operate (FTO), and invalidity search guidelines." },
+      { id: 'res_22', name: "AIA", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230", desc: "America Invents Act provisions, first-inventor-to-file rules, and IPRs." },
+      { id: 'res_23', name: "Importance of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", desc: "PTO drawing requirements and technical illustration standards." },
+      { id: 'res_24', name: "Tools we use", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", desc: "Illustration software and drafting tools for IP teams." },
+      { id: 'res_25', name: "Types of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", desc: "Utility vs Design patent drawing specifications." },
+      { id: 'res_26', name: "PTO Rules for Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", desc: "Margin, numbering, and line density rules across global offices." },
+      { id: 'res_27', name: "Handling Patent drawing rejections", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", desc: "Correcting informal drawings and responding to PTO objections." },
+      { id: 'res_28', name: "Overview of Patent Center", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=244", desc: "USPTO Patent Center portal navigation and electronic filing." },
+      { id: 'res_29', name: "Overview of WIPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", desc: "PCT international application filings and ePCT portal guide." },
+      { id: 'res_30', name: "Overview of EPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", desc: "European Patent Office procedures, opposition, and validation." },
+      { id: 'res_31', name: "US Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231", desc: "Declarations, power of attorney, assignments, and RCE filings." },
+      { id: 'res_32', name: "PCT Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231", desc: "Demand for Chapter II, Article 19/34 amendments, and national phase entries." },
+      { id: 'res_33', name: "Overview of IDS", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232", desc: "Information Disclosure Statement duty of candor and submission rules." },
+      { id: 'res_34', name: "IDS obligation and procedure", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232", desc: "Timelines, fee tiers, and cross-citation automation in Symphony." },
+      { id: 'res_35', name: "Renewals Overview", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", desc: "Annuity lifecycle management and patent maintenance fee structures." },
+      { id: 'res_36', name: "Duration of Asset Protection", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", desc: "Calculations for patent terms, SPC extensions, and trademark renewals." },
+      { id: 'res_37', name: "Patent term and renewal timeline", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", desc: "3.5, 7.5, and 11.5 year US maintenance fee windows and grace periods." },
+      { id: 'res_38', name: "Consequences of not renewing an asset", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", desc: "Asset expiration, public domain transition, and reinstatement rules." },
+      { id: 'res_39', name: "Renewal Fee and mode of payment", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", desc: "Direct PTO payments, agent processing, and currency handling." },
+      { id: 'res_40', name: "Who can pay the renewals", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", desc: "In-house counsel vs foreign agent renewal responsibilities." },
+      { id: 'res_41', name: "What is a Trademark?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "Brand identifier protection, service marks, and trade dress." },
+      { id: 'res_42', name: "What can be Trademarked?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "Word marks, logos, slogans, shapes, sounds, and color marks." },
+      { id: 'res_43', name: "Unconventional marks as a Trademark", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "Guidelines for registering sound, motion, and scent marks." },
+      { id: 'res_44', name: "Types of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "Coined, arbitrary, suggestive, descriptive, and generic marks." },
+      { id: 'res_45', name: "Trademarks Distinctiveness Spectrum", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "Abercrombie spectrum analysis for brand strength evaluation." },
+      { id: 'res_46', name: "Classification of Goods & Services", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "Nice Classification system (Classes 1-45) selection rules." },
+      { id: 'res_47', name: "Basis of Filings and Use Requirement", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "Section 1(a) Use in Commerce vs Section 1(b) Intent-to-Use filings." },
+      { id: 'res_48', name: "Maintenance of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "Section 8 declarations, Section 9 renewals, and Section 15 incontestability." },
+      { id: 'res_49', name: "Trademark Life Cycle", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", desc: "End-to-end management from clearance search to perpetual renewal." },
+      { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8", desc: "Interactive evaluation quiz to test operational knowledge in Symphony." },
+      { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m", desc: "Recorded instructor-led training (ILT) sessions and workshops." }
     ];
 
     const baseDocDataset = [
-      { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8" },
-      { pkg: "Symphony LF", ver: "Standard", type: "PTO Integration", link: "https://docs.google.com/document/d/1MiR6AGAMgPJHxmwySp4bap_tmQFHWATG66dB1X7B0bY/edit?tab=t.0#heading=h.gn2p9i53yy15" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Field Configuration", link: "https://docs.google.com/spreadsheets/d/1qZTCt4lbngMsRQ37JxkCiHfTOfhFlhCweXqsEZrCyJ8/edit?gid=0#gid=0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Data Uploads & Renewals", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0#heading=h.fvxjcsbrpisy" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Dates Component Config", link: "https://docs.google.com/document/d/1Lz90hLqDNZqNKay1CahffYgFMu9yX0tv7H8ijJgd0iE/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Family Tree Tech Doc", link: "https://docs.google.com/document/d/1oxMp3xiPkMttzt43dPVJJcfKd4OSAlPul7aajz75qfQ/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Related IP Matters - Configuration", link: "https://docs.google.com/document/d/1_-rbG5XfJUmNKNzbj_DEgOFjGeXiNuNqWDaDfs1oL_g/edit?hl=en&forcehl=1&tab=t.0#heading=h.x4tnm73un1bn" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Update Term Name", link: "https://docs.google.com/document/d/1mkQQ--uSk3k2WX0RUkCdsT-4_85ggM0OyY3gfEOBPD0/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "PTO Doc Codes", link: "https://docs.google.com/document/d/1Y64tmdzbawTj8hHvr-P3jOLZeYtQwGEgteQKnBkR2r0/edit?tab=t.nn7xerowdjpb" },
-      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Configuration Steps", link: "https://docs.google.com/document/d/1USadU5-pzbZhLzYlvGEc2SPuUgjpxbOOVIgbnC_zoyY/edit?tab=t.0" },
-      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Upgrade Steps", link: "https://docs.google.com/document/d/1OvitBT0PemTnXxpue0MagvPjFGs8h0eNQ8pYE_FKrI4/edit?tab=t.0#heading=h.f6wmunhppk9w" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Release Notes", link: "https://docs.google.com/document/d/1UW30pnWjtAj30meb6XfuBXbKa0E0epf1CrJTKaAkg7U/edit?tab=t.3eyh0nlcm3z0#heading=h.529i7peg55gb" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Installation Doc", link: "https://docs.google.com/document/d/1z5P5YvE8pVtIgv1Y27khwNxZCLcpZgse23Qctfi61sg/edit?usp=sharing" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Upgrade Doc", link: "https://docs.google.com/document/d/1wQoKpdDCyuORvtPxychos06PYPqJGTPrVazlCGel19c/edit?usp=sharing" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Recordings Folder", link: "https://drive.google.com/drive/folders/1nPPwt0RvFvvzSKy2StbSNVP7lIM-CmNO" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "User Guides & Technical Docs Folder", link: "https://drive.google.com/drive/folders/1AjCqtpHhEg9HpLhUY7mED_MuGb_8qJpb?usp=drive_link" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Installation Procedure", link: "https://docs.google.com/document/d/12t1TSmtTI7cT4p7VA3eG8ZuNgpCGLf0GruB5RSWN_gE/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes(Patch Updates)", link: "https://docs.google.com/document/d/1DSzp2roWj81PLDsgM1jzCm3kFOU7H5AqhKGAEyYB-w4/edit?tab=t.0#heading=h.doi0kxxzb3c6" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "PTA & TD", link: "https://docs.google.com/document/d/1ZK_k1vmJ4S-B9pm9X3T_rAtB7Nuu_J4mPwioi6Ag1pk/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes", link: "https://docs.google.com/document/d/1aMEtBF9hJ4LbsNBddzP3FBjdGblc-MIdx3C4eX9NK3k/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "TM Renewal & Maintenance workflow", link: "https://docs.google.com/document/d/1YYWUrchs1ofHUY4lhJbhfbazXUYko7eYZSgfGm-Xeok/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Installation Procedure", link: "https://docs.google.com/document/d/15ojq7aUyBebs87Q5j_qOuJKbC4QN7q2OKeWURHbUO64/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Release Notes", link: "https://docs.google.com/document/d/1nAxplj9o5V-gd-wK-hsQ_IVYE48bheTlphi2-v2nP_c/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "FAQs", link: "https://docs.google.com/document/d/15eUk8aTdCMwxRXu-cO6ga9kD9lAeX6IqoVb0ZY01CwI/edit" },
-      { pkg: "SymphonyIPM", ver: "Post Installation", type: "Template cloned org - Post Installation", link: "https://docs.google.com/document/d/1zFWAJflfnTFunMkCObs17UHBUdIoo3rKYXAfE8zc5Ow/edit?tab=t.0#heading=h.nxx749ly2sd1" },
-      { pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Additional Steps", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Post Installation", link: "https://docs.google.com/document/d/1TYoM38OwvqGUj2vIBf1cXrH07wIrkL6iYP8E1GGBNZ8/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Post Installation", type: "Post Installation Consolidated", link: "https://docs.google.com/spreadsheets/d/12-cra50RDo8BD5bkNql0wfn11CBLegFNbsW2reJS94k/edit?gid=0#gid=0" },
-      { pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Installation Procedure", link: "https://docs.google.com/document/d/1sN0_8dLaGhSjFiDwiSvTZxf4aGHPACO4jo2cuep1Euc/edit?tab=t.0" },
-      { pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Release Notes", link: "https://docs.google.com/document/d/16m5mOKx96X2dpQMmEYhTM-Vu4RBGRzadyByFbGWepEI/edit?tab=t.0#heading=h.afvb612sap42" },
-      { pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Release Notes", link: "https://docs.google.com/document/d/1k_aNNuBtpBS6bctW21TVKF5A1dmsqhuG_4kS57DvcUE/edit?tab=t.0#heading=h.z20ne1xmld5z" },
-      { pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Installation Procedure", link: "https://drive.google.com/file/d/1fFiQUZu8ATOinYmH_zI-jr6J9UPS4f9E/view" },
-      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Installation Procedure", link: "https://docs.google.com/document/d/18Rkm3Y_GGUjWToa_N-GtKLx2gZ-rrg48MubcU9W_xrE/edit?usp=sharing" },
-      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Release Notes", link: "https://docs.google.com/document/d/1s3xLP2YA0l2UG3sXJ8vk62Xolw1XiKl8Tx6QH2vp6zM/edit?usp=sharing" },
-      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "User Guide", link: "https://docs.google.com/document/d/1d8KEX4fXKGU3jC8mNmGjIV5MHZ40gQJ2L5JwGcXj74g/edit?usp=sharing" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "Configuration & Setup", link: "https://docs.google.com/document/d/12O9E13nzhvUCf3G4tPJcCALdoU_-rNBe06Qwb555YVA/edit?tab=t.0#heading=h.w1f633o6rz3d" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Configuration ( Recent Changes )", link: "https://docs.google.com/document/d/17oQjYBs-7YXTbrt8w0xr9v7AVmeezISCGw4s-1hW0GE/edit?usp=sharing" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO TM Configuration", link: "https://docs.google.com/document/d/1KNFCiqFxOYpreqQI6pzTSNFMKpIJcRUZg1fX7_-ZS3Q/edit?tab=t.0#heading=h.9j1x6qq0ikur" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "Symphony Corporate - Technical Document", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.3iawlk4gm5a9" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration User guide", link: "https://docs.google.com/document/d/19U7qsSC6n9Umpz-ZVtcJ6TLeRwS1DUDE/edit" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "TM PTO Integration - User Guide", link: "https://docs.google.com/document/d/1x7pQZnZmd4PDr-S_U2BIN1NSs0Qhc_Ujiz8TwiKXpAc/edit?tab=t.0" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration - FAQ", link: "https://docs.google.com/spreadsheets/d/12XkVFQoFoLbBDwW6o2Xn0ieAyptyS15HjETrPWSAeW8/edit?gid=0#gid=0" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 1", link: "https://docs.google.com/document/d/1xQSlTOKb1YlB4YgCkTbZrz5_yCHDND71rwyqVo9xk4U/edit?tab=t.0" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 2", link: "https://docs.google.com/document/d/1TxknkBApfacf5IhmcIUFoTCOSqlwCTHx2nLTfPeXd7w/edit?tab=t.0" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 3", link: "https://docs.google.com/document/d/1dR31w_O5cmKH1Hjg1GmH3F-dbvfE6xAosjd9AdeEiiI/edit?tab=t.0#heading=h.e8ns8op5dsap" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Package details", link: "https://docs.google.com/spreadsheets/d/1sTxqq6GV5jN7zf_Bbsv2l7zOt_b_3x6tlM1QlTxzPZs/edit?gid=0#gid=0" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Release Notes", link: "https://docs.google.com/document/d/1LRGEHLGKZ8ktQ4K-FALU6E-xwLTN37gleI5TWUB1aPc/edit?hl=en&forcehl=1&tab=t.0" },
-      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Installation Procedure", link: "https://docs.google.com/document/d/1uDOHTA1nAuptl50XVE8zroDriJvEC-vWaMlr-Qmul0k/edit?tab=t.0" },
-      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "User Guide", link: "https://docs.google.com/document/d/1x0Byh0sS7mjE3Mrtm0Qotq671hQvpPoMwccpgTDhw3k/edit?tab=t.0" },
-      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Release Notes", link: "https://docs.google.com/document/d/1QqwMgMNlzuTAThfFUunGB5sTo_Pj2OyECF0loyi4Nzs/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
-      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Package details", link: "https://docs.google.com/document/d/1Lsz2mprPkHYf58fmE6yQK81NAzlI7f3j/edit" },
-      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Release Notes", link: "https://docs.google.com/document/d/1lXuZP5OL0ZaFQp_dqxz3i-WPh40HRGlqfB3y4cJ9-6E/edit?tab=t.0" },
-      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "User Guide", link: "https://docs.google.com/document/d/1To_yiyqfyBO7_qVLqyADumWNaLsFwxTEaVqlDhPTzao/edit?tab=t.0" },
-      { pkg: "sIDS Docketing", ver: "sIDS Docketing", type: "User Guide", link: "https://docs.google.com/document/d/1CZDWmzKugbwrZ7RIOsgW1k5cVTkvbRLWDICjXvfUQ60/edit?tab=t.0" },
-      { pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Installation Procedure", link: "https://docs.google.com/document/d/1xzAKXMiD2eyGp9R4xfNLRTdhrOk92-Cdb4Sx2pazwQE/edit?tab=t.0" },
-      { pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Release Notes", link: "https://docs.google.com/document/d/1_OeGOTnVSgh84uEH5q7nGy35Oo3u3uZ-3_iwRrRN1_E/edit?tab=t.0#heading=h.33ebwiv13lft" },
-      { pkg: "Other", ver: "Other", type: "Production Checklist", link: "https://docs.google.com/spreadsheets/d/1hb_bFG5AB5OST8K6l7kZrqJZNO8Fvn4z/edit?gid=1020191051#gid=1020191051" },
-      { pkg: "Other", ver: "Other", type: "Estimation Template", link: "https://docs.google.com/spreadsheets/d/1e50bRJxcbc3k_bI2WD1733xgv4sxZMleO09EwPClugU/edit?gid=0#gid=0" },
-      { pkg: "Other", ver: "Other", type: "OOB IDF template", link: "https://docs.google.com/document/d/10hxmDD0DOwIVe2ObxgOaEEbJFA9uCoh2KeGn--6dldk/edit?tab=t.0#heading=h.gjdgxs" },
-      { pkg: "Other", ver: "Other", type: "Fields updated by clicking on 'Data Sync' button (IFI import)", link: "https://docs.google.com/spreadsheets/d/1FAKrv_VfK75gxdzzyoyCce3vXhPoVY_aSwj-AsiwAfA/edit?gid=0#gid=0" },
-      { pkg: "Other", ver: "Other", type: "Encryption and field tracking doc", link: "https://docs.google.com/spreadsheets/d/1_H5i1sHYWIeE6iA5x-cqibG97fYeqZgaDfwRwkOOceY/edit?gid=1277242720#gid=1277242720" },
-      { pkg: "Other", ver: "Other", type: "Salesforce Shield Platform Encryption", link: "https://docs.google.com/presentation/d/1AgTXlLsyh-buIzKlnrwSR1GBuMk94n0ivpASf7bSTf4/edit#slide=id.p" },
-      { pkg: "Other", ver: "Other", type: "Turning off - OOB Status updation", link: "https://docs.google.com/document/d/1viGZjOQC15qfd3It-YwgGEcIx1UjD4HM/edit" },
-      { pkg: "Other", ver: "Other", type: "Symphony LF - Data Upload Steps/Guideline", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Rules by Case Type", link: "https://docs.google.com/document/d/1_IeSJf_8idS_WCLP3Ua0H_TtozwzrEZEvIhoGmUi0Tw/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Reminder object data for LF", link: "https://drive.google.com/drive/folders/1-FtZUh7lP5WQm0jT7vcLx4z_nnCylPde?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Schedule Jobs - All Packages", link: "https://docs.google.com/spreadsheets/d/1NZSbNl44jviJpYmAKwpyFGATJXqSSp7T/edit?gid=1001576285#gid=1001576285" },
-      { pkg: "Other", ver: "Other", type: "Technical PTO document (from PE)", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.vdqd05xcieik" },
-      { pkg: "Other", ver: "Other", type: "Symphony-List of Processes & Details", link: "https://docs.google.com/spreadsheets/d/1jT24l1SDvVkNsrN1PZV4wulD_e7lkrs059LOrsOnSg0/edit?gid=1810542744#gid=1810542744" },
-      { pkg: "Other", ver: "Other", type: "Patent field description", link: "https://docs.google.com/spreadsheets/d/1u3ngTQfzKslP5za1-uF8JrY0ou-2aCMUkE7n4jUDTok/edit?gid=1042587126#gid=1042587126" },
-      { pkg: "Other", ver: "Other", type: "OOB email templates", link: "https://docs.google.com/document/d/17_WuOjbpkbAX9VQcRrrUAu4_qO6PT3epTGcwu5UDfsI/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Glossary and Number Formats for Symphony", link: "https://docs.google.com/spreadsheets/d/1gX7mHK1rnjfRUgznFZ_ahwvmv4KWNoUR/edit?gid=1452062042#gid=1452062042" },
-      { pkg: "Other", ver: "Other", type: "MaxForms List Old", link: "https://docs.google.com/spreadsheets/d/1Kyt3D24WY-t8RXjy4GsDuAuYsA6zdDfmIGTsEilcQSg/edit?gid=0#gid=0" },
-      { pkg: "Other", ver: "Other", type: "Prosecution Analytics Requirement Definition Document", link: "https://docs.google.com/document/d/16fefj0Mr4q1u-jxrPNykY-ZE_P1Pw0Z1/edit?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Prosecution Analytics & History Doc", link: "https://docs.google.com/document/d/1EJ270FIDMS5eRTsokPeV8x4zovO6WsCt8sSjsOeNQKo/edit?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Prosecution Analytics- Api Integration", link: "https://drive.google.com/file/d/1QZGbpZEhgPsdDDyz8_X24ordjNURJfIC/view?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Support checklist document Template", link: "https://docs.google.com/spreadsheets/d/1S7fqp95TLsLXdI6VMQWSj8ffLu34uJYClceJMGKo5x4/edit?gid=2105910797#gid=2105910797" },
-      { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 1", link: "https://docs.google.com/document/d/1BeMcpIbVNIP0etuufO-Duc_SXznyEqJo_yQaB-ah-2Y/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 2", link: "https://docs.google.com/document/d/1YA0f1BRx5tB1UXB3Q74e_LdrQ0lyKrphEnNYEp0rw30/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Law Firm OOB features", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "DKIM Setup Document", link: "https://docs.google.com/document/d/1mSO7qCLeEx3ZSMb3upBh5bEbm0w978JC/edit" },
-      { pkg: "Other", ver: "Other", type: "Post Installation Steps", link: "https://docs.google.com/spreadsheets/d/1VVZZtIYXpzAd_-dGjt-JDOjhnehh5Uawe5WZJ7eN96c/edit?gid=0#gid=0" },
-      { pkg: "Other", ver: "Other", type: "USPTO sponsorship - Patent Center", link: "https://drive.google.com/file/d/17L3Zk12DOm33_tb77ZLO41E6dWKtr_nH/view" },
-      { pkg: "Other", ver: "Other", type: "PTO Sync document", link: "https://docs.google.com/document/d/1aaI7LNgQx2ccEhru7qYAA9EOSh9JuyE5HIurhWHvah4/edit?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "E-Billing recording", link: "https://drive.google.com/drive/folders/1g4ydUD4rj2gLYQBH3A_z4u0-FhwoD-Bd" },
-      { pkg: "Other", ver: "Other", type: "Errors & Fixes", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "PTO Doc codes", link: "https://docs.google.com/document/d/1HF42RGxJIs97wTHlUSbfXwPFIXskys3vO6xilNYPVnI/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Symphony Prosecution sync data flow diagram", link: "https://drive.google.com/file/d/1Q3q_v-XNr4_DToS2qiw_lqnS9VCwSbz1/view?usp=drive_link" },
-      { pkg: "Other", ver: "Other", type: "Renewals doc", link: "https://docs.google.com/spreadsheets/d/1WLc0EHyljjffbDHebQu0AttDdDV03oDE/edit" },
-      { pkg: "Other", ver: "Other", type: "Renewal Guide for Annuity", link: "https://docs.google.com/document/d/1gHFV9ixVcZCuE8y00eeRk5TFSw2yboeVbqgGG3ES7jU/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "UPC Folder", link: "https://drive.google.com/drive/folders/1a6FgPCByxI1ibEPehvKLM_d2K6IV8u2s" },
-      { pkg: "Other", ver: "Other", type: "New Object/Fields Request Template", link: "https://docs.google.com/spreadsheets/d/1tvaTEMsruZ4mrylN8sGb1w6DnKxhgKR8nPFPyTUQZkQ/edit?gid=526926240#gid=526926240" },
-      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring PPT", link: "https://docs.google.com/presentation/d/1jmw9iCRUUKnLwFzMGPWu21X0V5Zk9olXsdFHK7BEGcM/edit#slide=id.g2e29f102836_0_70" },
-      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
+      { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0", desc: "Complete installation steps for Symphony Law Firm v1.3.4 package." },
+      { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0", desc: "Release updates, bug fixes, and new features in LF v1.3.4." },
+      { pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8", desc: "Out-of-the-box standard functionality and configuration guide." },
+      { pkg: "Symphony LF", ver: "Standard", type: "PTO Integration", link: "https://docs.google.com/document/d/1MiR6AGAMgPJHxmwySp4bap_tmQFHWATG66dB1X7B0bY/edit?tab=t.0#heading=h.gn2p9i53yy15", desc: "PTO API setup, docketing sync rules, and status mapping." },
+      { pkg: "Symphony LF", ver: "Standard", type: "Field Configuration", link: "https://docs.google.com/spreadsheets/d/1qZTCt4lbngMsRQ37JxkCiHfTOfhFlhCweXqsEZrCyJ8/edit?gid=0#gid=0", desc: "Field level security matrix, custom field rules, and layouts." }
+    ];
+
+    const baseQuickLinks = [
+      { id: 'ql_1', name: "PSO Org Access", category: "Quick Links", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", desc: "Request sandbox and production Salesforce org access." },
+      { id: 'ql_2', name: "Project Allocation Tracker", category: "Quick Links", link: "https://docs.google.com/spreadsheets/d/1bJju9VxH42h_WgtOka_Rz0CvKWbAHdLMdxNQj6YutxE/edit?gid=2110691200#gid=2110691200", desc: "Implementation team project assignment spreadsheet." },
+      { id: 'ql_3', name: "Implementation Tracker", category: "Quick Links", link: "https://docs.google.com/spreadsheets/d/1OOm0wgAZdr21o9tPQJbwFBfDef73XCbH1ckOif5PjqQ/edit?gid=1957868564#gid=1957868564", desc: "Master client deployment status and milestone tracker." }
     ];
 
     let localCustomDataset = JSON.parse(localStorage.getItem('kc_custom_learning_v17') || '[]');
     let localCustomDocs = JSON.parse(localStorage.getItem('kc_custom_docs_v17') || '[]');
+    let localCustomQuick = JSON.parse(localStorage.getItem('kc_custom_quick_v17') || '[]');
 
     let dataset = [...baseDataset, ...localCustomDataset];
     let docDataset = [...baseDocDataset, ...localCustomDocs];
+    let quickDataset = [...baseQuickLinks, ...localCustomQuick];
 
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
@@ -809,19 +784,24 @@
     let searchQuery = '';
     let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v17') || 'ALL';
     let docSearchQuery = '';
+    let quickSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
 
-    // Configurable Power Users List
+    // View Modes
+    let learningViewMode = localStorage.getItem('user_pref_learning_view') || 'grid';
+    let docViewMode = localStorage.getItem('user_pref_doc_view') || 'list';
+    let filterBookmarksOnly = false;
+
+    // Power User Configuration
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
     let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
+    let powerUserOverride = localStorage.getItem('kc_power_override') !== 'normal'; // Mode switcher
 
     let isLearningSelectionMode = false;
     let isDocSelectionMode = false;
-
     let selectedLearningIndices = new Set();
     let selectedDocIndices = new Set();
-
     let pendingAction = null; 
 
     const categoryColors = {
@@ -833,8 +813,17 @@
       'trademark': { bg: '#fce8e6', color: '#c5221f' },
       'assessment': { bg: '#e8f0fe', color: '#1a73e8' },
       'additional reference materials': { bg: '#feefe3', color: '#b06000' },
+      'quick links': { bg: '#e6f4ea', color: '#1e8e3e' },
       'default': { bg: '#f1f3f4', color: '#5f6368' }
     };
+
+    /* EXTRACT FIRST NAME DISPLAY (e.g. prabhaharan.j@maxval.com -> Prabhaharan) */
+    function extractDisplayName(email) {
+      if (!email || email.indexOf("@") === -1) return "User";
+      var handle = email.split("@")[0];
+      var firstName = handle.split(".")[0];
+      return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    }
 
     function cleanAsciiText(str) {
       if (!str) return '';
@@ -858,9 +847,8 @@
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
       window[cbName] = function(data) {
-        try {
-          if (callback) callback(data);
-        } finally {
+        try { if (callback) callback(data); } 
+        finally {
           delete window[cbName];
           const script = document.getElementById(cbName);
           if (script) script.remove();
@@ -877,12 +865,11 @@
       script.onerror = function() {
         delete window[cbName];
         script.remove();
-        if (callback) callback({ status: 'FAILED', message: 'Connection to verification server failed.' });
+        if (callback) callback({ status: 'FAILED', message: 'Connection error.' });
       };
       document.body.appendChild(script);
     }
 
-    /* GOOGLE SSO & EMAIL VALIDATION WITH OTP LOCK */
     function detectGoogleSessionAccount() {
       callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
         if (data && data.email && data.email.includes('@maxval.com')) {
@@ -932,13 +919,13 @@
       pendingOtpEmail = input;
 
       callGasJsonp({ action: 'SEND_LOGIN_OTP', email: pendingOtpEmail }, function(data) {
-        btn.textContent = "Send OTP Passcode to Inbox";
+        btn.textContent = "Send Passcode to Inbox";
         btn.disabled = false;
         if (data && data.status === "SUCCESS") {
           document.getElementById('otpRequestForm').style.display = 'none';
           document.getElementById('otpVerifyForm').style.display = 'flex';
         } else {
-          alert(data.message || "Failed to send OTP code.");
+          alert(data.message || "Failed to send passcode.");
         }
       });
     }
@@ -952,7 +939,7 @@
       btn.disabled = true;
 
       callGasJsonp({ action: 'VERIFY_LOGIN_OTP', email: pendingOtpEmail, otp: enteredOtp }, function(data) {
-        btn.textContent = "Verify OTP & Access Portal";
+        btn.textContent = "Verify Passcode & Access Portal";
         btn.disabled = false;
         if (data && data.status === "SUCCESS") {
           currentUser = pendingOtpEmail;
@@ -969,11 +956,12 @@
           document.getElementById('mandatoryLockOverlay').style.display = 'none';
           updateUserBadgeDisplay();
           updatePowerUserUIElements();
-          showInlineBanner(`Verified & Signed In: ${currentUser}`);
+          showInlineBanner(`Welcome ${extractDisplayName(currentUser)}!`);
           renderLearningHub();
           renderDocumentHub();
+          renderQuickLinks();
         } else {
-          alert(data.message || "Invalid OTP entered.");
+          alert(data.message || "Invalid passcode entered.");
         }
       });
     }
@@ -986,6 +974,7 @@
 
     function openProfileModal() {
       if (!currentUser) { checkUserLoginState(); return; }
+      document.getElementById('modalProfileDisplay').textContent = extractDisplayName(currentUser);
       document.getElementById('modalProfileEmail').textContent = currentUser;
       document.getElementById('profileModalOverlay').classList.add('open');
       scrollParentToTop();
@@ -1004,10 +993,30 @@
     function updateUserBadgeDisplay() {
       const displayElem = document.getElementById('activeUserDisplay');
       if (currentUser) {
-        displayElem.textContent = `${currentUser.split('@')[0]}@maxval.com`;
+        displayElem.textContent = extractDisplayName(currentUser);
       } else {
         displayElem.textContent = "Sign In (@maxval.com)";
       }
+    }
+
+    function isPowerUser(email) {
+      if (!email) return false;
+      if (!powerUserOverride) return false; // Respect Mode Switcher
+      return powerUsers.has(email.toLowerCase().trim());
+    }
+
+    function togglePowerUserModeOverride() {
+      powerUserOverride = !powerUserOverride;
+      localStorage.setItem('kc_power_override', powerUserOverride ? 'power' : 'normal');
+      
+      document.getElementById('activeModeLabel').textContent = powerUserOverride ? "Power User Admin Mode" : "Normal User Mode";
+      document.getElementById('modeSwitchBtnText').textContent = powerUserOverride ? "Switch to Normal Mode" : "Switch to Power Admin Mode";
+      
+      updatePowerUserUIElements();
+      renderLearningHub();
+      renderDocumentHub();
+      renderQuickLinks();
+      showInlineBanner(`Switched to ${powerUserOverride ? 'Power User Admin Mode' : 'Normal User Mode'}`);
     }
 
     function updatePowerUserUIElements() {
@@ -1022,7 +1031,7 @@
         if (learningAdminActions) learningAdminActions.style.display = 'flex';
         if (docAdminActions) docAdminActions.style.display = 'flex';
       } else {
-        if (powerTabBtn) powerTabBtn.style.display = 'none';
+        if (powerTabBtn) powerTabBtn.style.display = 'inline-flex'; // Always visible to Power Users to switch back
         if (submitLinkBtn) submitLinkBtn.style.display = 'none';
         if (learningAdminActions) learningAdminActions.style.display = 'none';
         if (docAdminActions) docAdminActions.style.display = 'none';
@@ -1093,9 +1102,41 @@
       renderLearningHub();
     }
 
-    function isPowerUser(email) {
-      if (!email) return false;
-      return powerUsers.has(email.toLowerCase().trim());
+    function toggleBookmarkOnlyFilter() {
+      filterBookmarksOnly = !filterBookmarksOnly;
+      const pill = document.getElementById('bookmarkContainer');
+      if (filterBookmarksOnly) pill.classList.add('filter-active');
+      else pill.classList.remove('filter-active');
+      
+      renderLearningHub();
+      renderDocumentHub();
+      renderQuickLinks();
+    }
+
+    function switchViewMode(hub, mode) {
+      if (hub === 'learning') {
+        learningViewMode = mode;
+        localStorage.setItem('user_pref_learning_view', mode);
+        document.getElementById('learningGridBtn').classList.toggle('active', mode === 'grid');
+        document.getElementById('learningListBtn').classList.toggle('active', mode === 'list');
+        renderLearningHub();
+      } else {
+        docViewMode = mode;
+        localStorage.setItem('user_pref_doc_view', mode);
+        document.getElementById('docGridBtn').classList.toggle('active', mode === 'grid');
+        document.getElementById('docListBtn').classList.toggle('active', mode === 'list');
+        renderDocumentHub();
+      }
+    }
+
+    function triggerAiDescriptionEngine() {
+      showInlineBanner("Triggered AI Description Engine across all tiles...");
+      dataset.forEach(res => {
+        callGasJsonp({ action: 'GENERATE_AI_DESCRIPTIONS', title: res.name, category: res.category }, function(data) {
+          if (data && data.description) res.desc = data.description;
+          renderLearningHub();
+        });
+      });
     }
 
     function openUserAnalyticsDashboard() {
@@ -1118,7 +1159,7 @@
           const userKeys = Object.keys(users);
 
           if (userKeys.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No user progress data recorded yet.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1rem;">No user progress data recorded yet.</td></tr>`;
           } else {
             tbody.innerHTML = userKeys.map(email => {
               const u = users[email];
@@ -1127,7 +1168,7 @@
 
               return `
                 <tr>
-                  <td><strong>${email}</strong></td>
+                  <td><strong>${extractDisplayName(email)}</strong> (${email})</td>
                   <td>${u.lastLogin || 'N/A'}</td>
                   <td>
                     <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
@@ -1141,11 +1182,11 @@
                   </td>
                   <td>
                     <div style="display:flex; gap:0.25rem; align-items:center;">
-                      <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${email}', event)">
-                        <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>Details</span>
+                      <button type="button" class="btn-secondary" style="padding:0.2rem 0.4rem; font-size:0.72rem;" onclick="viewUserDetailBreakdown('${email}', event)">
+                        <span class="material-icons-outlined" style="font-size:13px;">visibility</span><span>Details</span>
                       </button>
-                      <button type="button" class="btn-danger" style="padding:0.25rem 0.4rem; font-size:0.75rem;" onclick="window.deleteUserProgressRecord('${email}', event)" title="Delete User Progress Record">
-                        <span class="material-icons-outlined" style="font-size:14px;">delete</span>
+                      <button type="button" class="btn-danger" style="padding:0.2rem 0.35rem; font-size:0.72rem;" onclick="window.deleteUserProgressRecord('${email}', event)" title="Delete User Record">
+                        <span class="material-icons-outlined" style="font-size:13px;">delete</span>
                       </button>
                     </div>
                   </td>
@@ -1161,7 +1202,7 @@
 
           tbody.innerHTML = `
             <tr>
-              <td><strong>${currentUser} (You)</strong></td>
+              <td><strong>${extractDisplayName(currentUser)} (You)</strong></td>
               <td>${u.lastLogin || 'Active Now'}</td>
               <td>
                 <span class="doc-type-tag" style="background:var(--google-green-light); color:var(--google-green);">
@@ -1174,8 +1215,8 @@
                 </span>
               </td>
               <td>
-                <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="viewUserDetailBreakdown('${currentUser}', event)">
-                  <span class="material-icons-outlined" style="font-size:14px;">visibility</span><span>My Details</span>
+                <button type="button" class="btn-secondary" style="padding:0.2rem 0.4rem; font-size:0.72rem;" onclick="viewUserDetailBreakdown('${currentUser}', event)">
+                  <span class="material-icons-outlined" style="font-size:13px;">visibility</span><span>My Details</span>
                 </button>
               </td>
             </tr>
@@ -1188,17 +1229,12 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    /* POPUP CONFIRMATION DIALOG & DASHBOARD DELETION */
     window.deleteUserProgressRecord = function(targetEmail, event) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+      if (event) { event.preventDefault(); event.stopPropagation(); }
       if (!isPowerUser(currentUser)) return;
 
       const cleanedTarget = targetEmail.trim().toLowerCase();
 
-      // NATIVE POPUP CONFIRMATION MODAL
       if (confirm(`Are you sure you want to permanently delete the progress record for ${cleanedTarget}?`)) {
         let localData = JSON.parse(localStorage.getItem('kc_user_analytics_v7')) || { users: {} };
         if (localData.users && localData.users[cleanedTarget]) delete localData.users[cleanedTarget];
@@ -1209,7 +1245,7 @@
         localStorage.setItem('kc_global_user_activity_v17', JSON.stringify(globalLog));
 
         callGasJsonp({ action: 'DELETE_USER_ANALYTICS', email: cleanedTarget }, function() {
-          openUserAnalyticsDashboard(); // Instant Re-render
+          openUserAnalyticsDashboard();
         });
 
         showInlineBanner(`Deleted record for ${cleanedTarget}`);
@@ -1221,19 +1257,19 @@
       const analytics = getUserAnalytics();
       const u = (analytics.users && analytics.users[email]) ? analytics.users[email] : { completedTopics: [], seenDocs: [] };
 
-      document.getElementById('detailUserEmailDisplay').textContent = `User Progress Details for: ${email}`;
+      document.getElementById('detailUserEmailDisplay').textContent = `User Details for: ${extractDisplayName(email)} (${email})`;
 
       const completedListElem = document.getElementById('detailCompletedList');
       const completedIds = u.completedTopics || [];
       const completedItems = dataset.filter(d => completedIds.includes(d.id));
 
       if (completedItems.length === 0) {
-        completedListElem.innerHTML = `<li><span style="color:var(--text-secondary);">No completed topics recorded yet.</span></li>`;
+        completedListElem.innerHTML = `<li><span style="color:var(--text-secondary);">No completed topics recorded.</span></li>`;
       } else {
         completedListElem.innerHTML = completedItems.map(item => `
           <li>
             <span><strong>${item.name}</strong> (${item.category})</span>
-            <span class="material-icons-outlined" style="color:var(--google-green); font-size:16px;">check_circle</span>
+            <span class="material-icons-outlined" style="color:var(--google-green); font-size:15px;">check_circle</span>
           </li>
         `).join('');
       }
@@ -1242,12 +1278,12 @@
       const pendingItems = dataset.filter(d => !completedIds.includes(d.id));
 
       if (pendingItems.length === 0) {
-        pendingListElem.innerHTML = `<li><span style="color:var(--google-green);">All available topics completed!</span></li>`;
+        pendingListElem.innerHTML = `<li><span style="color:var(--google-green);">All topics completed!</span></li>`;
       } else {
         pendingListElem.innerHTML = pendingItems.map(item => `
           <li>
             <span>${item.name} (${item.category})</span>
-            <span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">radio_button_unchecked</span>
+            <span class="material-icons-outlined" style="color:var(--google-red); font-size:15px;">radio_button_unchecked</span>
           </li>
         `).join('');
       }
@@ -1256,12 +1292,12 @@
       const seenDocs = u.seenDocs || [];
 
       if (seenDocs.length === 0) {
-        docsListElem.innerHTML = `<li><span style="color:var(--text-secondary);">No document viewing history recorded yet.</span></li>`;
+        docsListElem.innerHTML = `<li><span style="color:var(--text-secondary);">No viewing history recorded.</span></li>`;
       } else {
         docsListElem.innerHTML = seenDocs.map(doc => `
           <li>
             <span><strong>${doc.pkg}</strong> - ${doc.type}</span>
-            <span style="font-size:0.75rem; color:var(--text-secondary);">${doc.timestamp || ''}</span>
+            <span style="font-size:0.73rem; color:var(--text-secondary);">${doc.timestamp || ''}</span>
           </li>
         `).join('');
       }
@@ -1273,17 +1309,8 @@
 
     function promptPowerUserSettings() {
       if (!currentUser) { checkUserLoginState(); return; }
-      
-      if (isPowerUser(currentUser)) {
-        renderPowerUsersList();
-        document.getElementById('powerUserSettingsModalOverlay').classList.add('open');
-        scrollParentToTop();
-        return;
-      }
-
-      pendingAction = { type: 'open_power_settings' };
-      document.getElementById('pinInput').value = '';
-      document.getElementById('pinModalOverlay').classList.add('open');
+      renderPowerUsersList();
+      document.getElementById('powerUserSettingsModalOverlay').classList.add('open');
       scrollParentToTop();
     }
 
@@ -1292,15 +1319,15 @@
       const list = Array.from(powerUsers);
 
       if (list.length === 0) {
-        container.innerHTML = `<p style="font-size: 0.8rem; color: var(--text-secondary);">No power users configured.</p>`;
+        container.innerHTML = `<p style="font-size: 0.78rem; color: var(--text-secondary);">No power users configured.</p>`;
         return;
       }
 
       container.innerHTML = list.map(email => `
         <div class="power-user-chip">
-          <span>${email}</span>
+          <span>${extractDisplayName(email)} (${email})</span>
           <button type="button" onclick="handleRemovePowerUser('${email}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;" title="Remove Power User">
-            <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
+            <span class="material-icons-outlined" style="font-size:15px;">cancel</span>
           </button>
         </div>
       `).join('');
@@ -1323,10 +1350,10 @@
       updatePowerUserUIElements();
 
       if (input === currentUser) {
-        alert("Your account has been granted Power User privileges! The system will now sign you out. Please sign in again to activate your admin privileges.");
+        alert("Your account has been granted Power User privileges! The system will sign you out so your elevated controls take effect.");
         handleSignOut();
       } else {
-        showInlineBanner(`Power User notification email sent to ${input}. Please notify them to log in again to activate privileges.`);
+        showInlineBanner(`Power User notification email sent to ${input}.`);
       }
     }
 
@@ -1360,12 +1387,10 @@
       document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       el.classList.add('active');
-      
-      const bookmarkContainer = document.getElementById('bookmarkContainer');
-      bookmarkContainer.style.display = (tabId === 'learningHubTab') ? 'inline-flex' : 'none';
 
       renderLearningHub();
       renderDocumentHub();
+      renderQuickLinks();
       setTimeout(notifyIframeHeight, 50);
     }
 
@@ -1373,9 +1398,15 @@
       if (target === 'learning') {
         document.getElementById('learningFields').style.display = 'block';
         document.getElementById('documentFields').style.display = 'none';
-      } else {
+        document.getElementById('quickFields').style.display = 'none';
+      } else if (target === 'document') {
         document.getElementById('learningFields').style.display = 'none';
         document.getElementById('documentFields').style.display = 'block';
+        document.getElementById('quickFields').style.display = 'none';
+      } else {
+        document.getElementById('learningFields').style.display = 'none';
+        document.getElementById('documentFields').style.display = 'none';
+        document.getElementById('quickFields').style.display = 'block';
       }
       setTimeout(notifyIframeHeight, 50);
     }
@@ -1411,6 +1442,8 @@
       if (bookmarkedIds.has(id)) { bookmarkedIds.delete(id); } else { bookmarkedIds.add(id); }
       localStorage.setItem('user_private_bookmarks_v17', JSON.stringify(Array.from(bookmarkedIds)));
       renderLearningHub();
+      renderDocumentHub();
+      renderQuickLinks();
     }
 
     function getCategoryStyle(category) {
@@ -1423,40 +1456,19 @@
         isLearningSelectionMode = !isLearningSelectionMode;
         selectedLearningIndices.clear();
         document.getElementById('learningSelectBtnLabel').textContent = isLearningSelectionMode ? "Cancel Selection Mode" : "Select Multiple to Delete";
-        const grid = document.getElementById('resourcesGrid');
-        if (isLearningSelectionMode) {
-          grid.classList.add('selection-mode-active');
-        } else {
-          grid.classList.remove('selection-mode-active');
-        }
-        updateLearningBulkUI();
         renderLearningHub();
       } else {
         isDocSelectionMode = !isDocSelectionMode;
         selectedDocIndices.clear();
         document.getElementById('docSelectBtnLabel').textContent = isDocSelectionMode ? "Cancel Selection Mode" : "Select Multiple to Delete";
-        
-        const thCheckbox = document.querySelector('.doc-checkbox-th');
-        if (thCheckbox) thCheckbox.style.display = isDocSelectionMode ? 'table-cell' : 'none';
-
-        const tbody = document.getElementById('docTableBody');
-        if (isDocSelectionMode) {
-          tbody.classList.add('selection-mode-active');
-        } else {
-          tbody.classList.remove('selection-mode-active');
-        }
-        updateDocBulkUI();
         renderDocumentHub();
       }
     }
 
     function toggleLearningSelect(index, event) {
       event.stopPropagation();
-      if (selectedLearningIndices.has(index)) {
-        selectedLearningIndices.delete(index);
-      } else {
-        selectedLearningIndices.add(index);
-      }
+      if (selectedLearningIndices.has(index)) { selectedLearningIndices.delete(index); } 
+      else { selectedLearningIndices.add(index); }
       updateLearningBulkUI();
     }
 
@@ -1465,61 +1477,15 @@
       const btn = document.getElementById('learningBulkDeleteBtn');
       document.getElementById('learningSelectedCount').textContent = count;
       btn.style.display = (isLearningSelectionMode && count > 0) ? 'inline-flex' : 'none';
-
-      document.querySelectorAll('#resourcesGrid .resource-card').forEach(card => {
-        const idx = parseInt(card.getAttribute('data-index'), 10);
-        if (selectedLearningIndices.has(idx)) {
-          card.classList.add('selected-card');
-        } else {
-          card.classList.remove('selected-card');
-        }
-      });
-    }
-
-    function toggleDocSelect(index, event) {
-      event.stopPropagation();
-      if (selectedDocIndices.has(index)) {
-        selectedDocIndices.delete(index);
-      } else {
-        selectedDocIndices.add(index);
-      }
-      updateDocBulkUI();
-    }
-
-    function toggleSelectAllDocs(masterCheckbox) {
-      selectedDocIndices.clear();
-      if (masterCheckbox.checked) {
-        document.querySelectorAll('#docTableBody .item-select-checkbox').forEach(cb => {
-          const idx = parseInt(cb.getAttribute('data-index'), 10);
-          selectedDocIndices.add(idx);
-          cb.checked = true;
-        });
-      } else {
-        document.querySelectorAll('#docTableBody .item-select-checkbox').forEach(cb => {
-          cb.checked = false;
-        });
-      }
-      updateDocBulkUI();
-    }
-
-    function updateDocBulkUI() {
-      const count = selectedDocIndices.size;
-      const btn = document.getElementById('docBulkDeleteBtn');
-      document.getElementById('docSelectedCount').textContent = count;
-      btn.style.display = (isDocSelectionMode && count > 0) ? 'inline-flex' : 'none';
     }
 
     function handleActionRequest(type, index, hub) {
       if (!currentUser) { checkUserLoginState(); return; }
 
       if (isPowerUser(currentUser)) {
-        if (type === 'delete') {
-          executeDeleteItem(hub, index);
-        } else if (type === 'bulk_delete') {
-          executeBulkDeleteItem(hub);
-        } else if (type === 'edit') {
-          executeEditItem(hub, index);
-        }
+        if (type === 'delete') executeDeleteItem(hub, index);
+        else if (type === 'bulk_delete') executeBulkDeleteItem(hub);
+        else if (type === 'edit') executeEditItem(hub, index);
         return;
       }
 
@@ -1532,7 +1498,6 @@
     function handlePinSubmission(e) {
       e.preventDefault();
       const enteredPin = document.getElementById('pinInput').value.trim();
-      
       if (enteredPin !== ADMIN_PIN) {
         alert("Incorrect PIN! Action unauthorized.");
         document.getElementById('pinInput').value = '';
@@ -1540,21 +1505,12 @@
       }
 
       closeModal('pinModalOverlay');
-
       if (!pendingAction) return;
 
       const { type, index, hub } = pendingAction;
-
-      if (type === 'delete') {
-        executeDeleteItem(hub, index);
-      } else if (type === 'bulk_delete') {
-        executeBulkDeleteItem(hub);
-      } else if (type === 'edit') {
-        executeEditItem(hub, index);
-      } else if (type === 'open_power_settings') {
-        renderPowerUsersList();
-        document.getElementById('powerUserSettingsModalOverlay').classList.add('open');
-      }
+      if (type === 'delete') executeDeleteItem(hub, index);
+      else if (type === 'bulk_delete') executeBulkDeleteItem(hub);
+      else if (type === 'edit') executeEditItem(hub, index);
       
       pendingAction = null;
     }
@@ -1562,18 +1518,19 @@
     function executeDeleteItem(hub, index) {
       if (hub === 'learning') {
         dataset.splice(index, 1);
-        selectedLearningIndices.delete(index);
         const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
         localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
-        updateLearningBulkUI();
         renderLearningHub();
-      } else {
+      } else if (hub === 'document') {
         docDataset.splice(index, 1);
-        selectedDocIndices.delete(index);
         const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
         localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
-        updateDocBulkUI();
         renderDocumentHub();
+      } else {
+        quickDataset.splice(index, 1);
+        const customQuickRemaining = quickDataset.filter(q => q.id && q.id.startsWith('ql_custom_'));
+        localStorage.setItem('kc_custom_quick_v17', JSON.stringify(customQuickRemaining));
+        renderQuickLinks();
       }
       showInlineBanner("Item successfully deleted.");
     }
@@ -1583,22 +1540,14 @@
         const sortedIndices = Array.from(selectedLearningIndices).sort((a, b) => b - a);
         sortedIndices.forEach(idx => dataset.splice(idx, 1));
         selectedLearningIndices.clear();
-        
-        const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
-        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
-        
+        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(dataset.filter(item => item.id.startsWith('res_custom_'))));
         toggleSelectionMode('learning');
-        renderLearningHub();
       } else {
         const sortedIndices = Array.from(selectedDocIndices).sort((a, b) => b - a);
         sortedIndices.forEach(idx => docDataset.splice(idx, 1));
         selectedDocIndices.clear();
-
-        const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
-        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
-
+        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg))));
         toggleSelectionMode('document');
-        renderDocumentHub();
       }
       showInlineBanner("Selected items successfully deleted.");
     }
@@ -1615,12 +1564,16 @@
         document.getElementById('newTitle').value = item.name;
         document.getElementById('newModule').value = item.category;
         document.getElementById('newLink').value = item.link;
-      } else {
+      } else if (hub === 'document') {
         const doc = docDataset[index];
         document.getElementById('newPkg').value = doc.pkg;
         document.getElementById('newVer').value = doc.ver;
         document.getElementById('newDocType').value = doc.type;
         document.getElementById('newLink').value = doc.link;
+      } else {
+        const q = quickDataset[index];
+        document.getElementById('newQuickName').value = q.name;
+        document.getElementById('newLink').value = q.link;
       }
 
       document.getElementById('submitterEmail').value = currentUser;
@@ -1628,131 +1581,244 @@
       scrollParentToTop();
     }
 
+    /* RENDER LEARNING HUB (GRID & LIST VIEWS) */
     function renderLearningHub() {
-      const grid = document.getElementById('resourcesGrid');
+      const container = document.getElementById('learningViewContainer');
       const filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery) || res.category.toLowerCase().includes(searchQuery);
-        return matchesModule && matchesSearch;
+        const matchesBookmark = !filterBookmarksOnly || bookmarkedIds.has(res.id);
+        return matchesModule && matchesSearch && matchesBookmark;
       });
 
-      document.getElementById('learningActiveCount').textContent = filtered.length;
+      const analytics = getUserAnalytics();
+      const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
+      const completedCount = userRecord.completedTopics ? userRecord.completedTopics.length : 0;
+      
+      document.getElementById('learningActiveCount').textContent = `${completedCount} / ${dataset.length} Completed`;
       document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:1.5rem;"><span class="material-icons-outlined" style="font-size:32px;">search_off</span><h3>No matching learning items found</h3></div>`;
+        container.innerHTML = `<div style="text-align:center; padding:1.25rem;"><span class="material-icons-outlined" style="font-size:32px; color:var(--text-secondary);">search_off</span><h3>No matching learning items found</h3></div>`;
         setTimeout(notifyIframeHeight, 50);
         return;
       }
 
-      const analytics = getUserAnalytics();
-      const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
       const powerUserActive = isPowerUser(currentUser);
 
-      grid.innerHTML = filtered.map(res => {
-        const style = getCategoryStyle(res.category);
-        const isBookmarked = bookmarkedIds.has(res.id);
-        const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
-        const isSelected = selectedLearningIndices.has(res.originalIndex);
+      if (learningViewMode === 'grid') {
+        container.className = 'resources-grid';
+        container.innerHTML = filtered.map(res => {
+          const style = getCategoryStyle(res.category);
+          const isBookmarked = bookmarkedIds.has(res.id);
+          const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
 
-        return `
-          <article class="resource-card ${isSelected ? 'selected-card' : ''}" data-index="${res.originalIndex}" onclick="toggleTileActive(this)">
+          return `
+            <article class="resource-card" data-index="${res.originalIndex}">
+              <div>
+                <div class="card-header">
+                  <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
+                  <div class="action-icons" onclick="event.stopPropagation()">
+                    <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Completed' : 'Mark as Complete'}">
+                      <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
+                        ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                      </span>
+                    </button>
+                    <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark">
+                      <span class="material-icons-outlined" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                    </button>
+                  </div>
+                </div>
+                <h3 class="card-title">${res.name}</h3>
+                <p class="card-desc">${res.desc || 'Symphony implementation reference guideline.'}</p>
+              </div>
+              <div class="card-actions" onclick="event.stopPropagation()">
+                <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
+                  <span>Open Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
+                </a>
+                ${powerUserActive ? `
+                  <div class="action-icons">
+                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')" title="Edit Resource"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
+                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')" title="Delete Resource"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+                  </div>
+                ` : ''}
+              </div>
+            </article>
+          `;
+        }).join('');
+      } else {
+        container.className = 'table-container';
+        container.innerHTML = `
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Bookmark</th><th>Module</th><th>Description</th><th>Completed</th><th>Link</th>${powerUserActive ? '<th>Actions</th>' : ''}
+              </tr>
+            </thead>
+            <tbody>
+              ${filtered.map(res => {
+                const isBookmarked = bookmarkedIds.has(res.id);
+                const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
+                return `
+                  <tr>
+                    <td>
+                      <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
+                        <span class="material-icons-outlined" style="font-size:16px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                      </button>
+                    </td>
+                    <td><strong>${res.name}</strong><br><span style="font-size:0.7rem; color:var(--text-secondary);">${res.category}</span></td>
+                    <td><span style="font-size:0.75rem; color:var(--text-secondary);">${res.desc || 'Implementation guidelines'}</span></td>
+                    <td>
+                      <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')">
+                        <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:18px;">
+                          ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                        </span>
+                      </button>
+                    </td>
+                    <td>
+                      <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
+                        <span>Open</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span>
+                      </a>
+                    </td>
+                    ${powerUserActive ? `
+                      <td>
+                        <div class="action-icons">
+                          <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
+                          <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
+                        </div>
+                      </td>
+                    ` : ''}
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      setTimeout(notifyIframeHeight, 50);
+    }
+
+    /* RENDER DOCUMENT HUB */
+    function renderDocumentHub() {
+      const container = document.getElementById('docViewContainer');
+      const filtered = docDataset.map((doc, originalIndex) => ({ ...doc, originalIndex })).filter(doc => {
+        const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
+        const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) || doc.ver.toLowerCase().includes(docSearchQuery) || doc.type.toLowerCase().includes(docSearchQuery);
+        return matchesPkg && matchesSearch;
+      });
+
+      document.getElementById('docActiveCount').textContent = `${filtered.length} Total Documents`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 1.25rem;">No matching documents found.</div>`;
+        setTimeout(notifyIframeHeight, 50);
+        return;
+      }
+
+      const powerUserActive = isPowerUser(currentUser);
+
+      if (docViewMode === 'list') {
+        container.className = 'table-container';
+        container.innerHTML = `
+          <table class="doc-table">
+            <thead>
+              <tr><th>Package Name</th><th>Version</th><th>Type of Doc</th><th>Description</th><th>Link</th>${powerUserActive ? '<th>Actions</th>' : ''}</tr>
+            </thead>
+            <tbody>
+              ${filtered.map(doc => `
+                <tr>
+                  <td><strong>${doc.pkg}</strong></td>
+                  <td>${doc.ver}</td>
+                  <td><span class="doc-type-tag">${doc.type}</span></td>
+                  <td><span style="font-size:0.75rem; color:var(--text-secondary);">${doc.desc || 'Technical package doc'}</span></td>
+                  <td>
+                    <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
+                      <span>View</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span>
+                    </a>
+                  </td>
+                  ${powerUserActive ? `
+                    <td>
+                      <div class="action-icons">
+                        <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
+                        <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
+                      </div>
+                    </td>
+                  ` : ''}
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } else {
+        container.className = 'resources-grid';
+        container.innerHTML = filtered.map(doc => `
+          <article class="resource-card">
             <div>
               <div class="card-header">
-                <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
-                <div class="action-icons" onclick="event.stopPropagation()">
-                  <input type="checkbox" class="item-select-checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLearningSelect(${res.originalIndex}, event)" title="Select Item">
-                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Completed' : 'Mark as Complete'}">
-                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
-                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
-                    </span>
-                  </button>
-                  <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark">
-                    <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
-                  </button>
-                </div>
+                <span class="doc-type-tag">${doc.type}</span>
+                <span style="font-size:0.7rem; color:var(--text-secondary);">${doc.ver}</span>
               </div>
-              <h3 class="card-title">${res.name}</h3>
+              <h3 class="card-title">${doc.pkg}</h3>
+              <p class="card-desc">${doc.desc || 'Technical documentation guide.'}</p>
             </div>
-            <div class="card-actions" onclick="event.stopPropagation()">
-              <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
-                <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+            <div class="card-actions">
+              <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
+                <span>View Doc</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
               </a>
               ${powerUserActive ? `
                 <div class="action-icons">
-                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')" title="Edit Resource">
-                    <span class="material-icons-outlined" style="font-size:18px;">edit</span>
-                  </button>
-                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')" title="Delete Resource">
-                    <span class="material-icons-outlined" style="font-size:18px;">delete</span>
-                  </button>
+                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
+                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
                 </div>
               ` : ''}
             </div>
           </article>
-        `;
-      }).join('');
+        `).join('');
+      }
 
       setTimeout(notifyIframeHeight, 50);
     }
 
-    function renderDocumentHub() {
-      const tbody = document.getElementById('docTableBody');
-      const filteredWithIndex = docDataset.map((doc, idx) => ({ ...doc, originalIndex: idx })).filter(doc => {
-        const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
-        const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) ||
-                            doc.ver.toLowerCase().includes(docSearchQuery) ||
-                            doc.type.toLowerCase().includes(docSearchQuery);
-        return matchesPkg && matchesSearch;
+    /* RENDER QUICK LINKS TAB */
+    function renderQuickLinks() {
+      const container = document.getElementById('quickLinksContainer');
+      const filtered = quickDataset.map((q, originalIndex) => ({ ...q, originalIndex })).filter(q => {
+        return q.name.toLowerCase().includes(quickSearchQuery) || q.desc.toLowerCase().includes(quickSearchQuery);
       });
 
-      document.getElementById('docActiveCount').textContent = filteredWithIndex.length;
-
-      if (filteredWithIndex.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 1.25rem;">No matching documents found.</td></tr>`;
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:1.25rem;">No matching quick links found.</div>`;
         setTimeout(notifyIframeHeight, 50);
         return;
       }
 
       const powerUserActive = isPowerUser(currentUser);
 
-      tbody.innerHTML = filteredWithIndex.map(doc => {
-        const isSelected = selectedDocIndices.has(doc.originalIndex);
-        return `
-          <tr onclick="toggleTileActive(this)">
-            <td class="doc-checkbox-td" style="display:${isDocSelectionMode ? 'table-cell' : 'none'};" onclick="event.stopPropagation()">
-              <input type="checkbox" class="item-select-checkbox" data-index="${doc.originalIndex}" ${isSelected ? 'checked' : ''} onchange="toggleDocSelect(${doc.originalIndex}, event)">
-            </td>
-            <td><strong>${doc.pkg}</strong></td>
-            <td>${doc.ver}</td>
-            <td><span class="doc-type-tag">${doc.type}</span></td>
-            <td onclick="event.stopPropagation()">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
-                  <span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-                </a>
-                ${powerUserActive ? `
-                  <div class="action-icons">
-                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')" title="Edit Doc">
-                      <span class="material-icons-outlined" style="font-size:18px;">edit</span>
-                    </button>
-                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')" title="Delete Doc">
-                      <span class="material-icons-outlined" style="font-size:18px;">delete</span>
-                    </button>
-                  </div>
-                ` : ''}
+      container.innerHTML = filtered.map(q => `
+        <article class="resource-card">
+          <div>
+            <div class="card-header">
+              <span class="category-badge" style="background:var(--google-green-light); color:var(--google-green);">Quick Link</span>
+            </div>
+            <h3 class="card-title">${q.name}</h3>
+            <p class="card-desc">${q.desc || 'Direct Symphony implementation tool.'}</p>
+          </div>
+          <div class="card-actions">
+            <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+              <span>Open Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
+            </a>
+            ${powerUserActive ? `
+              <div class="action-icons">
+                <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
+                <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
               </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
+            ` : ''}
+          </div>
+        </article>
+      `).join('');
 
       setTimeout(notifyIframeHeight, 50);
-    }
-
-    function toggleTileActive(cardElement) {
-      document.querySelectorAll('.resource-card, .doc-table tr').forEach(el => el.classList.remove('selected-active'));
-      cardElement.classList.add('selected-active');
     }
 
     function sendNotificationEmail(details) {
@@ -1770,7 +1836,7 @@
       if (e) { e.preventDefault(); e.stopPropagation(); }
 
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = "Publishing & Delivering Email...";
+      submitBtn.textContent = "Publishing Link...";
       submitBtn.disabled = true;
 
       const editIndex = document.getElementById('editItemIndex').value;
@@ -1792,7 +1858,7 @@
           dataset[editIndex].category = category;
           dataset[editIndex].link = link;
         } else {
-          const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link };
+          const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link, desc: 'User published resource.' };
           dataset.push(newResource);
           localCustomDataset.push(newResource);
         }
@@ -1800,7 +1866,7 @@
         localStorage.setItem('kc_custom_learning_v17', JSON.stringify(localCustomDataset));
         syncDropdownOptions();
         renderLearningHub();
-      } else {
+      } else if (targetHub === 'document') {
         const pkg = document.getElementById('newPkg').value.trim() || 'New Package';
         const ver = document.getElementById('newVer').value.trim() || 'v1.0';
         const type = document.getElementById('newDocType').value.trim() || 'Document';
@@ -1812,7 +1878,7 @@
           docDataset[editIndex].type = type;
           docDataset[editIndex].link = link;
         } else {
-          const newDoc = { pkg, ver, type, link };
+          const newDoc = { pkg, ver, type, link, desc: 'User published document.' };
           docDataset.push(newDoc);
           localCustomDocs.push(newDoc);
         }
@@ -1820,6 +1886,18 @@
         localStorage.setItem('kc_custom_docs_v17', JSON.stringify(localCustomDocs));
         syncDocPackageOptions();
         renderDocumentHub();
+      } else {
+        releaseTitle = document.getElementById('newQuickName').value.trim() || 'New Quick Link';
+        if (editIndex !== "") {
+          quickDataset[editIndex].name = releaseTitle;
+          quickDataset[editIndex].link = link;
+        } else {
+          const newQuick = { id: `ql_custom_${Date.now()}`, name: releaseTitle, category: 'Quick Links', link: link, desc: 'User published quick link.' };
+          quickDataset.push(newQuick);
+          localCustomQuick.push(newQuick);
+        }
+        localStorage.setItem('kc_custom_quick_v17', JSON.stringify(localCustomQuick));
+        renderQuickLinks();
       }
 
       if (shouldSend) {
@@ -1834,7 +1912,7 @@
       }
 
       closeModal('addModalOverlay');
-      showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live and notification email sent.");
+      showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live.");
       
       submitBtn.textContent = "Publish Link Live";
       submitBtn.disabled = false;
@@ -1845,6 +1923,7 @@
       document.getElementById('newPkg').value = '';
       document.getElementById('newVer').value = '';
       document.getElementById('newDocType').value = '';
+      document.getElementById('newQuickName').value = '';
       document.getElementById('newLink').value = '';
 
       return false;
@@ -1856,6 +1935,7 @@
       syncDocPackageOptions();
       renderLearningHub();
       renderDocumentHub();
+      renderQuickLinks();
 
       document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
 
@@ -1880,9 +1960,14 @@
         docSearchQuery = e.target.value.toLowerCase();
         renderDocumentHub();
       });
+
+      document.getElementById('quickSearchInput').addEventListener('input', (e) => {
+        quickSearchQuery = e.target.value.toLowerCase();
+        renderQuickLinks();
+      });
       
       window.addEventListener('resize', notifyIframeHeight);
-      setTimeout(notifyIframeHeight, 200);
+      setTimeout(notifyIframeHeight, 150);
     });
   </script>
 </body>
