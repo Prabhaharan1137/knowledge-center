@@ -207,9 +207,21 @@
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 0.15rem 0.5rem;
-      font-size: 0.73rem;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
       font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+    .kpi-bookmark-small:hover {
+      background: #fef7e0;
+      border-color: var(--google-yellow);
+    }
+    .kpi-bookmark-small.filter-active {
+      background: #fef7e0;
+      border-color: var(--google-yellow);
+      box-shadow: 0 0 6px rgba(249, 171, 0, 0.4);
     }
 
     .container { width: 100%; padding: 0.75rem 1rem; display: flex; flex-direction: column; }
@@ -269,6 +281,7 @@
       position: relative;
     }
     .resource-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); border-color: var(--google-blue); }
+    .resource-card.highlight-bookmark { border: 2px solid var(--google-yellow) !important; background: #fffdf0; box-shadow: 0 0 8px rgba(249, 171, 0, 0.3); }
     .resource-card.highlight-new { animation: pulseNewCard 2.5s infinite alternate; }
     @keyframes pulseNewCard { 0% { border-color: var(--google-blue); box-shadow: 0 0 4px var(--google-blue); } 100% { border-color: var(--google-purple); box-shadow: 0 0 12px var(--google-purple); } }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
@@ -448,16 +461,6 @@
 
   <div class="top-utility-bar">
     <div class="top-utility-nav">
-      <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">key</span><span>PSO Org Access</span>
-      </a>
-      <a href="https://docs.google.com/spreadsheets/d/1bJju9VxH42h_WgtOka_Rz0CvKWbAHdLMdxNQj6YutxE/edit?gid=2110691200#gid=2110691200" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">assignment_ind</span><span>Project Allocation</span>
-      </a>
-      <a href="https://docs.google.com/spreadsheets/d/1OOm0wgAZdr21o9tPQJbwFBfDef73XCbH1ckOif5PjqQ/edit?gid=1957868564#gid=1957868564" target="_blank" class="top-utility-link">
-        <span class="material-icons-outlined" style="font-size:15px;">table_chart</span><span>Implementation Tracker</span>
-      </a>
-
       <button type="button" class="top-utility-btn user-profile-badge" onclick="openProfileModal()">
         <span class="material-icons-outlined" style="font-size:15px;">account_circle</span>
         <span id="activeUserDisplay">Sign In (@maxval.com)</span>
@@ -490,7 +493,7 @@
         <span class="material-icons-outlined" style="font-size:18px;">bolt</span><span>Quick Links</span>
       </button>
     </nav>
-    <div class="kpi-bookmark-small" id="bookmarkContainer">
+    <div class="kpi-bookmark-small" id="bookmarkContainer" onclick="toggleFilterOnlyBookmarks()" title="Click to filter and highlight bookmarked items">
       <span class="material-icons-outlined" style="color:var(--google-yellow);">star</span>
       <span>Bookmarks: <strong id="kpiBookmarks">0</strong></span>
     </div>
@@ -884,7 +887,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwctxINY9plUZtoIQQKRB6vm71T-F7DrhbDQvahwWq2yFWovJ0_Iv1_yE1Em6FTxEQy/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzAHZRgnpKXKYiCYPhd8XArqU9qTwn3qf_5RkKGUtvZlgz8CInW3oSk7OtEPzsjelaf/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1060,6 +1063,7 @@
     let selectedDocPackage = localStorage.getItem('user_pref_doc_package_v17') || 'ALL';
     let docSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
+    let filterOnlyBookmarks = false;
 
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
@@ -1116,6 +1120,14 @@
       document.getElementById('congratsModuleTitle').textContent = `Completed: ${moduleTitle}`;
       overlay.style.display = 'flex';
       setTimeout(() => { overlay.style.display = 'none'; }, 2500);
+    }
+
+    function toggleFilterOnlyBookmarks() {
+      filterOnlyBookmarks = !filterOnlyBookmarks;
+      const kpiContainer = document.getElementById('bookmarkContainer');
+      kpiContainer.classList.toggle('filter-active', filterOnlyBookmarks);
+      renderLearningHub();
+      showInlineBanner(filterOnlyBookmarks ? "Filtering bookmarked items" : "Showing all learning items");
     }
 
     function setHubViewMode(hub, mode) {
@@ -2059,7 +2071,8 @@
       let filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery) || res.category.toLowerCase().includes(searchQuery);
-        return matchesModule && matchesSearch;
+        const matchesBookmark = filterOnlyBookmarks ? bookmarkedIds.has(res.id) : true;
+        return matchesModule && matchesSearch && matchesBookmark;
       });
 
       // SORT BOOKMARKED ITEMS TO THE VERY TOP FOR INDIVIDUAL USER
@@ -2095,7 +2108,7 @@
         const autoDescription = `Comprehensive training guide covering ${res.name} under the ${res.category} module. Click to view training materials.`;
 
         return `
-          <article class="resource-card ${isSelected ? 'selected-card' : ''} ${isTodayRelease ? 'highlight-new' : ''}" data-index="${res.originalIndex}" title="${autoDescription}" onclick="toggleTileActive(this)">
+          <article class="resource-card ${isSelected ? 'selected-card' : ''} ${isTodayRelease ? 'highlight-new' : ''} ${isBookmarked && filterOnlyBookmarks ? 'highlight-bookmark' : ''}" data-index="${res.originalIndex}" title="${autoDescription}" onclick="toggleTileActive(this)">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
