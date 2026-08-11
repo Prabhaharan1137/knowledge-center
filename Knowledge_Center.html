@@ -261,12 +261,31 @@
     .view-toggle-btn { background: none; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center; }
     .view-toggle-btn.active { background: #ffffff; color: var(--google-blue); box-shadow: var(--shadow-sm); }
 
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
-    .resources-grid.list-view-mode { display: flex; flex-direction: column; gap: 0.5rem; }
-    .resources-grid.list-view-mode .resource-card { flex-direction: row; align-items: center; justify-content: space-between; padding: 0.6rem 0.85rem; gap: 1rem; }
-    .resources-grid.list-view-mode .resource-card .card-header { margin-bottom: 0; flex: 1; align-items: center; }
-    .resources-grid.list-view-mode .resource-card .card-description { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.2rem; }
-    .resources-grid.list-view-mode .resource-card .card-actions { margin-top: 0; border-top: none; padding-top: 0; }
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; width: 100%; }
+    
+    /* REFORMATTED STRUCTURED LIST VIEW FOR LEARNING HUB */
+    .resources-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .resources-list-table th, .resources-list-table td {
+      padding: 0.65rem 0.75rem;
+      text-align: left;
+      vertical-align: middle;
+      border-bottom: 1px solid #f1f3f4;
+      word-wrap: break-word;
+    }
+    .resources-list-table th {
+      background: var(--bg-body);
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
 
     .resource-card { 
       background: var(--bg-card); 
@@ -554,7 +573,7 @@
           </button>
         </div>
       </section>
-      <main class="resources-grid" id="resourcesGrid"></main>
+      <main id="resourcesGridContainer" class="resources-grid"></main>
     </div>
 
     <!-- DOCUMENT HUB TAB -->
@@ -717,7 +736,7 @@
     </div>
   </div>
 
-  <!-- POWER USER CONFIGURATION MODAL WITH VIEW MODE TOGGLE -->
+  <!-- POWER USER CONFIGURATION MODAL WITH VIEW MODE TOGGLE & AI DESCRIPTION BATCH GENERATOR -->
   <div class="modal-overlay" id="powerUserSettingsModalOverlay">
     <div class="modal-content" style="max-width:500px;">
       <div class="modal-header">
@@ -737,6 +756,12 @@
             <span id="viewModeToggleLabel">Switch to Normal View</span>
           </button>
         </div>
+
+        <!-- AI BATCH DESCRIPTION RE-GENERATOR BUTTON -->
+        <button type="button" class="btn-secondary" style="background:var(--google-blue-light); border-color:var(--google-blue); color:var(--google-blue); justify-content:center; padding:0.6rem;" onclick="triggerBatchAiDescriptions()">
+          <span class="material-icons-outlined" style="font-size:16px;">auto_awesome</span>
+          <span>Generate AI Descriptions for All Tiles</span>
+        </button>
 
         <p style="font-size: 0.8rem; color: var(--text-secondary);">
           Power Users have full privileges to edit/delete items live and monitor organization progress metrics.
@@ -783,7 +808,7 @@
     </div>
   </div>
 
-  <!-- ADD LINK MODAL -->
+  <!-- ADD LINK MODAL (DYNAMICALLY ADJUSTS FIELDS PER TAB) -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -897,7 +922,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwnfnQQpLppS__Maf8KaNsPsaVnQFiQW6lXe1RMQWGME-aGyBKMG4Q_XfqEVUXsb7uZ/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwGfPtv_Ol2qAUMdQr3ZHPZZOUaS3F701dWPTlmFxzD8AoRXpyLInKVfQZye_5qtqBH/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1080,7 +1105,6 @@
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
     let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
     
-    // POWER USER VIEW MODE TOGGLE (TRUE = POWER MODE, FALSE = NORMAL USER VIEW)
     let isPowerUserViewMode = true;
 
     let isLearningSelectionMode = false;
@@ -1146,8 +1170,6 @@
         learningHubLayoutMode = mode;
         document.getElementById('learningGridToggleBtn').classList.toggle('active', mode === 'grid');
         document.getElementById('learningListToggleBtn').classList.toggle('active', mode === 'list');
-        const grid = document.getElementById('resourcesGrid');
-        grid.classList.toggle('list-view-mode', mode === 'list');
         renderLearningHub();
       } else {
         docHubLayoutMode = mode;
@@ -1178,6 +1200,15 @@
       renderLearningHub();
       renderDocumentHub();
       showInlineBanner(isPowerUserViewMode ? "Switched to Power User Mode" : "Switched to Normal User View");
+    }
+
+    function triggerBatchAiDescriptions() {
+      showInlineBanner("Batch AI re-generator initiated. Updating tile summaries globally...");
+      callGasJsonp({ action: 'BATCH_GENERATE_AI_DESCRIPTIONS' }, function(res) {
+        loadGlobalCustomLinks(function() {
+          showInlineBanner("AI descriptions successfully generated and refreshed live across all tiles!");
+        });
+      });
     }
 
     function checkSameDayReleases() {
@@ -1817,6 +1848,14 @@
 
     function openAddModal() {
       if (!currentUser) { checkUserLoginState(); return; }
+      
+      const targetHubSelect = document.getElementById('targetHub');
+      if (activeTab === 'learningHubTab') targetHubSelect.value = 'learning';
+      else if (activeTab === 'documentHubTab') targetHubSelect.value = 'document';
+      else targetHubSelect.value = 'quick';
+      
+      toggleFormFields(targetHubSelect.value);
+
       document.getElementById('addModalTitle').textContent = "Submit New Link";
       document.getElementById('editItemIndex').value = "";
       document.getElementById('editItemType').value = "";
@@ -1858,7 +1897,7 @@
         isLearningSelectionMode = !isLearningSelectionMode;
         selectedLearningIndices.clear();
         document.getElementById('learningSelectBtnLabel').textContent = isLearningSelectionMode ? "Cancel Selection Mode" : "Select Multiple to Delete";
-        const grid = document.getElementById('resourcesGrid');
+        const grid = document.getElementById('resourcesGridContainer');
         if (isLearningSelectionMode) {
           grid.classList.add('selection-mode-active');
         } else {
@@ -1901,7 +1940,7 @@
       document.getElementById('learningSelectedCount').textContent = count;
       btn.style.display = (isLearningSelectionMode && count > 0) ? 'inline-flex' : 'none';
 
-      document.querySelectorAll('#resourcesGrid .resource-card').forEach(card => {
+      document.querySelectorAll('#resourcesGridContainer .resource-card, #resourcesGridContainer tr').forEach(card => {
         const idx = parseInt(card.getAttribute('data-index'), 10);
         if (selectedLearningIndices.has(idx)) {
           card.classList.add('selected-card');
@@ -2095,7 +2134,7 @@
     }
 
     function renderLearningHub() {
-      const grid = document.getElementById('resourcesGrid');
+      const container = document.getElementById('resourcesGridContainer');
       let filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery) || res.category.toLowerCase().includes(searchQuery);
@@ -2118,7 +2157,8 @@
       document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:1.5rem;"><span class="material-icons-outlined" style="font-size:32px;">search_off</span><h3>No matching learning items found</h3></div>`;
+        container.className = "resources-grid";
+        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:1.5rem;"><span class="material-icons-outlined" style="font-size:32px;">search_off</span><h3>No matching learning items found</h3></div>`;
         setTimeout(notifyIframeHeight, 50);
         return;
       }
@@ -2126,52 +2166,110 @@
       const powerUserActive = isPowerUser(currentUser) && isPowerUserViewMode;
       const todayStr = new Date().toLocaleDateString();
 
-      grid.innerHTML = filtered.map(res => {
-        const style = getCategoryStyle(res.category);
-        const isBookmarked = bookmarkedIds.has(res.id);
-        const isCompleted = completedList.includes(res.id);
-        const isSelected = selectedLearningIndices.has(res.originalIndex);
-        const isTodayRelease = res.releaseDate === todayStr;
-        const autoDescription = res.description || `Comprehensive training guide covering ${res.name} under the ${res.category} module. Review to enhance process workflows.`;
+      // RENDER LIST VIEW MODE AS STRUCTURED TABLE
+      if (learningHubLayoutMode === 'list') {
+        container.className = "";
+        container.innerHTML = `
+          <table class="resources-list-table">
+            <thead>
+              <tr>
+                <th style="width:20%;">Module</th>
+                <th style="width:45%;">Title & Summary Description</th>
+                <th style="width:12%; text-align:center;">Completed</th>
+                <th style="width:13%;">Open Link</th>
+                ${powerUserActive ? '<th style="width:10%; text-align:right;">Actions</th>' : ''}
+              </tr>
+            </thead>
+            <tbody>
+              ${filtered.map(res => {
+                const style = getCategoryStyle(res.category);
+                const isBookmarked = bookmarkedIds.has(res.id);
+                const isCompleted = completedList.includes(res.id);
+                const autoDescription = res.description || `Comprehensive training guide covering ${res.name} under the ${res.category} module.`;
 
-        return `
-          <article class="resource-card ${isSelected ? 'selected-card' : ''} ${isTodayRelease ? 'highlight-new' : ''} ${isBookmarked && filterOnlyBookmarks ? 'highlight-bookmark' : ''}" data-index="${res.originalIndex}" title="${autoDescription}" onclick="toggleTileActive(this)">
-            <div>
-              <div class="card-header">
-                <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
-                <div class="action-icons" onclick="event.stopPropagation()">
-                  <input type="checkbox" class="item-select-checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLearningSelect(${res.originalIndex}, event)" title="Select Item">
-                  <button class="action-btn completion-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Marked as Completed' : 'Click to complete (Requires opening link first)'}">
-                    <span class="material-icons-outlined ${isCompleted ? 'completed-filled' : ''}" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
-                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
-                    </span>
-                  </button>
-                  <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark Resource">
-                    <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
-                  </button>
-                </div>
-              </div>
-              <h3 class="card-title">${res.name}</h3>
-              <p class="card-description">${autoDescription}</p>
-            </div>
-            <div class="card-actions" onclick="event.stopPropagation()">
-              <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
-                <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-              </a>
-              ${powerUserActive ? `
-                <div class="action-icons">
-                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')" title="Edit Resource">
-                    <span class="material-icons-outlined" style="font-size:18px;">edit</span>
-                  </button>
-                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')" title="Delete Resource">
-                    <span class="material-icons-outlined" style="font-size:18px;">delete</span>
-                  </button>
-                </div>
-              ` : ''}
-            </div>
-          </article>
+                return `
+                  <tr title="${autoDescription}" onclick="toggleTileActive(this)">
+                    <td><span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span></td>
+                    <td>
+                      <strong>${res.name}</strong>
+                      <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:2px;">${autoDescription}</p>
+                    </td>
+                    <td style="text-align:center;" onclick="event.stopPropagation()">
+                      <button class="action-btn completion-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Marked as Completed' : 'Click to complete (Requires opening link first)'}">
+                        <span class="material-icons-outlined ${isCompleted ? 'completed-filled' : ''}" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
+                          ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                        </span>
+                      </button>
+                    </td>
+                    <td onclick="event.stopPropagation()">
+                      <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
+                        <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+                      </a>
+                    </td>
+                    ${powerUserActive ? `
+                      <td style="text-align:right;" onclick="event.stopPropagation()">
+                        <div class="action-icons" style="justify-content:flex-end;">
+                          <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')" title="Edit Resource"><span class="material-icons-outlined" style="font-size:18px;">edit</span></button>
+                          <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')" title="Delete Resource"><span class="material-icons-outlined" style="font-size:18px;">delete</span></button>
+                        </div>
+                      </td>
+                    ` : ''}
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
         `;
-      }).join('');
+      } else {
+        // RENDER GRID VIEW MODE AS CARDS
+        container.className = "resources-grid";
+        container.innerHTML = filtered.map(res => {
+          const style = getCategoryStyle(res.category);
+          const isBookmarked = bookmarkedIds.has(res.id);
+          const isCompleted = completedList.includes(res.id);
+          const isSelected = selectedLearningIndices.has(res.originalIndex);
+          const isTodayRelease = res.releaseDate === todayStr;
+          const autoDescription = res.description || `Comprehensive training guide covering ${res.name} under the ${res.category} module. Review to enhance process workflows.`;
+
+          return `
+            <article class="resource-card ${isSelected ? 'selected-card' : ''} ${isTodayRelease ? 'highlight-new' : ''} ${isBookmarked && filterOnlyBookmarks ? 'highlight-bookmark' : ''}" data-index="${res.originalIndex}" title="${autoDescription}" onclick="toggleTileActive(this)">
+              <div>
+                <div class="card-header">
+                  <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
+                  <div class="action-icons" onclick="event.stopPropagation()">
+                    <input type="checkbox" class="item-select-checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLearningSelect(${res.originalIndex}, event)" title="Select Item">
+                    <button class="action-btn completion-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Marked as Completed' : 'Click to complete (Requires opening link first)'}">
+                      <span class="material-icons-outlined ${isCompleted ? 'completed-filled' : ''}" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
+                        ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                      </span>
+                    </button>
+                    <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')" title="Bookmark Resource">
+                      <span class="material-icons-outlined">${isBookmarked ? 'star' : 'star_border'}</span>
+                    </button>
+                  </div>
+                </div>
+                <h3 class="card-title">${res.name}</h3>
+                <p class="card-description">${autoDescription}</p>
+              </div>
+              <div class="card-actions" onclick="event.stopPropagation()">
+                <a href="${res.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${res.name}', 'Learning Resource')">
+                  <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+                </a>
+                ${powerUserActive ? `
+                  <div class="action-icons">
+                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${res.originalIndex}, 'learning')" title="Edit Resource">
+                      <span class="material-icons-outlined" style="font-size:18px;">edit</span>
+                    </button>
+                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${res.originalIndex}, 'learning')" title="Delete Resource">
+                      <span class="material-icons-outlined" style="font-size:18px;">delete</span>
+                    </button>
+                  </div>
+                ` : ''}
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
 
       setTimeout(notifyIframeHeight, 50);
     }
@@ -2276,7 +2374,7 @@
       const powerUserActive = isPowerUser(currentUser) && isPowerUserViewMode;
 
       let customQuickHtml = globalCustomQuick.map((item, idx) => `
-        <article class="resource-card" style="border-top: 3px solid var(--google-blue);">
+        <article class="resource-card custom-dynamic-quick" style="border-top: 3px solid var(--google-blue);">
           <div>
             <div class="card-header">
               <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">Custom Quick Link</span>
