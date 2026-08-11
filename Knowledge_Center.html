@@ -37,6 +37,7 @@
       overflow-x: hidden;
     }
 
+    /* ANIMATED SYMPHONY LOGO */
     .symphony-logo-svg {
       width: 36px;
       height: 22px;
@@ -83,6 +84,7 @@
       100% { background-position: 0% 50%; }
     }
 
+    /* TOP UTILITY HEADER BAR LAYOUT */
     .top-utility-bar {
       background-color: #28292c;
       padding: 0.45rem 1rem;
@@ -246,17 +248,6 @@
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow); }
 
-    .completion-btn .material-icons-outlined.completed-filled {
-      color: #ffffff !important;
-      background: var(--google-green);
-      border-radius: 50%;
-      font-size: 18px;
-      padding: 1px;
-    }
-
-    .item-select-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--google-red); display: none; }
-    .selection-mode-active .item-select-checkbox { display: inline-block; }
-
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; table-layout: fixed; min-width: 680px; }
     .doc-table th, .doc-table td { padding: 0.55rem 0.7rem; text-align: left; vertical-align: middle; border-bottom: 1px solid #f1f3f4; }
@@ -271,6 +262,7 @@
     .modal-overlay.open { display: flex; }
     .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.25rem; margin-top: 10px; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
+    .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1.05rem; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
     .modal-form { display: flex; flex-direction: column; gap: 0.75rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
@@ -279,7 +271,6 @@
 
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
     .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
-    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; }
 
     .app-lock-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 16, 18, 0.85); z-index: 9999999; display: flex; justify-content: center; align-items: flex-start; padding: 20px 10px; }
     .app-lock-card { background: #ffffff; border-radius: 16px; padding: 1.75rem; max-width: 420px; width: 100%; text-align: center; border: 1px solid var(--border-color); margin-top: 10px; }
@@ -624,7 +615,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyyqoHEnSaNKw-VOuUZsaj9d79hPhXQxx8gUlyYZJ1hM_A_gIj6LRPAQab4IAkk8siA/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbby3TTP1Muz0mG5AauVWkCz6jP2cREKkp8F6vNCUQK4uOb_AsPJVIBDFZcm_NubxHvc3/exec";
 
     // UNTRUNCATED LEARNING HUB DATASET
     const baseDataset = [
@@ -963,7 +954,7 @@
       const container = document.getElementById('resourcesGridContainer');
       let filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
-        const matchesSearch = res.name.toLowerCase().includes(searchQuery);
+        const matchesSearch = res.name.toLowerCase().includes(searchQuery) || res.category.toLowerCase().includes(searchQuery);
         const matchesBookmark = filterOnlyBookmarks ? bookmarkedIds.has(res.id) : true;
         return matchesModule && matchesSearch && matchesBookmark;
       });
