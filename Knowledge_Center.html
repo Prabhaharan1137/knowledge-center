@@ -66,47 +66,28 @@
       z-index: 10000000;
     }
 
-    /* TOP HEADER & COMPACT ANIMATED LOGO */
+    /* STREAMLINED MODERN HEADER & LOGO */
     .top-hero-header {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 1rem;
       border-bottom: 2px solid var(--google-blue);
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 0.75rem;
     }
 
-    .header-logo-flex {
+    .simple-logo-icon {
+      background: linear-gradient(135deg, #3b82f6, #10b981);
+      color: #ffffff;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
     }
-
-    /* SVG Keyframes */
-    @keyframes ringPulse {
-      0%, 100% { opacity: 0.25; transform: scale(0.97); }
-      50% { opacity: 0.7; transform: scale(1.02); }
-    }
-
-    @keyframes clefRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes arrowRise {
-      0%, 100% { transform: translateY(0px); opacity: 0.4; }
-      50% { transform: translateY(-6px); opacity: 1; }
-    }
-
-    @keyframes nodeFloat {
-      0%, 100% { transform: translateY(0px) rotate(-8deg); }
-      50% { transform: translateY(-4px) rotate(8deg); }
-    }
-
-    .symphony-rings { animation: ringPulse 3.5s ease-in-out infinite; transform-origin: center; }
-    .symphony-clef-nodes { animation: clefRotate 20s linear infinite; transform-origin: 140px 95px; }
-    .symphony-growth-arrow { animation: arrowRise 3s ease-in-out infinite; transform-origin: center; }
-    .symphony-clef-p-node { animation: nodeFloat 4s ease-in-out infinite; transform-origin: center; }
 
     .header-text-group {
       display: flex;
@@ -116,29 +97,44 @@
     }
 
     .text-main-title {
-      font-size: 22px;
+      font-size: 1.15rem;
       font-weight: 800;
       color: #ffffff;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       font-family: 'Google Sans', sans-serif;
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.2rem;
     }
 
     .registered-symbol {
-      font-size: 10px;
+      font-size: 9px;
       vertical-align: super;
       color: #94a3b8;
     }
 
     .text-subtitle {
-      font-size: 9px;
+      font-size: 0.65rem;
       font-weight: 600;
       color: #94a3b8;
-      letter-spacing: 1.2px;
-      margin-top: 2px;
+      letter-spacing: 1px;
+      margin-top: 1px;
     }
+
+    /* PERSISTENT LATEST RELEASE ANNOUNCEMENT BANNER */
+    .latest-release-banner {
+      background: linear-gradient(90deg, #1e3a8a, #0d9488);
+      color: #ffffff;
+      padding: 0.4rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .latest-release-banner:hover { background: linear-gradient(90deg, #1d4ed8, #0f766e); }
 
     .top-utility-bar {
       background-color: #1e293b;
@@ -245,9 +241,28 @@
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: bold; }
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.6rem; }
-    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.7rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; }
+    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.7rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; position: relative; }
     .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
+
+    /* NEWLY PUBLISHED HIGHLIGHT BADGE AND BORDER */
+    .resource-card.newly-updated-highlight {
+      border: 2px solid var(--google-blue) !important;
+      animation: pulseHighlight 2s infinite;
+    }
+    @keyframes pulseHighlight {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(26, 115, 232, 0); }
+    }
+    .new-badge {
+      background: var(--google-blue);
+      color: #ffffff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      margin-left: 0.35rem;
+    }
 
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.35rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
@@ -261,6 +276,12 @@
     .action-btn.delete-btn:hover { color: var(--google-red); }
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     .bookmark-btn.bookmarked { color: var(--google-yellow) !important; }
+
+    /* SOLID GREEN FILLED TICK FOR COMPLETED STATE */
+    .completed-tick-filled {
+      color: var(--google-green) !important;
+      font-weight: bold;
+    }
 
     .item-select-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--google-red); display: none; }
     .selection-mode-active .item-select-checkbox { display: inline-block; }
@@ -348,76 +369,24 @@
     </div>
   </div>
 
-  <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
-
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbbytseR9M9HCb6aG9YavfGaiVaD02NiWGeW_nsKuljFlTjRsjYNSRfH_lIb53GOURqpr/exec" method="POST" target="hidden_email_iframe" accept-charset="UTF-8" style="display:none;">
-    <input type="hidden" name="dlAddress" id="gas_dlAddress">
-    <input type="hidden" name="submitter" id="gas_submitter">
-    <input type="hidden" name="title" id="gas_title">
-    <input type="hidden" name="hubName" id="gas_hubName">
-    <input type="hidden" name="link" id="gas_link">
-    <input type="hidden" name="releaseDate" id="gas_releaseDate">
-  </form>
-
-  <!-- ANIMATED HEADER WITH SMALL LEFT LOGO & RIGHT TYPOGRAPHY -->
+  <!-- STREAMLINED HEADER WITH SIMPLE LOGO -->
   <div class="top-hero-header">
-    <div class="header-logo-flex">
-      <svg width="110" height="70" viewBox="0 0 280 190" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/>
-            <stop offset="100%" stop-color="#10b981" stop-opacity="0.05"/>
-          </linearGradient>
-          <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#ef4444"/>
-            <stop offset="100%" stop-color="#f59e0b"/>
-          </linearGradient>
-        </defs>
-        <g class="symphony-rings">
-          <circle cx="140" cy="95" r="75" fill="url(#ringGrad)"/>
-          <circle cx="140" cy="95" r="65" stroke="#94a3b8" stroke-width="0.75" fill="none" stroke-dasharray="4 8" opacity="0.4"/>
-        </g>
-        <g class="symphony-clef-nodes">
-          <path d="M 100,95 A 35,35 0 0,1 180,95 L 180,120 A 8,8 0 0,1 172,128 L 110,128 A 8,8 0 0,1 100,120 Z" fill="#3b82f6" stroke="#1e40af" stroke-width="1.5"/>
-          <g class="symphony-clef-p-node" transform="translate(135,88)">
-             <circle cx="0" cy="0" r="12" fill="#10b981" stroke="#047857" stroke-width="1"/>
-             <text x="0" y="4" font-size="11" font-weight="bold" fill="white" text-anchor="middle">P</text>
-             <circle cx="13" cy="-8" r="3.5" fill="#f59e0b"/>
-             <circle cx="-13" cy="8" r="3.5" fill="#ef4444"/>
-          </g>
-          <g transform="translate(140, 95)">
-            <circle cx="0" cy="0" r="5" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
-            <path d="M 0,-5 A 5,5 0 0,1 5,0 L 0,0 Z" fill="#ef4444"/>
-          </g>
-        </g>
-        <g class="symphony-growth-arrow">
-          <path d="M 170,88 L 190,70 L 210,88 L 198,88 L 198,105 L 182,105 L 182,88 Z" fill="url(#arrowGrad)" />
-        </g>
-        <g id="symphony-dots" transform="translate(80,135)">
-          <circle cx="30" cy="0" r="4.5" fill="#10b981"/>
-          <circle cx="45" cy="-6" r="4.5" fill="#ef4444"/>
-          <circle cx="60" cy="-6" r="4.5" fill="#ef4444"/>
-          <circle cx="75" cy="0" r="4.5" fill="#3b82f6"/>
-          <circle cx="20" cy="11" r="4.5" fill="#f59e0b"/>
-          <circle cx="35" cy="9" r="4.5" fill="#10b981"/>
-          <circle cx="50" cy="6" r="4.5" fill="#ef4444"/>
-          <circle cx="57" cy="6" r="4.5" fill="#ef4444"/>
-          <circle cx="72" cy="9" r="4.5" fill="#3b82f6"/>
-          <circle cx="87" cy="11" r="4.5" fill="#3b82f6"/>
-          <circle cx="30" cy="22" r="4.5" fill="#10b981"/>
-          <circle cx="45" cy="19" r="4.5" fill="#ef4444"/>
-          <circle cx="60" cy="19" r="4.5" fill="#ef4444"/>
-          <circle cx="75" cy="22" r="4.5" fill="#3b82f6"/>
-          <circle cx="42" cy="32" r="4.5" fill="#ef4444"/>
-          <circle cx="63" cy="32" r="4.5" fill="#ef4444"/>
-          <circle cx="52" cy="42" r="4.5" fill="#f59e0b"/>
-        </g>
-      </svg>
-      <div class="header-text-group">
-        <div class="text-main-title">SYMPHONY <span class="registered-symbol">®</span></div>
-        <div class="text-subtitle">IMPLEMENTATION | LEARNING | DOCUMENTATION HUB</div>
-      </div>
+    <div class="simple-logo-icon">
+      <span class="material-icons-outlined" style="font-size:22px;">hub</span>
     </div>
+    <div class="header-text-group">
+      <div class="text-main-title">SYMPHONY <span class="registered-symbol">®</span></div>
+      <div class="text-subtitle">IMPLEMENTATION | LEARNING | DOCUMENTATION HUB</div>
+    </div>
+  </div>
+
+  <!-- PERSISTENT TOP NOTIFICATION BAR FOR LATEST RELEASE (FEATURE 6) -->
+  <div id="latestReleaseNotificationBar" class="latest-release-banner" onclick="navigateToLatestRelease()">
+    <div style="display:flex; align-items:center; gap:0.5rem;">
+      <span class="material-icons-outlined" style="font-size:18px;">campaign</span>
+      <span id="latestReleaseText">NEW RELEASE: Check out our latest published resource!</span>
+    </div>
+    <span class="material-icons-outlined" style="font-size:16px;">arrow_forward</span>
   </div>
 
   <div class="top-utility-bar">
@@ -437,7 +406,8 @@
         <span class="material-icons-outlined" style="font-size:14px;">admin_panel_settings</span><span>Power Controls</span>
       </button>
 
-      <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" style="display:none;" onclick="openAddModal()">
+      <!-- SUBMIT NEW LINK BUTTON (ACCESSIBLE TO ALL USERS - FEATURE 2) -->
+      <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" onclick="openAddModal()">
         <span class="material-icons-outlined" style="font-size:14px;">add_circle</span><span>Submit New Link</span>
       </button>
     </div>
@@ -451,8 +421,6 @@
       <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
         <span class="material-icons-outlined" style="font-size:16px;">description</span><span>Document Hub</span>
       </button>
-
-      <!-- RE-LOCATED QUICK LINKS TAB -->
       <button class="tab-btn quick-tab" onclick="switchTab('quickLinksTab', this)">
         <span class="material-icons-outlined" style="font-size:16px;">link</span><span>Quick Links</span>
       </button>
@@ -498,7 +466,6 @@
           <span class="material-icons-outlined">search</span>
           <input type="text" id="searchInput" class="search-input" placeholder="Search learning topics...">
         </div>
-        <!-- GRID / LIST VIEW SWITCHER -->
         <div class="view-mode-toggle">
           <button class="view-btn active" id="learningGridBtn" onclick="switchViewMode('learning', 'grid')" title="Grid View"><span class="material-icons-outlined">grid_view</span></button>
           <button class="view-btn" id="learningListBtn" onclick="switchViewMode('learning', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
@@ -758,7 +725,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbbytseR9M9HCb6aG9YavfGaiVaD02NiWGeW_nsKuljFlTjRsjYNSRfH_lIb53GOURqpr/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbygjcx6Xk4NS-0P29uS_3-2bdn2beXOUc8trxtoEHj0S3ELgOYHLBTGrAvAty30_Ue-/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -933,6 +900,9 @@
     let docDataset = [...baseDocDataset, ...localCustomDocs];
     let quickDataset = [...baseQuickLinks, ...localCustomQuick];
 
+    // PERSISTENT LATEST RELEASE TRACKER (FEATURE 6)
+    let latestRelease = JSON.parse(localStorage.getItem('kc_latest_release_v1') || 'null');
+
     let activeTab = 'learningHubTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
     let pendingOtpEmail = "";
@@ -974,7 +944,6 @@
       'default': { bg: '#f1f3f4', color: '#5f6368' }
     };
 
-    /* EXTRACT FIRST NAME DISPLAY (e.g. prabhaharan.j@maxval.com -> Prabhaharan) */
     function extractDisplayName(email) {
       if (!email || email.indexOf("@") === -1) return "User";
       var handle = email.split("@")[0];
@@ -1051,6 +1020,7 @@
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
         updatePowerUserUIElements();
+        checkLatestReleaseNotification();
       }
     }
 
@@ -1113,6 +1083,7 @@
           document.getElementById('mandatoryLockOverlay').style.display = 'none';
           updateUserBadgeDisplay();
           updatePowerUserUIElements();
+          checkLatestReleaseNotification();
           showInlineBanner(`Welcome ${extractDisplayName(currentUser)}!`);
           renderLearningHub();
           renderDocumentHub();
@@ -1178,21 +1149,47 @@
 
     function updatePowerUserUIElements() {
       const powerTabBtn = document.getElementById('powerUsersTabBtn');
-      const submitLinkBtn = document.getElementById('submitNewLinkBtn');
       const learningAdminActions = document.getElementById('learningAdminActions');
       const docAdminActions = document.getElementById('docAdminActions');
 
       if (isPowerUser(currentUser)) {
         if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
-        if (submitLinkBtn) submitLinkBtn.style.display = 'inline-flex';
         if (learningAdminActions) learningAdminActions.style.display = 'flex';
         if (docAdminActions) docAdminActions.style.display = 'flex';
       } else {
         if (powerTabBtn) powerTabBtn.style.display = 'inline-flex';
-        if (submitLinkBtn) submitLinkBtn.style.display = 'none';
         if (learningAdminActions) learningAdminActions.style.display = 'none';
         if (docAdminActions) docAdminActions.style.display = 'none';
       }
+    }
+
+    /* FEATURE 6: TOP NOTIFICATION BAR FOR LATEST RELEASE */
+    function checkLatestReleaseNotification() {
+      const banner = document.getElementById('latestReleaseNotificationBar');
+      if (latestRelease && latestRelease.title) {
+        document.getElementById('latestReleaseText').textContent = `NEW RELEASE: "${latestRelease.title}" published in ${latestRelease.hub.toUpperCase()} HUB by ${extractDisplayName(latestRelease.submitter)}`;
+        banner.style.display = 'flex';
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+
+    function navigateToLatestRelease() {
+      if (!latestRelease) return;
+      if (latestRelease.hub === 'learning') {
+        switchTab('learningHubTab', document.querySelector('.tab-btn.learning-tab'));
+      } else if (latestRelease.hub === 'document') {
+        switchTab('documentHubTab', document.querySelector('.tab-btn.doc-tab'));
+      } else {
+        switchTab('quickLinksTab', document.querySelector('.tab-btn.quick-tab'));
+      }
+
+      setTimeout(() => {
+        const targetCard = document.querySelector(`[data-id="${latestRelease.id}"]`);
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 200);
     }
 
     function getUserAnalytics() {
@@ -1426,7 +1423,7 @@
         completedListElem.innerHTML = completedItems.map(item => `
           <li>
             <span><strong>${item.name}</strong> (${item.category})</span>
-            <span class="material-icons-outlined" style="color:var(--google-green); font-size:15px;">check_circle</span>
+            <span class="material-icons-outlined completed-tick-filled" style="font-size:16px;">check_circle</span>
           </li>
         `).join('');
       }
@@ -1440,7 +1437,7 @@
         pendingListElem.innerHTML = pendingItems.map(item => `
           <li>
             <span>${item.name} (${item.category})</span>
-            <span class="material-icons-outlined" style="color:var(--google-red); font-size:15px;">radio_button_unchecked</span>
+            <span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">radio_button_unchecked</span>
           </li>
         `).join('');
       }
@@ -1543,7 +1540,7 @@
       document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
-      el.classList.add('active');
+      if (el) el.classList.add('active');
 
       renderLearningHub();
       renderDocumentHub();
@@ -1738,7 +1735,124 @@
       scrollParentToTop();
     }
 
-    /* RENDER LEARNING HUB (GRID & LIST VIEWS) */
+    /* FEATURE 1: RELIABLE LINK SUBMISSION VIA JSONP DIRECT CALL */
+    function handleAddSubmission(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.textContent = "Publishing Link...";
+      submitBtn.disabled = true;
+
+      const editIndex = document.getElementById('editItemIndex').value;
+      const targetHub = document.getElementById('targetHub').value;
+      const submitterEmail = document.getElementById('submitterEmail').value.trim();
+      const link = document.getElementById('newLink').value.trim();
+      const shouldSend = document.getElementById('sendEmailCheckbox').checked;
+      const dlAddress = document.getElementById('dlEmailAddress').value.trim();
+      const currentDateStr = new Date().toLocaleDateString();
+
+      let releaseTitle = "";
+      let newGeneratedId = "";
+
+      if (targetHub === 'learning') {
+        releaseTitle = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
+        const category = document.getElementById('newModule').value;
+        
+        if (editIndex !== "") {
+          dataset[editIndex].name = releaseTitle;
+          dataset[editIndex].category = category;
+          dataset[editIndex].link = link;
+          newGeneratedId = dataset[editIndex].id;
+        } else {
+          newGeneratedId = `res_custom_${Date.now()}`;
+          const newResource = { id: newGeneratedId, name: releaseTitle, category: category, link: link, desc: 'User published resource.', isNew: true };
+          dataset.push(newResource);
+          localCustomDataset.push(newResource);
+        }
+        
+        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(localCustomDataset));
+        syncDropdownOptions();
+        renderLearningHub();
+      } else if (targetHub === 'document') {
+        const pkg = document.getElementById('newPkg').value.trim() || 'New Package';
+        const ver = document.getElementById('newVer').value.trim() || 'v1.0';
+        const type = document.getElementById('newDocType').value.trim() || 'Document';
+        releaseTitle = `${pkg} (${ver}) - ${type}`;
+
+        if (editIndex !== "") {
+          docDataset[editIndex].pkg = pkg;
+          docDataset[editIndex].ver = ver;
+          docDataset[editIndex].type = type;
+          docDataset[editIndex].link = link;
+          newGeneratedId = docDataset[editIndex].id || `doc_custom_${editIndex}`;
+        } else {
+          newGeneratedId = `doc_custom_${Date.now()}`;
+          const newDoc = { id: newGeneratedId, pkg, ver, type, link, desc: 'User published document.', isNew: true };
+          docDataset.push(newDoc);
+          localCustomDocs.push(newDoc);
+        }
+
+        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(localCustomDocs));
+        syncDocPackageOptions();
+        renderDocumentHub();
+      } else {
+        releaseTitle = document.getElementById('newQuickName').value.trim() || 'New Quick Link';
+        if (editIndex !== "") {
+          quickDataset[editIndex].name = releaseTitle;
+          quickDataset[editIndex].link = link;
+          newGeneratedId = quickDataset[editIndex].id;
+        } else {
+          newGeneratedId = `ql_custom_${Date.now()}`;
+          const newQuick = { id: newGeneratedId, name: releaseTitle, category: 'Quick Links', link: link, desc: 'User published quick link.', isNew: true };
+          quickDataset.push(newQuick);
+          localCustomQuick.push(newQuick);
+        }
+        localStorage.setItem('kc_custom_quick_v17', JSON.stringify(localCustomQuick));
+        renderQuickLinks();
+      }
+
+      // SAVE LATEST RELEASE DATA FOR TOP BANNER (FEATURE 6)
+      latestRelease = {
+        id: newGeneratedId,
+        title: releaseTitle,
+        hub: targetHub,
+        submitter: submitterEmail
+      };
+      localStorage.setItem('kc_latest_release_v1', JSON.stringify(latestRelease));
+      checkLatestReleaseNotification();
+
+      // TRIGGER EMAIL DISPATCH VIA RELIABLE JSONP CALL
+      if (shouldSend) {
+        callGasJsonp({
+          action: 'SEND_NOTIFICATION_EMAIL',
+          hubName: targetHub,
+          title: releaseTitle,
+          link: link,
+          submitter: submitterEmail,
+          dlAddress: dlAddress,
+          releaseDate: currentDateStr
+        }, function() {});
+      }
+
+      closeModal('addModalOverlay');
+      showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live and email sent.");
+      
+      submitBtn.textContent = "Publish Link Live";
+      submitBtn.disabled = false;
+
+      document.getElementById('editItemIndex').value = "";
+      document.getElementById('editItemType').value = "";
+      document.getElementById('newTitle').value = '';
+      document.getElementById('newPkg').value = '';
+      document.getElementById('newVer').value = '';
+      document.getElementById('newDocType').value = '';
+      document.getElementById('newQuickName').value = '';
+      document.getElementById('newLink').value = '';
+
+      return false;
+    }
+
+    /* RENDER LEARNING HUB (FEATURE 4 & FEATURE 7) */
     function renderLearningHub() {
       const container = document.getElementById('learningViewContainer');
       const filtered = dataset.map((res, originalIndex) => ({ ...res, originalIndex })).filter(res => {
@@ -1769,15 +1883,19 @@
           const style = getCategoryStyle(res.category);
           const isBookmarked = bookmarkedIds.has(res.id);
           const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
+          const isNewlyUpdated = (latestRelease && latestRelease.id === res.id) || res.isNew;
 
           return `
-            <article class="resource-card" data-index="${res.originalIndex}">
+            <article class="resource-card ${isNewlyUpdated ? 'newly-updated-highlight' : ''}" data-id="${res.id}" data-index="${res.originalIndex}">
               <div>
                 <div class="card-header">
-                  <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
+                  <div>
+                    <span class="category-badge" style="background:${style.bg}; color:${style.color}">${res.category}</span>
+                    ${isNewlyUpdated ? '<span class="new-badge">NEW</span>' : ''}
+                  </div>
                   <div class="action-icons" onclick="event.stopPropagation()">
                     <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Completed' : 'Mark as Complete'}">
-                      <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}">
+                      <span class="material-icons-outlined ${isCompleted ? 'completed-tick-filled' : ''}">
                         ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
                       </span>
                     </button>
@@ -1827,7 +1945,7 @@
                     <td><span style="font-size:0.75rem; color:var(--text-secondary);">${res.desc || 'Implementation guidelines'}</span></td>
                     <td>
                       <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')">
-                        <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:18px;">
+                        <span class="material-icons-outlined ${isCompleted ? 'completed-tick-filled' : ''}" style="font-size:18px;">
                           ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
                         </span>
                       </button>
@@ -1884,7 +2002,7 @@
             </thead>
             <tbody>
               ${filtered.map(doc => `
-                <tr>
+                <tr data-id="${doc.id || ''}">
                   <td><strong>${doc.pkg}</strong></td>
                   <td>${doc.ver}</td>
                   <td><span class="doc-type-tag">${doc.type}</span></td>
@@ -1910,7 +2028,7 @@
       } else {
         container.className = 'resources-grid';
         container.innerHTML = filtered.map(doc => `
-          <article class="resource-card">
+          <article class="resource-card" data-id="${doc.id || ''}">
             <div>
               <div class="card-header">
                 <span class="doc-type-tag">${doc.type}</span>
@@ -1953,7 +2071,7 @@
       const powerUserActive = isPowerUser(currentUser);
 
       container.innerHTML = filtered.map(q => `
-        <article class="resource-card">
+        <article class="resource-card" data-id="${q.id}">
           <div>
             <div class="card-header">
               <span class="category-badge" style="background:var(--google-green-light); color:var(--google-green);">Quick Link</span>
@@ -1976,114 +2094,6 @@
       `).join('');
 
       setTimeout(notifyIframeHeight, 50);
-    }
-
-    function sendNotificationEmail(details) {
-      document.getElementById('gas_dlAddress').value = details.dlAddress;
-      document.getElementById('gas_submitter').value = cleanAsciiText(details.submitter);
-      document.getElementById('gas_title').value = cleanAsciiText(details.title);
-      document.getElementById('gas_hubName').value = cleanAsciiText(details.hubName);
-      document.getElementById('gas_link').value = details.link.trim();
-      document.getElementById('gas_releaseDate').value = details.releaseDate;
-
-      document.getElementById('hiddenGasForm').submit();
-    }
-
-    function handleAddSubmission(e) {
-      if (e) { e.preventDefault(); e.stopPropagation(); }
-
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = "Publishing Link...";
-      submitBtn.disabled = true;
-
-      const editIndex = document.getElementById('editItemIndex').value;
-      const targetHub = document.getElementById('targetHub').value;
-      const submitterEmail = document.getElementById('submitterEmail').value.trim();
-      const link = document.getElementById('newLink').value.trim();
-      const shouldSend = document.getElementById('sendEmailCheckbox').checked;
-      const dlAddress = document.getElementById('dlEmailAddress').value.trim();
-      const currentDateStr = new Date().toLocaleDateString();
-
-      let releaseTitle = "";
-
-      if (targetHub === 'learning') {
-        releaseTitle = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
-        const category = document.getElementById('newModule').value;
-        
-        if (editIndex !== "") {
-          dataset[editIndex].name = releaseTitle;
-          dataset[editIndex].category = category;
-          dataset[editIndex].link = link;
-        } else {
-          const newResource = { id: `res_custom_${Date.now()}`, name: releaseTitle, category: category, link: link, desc: 'User published resource.' };
-          dataset.push(newResource);
-          localCustomDataset.push(newResource);
-        }
-        
-        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(localCustomDataset));
-        syncDropdownOptions();
-        renderLearningHub();
-      } else if (targetHub === 'document') {
-        const pkg = document.getElementById('newPkg').value.trim() || 'New Package';
-        const ver = document.getElementById('newVer').value.trim() || 'v1.0';
-        const type = document.getElementById('newDocType').value.trim() || 'Document';
-        releaseTitle = `${pkg} (${ver}) - ${type}`;
-
-        if (editIndex !== "") {
-          docDataset[editIndex].pkg = pkg;
-          docDataset[editIndex].ver = ver;
-          docDataset[editIndex].type = type;
-          docDataset[editIndex].link = link;
-        } else {
-          const newDoc = { pkg, ver, type, link, desc: 'User published document.' };
-          docDataset.push(newDoc);
-          localCustomDocs.push(newDoc);
-        }
-
-        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(localCustomDocs));
-        syncDocPackageOptions();
-        renderDocumentHub();
-      } else {
-        releaseTitle = document.getElementById('newQuickName').value.trim() || 'New Quick Link';
-        if (editIndex !== "") {
-          quickDataset[editIndex].name = releaseTitle;
-          quickDataset[editIndex].link = link;
-        } else {
-          const newQuick = { id: `ql_custom_${Date.now()}`, name: releaseTitle, category: 'Quick Links', link: link, desc: 'User published quick link.' };
-          quickDataset.push(newQuick);
-          localCustomQuick.push(newQuick);
-        }
-        localStorage.setItem('kc_custom_quick_v17', JSON.stringify(localCustomQuick));
-        renderQuickLinks();
-      }
-
-      if (shouldSend) {
-        sendNotificationEmail({
-          hubName: targetHub,
-          title: releaseTitle,
-          link: link,
-          submitter: submitterEmail,
-          dlAddress: dlAddress,
-          releaseDate: currentDateStr
-        });
-      }
-
-      closeModal('addModalOverlay');
-      showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live.");
-      
-      submitBtn.textContent = "Publish Link Live";
-      submitBtn.disabled = false;
-
-      document.getElementById('editItemIndex').value = "";
-      document.getElementById('editItemType').value = "";
-      document.getElementById('newTitle').value = '';
-      document.getElementById('newPkg').value = '';
-      document.getElementById('newVer').value = '';
-      document.getElementById('newDocType').value = '';
-      document.getElementById('newQuickName').value = '';
-      document.getElementById('newLink').value = '';
-
-      return false;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
