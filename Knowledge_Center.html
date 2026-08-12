@@ -48,17 +48,17 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 20px;
+      padding-top: 15px;
       overflow-y: auto;
     }
 
     .app-lock-card {
       position: fixed;
-      top: 20px;
+      top: 15px;
       background: #ffffff;
       border-radius: 16px;
-      padding: 1.5rem;
-      max-width: 440px;
+      padding: 1.25rem;
+      max-width: 420px;
       width: 90%;
       box-shadow: 0 12px 32px rgba(0,0,0,0.45);
       text-align: center;
@@ -66,10 +66,10 @@
       z-index: 10000000;
     }
 
-    /* TOP HERO HEADER & ANIMATED LOGO */
+    /* HEADER & COMPACT ANIMATED VECTOR LOGO */
     .top-hero-header {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      padding: 0.5rem 1rem;
+      padding: 0.35rem 0.85rem;
       border-bottom: 2px solid var(--google-blue);
       display: flex;
       align-items: center;
@@ -79,10 +79,10 @@
     .header-logo-flex {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
 
-    /* SVG Keyframes */
+    /* SVG Animations */
     @keyframes ringRotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -108,7 +108,7 @@
     }
 
     .text-main-title {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: #ffffff;
       letter-spacing: 0.8px;
@@ -116,59 +116,59 @@
     }
 
     .text-subtitle {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 600;
       color: #94a3b8;
       letter-spacing: 0.8px;
       margin-top: 1px;
     }
 
-    /* COMPACT FLOATING TOAST NOTIFICATION PILL FOR NEW RELEASES */
+    /* COMPACT FLOATING TOAST NOTIFICATION FOR LATEST RELEASE */
     .latest-release-toast {
       display: none;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       background: #0f172a;
       color: #ffffff;
-      padding: 0.35rem 0.85rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 16px;
+      font-size: 0.72rem;
       font-weight: 500;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       border: 1px solid var(--google-blue);
       cursor: pointer;
-      margin: 0.4rem auto;
+      margin: 0.3rem auto;
       width: fit-content;
       max-width: 90%;
       transition: transform 0.2s ease;
     }
     .latest-release-toast:hover {
-      transform: translateY(-2px);
+      transform: translateY(-1px);
       background: #1e293b;
     }
 
     .top-utility-bar {
       background-color: #1e293b;
-      padding: 0.25rem 1rem;
+      padding: 0.2rem 0.85rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #334155;
     }
-    .top-utility-nav { display: flex; align-items: center; gap: 0.5rem; width: 100%; flex-wrap: wrap; }
+    .top-utility-nav { display: flex; align-items: center; gap: 0.4rem; width: 100%; flex-wrap: wrap; }
     .top-utility-btn {
       color: #ffffff;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.25rem;
       font-weight: 500;
-      padding: 0.25rem 0.6rem;
+      padding: 0.2rem 0.55rem;
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
     }
     .top-utility-btn.accent-add { background: var(--google-blue); border-color: var(--google-blue); margin-left: auto; }
     .top-utility-btn.accent-analytics { background: var(--google-purple); border-color: var(--google-purple); }
@@ -178,26 +178,26 @@
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      padding: 0.35rem 1rem;
+      padding: 0.3rem 0.85rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     
-    .nav-tabs { display: flex; gap: 0.5rem; align-items: center; }
+    .nav-tabs { display: flex; gap: 0.4rem; align-items: center; }
     .tab-btn {
       background: #f1f3f4;
       border: 1px solid var(--border-color);
-      padding: 0.35rem 0.85rem;
+      padding: 0.3rem 0.75rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.35rem;
-      border-radius: 16px;
+      gap: 0.3rem;
+      border-radius: 14px;
     }
     .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); }
     .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); }
@@ -206,12 +206,12 @@
     .kpi-bookmark-small {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.2rem;
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 0.15rem 0.5rem;
-      font-size: 0.73rem;
+      padding: 0.12rem 0.45rem;
+      font-size: 0.72rem;
       font-weight: 600;
       cursor: pointer;
     }
@@ -221,7 +221,7 @@
       color: #b06000;
     }
 
-    .container { width: 100%; padding: 0.5rem 1rem; display: flex; flex-direction: column; }
+    .container { width: 100%; padding: 0.35rem 0.85rem; display: flex; flex-direction: column; }
     .tab-content { display: none; flex-direction: column; }
     .tab-content.active { display: flex; }
 
@@ -229,30 +229,37 @@
       background: #ffffff; 
       border: 1px solid var(--border-color); 
       border-radius: var(--radius); 
-      padding: 0.5rem 0.75rem; 
-      margin-bottom: 0.5rem; 
+      padding: 0.4rem 0.65rem; 
+      margin-bottom: 0.4rem; 
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.25rem;
     }
-    .filter-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-    .filter-actions-group { display: flex; align-items: center; gap: 0.4rem; }
-    .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.35rem; }
-    .styled-dropdown-catchy { width: 100%; padding: 0.35rem 0.6rem; font-family: 'Google Sans', sans-serif; font-size: 0.82rem; font-weight: 500; border: 1px solid var(--border-color); border-radius: 6px; outline: none; }
+    .filter-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
+    .filter-actions-group { display: flex; align-items: center; gap: 0.35rem; }
+    .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.75rem; color: var(--google-blue-hover); display: flex; align-items: center; gap: 0.3rem; }
+    .styled-dropdown-catchy { width: 100%; padding: 0.3rem 0.5rem; font-family: 'Google Sans', sans-serif; font-size: 0.8rem; font-weight: 500; border: 1px solid var(--border-color); border-radius: 6px; outline: none; }
 
-    .active-count-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.73rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.15rem 0.5rem; border-radius: 6px; }
+    .active-count-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-weight: 700; color: var(--google-green); background: var(--google-green-light); padding: 0.12rem 0.45rem; border-radius: 6px; }
 
-    .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.35rem 0.6rem; margin-bottom: 0.5rem; display: flex; gap: 0.5rem; align-items: center; }
+    .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; margin-bottom: 0.4rem; display: flex; gap: 0.4rem; align-items: center; }
     .search-box { position: relative; flex: 1; }
-    .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 18px; }
-    .search-input { width: 100%; padding: 0.3rem 1rem 0.3rem 2.1rem; border: 1px solid var(--border-color); border-radius: 16px; font-size: 0.8rem; outline: none; }
+    .search-box .material-icons-outlined { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 17px; }
+    .search-input { width: 100%; padding: 0.25rem 0.85rem 0.25rem 2rem; border: 1px solid var(--border-color); border-radius: 14px; font-size: 0.78rem; outline: none; }
 
     .view-mode-toggle { display: flex; border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; }
-    .view-btn { background: #ffffff; border: none; padding: 0.25rem 0.5rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
+    .view-btn { background: #ffffff; border: none; padding: 0.2rem 0.45rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: bold; }
 
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.6rem; }
-    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.7rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; position: relative; }
+    /* INTERNAL SCROLLABLE VIEW CONTAINER TO REMOVE EMPTY SPACE */
+    .view-scroll-wrapper {
+      max-height: calc(100vh - 210px);
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.55rem; }
+    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.65rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; position: relative; }
     .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
 
@@ -267,85 +274,84 @@
     .new-badge {
       background: var(--google-blue);
       color: #ffffff;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 700;
-      padding: 0.1rem 0.35rem;
+      padding: 0.08rem 0.3rem;
       border-radius: 4px;
-      margin-left: 0.35rem;
+      margin-left: 0.3rem;
     }
 
-    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.35rem; }
-    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
-    .card-desc { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; line-height: 1.3; }
-    .category-badge { font-size: 0.63rem; font-weight: 500; padding: 0.1rem 0.35rem; border-radius: 8px; }
-    .card-actions { margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.3rem; }
-    .link-btn { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.75rem; }
-    .action-icons { display: flex; gap: 0.2rem; align-items: center; }
-    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.2rem; border-radius: 50%; display: inline-flex; }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.3rem; }
+    .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.83rem; font-weight: 600; color: var(--text-primary); }
+    .card-desc { font-size: 0.73rem; color: var(--text-secondary); margin-top: 0.2rem; line-height: 1.25; }
+    .category-badge { font-size: 0.62rem; font-weight: 500; padding: 0.08rem 0.3rem; border-radius: 8px; }
+    .card-actions { margin-top: 0.4rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f3f4; padding-top: 0.25rem; }
+    .link-btn { display: inline-flex; align-items: center; gap: 0.2rem; color: var(--google-blue); text-decoration: none; font-weight: 500; font-size: 0.73rem; }
+    .action-icons { display: flex; gap: 0.15rem; align-items: center; }
+    .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.15rem; border-radius: 50%; display: inline-flex; }
     .action-btn:hover { background: rgba(0, 0, 0, 0.05); }
     .action-btn.delete-btn:hover { color: var(--google-red); }
     .action-btn.edit-btn:hover { color: var(--google-blue); }
     
-    /* BOOKMARK YELLOW HIGHLIGHT STAR */
     .bookmark-btn.bookmarked { color: var(--google-yellow) !important; }
 
-    /* SOLID GREEN FILLED CHECKMARK FOR COMPLETED STATE */
+    /* FILLED GREEN TICK FOR COMPLETED STATE */
     .completed-tick-filled {
       color: var(--google-green) !important;
       font-weight: bold;
     }
 
-    .item-select-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--google-red); display: none; }
+    .item-select-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--google-red); display: none; }
     .selection-mode-active .item-select-checkbox { display: inline-block; }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-    .doc-table th { background: var(--bg-body); font-weight: 600; color: var(--text-secondary); padding: 0.45rem 0.65rem; border-bottom: 1px solid var(--border-color); text-align: left; }
-    .doc-table td { padding: 0.45rem 0.65rem; border-bottom: 1px solid #f1f3f4; }
-    .doc-type-tag { padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.68rem; font-weight: 500; background: #e8eaed; }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    .doc-table th { background: var(--bg-body); font-weight: 600; color: var(--text-secondary); padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border-color); text-align: left; }
+    .doc-table td { padding: 0.4rem 0.55rem; border-bottom: 1px solid #f1f3f4; }
+    .doc-type-tag { padding: 0.08rem 0.3rem; border-radius: 4px; font-size: 0.65rem; font-weight: 500; background: #e8eaed; }
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 16, 18, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow-y: auto;
+      display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 15px 1rem; overflow-y: auto;
     }
     .modal-overlay.open { display: flex; }
     
     #powerUserDetailModalOverlay { z-index: 10000005 !important; }
 
-    .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 500px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 10px; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-    .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1rem; }
+    .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 480px; padding: 1rem; box-shadow: var(--shadow-md); margin-top: 10px; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; }
+    .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 0.95rem; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
-    .modal-form { display: flex; flex-direction: column; gap: 0.65rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.2rem; }
-    .form-group label { font-size: 0.75rem; font-weight: 500; color: var(--text-secondary); }
-    .form-group input, .form-group select { padding: 0.4rem 0.65rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.82rem; outline: none; }
-    .checkbox-group { display: flex; align-items: center; gap: 0.5rem; background: var(--google-blue-light); padding: 0.45rem 0.65rem; border-radius: 6px; }
-    .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.5rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
-    .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.35rem 0.65rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; }
-    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.35rem 0.65rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; }
+    .modal-form { display: flex; flex-direction: column; gap: 0.55rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.18rem; }
+    .form-group label { font-size: 0.72rem; font-weight: 500; color: var(--text-secondary); }
+    .form-group input, .form-group select { padding: 0.35rem 0.55rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
+    .checkbox-group { display: flex; align-items: center; gap: 0.4rem; background: var(--google-blue-light); padding: 0.4rem 0.55rem; border-radius: 6px; }
+    .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.45rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
+    .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.3rem 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; }
+    .btn-danger { background: var(--google-red); color: white; border: none; padding: 0.3rem 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; }
     
     .power-user-chip {
       display: inline-flex; align-items: center; justify-content: space-between;
       background: var(--google-purple-light); color: var(--google-purple);
-      padding: 0.3rem 0.55rem; border-radius: 6px; font-size: 0.78rem; font-weight: 500;
+      padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 500;
       border: 1px solid rgba(147, 52, 230, 0.2);
     }
 
-    .detail-list { list-style: none; padding: 0; margin: 0; max-height: 160px; overflow-y: auto; font-size: 0.8rem; border: 1px solid var(--border-color); border-radius: 6px; }
-    .detail-list li { padding: 0.35rem 0.55rem; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between; }
+    .detail-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; font-size: 0.78rem; border: 1px solid var(--border-color); border-radius: 6px; }
+    .detail-list li { padding: 0.3rem 0.5rem; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between; }
     .detail-list li:last-child { border-bottom: none; }
 
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
-      padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 500; margin-bottom: 0.5rem; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 0.65rem; border-radius: 8px; font-size: 0.78rem; font-weight: 500; margin-bottom: 0.4rem; align-items: center; gap: 0.4rem;
     }
 
     .mode-switch-card {
-      background: var(--google-purple-light); border: 1px solid var(--google-purple); padding: 0.6rem; border-radius: 8px; margin-bottom: 0.75rem;
+      background: var(--google-purple-light); border: 1px solid var(--google-purple); padding: 0.5rem; border-radius: 8px; margin-bottom: 0.65rem;
       display: flex; align-items: center; justify-content: space-between;
     }
   </style>
@@ -355,36 +361,36 @@
   <!-- MANDATORY PASSCODE VERIFICATION LOCK OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
-      <span class="material-icons-outlined" style="font-size: 40px; color: var(--google-blue); margin-bottom: 0.4rem;">lock</span>
-      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.2rem; margin-bottom: 0.4rem;">Security Passcode Verification</h2>
-      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.85rem;">
+      <span class="material-icons-outlined" style="font-size: 36px; color: var(--google-blue); margin-bottom: 0.3rem;">lock</span>
+      <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.15rem; margin-bottom: 0.35rem;">Security Passcode Verification</h2>
+      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
         Enter your official <strong>@maxval.com</strong> email. A 1-time passcode will be sent to your inbox to verify identity.
       </p>
 
-      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.5rem; font-size:0.8rem; margin-bottom:0.85rem; font-weight:600; color:var(--google-blue-hover);">
+      <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.45rem; font-size:0.78rem; margin-bottom:0.75rem; font-weight:600; color:var(--google-blue-hover);">
         Verified Session: <span id="detectedEmailAddress">...</span>
       </div>
 
       <!-- STEP 1: REQUEST PASSCODE FORM -->
-      <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.65rem;">
+      <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.55rem;">
         <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.55rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.85rem; text-align: center; font-weight: 500; outline: none;">
-        <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.55rem; font-size: 0.85rem;">Send Passcode to Inbox</button>
+        <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.5rem; font-size: 0.82rem;">Send Passcode to Inbox</button>
       </form>
 
       <!-- STEP 2: VERIFY PASSCODE FORM -->
-      <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.65rem; margin-top: 0.4rem;">
-        <p style="font-size: 0.78rem; color: var(--google-green); font-weight: 600;">Passcode sent! Check your inbox for the 6-digit code.</p>
-        <input type="text" id="otpCodeInput" placeholder="6-Digit Passcode" required maxlength="6" style="padding: 0.55rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.1rem; text-align: center; font-weight: 700; letter-spacing: 5px; outline: none;">
-        <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.55rem; font-size: 0.85rem; background: var(--google-green);">Verify Passcode & Access Portal</button>
+      <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.55rem; margin-top: 0.35rem;">
+        <p style="font-size: 0.75rem; color: var(--google-green); font-weight: 600;">Passcode sent! Check your inbox for the 6-digit code.</p>
+        <input type="text" id="otpCodeInput" placeholder="6-Digit Passcode" required maxlength="6" style="padding: 0.5rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.05rem; text-align: center; font-weight: 700; letter-spacing: 5px; outline: none;">
+        <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.5rem; font-size: 0.82rem; background: var(--google-green);">Verify Passcode & Access Portal</button>
         <button type="button" class="btn-secondary" onclick="resetOtpForm()" style="justify-content: center;">Use Different Email</button>
       </form>
     </div>
   </div>
 
-  <!-- HEADER WITH NEW VECTOR ANIMATED LOGO -->
+  <!-- HEADER WITH ANIMATED VECTOR LOGO -->
   <div class="top-hero-header">
     <div class="header-logo-flex">
-      <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+      <svg width="42" height="42" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="logoGlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
@@ -410,33 +416,33 @@
     </div>
   </div>
 
-  <!-- FLOATING TOAST NOTIFICATION PILL FOR LATEST RELEASE -->
+  <!-- COMPACT FLOATING TOAST RELEASE NOTIFICATION -->
   <div id="latestReleaseNotificationBar" class="latest-release-toast" onclick="navigateToLatestRelease()">
-    <span class="material-icons-outlined" style="font-size:16px; color:var(--google-yellow);">campaign</span>
-    <span id="latestReleaseText">NEW RELEASE: Check out our latest published resource!</span>
-    <span class="material-icons-outlined" style="font-size:14px; margin-left:0.25rem;">arrow_forward</span>
+    <span class="material-icons-outlined" style="font-size:15px; color:var(--google-yellow);">campaign</span>
+    <span id="latestReleaseText">NEW RELEASE: "IP Basics" published in LEARNING HUB click here</span>
+    <span class="material-icons-outlined" style="font-size:13px; margin-left:0.2rem;">arrow_forward</span>
   </div>
 
   <div class="top-utility-bar">
     <div class="top-utility-nav">
       <!-- USER PROFILE BADGE -->
       <button type="button" class="top-utility-btn user-profile-badge" onclick="openProfileModal()">
-        <span class="material-icons-outlined" style="font-size:14px;">account_circle</span>
+        <span class="material-icons-outlined" style="font-size:13px;">account_circle</span>
         <span id="activeUserDisplay">Sign In (@maxval.com)</span>
       </button>
 
       <button type="button" class="top-utility-btn accent-analytics" onclick="openUserAnalyticsDashboard()">
-        <span class="material-icons-outlined" style="font-size:14px;">insights</span><span>User Progress Dashboard</span>
+        <span class="material-icons-outlined" style="font-size:13px;">insights</span><span>User Progress Dashboard</span>
       </button>
 
       <!-- POWER USER CONTROLS -->
       <button type="button" class="top-utility-btn accent-settings" id="powerUsersTabBtn" style="display:none;" onclick="promptPowerUserSettings()">
-        <span class="material-icons-outlined" style="font-size:14px;">admin_panel_settings</span><span>Power Controls</span>
+        <span class="material-icons-outlined" style="font-size:13px;">admin_panel_settings</span><span>Power Controls</span>
       </button>
 
       <!-- SUBMIT NEW LINK BUTTON -->
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" onclick="openAddModal()">
-        <span class="material-icons-outlined" style="font-size:14px;">add_circle</span><span>Submit New Link</span>
+        <span class="material-icons-outlined" style="font-size:13px;">add_circle</span><span>Submit New Link</span>
       </button>
     </div>
   </div>
@@ -444,19 +450,19 @@
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:16px;">school</span><span>Learning Hub</span>
+        <span class="material-icons-outlined" style="font-size:15px;">school</span><span>Learning Hub</span>
       </button>
       <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:16px;">description</span><span>Document Hub</span>
+        <span class="material-icons-outlined" style="font-size:15px;">description</span><span>Document Hub</span>
       </button>
       <button class="tab-btn quick-tab" onclick="switchTab('quickLinksTab', this)">
-        <span class="material-icons-outlined" style="font-size:16px;">link</span><span>Quick Links</span>
+        <span class="material-icons-outlined" style="font-size:15px;">link</span><span>Quick Links</span>
       </button>
     </nav>
 
     <!-- BOOKMARK FILTER TOGGLE -->
     <div class="kpi-bookmark-small" id="bookmarkContainer" onclick="toggleBookmarkOnlyFilter()" title="Click to filter bookmarked items">
-      <span class="material-icons-outlined" style="color:var(--google-yellow); font-size:16px;">star</span>
+      <span class="material-icons-outlined" style="color:var(--google-yellow); font-size:15px;">star</span>
       <span>Bookmarks: <strong id="kpiBookmarks">0</strong></span>
     </div>
   </header>
@@ -474,11 +480,11 @@
           <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
           <div class="filter-actions-group" id="learningAdminActions" style="display:none;">
             <button id="toggleLearningSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('learning')">
-              <span class="material-icons-outlined" style="font-size:15px;">checklist</span>
+              <span class="material-icons-outlined" style="font-size:14px;">checklist</span>
               <span id="learningSelectBtnLabel">Select Multiple to Delete</span>
             </button>
             <button id="learningBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="handleActionRequest('bulk_delete', null, 'learning')">
-              <span class="material-icons-outlined" style="font-size:15px;">delete_sweep</span>
+              <span class="material-icons-outlined" style="font-size:14px;">delete_sweep</span>
               <span>Delete Selected (<strong id="learningSelectedCount">0</strong>)</span>
             </button>
           </div>
@@ -486,7 +492,7 @@
         <select id="moduleSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Learning Modules --</option>
         </select>
-        <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:13px;">visibility</span> Status: <strong id="learningActiveCount">0</strong></div>
+        <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:12px;">visibility</span> Status: <strong id="learningActiveCount">0</strong></div>
       </section>
 
       <section class="toolbar">
@@ -499,7 +505,9 @@
           <button class="view-btn" id="learningListBtn" onclick="switchViewMode('learning', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
         </div>
       </section>
-      <main id="learningViewContainer"></main>
+      <div class="view-scroll-wrapper">
+        <main id="learningViewContainer"></main>
+      </div>
     </div>
 
     <!-- DOCUMENT HUB TAB -->
@@ -509,11 +517,11 @@
           <label for="docPackageSelect" class="filter-label-catchy"><span class="material-icons-outlined">inventory_2</span> FILTER BY PACKAGE</label>
           <div class="filter-actions-group" id="docAdminActions" style="display:none;">
             <button id="toggleDocSelectionBtn" class="btn-secondary" onclick="toggleSelectionMode('document')">
-              <span class="material-icons-outlined" style="font-size:15px;">checklist</span>
+              <span class="material-icons-outlined" style="font-size:14px;">checklist</span>
               <span id="docSelectBtnLabel">Select Multiple to Delete</span>
             </button>
             <button id="docBulkDeleteBtn" class="btn-danger" style="display:none;" onclick="handleActionRequest('bulk_delete', null, 'document')">
-              <span class="material-icons-outlined" style="font-size:15px;">delete_sweep</span>
+              <span class="material-icons-outlined" style="font-size:14px;">delete_sweep</span>
               <span>Delete Selected (<strong id="docSelectedCount">0</strong>)</span>
             </button>
           </div>
@@ -521,7 +529,7 @@
         <select id="docPackageSelect" class="styled-dropdown-catchy">
           <option value="ALL">-- All Packages --</option>
         </select>
-        <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);"><span class="material-icons-outlined" style="font-size:13px;">visibility</span> Status: <strong id="docActiveCount">0</strong></div>
+        <div class="active-count-badge" style="color:var(--google-purple); background:var(--google-purple-light);"><span class="material-icons-outlined" style="font-size:12px;">visibility</span> Status: <strong id="docActiveCount">0</strong></div>
       </section>
 
       <section class="toolbar">
@@ -534,34 +542,51 @@
           <button class="view-btn active" id="docListBtn" onclick="switchViewMode('document', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
         </div>
       </section>
-      <main id="docViewContainer"></main>
+      <div class="view-scroll-wrapper">
+        <main id="docViewContainer"></main>
+      </div>
     </div>
 
     <!-- QUICK LINKS TAB -->
     <div id="quickLinksTab" class="tab-content">
+      <section class="filter-card-highlight">
+        <div class="filter-header-row">
+          <label class="filter-label-catchy"><span class="material-icons-outlined">link</span> QUICK LINKS MODULE</label>
+          <div class="active-count-badge" style="color:var(--google-green); background:var(--google-green-light);">
+            <span class="material-icons-outlined" style="font-size:12px;">visibility</span> Status: <strong id="quickActiveCount">0</strong>
+          </div>
+        </div>
+      </section>
+
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
           <input type="text" id="quickSearchInput" class="search-input" placeholder="Filter quick links...">
         </div>
+        <div class="view-mode-toggle">
+          <button class="view-btn active" id="quickGridBtn" onclick="switchViewMode('quick', 'grid')" title="Grid View"><span class="material-icons-outlined">grid_view</span></button>
+          <button class="view-btn" id="quickListBtn" onclick="switchViewMode('quick', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
+        </div>
       </section>
-      <main class="resources-grid" id="quickLinksContainer"></main>
+      <div class="view-scroll-wrapper">
+        <main id="quickLinksContainer"></main>
+      </div>
     </div>
   </div>
 
   <!-- PROFILE / SIGN OUT MODAL -->
   <div class="modal-overlay" id="profileModalOverlay">
-    <div class="modal-content" style="max-width:380px; text-align:center;">
+    <div class="modal-content" style="max-width:360px; text-align:center;">
       <div class="modal-header">
         <h2>Active User Profile</h2>
         <button class="modal-close-btn" onclick="closeModal('profileModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <div style="padding: 0.5rem 0;">
-        <span class="material-icons-outlined" style="font-size: 48px; color: var(--google-green);">account_circle</span>
-        <p style="font-size: 0.95rem; font-weight: 700; margin-top: 0.3rem;" id="modalProfileDisplay">Prabhaharan</p>
-        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1rem;" id="modalProfileEmail">user@maxval.com</p>
-        <button type="button" class="btn-danger" style="width: 100%; justify-content: center; padding: 0.55rem;" onclick="handleSignOut()">
-          <span class="material-icons-outlined" style="font-size: 15px;">logout</span><span>Sign Out</span>
+      <div style="padding: 0.4rem 0;">
+        <span class="material-icons-outlined" style="font-size: 44px; color: var(--google-green);">account_circle</span>
+        <p style="font-size: 0.9rem; font-weight: 700; margin-top: 0.25rem;" id="modalProfileDisplay">Prabhaharan</p>
+        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.85rem;" id="modalProfileEmail">user@maxval.com</p>
+        <button type="button" class="btn-danger" style="width: 100%; justify-content: center; padding: 0.5rem;" onclick="handleSignOut()">
+          <span class="material-icons-outlined" style="font-size: 14px;">logout</span><span>Sign Out</span>
         </button>
       </div>
     </div>
@@ -569,44 +594,42 @@
 
   <!-- POWER USER CONTROLS MODAL -->
   <div class="modal-overlay" id="powerUserSettingsModalOverlay">
-    <div class="modal-content" style="max-width:500px;">
+    <div class="modal-content" style="max-width:480px;">
       <div class="modal-header">
         <h2>Power User Controls & Configuration</h2>
         <button class="modal-close-btn" onclick="closeModal('powerUserSettingsModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.65rem;">
         
-        <!-- POWER USER MODE SWITCHER -->
         <div class="mode-switch-card">
           <div>
-            <strong style="font-size:0.85rem; color:var(--google-purple);">Active View Mode:</strong>
-            <p style="font-size:0.75rem; color:var(--text-secondary);" id="activeModeLabel">Power User Admin Mode</p>
+            <strong style="font-size:0.82rem; color:var(--google-purple);">Active View Mode:</strong>
+            <p style="font-size:0.72rem; color:var(--text-secondary);" id="activeModeLabel">Power User Admin Mode</p>
           </div>
           <button type="button" class="btn-secondary" onclick="togglePowerUserModeOverride()">
-            <span class="material-icons-outlined" style="font-size:15px;">swap_horiz</span>
+            <span class="material-icons-outlined" style="font-size:14px;">swap_horiz</span>
             <span id="modeSwitchBtnText">Switch to Normal Mode</span>
           </button>
         </div>
 
-        <!-- AI DESCRIPTION GENERATOR TRIGGER -->
-        <div style="background:var(--google-blue-light); border:1px solid var(--google-blue); padding:0.6rem; border-radius:8px; display:flex; align-items:center; justify-content:space-between;">
+        <div style="background:var(--google-blue-light); border:1px solid var(--google-blue); padding:0.5rem; border-radius:8px; display:flex; align-items:center; justify-content:space-between;">
           <div>
-            <strong style="font-size:0.82rem; color:var(--google-blue-hover);">AI Description Synthesizer</strong>
-            <p style="font-size:0.73rem; color:var(--text-secondary);">Auto-generate detailed AI descriptions across all cards.</p>
+            <strong style="font-size:0.8rem; color:var(--google-blue-hover);">AI Description Synthesizer</strong>
+            <p style="font-size:0.7rem; color:var(--text-secondary);">Auto-generate AI descriptions across all cards.</p>
           </div>
-          <button type="button" class="btn-submit" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="triggerAiDescriptionEngine()">
-            <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>Generate AI Descs</span>
+          <button type="button" class="btn-submit" style="font-size:0.72rem; padding:0.3rem 0.6rem;" onclick="triggerAiDescriptionEngine()">
+            <span class="material-icons-outlined" style="font-size:13px;">auto_awesome</span><span>Generate AI Descs</span>
           </button>
         </div>
 
-        <form onsubmit="handleAddPowerUser(event)" style="display: flex; gap: 0.4rem; margin-top:0.25rem;">
-          <input type="email" id="newPowerUserEmail" placeholder="user@maxval.com" required style="flex:1; padding: 0.4rem 0.65rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.82rem;">
-          <button type="submit" class="btn-submit" style="padding: 0.4rem 0.75rem; font-size:0.8rem;">Add Power User</button>
+        <form onsubmit="handleAddPowerUser(event)" style="display: flex; gap: 0.35rem; margin-top:0.2rem;">
+          <input type="email" id="newPowerUserEmail" placeholder="user@maxval.com" required style="flex:1; padding: 0.35rem 0.55rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.78rem;">
+          <button type="submit" class="btn-submit" style="padding: 0.35rem 0.65rem; font-size:0.78rem;">Add Power User</button>
         </form>
 
         <div>
-          <label style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Authorized Power Users Roster:</label>
-          <div id="powerUserListContainer" style="display: flex; flex-direction: column; gap: 0.35rem; max-height: 140px; overflow-y: auto;"></div>
+          <label style="font-size: 0.72rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Authorized Power Users Roster:</label>
+          <div id="powerUserListContainer" style="display: flex; flex-direction: column; gap: 0.3rem; max-height: 130px; overflow-y: auto;"></div>
         </div>
       </div>
     </div>
@@ -614,26 +637,26 @@
 
   <!-- POWER USER DRILL-DOWN MODAL -->
   <div class="modal-overlay" id="powerUserDetailModalOverlay">
-    <div class="modal-content" style="max-width:540px;">
+    <div class="modal-content" style="max-width:520px;">
       <div class="modal-header">
         <h2>User Detail Breakdown</h2>
         <button class="modal-close-btn" onclick="closeModal('powerUserDetailModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <p style="font-size: 0.85rem; font-weight: 700; color: var(--google-blue);" id="detailUserEmailDisplay">user@maxval.com</p>
+      <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+        <p style="font-size: 0.82rem; font-weight: 700; color: var(--google-blue);" id="detailUserEmailDisplay">user@maxval.com</p>
 
         <div>
-          <label style="font-size: 0.75rem; font-weight: 700; color: var(--google-green); display: block; margin-bottom: 0.2rem;">Completed Topics:</label>
+          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-green); display: block; margin-bottom: 0.18rem;">Completed Topics:</label>
           <ul class="detail-list" id="detailCompletedList"></ul>
         </div>
 
         <div>
-          <label style="font-size: 0.75rem; font-weight: 700; color: var(--google-red); display: block; margin-bottom: 0.2rem;">Pending Topics:</label>
+          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-red); display: block; margin-bottom: 0.18rem;">Pending Topics:</label>
           <ul class="detail-list" id="detailPendingList"></ul>
         </div>
 
         <div>
-          <label style="font-size: 0.75rem; font-weight: 700; color: var(--google-purple); display: block; margin-bottom: 0.2rem;">Viewed Documents Log:</label>
+          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-purple); display: block; margin-bottom: 0.18rem;">Viewed Documents Log:</label>
           <ul class="detail-list" id="detailDocsViewedList"></ul>
         </div>
       </div>
@@ -712,7 +735,7 @@
 
   <!-- PIN VERIFICATION MODAL -->
   <div class="modal-overlay" id="pinModalOverlay">
-    <div class="modal-content" style="max-width:360px;">
+    <div class="modal-content" style="max-width:350px;">
       <div class="modal-header">
         <h2>Admin Security Verification</h2>
         <button class="modal-close-btn" onclick="closeModal('pinModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -720,19 +743,24 @@
       <form id="pinForm" class="modal-form" onsubmit="handlePinSubmission(event)">
         <div class="form-group">
           <label>Enter Security PIN *</label>
-          <input type="password" id="pinInput" placeholder="Enter PIN (Default: 1234)" required maxlength="8" style="text-align:center; font-size:1.1rem; letter-spacing:4px;">
+          <input type="password" id="pinInput" placeholder="Enter PIN (Default: 1234)" required maxlength="8" style="text-align:center; font-size:1.05rem; letter-spacing:4px;">
         </div>
         <button type="submit" class="btn-submit">Verify PIN</button>
       </form>
     </div>
   </div>
 
-  <!-- PROGRESS DASHBOARD MODAL -->
+  <!-- PROGRESS DASHBOARD MODAL WITH MANUAL REFRESH BUTTON -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
-    <div class="modal-content" style="max-width: 700px;">
+    <div class="modal-content" style="max-width: 680px;">
       <div class="modal-header">
         <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
-        <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
+        <div style="display:flex; align-items:center; gap:0.4rem;">
+          <button type="button" class="btn-secondary" onclick="openUserAnalyticsDashboard()" title="Refresh Dashboard Logs">
+            <span class="material-icons-outlined" style="font-size:14px;">refresh</span><span>Refresh</span>
+          </button>
+          <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
+        </div>
       </div>
       <div class="table-container">
         <table class="doc-table">
@@ -924,9 +952,9 @@
     let localCustomDocs = JSON.parse(localStorage.getItem('kc_custom_docs_v17') || '[]');
     let localCustomQuick = JSON.parse(localStorage.getItem('kc_custom_quick_v17') || '[]');
 
-    let dataset = [...baseDataset, ...localCustomDataset];
-    let docDataset = [...baseDocDataset, ...localCustomDocs];
-    let quickDataset = [...baseQuickLinks, ...localCustomQuick];
+    let dataset = [...localCustomDataset, ...baseDataset];
+    let docDataset = [...localCustomDocs, ...baseDocDataset];
+    let quickDataset = [...localCustomQuick, ...baseQuickLinks];
 
     // PERSISTENT LATEST RELEASE TRACKER
     let latestRelease = JSON.parse(localStorage.getItem('kc_latest_release_v1') || 'null');
@@ -945,6 +973,7 @@
     // View Modes
     let learningViewMode = localStorage.getItem('user_pref_learning_view') || 'grid';
     let docViewMode = localStorage.getItem('user_pref_doc_view') || 'list';
+    let quickViewMode = localStorage.getItem('user_pref_quick_view') || 'grid';
     let filterBookmarksOnly = false;
 
     // Power User Configuration
@@ -1195,7 +1224,7 @@
     function checkLatestReleaseNotification() {
       const banner = document.getElementById('latestReleaseNotificationBar');
       if (latestRelease && latestRelease.title) {
-        document.getElementById('latestReleaseText').textContent = `NEW RELEASE: "${latestRelease.title}" published in ${latestRelease.hub.toUpperCase()} HUB by ${extractDisplayName(latestRelease.submitter)}`;
+        document.getElementById('latestReleaseText').textContent = `NEW RELEASE: "${latestRelease.title}" published in ${latestRelease.hub.toUpperCase()} HUB click here`;
         banner.style.display = 'inline-flex';
       } else {
         banner.style.display = 'none';
@@ -1239,6 +1268,7 @@
       }
     }
 
+    /* PREREQUISITE CHECK GUARD FOR COMPLETION */
     function toggleTopicCompletion(resId, isDoc = false) {
       if (!currentUser) { checkUserLoginState(); return; }
       const analytics = getUserAnalytics();
@@ -1253,7 +1283,7 @@
       const hasViewed = userRecord.seenDocs.some(doc => doc.pkg === resId || doc.type === resId || doc.pkg === resourceTitle);
 
       if (!hasViewed) {
-        alert("Please complete the module by opening the link first.");
+        alert("Please click on the link first then only you can able to complete.");
         return;
       }
 
@@ -1302,12 +1332,18 @@
         document.getElementById('learningGridBtn').classList.toggle('active', mode === 'grid');
         document.getElementById('learningListBtn').classList.toggle('active', mode === 'list');
         renderLearningHub();
-      } else {
+      } else if (hub === 'document') {
         docViewMode = mode;
         localStorage.setItem('user_pref_doc_view', mode);
         document.getElementById('docGridBtn').classList.toggle('active', mode === 'grid');
         document.getElementById('docListBtn').classList.toggle('active', mode === 'list');
         renderDocumentHub();
+      } else {
+        quickViewMode = mode;
+        localStorage.setItem('user_pref_quick_view', mode);
+        document.getElementById('quickGridBtn').classList.toggle('active', mode === 'grid');
+        document.getElementById('quickListBtn').classList.toggle('active', mode === 'list');
+        renderQuickLinks();
       }
     }
 
@@ -1763,7 +1799,7 @@
       scrollParentToTop();
     }
 
-    /* RELIABLE LINK SUBMISSION VIA JSONP DIRECT CALL */
+    /* PREPEND NEWEST ENTRIES TO TOP OF ARRAY */
     function handleAddSubmission(e) {
       if (e) { e.preventDefault(); e.stopPropagation(); }
 
@@ -1794,8 +1830,8 @@
         } else {
           newGeneratedId = `res_custom_${Date.now()}`;
           const newResource = { id: newGeneratedId, name: releaseTitle, category: category, link: link, desc: 'User published resource.', isNew: true };
-          dataset.push(newResource);
-          localCustomDataset.push(newResource);
+          dataset.unshift(newResource); // Prepend to top
+          localCustomDataset.unshift(newResource);
         }
         
         localStorage.setItem('kc_custom_learning_v17', JSON.stringify(localCustomDataset));
@@ -1816,8 +1852,8 @@
         } else {
           newGeneratedId = `doc_custom_${Date.now()}`;
           const newDoc = { id: newGeneratedId, pkg, ver, type, link, desc: 'User published document.', isNew: true };
-          docDataset.push(newDoc);
-          localCustomDocs.push(newDoc);
+          docDataset.unshift(newDoc); // Prepend to top
+          localCustomDocs.unshift(newDoc);
         }
 
         localStorage.setItem('kc_custom_docs_v17', JSON.stringify(localCustomDocs));
@@ -1832,14 +1868,14 @@
         } else {
           newGeneratedId = `ql_custom_${Date.now()}`;
           const newQuick = { id: newGeneratedId, name: releaseTitle, category: 'Quick Links', link: link, desc: 'User published quick link.', isNew: true };
-          quickDataset.push(newQuick);
-          localCustomQuick.push(newQuick);
+          quickDataset.unshift(newQuick); // Prepend to top
+          localCustomQuick.unshift(newQuick);
         }
         localStorage.setItem('kc_custom_quick_v17', JSON.stringify(localCustomQuick));
         renderQuickLinks();
       }
 
-      // SAVE LATEST RELEASE DATA FOR TOP BANNER
+      // SAVE LATEST RELEASE DATA FOR COMPACT FLOATING TOAST
       latestRelease = {
         id: newGeneratedId,
         title: releaseTitle,
@@ -1849,7 +1885,6 @@
       localStorage.setItem('kc_latest_release_v1', JSON.stringify(latestRelease));
       checkLatestReleaseNotification();
 
-      // TRIGGER EMAIL DISPATCH VIA RELIABLE JSONP CALL
       if (shouldSend) {
         callGasJsonp({
           action: 'SEND_NOTIFICATION_EMAIL',
@@ -2083,43 +2118,78 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
-    /* RENDER QUICK LINKS TAB */
+    /* RENDER QUICK LINKS TAB (WITH GRID & LIST VIEW TOGGLES AND COUNTER) */
     function renderQuickLinks() {
       const container = document.getElementById('quickLinksContainer');
       const filtered = quickDataset.map((q, originalIndex) => ({ ...q, originalIndex })).filter(q => {
         return q.name.toLowerCase().includes(quickSearchQuery) || q.desc.toLowerCase().includes(quickSearchQuery);
       });
 
+      document.getElementById('quickActiveCount').textContent = `${filtered.length} Total Quick Links`;
+
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:1.25rem;">No matching quick links found.</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:1.25rem;">No matching quick links found.</div>`;
         setTimeout(notifyIframeHeight, 50);
         return;
       }
 
       const powerUserActive = isPowerUser(currentUser);
 
-      container.innerHTML = filtered.map(q => `
-        <article class="resource-card" data-id="${q.id}">
-          <div>
-            <div class="card-header">
-              <span class="category-badge" style="background:var(--google-green-light); color:var(--google-green);">Quick Link</span>
-            </div>
-            <h3 class="card-title">${q.name}</h3>
-            <p class="card-desc">${q.desc || 'Direct Symphony implementation tool.'}</p>
-          </div>
-          <div class="card-actions">
-            <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
-              <span>Open Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
-            </a>
-            ${powerUserActive ? `
-              <div class="action-icons">
-                <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
-                <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+      if (quickViewMode === 'grid') {
+        container.className = 'resources-grid';
+        container.innerHTML = filtered.map(q => `
+          <article class="resource-card" data-id="${q.id}">
+            <div>
+              <div class="card-header">
+                <span class="category-badge" style="background:var(--google-green-light); color:var(--google-green);">Quick Link</span>
               </div>
-            ` : ''}
-          </div>
-        </article>
-      `).join('');
+              <h3 class="card-title">${q.name}</h3>
+              <p class="card-desc">${q.desc || 'Direct Symphony implementation tool.'}</p>
+            </div>
+            <div class="card-actions">
+              <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span>Open Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
+              </a>
+              ${powerUserActive ? `
+                <div class="action-icons">
+                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
+                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+                </div>
+              ` : ''}
+            </div>
+          </article>
+        `).join('');
+      } else {
+        container.className = 'table-container';
+        container.innerHTML = `
+          <table class="doc-table">
+            <thead>
+              <tr><th>Quick Link Name</th><th>Description</th><th>Link</th>${powerUserActive ? '<th>Actions</th>' : ''}</tr>
+            </thead>
+            <tbody>
+              ${filtered.map(q => `
+                <tr data-id="${q.id}">
+                  <td><strong>${q.name}</strong></td>
+                  <td><span style="font-size:0.75rem; color:var(--text-secondary);">${q.desc || 'Direct link resource'}</span></td>
+                  <td>
+                    <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+                      <span>Open</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span>
+                    </a>
+                  </td>
+                  ${powerUserActive ? `
+                    <td>
+                      <div class="action-icons">
+                        <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
+                        <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
+                      </div>
+                    </td>
+                  ` : ''}
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
 
       setTimeout(notifyIframeHeight, 50);
     }
