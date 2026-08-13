@@ -48,13 +48,13 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 15px;
+      padding-top: 20px;
       overflow-y: auto;
     }
 
     .app-lock-card {
       position: fixed;
-      top: 15px;
+      top: 20px;
       background: #ffffff;
       border-radius: 16px;
       padding: 1.25rem;
@@ -64,6 +64,7 @@
       text-align: center;
       border: 1px solid var(--border-color);
       z-index: 10000000;
+      animation: modalSlideIn 0.3s ease-out;
     }
 
     /* HEADER & COMPACT ANIMATED VECTOR LOGO */
@@ -123,24 +124,25 @@
       margin-top: 1px;
     }
 
-    /* COMPACT FLOATING TOAST NOTIFICATION FOR LATEST RELEASE */
+    /* COMPACT FLOATING TOAST RELEASE NOTIFICATION */
     .latest-release-toast {
       display: none;
       align-items: center;
       gap: 0.4rem;
       background: #0f172a;
       color: #ffffff;
-      padding: 0.25rem 0.75rem;
+      padding: 0.2rem 0.65rem;
       border-radius: 16px;
       font-size: 0.72rem;
       font-weight: 500;
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       border: 1px solid var(--google-blue);
       cursor: pointer;
-      margin: 0.3rem auto;
+      margin: 0.25rem auto;
       width: fit-content;
       max-width: 90%;
       transition: transform 0.2s ease;
+      animation: modalSlideIn 0.3s ease-out;
     }
     .latest-release-toast:hover {
       transform: translateY(-1px);
@@ -251,18 +253,39 @@
     .view-btn { background: #ffffff; border: none; padding: 0.2rem 0.45rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: bold; }
 
-    /* INTERNAL SCROLLABLE VIEW CONTAINER TO REMOVE EMPTY SPACE */
+    /* ZERO EMPTY SPACE SCROLLING WRAPPER */
     .view-scroll-wrapper {
       max-height: calc(100vh - 210px);
       overflow-y: auto;
       padding-right: 2px;
+      margin-bottom: 0.5rem;
     }
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.55rem; }
-    .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.65rem; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; position: relative; }
+    
+    /* ENTRANCE ANIMATION FOR MODULE CARDS */
+    .resource-card { 
+      background: var(--bg-card); 
+      border: 1px solid var(--border-color); 
+      border-radius: var(--radius); 
+      padding: 0.65rem; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: space-between; 
+      cursor: pointer; 
+      transition: all 0.2s ease; 
+      position: relative; 
+      animation: cardEntrance 0.35s ease-out forwards;
+    }
+    @keyframes cardEntrance {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
 
+    /* NEWLY UPDATED PULSING HIGHLIGHT */
     .resource-card.newly-updated-highlight {
       border: 2px solid var(--google-blue) !important;
       animation: pulseHighlight 2s infinite;
@@ -304,10 +327,11 @@
     .item-select-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--google-red); display: none; }
     .selection-mode-active .item-select-checkbox { display: inline-block; }
 
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; }
+    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; max-height: calc(100vh - 210px); }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
     .doc-table th { background: var(--bg-body); font-weight: 600; color: var(--text-secondary); padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border-color); text-align: left; }
     .doc-table td { padding: 0.4rem 0.55rem; border-bottom: 1px solid #f1f3f4; }
+    .doc-table tr { animation: cardEntrance 0.3s ease-out forwards; }
     .doc-type-tag { padding: 0.08rem 0.3rem; border-radius: 4px; font-size: 0.65rem; font-weight: 500; background: #e8eaed; }
 
     .modal-overlay {
@@ -321,14 +345,30 @@
     
     #powerUserDetailModalOverlay { z-index: 10000005 !important; }
 
-    .modal-content { background: var(--bg-card); border-radius: var(--radius); width: 100%; max-width: 480px; padding: 1rem; box-shadow: var(--shadow-md); margin-top: 10px; }
+    .modal-content { 
+      background: var(--bg-card); 
+      border-radius: var(--radius); 
+      width: 100%; 
+      max-width: 480px; 
+      padding: 1rem; 
+      box-shadow: var(--shadow-md); 
+      margin-top: 10px; 
+      max-height: 85vh; 
+      overflow-y: auto;
+      animation: modalSlideIn 0.3s ease-out;
+    }
+    @keyframes modalSlideIn {
+      from { opacity: 0; transform: translateY(-15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; }
     .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 0.95rem; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
     .modal-form { display: flex; flex-direction: column; gap: 0.55rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.18rem; }
     .form-group label { font-size: 0.72rem; font-weight: 500; color: var(--text-secondary); }
-    .form-group input, .form-group select { padding: 0.35rem 0.55rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; outline: none; }
+    .form-group input, .form-group select { padding: 0.35rem 0.55rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.82rem; outline: none; }
     .checkbox-group { display: flex; align-items: center; gap: 0.4rem; background: var(--google-blue-light); padding: 0.4rem 0.55rem; border-radius: 6px; }
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.45rem; border-radius: 6px; font-weight: 500; cursor: pointer; }
     .btn-secondary { background: #e8eaed; color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.3rem 0.55rem; border-radius: 6px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; }
@@ -341,7 +381,7 @@
       border: 1px solid rgba(147, 52, 230, 0.2);
     }
 
-    .detail-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; font-size: 0.78rem; border: 1px solid var(--border-color); border-radius: 6px; }
+    .detail-list { list-style: none; padding: 0; margin: 0; max-height: 140px; overflow-y: auto; font-size: 0.78rem; border: 1px solid var(--border-color); border-radius: 6px; }
     .detail-list li { padding: 0.3rem 0.5rem; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between; }
     .detail-list li:last-child { border-bottom: none; }
 
@@ -364,7 +404,7 @@
       <span class="material-icons-outlined" style="font-size: 36px; color: var(--google-blue); margin-bottom: 0.3rem;">lock</span>
       <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.15rem; margin-bottom: 0.35rem;">Security Passcode Verification</h2>
       <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
-        Enter your official <strong>@maxval.com</strong> email. A 1-time passcode will be sent to your inbox to verify identity.
+        Enter your official <strong>@maxval.com</strong> email address. A 1-time passcode will be sent to your inbox to verify identity.
       </p>
 
       <div id="detectedEmailBox" style="display:none; background:var(--google-blue-light); border:1px solid var(--google-blue); border-radius:8px; padding:0.45rem; font-size:0.78rem; margin-bottom:0.75rem; font-weight:600; color:var(--google-blue-hover);">
@@ -382,7 +422,6 @@
         <p style="font-size: 0.75rem; color: var(--google-green); font-weight: 600;">Passcode sent! Check your inbox for the 6-digit code.</p>
         <input type="text" id="otpCodeInput" placeholder="6-Digit Passcode" required maxlength="6" style="padding: 0.5rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.05rem; text-align: center; font-weight: 700; letter-spacing: 5px; outline: none;">
         <button type="submit" class="btn-submit" id="verifyOtpBtn" style="padding: 0.5rem; font-size: 0.82rem; background: var(--google-green);">Verify Passcode & Access Portal</button>
-        <button type="button" class="btn-secondary" onclick="resetOtpForm()" style="justify-content: center;">Use Different Email</button>
       </form>
     </div>
   </div>
@@ -450,13 +489,13 @@
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:15px;">school</span><span>Learning Hub</span>
+        <span class="material-icons-outlined" style="font-size:16px;">school</span><span>Learning Hub</span>
       </button>
       <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:15px;">description</span><span>Document Hub</span>
+        <span class="material-icons-outlined" style="font-size:16px;">description</span><span>Document Hub</span>
       </button>
       <button class="tab-btn quick-tab" onclick="switchTab('quickLinksTab', this)">
-        <span class="material-icons-outlined" style="font-size:15px;">link</span><span>Quick Links</span>
+        <span class="material-icons-outlined" style="font-size:16px;">link</span><span>Quick Links</span>
       </button>
     </nav>
 
@@ -645,29 +684,27 @@
       <div style="display: flex; flex-direction: column; gap: 0.65rem;">
         <p style="font-size: 0.82rem; font-weight: 700; color: var(--google-blue);" id="detailUserEmailDisplay">user@maxval.com</p>
 
-        <div>
-          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-green); display: block; margin-bottom: 0.18rem;">Completed Topics:</label>
+        <div id="detailLearningSection">
+          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-green); display: block; margin-bottom: 0.18rem;">Completed Learning Topics:</label>
           <ul class="detail-list" id="detailCompletedList"></ul>
-        </div>
 
-        <div>
-          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-red); display: block; margin-bottom: 0.18rem;">Pending Topics:</label>
+          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-red); display: block; margin-top: 0.5rem; margin-bottom: 0.18rem;">Pending Learning Topics:</label>
           <ul class="detail-list" id="detailPendingList"></ul>
         </div>
 
-        <div>
-          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-purple); display: block; margin-bottom: 0.18rem;">Viewed Documents Log:</label>
+        <div style="margin-top:0.4rem;">
+          <label style="font-size: 0.72rem; font-weight: 700; color: var(--google-purple); display: block; margin-bottom: 0.18rem;">Viewed Documents & Links Log (All Hubs):</label>
           <ul class="detail-list" id="detailDocsViewedList"></ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ADD / EDIT LINK MODAL -->
+  <!-- SUBMIT / EDIT LINK MODAL -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="addModalTitle">Submit New Resource Link</h2>
+        <h2 id="addModalTitle">Submit Link</h2>
         <button class="modal-close-btn" onclick="closeModal('addModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
 
@@ -693,7 +730,7 @@
           <div class="form-group"><label>Resource Title *</label><input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims"></div>
           <div class="form-group">
             <label>Module Category *</label>
-            <select id="newModule">
+            <select id="newModule" onchange="handleCategoryDropdownChange(this.value)">
               <option value="Intellectual Property">Intellectual Property</option>
               <option value="Introduction to Symphony">Introduction to Symphony</option>
               <option value="Invention Module">Invention Module</option>
@@ -702,7 +739,12 @@
               <option value="Trademark">Trademark</option>
               <option value="Assessment">Assessment</option>
               <option value="Additional Reference Materials">Additional Reference Materials</option>
+              <option value="__NEW_CATEGORY__">+ Add New Category</option>
             </select>
+          </div>
+          <div class="form-group" id="customCategoryInputGroup" style="display:none; margin-top:0.25rem;">
+            <label>Custom Category Name *</label>
+            <input type="text" id="customCategoryInput" placeholder="e.g., Advanced Analytics">
           </div>
         </div>
 
@@ -781,7 +823,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyj3UCbZulTcnTT-koQRWrVjKBZ4xDuH0xjB3DYjJcWYcb0OeYF8S2SWk2nQiV1Gdfd/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzQ_d_88WgLJmy_DYkLN_-AUdHSFCJnVisihnvjqdiyorRAL9E-5loqRkW0qu0QS9J0/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1300,6 +1342,7 @@
       return found ? found.name : resId;
     }
 
+    /* REAL-TIME LINK VIEW LOGGING ACROSS ALL HUBS */
     function trackDocView(pkgName, docType) {
       if (!currentUser) return;
       const analytics = getUserAnalytics();
@@ -1447,6 +1490,7 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
+    /* CONFIRMATION POPUP & USER DASHBOARD DELETION */
     window.deleteUserProgressRecord = function(targetEmail, event) {
       if (event) { event.preventDefault(); event.stopPropagation(); }
       if (!isPowerUser(currentUser)) return;
@@ -1470,6 +1514,7 @@
       }
     };
 
+    /* DRILL-DOWN USER DETAILS MODAL SHOWING LOGS ACROSS ALL HUBS */
     function viewUserDetailBreakdown(email, event) {
       if(event) event.stopPropagation();
       const analytics = getUserAnalytics();
@@ -1478,6 +1523,8 @@
       document.getElementById('detailUserEmailDisplay').textContent = `User Details for: ${extractDisplayName(email)} (${email})`;
 
       const completedListElem = document.getElementById('detailCompletedList');
+      const pendingListElem = document.getElementById('detailPendingList');
+
       const completedIds = u.completedTopics || [];
       const completedItems = dataset.filter(d => completedIds.includes(d.id));
 
@@ -1492,11 +1539,10 @@
         `).join('');
       }
 
-      const pendingListElem = document.getElementById('detailPendingList');
       const pendingItems = dataset.filter(d => !completedIds.includes(d.id));
 
       if (pendingItems.length === 0) {
-        pendingListElem.innerHTML = `<li><span style="color:var(--google-green);">All topics completed!</span></li>`;
+        pendingListElem.innerHTML = `<li><span style="color:var(--google-green);">All learning topics completed!</span></li>`;
       } else {
         pendingListElem.innerHTML = pendingItems.map(item => `
           <li>
@@ -1510,7 +1556,7 @@
       const seenDocs = u.seenDocs || [];
 
       if (seenDocs.length === 0) {
-        docsListElem.innerHTML = `<li><span style="color:var(--text-secondary);">No viewing history recorded.</span></li>`;
+        docsListElem.innerHTML = `<li><span style="color:var(--text-secondary);">No document or link viewing history recorded.</span></li>`;
       } else {
         docsListElem.innerHTML = seenDocs.map(doc => `
           <li>
@@ -1589,6 +1635,10 @@
       mainSelect.innerHTML = `<option value="ALL">-- All Learning Modules --</option>` +
         Array.from(existingCats).map(cat => `<option value="${cat}">${cat}</option>`).join('');
       mainSelect.value = selectedModule;
+
+      const modalSelect = document.getElementById('newModule');
+      modalSelect.innerHTML = Array.from(existingCats).map(cat => `<option value="${cat}">${cat}</option>`).join('') +
+        `<option value="__NEW_CATEGORY__">+ Add New Category</option>`;
     }
 
     function syncDocPackageOptions() {
@@ -1612,6 +1662,17 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
+    function handleCategoryDropdownChange(val) {
+      const customGroup = document.getElementById('customCategoryInputGroup');
+      if (val === '__NEW_CATEGORY__') {
+        customGroup.style.display = 'flex';
+        document.getElementById('customCategoryInput').focus();
+      } else {
+        customGroup.style.display = 'none';
+      }
+      setTimeout(notifyIframeHeight, 50);
+    }
+
     function toggleFormFields(target) {
       if (target === 'learning') {
         document.getElementById('learningFields').style.display = 'block';
@@ -1629,15 +1690,23 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
+    /* AUTOMATIC TAB-AWARE TARGET HUB SELECTION */
     function openAddModal() {
       if (!currentUser) { checkUserLoginState(); return; }
-      document.getElementById('addModalTitle').textContent = "Submit New Resource Link";
+      document.getElementById('addModalTitle').textContent = "Submit Link";
       document.getElementById('editItemIndex').value = "";
       document.getElementById('editItemType').value = "";
       document.getElementById('submitterEmail').value = currentUser;
       
       const dlField = document.getElementById('dlEmailAddress');
       if (!dlField.value) dlField.value = currentUser;
+
+      const targetSelect = document.getElementById('targetHub');
+      if (activeTab === 'learningHubTab') targetSelect.value = 'learning';
+      else if (activeTab === 'documentHubTab') targetSelect.value = 'document';
+      else targetSelect.value = 'quick';
+
+      toggleFormFields(targetSelect.value);
 
       document.getElementById('addModalOverlay').classList.add('open');
       scrollParentToTop();
@@ -1771,7 +1840,7 @@
     }
 
     function executeEditItem(hub, index) {
-      document.getElementById('addModalTitle').textContent = "Edit Resource Link";
+      document.getElementById('addModalTitle').textContent = "Submit Link";
       document.getElementById('editItemIndex').value = index;
       document.getElementById('editItemType').value = hub;
       document.getElementById('targetHub').value = hub;
@@ -1799,7 +1868,7 @@
       scrollParentToTop();
     }
 
-    /* PREPEND NEWEST ENTRIES TO TOP OF ARRAY */
+    /* PREPEND NEWEST ENTRIES TO TOP & HIGHLIGHT WITH ANIMATION */
     function handleAddSubmission(e) {
       if (e) { e.preventDefault(); e.stopPropagation(); }
 
@@ -1820,7 +1889,10 @@
 
       if (targetHub === 'learning') {
         releaseTitle = document.getElementById('newTitle').value.trim() || 'New Learning Resource';
-        const category = document.getElementById('newModule').value;
+        let category = document.getElementById('newModule').value;
+        if (category === '__NEW_CATEGORY__') {
+          category = document.getElementById('customCategoryInput').value.trim() || 'Custom Module';
+        }
         
         if (editIndex !== "") {
           dataset[editIndex].name = releaseTitle;
@@ -1911,6 +1983,7 @@
       document.getElementById('newDocType').value = '';
       document.getElementById('newQuickName').value = '';
       document.getElementById('newLink').value = '';
+      document.getElementById('customCategoryInput').value = '';
 
       return false;
     }
@@ -2118,7 +2191,7 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
-    /* RENDER QUICK LINKS TAB (WITH GRID & LIST VIEW TOGGLES AND COUNTER) */
+    /* RENDER QUICK LINKS TAB */
     function renderQuickLinks() {
       const container = document.getElementById('quickLinksContainer');
       const filtered = quickDataset.map((q, originalIndex) => ({ ...q, originalIndex })).filter(q => {
@@ -2147,7 +2220,7 @@
               <p class="card-desc">${q.desc || 'Direct Symphony implementation tool.'}</p>
             </div>
             <div class="card-actions">
-              <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+              <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${q.name}', 'Quick Link')">
                 <span>Open Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
               </a>
               ${powerUserActive ? `
@@ -2172,7 +2245,7 @@
                   <td><strong>${q.name}</strong></td>
                   <td><span style="font-size:0.75rem; color:var(--text-secondary);">${q.desc || 'Direct link resource'}</span></td>
                   <td>
-                    <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+                    <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${q.name}', 'Quick Link')">
                       <span>Open</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span>
                     </a>
                   </td>
