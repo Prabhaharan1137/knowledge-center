@@ -13,7 +13,8 @@
       --google-blue-light: #e8f0fe;
       --google-green: #1e8e3e;
       --google-green-light: #e6f4ea;
-      --google-yellow: #f9ab00;
+      --google-yellow: #f59e0b;
+      --google-yellow-bg: #fffdf0;
       --google-red: #d93025;
       --google-purple: #9334e6;
       --google-purple-light: #f3e8fd;
@@ -27,15 +28,15 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    body {
+    html, body {
       width: 100%;
+      height: 100%;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
-      position: relative;
     }
 
     .app-lock-overlay {
@@ -64,7 +65,7 @@
       text-align: center;
       border: 1px solid var(--border-color);
       z-index: 10000000;
-      animation: modalSlideIn 0.3s ease-out;
+      animation: modalSlideIn 0.25s ease-out;
     }
 
     /* HEADER & COMPACT ANIMATED VECTOR LOGO */
@@ -83,7 +84,7 @@
       gap: 0.65rem;
     }
 
-    /* SVG Animations */
+    /* SVG Keyframes */
     @keyframes ringRotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -131,7 +132,7 @@
       gap: 0.4rem;
       background: #0f172a;
       color: #ffffff;
-      padding: 0.2rem 0.65rem;
+      padding: 0.25rem 0.75rem;
       border-radius: 16px;
       font-size: 0.72rem;
       font-weight: 500;
@@ -142,7 +143,7 @@
       width: fit-content;
       max-width: 90%;
       transition: transform 0.2s ease;
-      animation: modalSlideIn 0.3s ease-out;
+      animation: modalSlideIn 0.25s ease-out;
     }
     .latest-release-toast:hover {
       transform: translateY(-1px);
@@ -216,15 +217,17 @@
       font-size: 0.72rem;
       font-weight: 600;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
     .kpi-bookmark-small.filter-active {
       background: #fef7e0;
       border-color: var(--google-yellow);
       color: #b06000;
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
     }
 
-    .container { width: 100%; padding: 0.35rem 0.85rem; display: flex; flex-direction: column; }
-    .tab-content { display: none; flex-direction: column; }
+    .container { width: 100%; padding: 0.35rem 0.85rem; display: flex; flex-direction: column; flex: 1; }
+    .tab-content { display: none; flex-direction: column; height: auto; }
     .tab-content.active { display: flex; }
 
     .filter-card-highlight { 
@@ -253,12 +256,12 @@
     .view-btn { background: #ffffff; border: none; padding: 0.2rem 0.45rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: bold; }
 
-    /* ZERO EMPTY SPACE SCROLLING WRAPPER */
+    /* SCROLL WRAPPER THAT FIT-WRAPS DATA AND REMOVES BLANK SPACES */
     .view-scroll-wrapper {
-      max-height: calc(100vh - 210px);
+      max-height: calc(100vh - 180px);
       overflow-y: auto;
       padding-right: 2px;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.55rem; }
@@ -275,15 +278,21 @@
       cursor: pointer; 
       transition: all 0.2s ease; 
       position: relative; 
-      animation: cardEntrance 0.35s ease-out forwards;
+      animation: cardEntrance 0.25s ease-out forwards;
     }
     @keyframes cardEntrance {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
     .resource-card.selected-card { border-color: var(--google-red); background-color: #fce8e6; }
+
+    /* BOOKMARKED TILE GOLDEN HIGHLIGHT BACKGROUND & BORDER */
+    .resource-card.bookmarked-card-highlight {
+      background-color: var(--google-yellow-bg) !important;
+      border: 1.5px solid var(--google-yellow) !important;
+    }
 
     /* NEWLY UPDATED PULSING HIGHLIGHT */
     .resource-card.newly-updated-highlight {
@@ -324,14 +333,13 @@
       font-weight: bold;
     }
 
-    .item-select-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--google-red); display: none; }
-    .selection-mode-active .item-select-checkbox { display: inline-block; }
+    .item-select-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--google-red); display: inline-block; }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; max-height: calc(100vh - 210px); }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
     .doc-table th { background: var(--bg-body); font-weight: 600; color: var(--text-secondary); padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border-color); text-align: left; }
     .doc-table td { padding: 0.4rem 0.55rem; border-bottom: 1px solid #f1f3f4; }
-    .doc-table tr { animation: cardEntrance 0.3s ease-out forwards; }
+    .doc-table tr { animation: cardEntrance 0.2s ease-out forwards; }
     .doc-type-tag { padding: 0.08rem 0.3rem; border-radius: 4px; font-size: 0.65rem; font-weight: 500; background: #e8eaed; }
 
     .modal-overlay {
@@ -355,10 +363,10 @@
       margin-top: 10px; 
       max-height: 85vh; 
       overflow-y: auto;
-      animation: modalSlideIn 0.3s ease-out;
+      animation: modalSlideIn 0.25s ease-out;
     }
     @keyframes modalSlideIn {
-      from { opacity: 0; transform: translateY(-15px); }
+      from { opacity: 0; transform: translateY(-12px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -499,7 +507,7 @@
       </button>
     </nav>
 
-    <!-- BOOKMARK FILTER TOGGLE -->
+    <!-- GLOBAL BOOKMARK FILTER TOGGLE ACROSS ALL TABS -->
     <div class="kpi-bookmark-small" id="bookmarkContainer" onclick="toggleBookmarkOnlyFilter()" title="Click to filter bookmarked items">
       <span class="material-icons-outlined" style="color:var(--google-yellow); font-size:15px;">star</span>
       <span>Bookmarks: <strong id="kpiBookmarks">0</strong></span>
@@ -792,9 +800,9 @@
     </div>
   </div>
 
-  <!-- PROGRESS DASHBOARD MODAL WITH MANUAL REFRESH BUTTON -->
+  <!-- PROGRESS DASHBOARD MODAL WITH MANUAL REFRESH BUTTON & CONSTRAINED SCROLLING -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
-    <div class="modal-content" style="max-width: 680px;">
+    <div class="modal-content" style="max-width: 680px; max-height: 80vh; overflow-y: auto;">
       <div class="modal-header">
         <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
         <div style="display:flex; align-items:center; gap:0.4rem;">
@@ -804,7 +812,7 @@
           <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
         </div>
       </div>
-      <div class="table-container">
+      <div class="table-container" style="max-height: 60vh; overflow-y: auto;">
         <table class="doc-table">
           <thead>
             <tr>
@@ -823,7 +831,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzQ_d_88WgLJmy_DYkLN_-AUdHSFCJnVisihnvjqdiyorRAL9E-5loqRkW0qu0QS9J0/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzHoJTVCuV9zSclLl29nR8vwdjrXz-uW_i1WaB9Rbtd80RFhX6z99XMKKzqnSWHsruS/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1357,6 +1365,7 @@
       renderLearningHub();
     }
 
+    /* GLOBAL BOOKMARK FILTER TOGGLE ACROSS ALL HUBS */
     function toggleBookmarkOnlyFilter() {
       filterBookmarksOnly = !filterBookmarksOnly;
       const pill = document.getElementById('bookmarkContainer');
@@ -1490,7 +1499,7 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    /* CONFIRMATION POPUP & USER DASHBOARD DELETION */
+    /* CONFIRMATION POPUP & RELIABLE DASHBOARD USER DELETION */
     window.deleteUserProgressRecord = function(targetEmail, event) {
       if (event) { event.preventDefault(); event.stopPropagation(); }
       if (!isPowerUser(currentUser)) return;
@@ -1690,7 +1699,6 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
-    /* AUTOMATIC TAB-AWARE TARGET HUB SELECTION */
     function openAddModal() {
       if (!currentUser) { checkUserLoginState(); return; }
       document.getElementById('addModalTitle').textContent = "Submit Link";
@@ -1764,6 +1772,20 @@
       const btn = document.getElementById('learningBulkDeleteBtn');
       document.getElementById('learningSelectedCount').textContent = count;
       btn.style.display = (isLearningSelectionMode && count > 0) ? 'inline-flex' : 'none';
+    }
+
+    function toggleDocSelect(index, event) {
+      event.stopPropagation();
+      if (selectedDocIndices.has(index)) { selectedDocIndices.delete(index); } 
+      else { selectedDocIndices.add(index); }
+      updateDocBulkUI();
+    }
+
+    function updateDocBulkUI() {
+      const count = selectedDocIndices.size;
+      const btn = document.getElementById('docBulkDeleteBtn');
+      document.getElementById('docSelectedCount').textContent = count;
+      btn.style.display = (isDocSelectionMode && count > 0) ? 'inline-flex' : 'none';
     }
 
     function handleActionRequest(type, index, hub) {
@@ -1947,7 +1969,7 @@
         renderQuickLinks();
       }
 
-      // SAVE LATEST RELEASE DATA FOR COMPACT FLOATING TOAST
+      // SAVE LATEST RELEASE DATA FOR COMPACT TOAST
       latestRelease = {
         id: newGeneratedId,
         title: releaseTitle,
@@ -2022,7 +2044,7 @@
           const isNewlyUpdated = (latestRelease && latestRelease.id === res.id) || res.isNew;
 
           return `
-            <article class="resource-card ${isNewlyUpdated ? 'newly-updated-highlight' : ''}" data-id="${res.id}" data-index="${res.originalIndex}">
+            <article class="resource-card ${isBookmarked ? 'bookmarked-card-highlight' : ''} ${isNewlyUpdated ? 'newly-updated-highlight' : ''}" data-id="${res.id}" data-index="${res.originalIndex}">
               <div>
                 <div class="card-header">
                   <div>
@@ -2030,6 +2052,7 @@
                     ${isNewlyUpdated ? '<span class="new-badge">NEW</span>' : ''}
                   </div>
                   <div class="action-icons" onclick="event.stopPropagation()">
+                    ${isLearningSelectionMode ? `<input type="checkbox" class="item-select-checkbox" ${selectedLearningIndices.has(res.originalIndex) ? 'checked' : ''} onchange="toggleLearningSelect(${res.originalIndex}, event)">` : ''}
                     <button class="action-btn" onclick="toggleTopicCompletion('${res.id}')" title="${isCompleted ? 'Completed' : 'Mark as Complete'}">
                       <span class="material-icons-outlined ${isCompleted ? 'completed-tick-filled' : ''}">
                         ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
@@ -2071,7 +2094,7 @@
                 const isBookmarked = bookmarkedIds.has(res.id);
                 const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
                 return `
-                  <tr>
+                  <tr style="${isBookmarked ? 'background-color: var(--google-yellow-bg);' : ''}">
                     <td>
                       <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
                         <span class="material-icons-outlined" style="font-size:16px;">${isBookmarked ? 'star' : 'star_border'}</span>
@@ -2116,7 +2139,8 @@
       const filtered = docDataset.map((doc, originalIndex) => ({ ...doc, originalIndex })).filter(doc => {
         const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
         const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) || doc.ver.toLowerCase().includes(docSearchQuery) || doc.type.toLowerCase().includes(docSearchQuery);
-        return matchesPkg && matchesSearch;
+        const matchesBookmark = !filterBookmarksOnly || bookmarkedIds.has(doc.id || `doc_${doc.originalIndex}`);
+        return matchesPkg && matchesSearch && matchesBookmark;
       });
 
       document.getElementById('docActiveCount').textContent = `${filtered.length} Total Documents`;
@@ -2134,68 +2158,88 @@
         container.innerHTML = `
           <table class="doc-table">
             <thead>
-              <tr><th>Package Name</th><th>Version</th><th>Type of Doc</th><th>Description</th><th>Link</th>${powerUserActive ? '<th>Actions</th>' : ''}</tr>
+              <tr><th>Bookmark</th><th>Package Name</th><th>Version</th><th>Type of Doc</th><th>Description</th><th>Link</th>${powerUserActive ? '<th>Actions</th>' : ''}</tr>
             </thead>
             <tbody>
-              ${filtered.map(doc => `
-                <tr data-id="${doc.id || ''}">
-                  <td><strong>${doc.pkg}</strong></td>
-                  <td>${doc.ver}</td>
-                  <td><span class="doc-type-tag">${doc.type}</span></td>
-                  <td><span style="font-size:0.75rem; color:var(--text-secondary);">${doc.desc || 'Technical package doc'}</span></td>
-                  <td>
-                    <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
-                      <span>View</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span>
-                    </a>
-                  </td>
-                  ${powerUserActive ? `
+              ${filtered.map(doc => {
+                const docId = doc.id || `doc_${doc.originalIndex}`;
+                const isBookmarked = bookmarkedIds.has(docId);
+                return `
+                  <tr data-id="${docId}" style="${isBookmarked ? 'background-color: var(--google-yellow-bg);' : ''}">
                     <td>
-                      <div class="action-icons">
-                        <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
-                        <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
-                      </div>
+                      <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${docId}')">
+                        <span class="material-icons-outlined" style="font-size:16px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                      </button>
                     </td>
-                  ` : ''}
-                </tr>
-              `).join('')}
+                    <td><strong>${doc.pkg}</strong></td>
+                    <td>${doc.ver}</td>
+                    <td><span class="doc-type-tag">${doc.type}</span></td>
+                    <td><span style="font-size:0.75rem; color:var(--text-secondary);">${doc.desc || 'Technical package doc'}</span></td>
+                    <td>
+                      <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
+                        <span>View</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span>
+                      </a>
+                    </td>
+                    ${powerUserActive ? `
+                      <td>
+                        <div class="action-icons">
+                          <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
+                          <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
+                        </div>
+                      </td>
+                    ` : ''}
+                  </tr>
+                `;
+              }).join('')}
             </tbody>
           </table>
         `;
       } else {
         container.className = 'resources-grid';
-        container.innerHTML = filtered.map(doc => `
-          <article class="resource-card" data-id="${doc.id || ''}">
-            <div>
-              <div class="card-header">
-                <span class="doc-type-tag">${doc.type}</span>
-                <span style="font-size:0.7rem; color:var(--text-secondary);">${doc.ver}</span>
-              </div>
-              <h3 class="card-title">${doc.pkg}</h3>
-              <p class="card-desc">${doc.desc || 'Technical documentation guide.'}</p>
-            </div>
-            <div class="card-actions">
-              <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
-                <span>View Doc</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
-              </a>
-              ${powerUserActive ? `
-                <div class="action-icons">
-                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
-                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+        container.innerHTML = filtered.map(doc => {
+          const docId = doc.id || `doc_${doc.originalIndex}`;
+          const isBookmarked = bookmarkedIds.has(docId);
+
+          return `
+            <article class="resource-card ${isBookmarked ? 'bookmarked-card-highlight' : ''}" data-id="${docId}">
+              <div>
+                <div class="card-header">
+                  <span class="doc-type-tag">${doc.type}</span>
+                  <div class="action-icons" onclick="event.stopPropagation()">
+                    <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${docId}')" title="Bookmark">
+                      <span class="material-icons-outlined" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                    </button>
+                  </div>
                 </div>
-              ` : ''}
-            </div>
-          </article>
-        `).join('');
+                <h3 class="card-title">${doc.pkg} (${doc.ver})</h3>
+                <p class="card-desc">${doc.desc || 'Technical documentation guide.'}</p>
+              </div>
+              <div class="card-actions">
+                <a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')">
+                  <span>View Doc</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
+                </a>
+                ${powerUserActive ? `
+                  <div class="action-icons">
+                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
+                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+                  </div>
+                ` : ''}
+              </div>
+            </article>
+          `;
+        }).join('');
       }
 
       setTimeout(notifyIframeHeight, 50);
     }
 
-    /* RENDER QUICK LINKS TAB */
+    /* RENDER QUICK LINKS TAB WITH BOOKMARKS SUPPORT */
     function renderQuickLinks() {
       const container = document.getElementById('quickLinksContainer');
       const filtered = quickDataset.map((q, originalIndex) => ({ ...q, originalIndex })).filter(q => {
-        return q.name.toLowerCase().includes(quickSearchQuery) || q.desc.toLowerCase().includes(quickSearchQuery);
+        const matchesSearch = q.name.toLowerCase().includes(quickSearchQuery) || q.desc.toLowerCase().includes(quickSearchQuery);
+        const matchesBookmark = !filterBookmarksOnly || bookmarkedIds.has(q.id);
+        return matchesSearch && matchesBookmark;
       });
 
       document.getElementById('quickActiveCount').textContent = `${filtered.length} Total Quick Links`;
@@ -2210,55 +2254,71 @@
 
       if (quickViewMode === 'grid') {
         container.className = 'resources-grid';
-        container.innerHTML = filtered.map(q => `
-          <article class="resource-card" data-id="${q.id}">
-            <div>
-              <div class="card-header">
-                <span class="category-badge" style="background:var(--google-green-light); color:var(--google-green);">Quick Link</span>
-              </div>
-              <h3 class="card-title">${q.name}</h3>
-              <p class="card-desc">${q.desc || 'Direct Symphony implementation tool.'}</p>
-            </div>
-            <div class="card-actions">
-              <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${q.name}', 'Quick Link')">
-                <span>Open Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
-              </a>
-              ${powerUserActive ? `
-                <div class="action-icons">
-                  <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
-                  <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+        container.innerHTML = filtered.map(q => {
+          const isBookmarked = bookmarkedIds.has(q.id);
+          return `
+            <article class="resource-card ${isBookmarked ? 'bookmarked-card-highlight' : ''}" data-id="${q.id}">
+              <div>
+                <div class="card-header">
+                  <span class="category-badge" style="background:var(--google-green-light); color:var(--google-green);">Quick Link</span>
+                  <div class="action-icons" onclick="event.stopPropagation()">
+                    <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${q.id}')" title="Bookmark">
+                      <span class="material-icons-outlined" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                    </button>
+                  </div>
                 </div>
-              ` : ''}
-            </div>
-          </article>
-        `).join('');
+                <h3 class="card-title">${q.name}</h3>
+                <p class="card-desc">${q.desc || 'Direct Symphony implementation tool.'}</p>
+              </div>
+              <div class="card-actions">
+                <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${q.name}', 'Quick Link')">
+                  <span>Open Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span>
+                </a>
+                ${powerUserActive ? `
+                  <div class="action-icons">
+                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
+                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+                  </div>
+                ` : ''}
+              </div>
+            </article>
+          `;
+        }).join('');
       } else {
         container.className = 'table-container';
         container.innerHTML = `
           <table class="doc-table">
             <thead>
-              <tr><th>Quick Link Name</th><th>Description</th><th>Link</th>${powerUserActive ? '<th>Actions</th>' : ''}</tr>
+              <tr><th>Bookmark</th><th>Quick Link Name</th><th>Description</th><th>Link</th>${powerUserActive ? '<th>Actions</th>' : ''}</tr>
             </thead>
             <tbody>
-              ${filtered.map(q => `
-                <tr data-id="${q.id}">
-                  <td><strong>${q.name}</strong></td>
-                  <td><span style="font-size:0.75rem; color:var(--text-secondary);">${q.desc || 'Direct link resource'}</span></td>
-                  <td>
-                    <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${q.name}', 'Quick Link')">
-                      <span>Open</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span>
-                    </a>
-                  </td>
-                  ${powerUserActive ? `
+              ${filtered.map(q => {
+                const isBookmarked = bookmarkedIds.has(q.id);
+                return `
+                  <tr data-id="${q.id}" style="${isBookmarked ? 'background-color: var(--google-yellow-bg);' : ''}">
                     <td>
-                      <div class="action-icons">
-                        <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
-                        <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
-                      </div>
+                      <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${q.id}')">
+                        <span class="material-icons-outlined" style="font-size:16px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                      </button>
                     </td>
-                  ` : ''}
-                </tr>
-              `).join('')}
+                    <td><strong>${q.name}</strong></td>
+                    <td><span style="font-size:0.75rem; color:var(--text-secondary);">${q.desc || 'Direct link resource'}</span></td>
+                    <td>
+                      <a href="${q.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${q.name}', 'Quick Link')">
+                        <span>Open</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span>
+                      </a>
+                    </td>
+                    ${powerUserActive ? `
+                      <td>
+                        <div class="action-icons">
+                          <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
+                          <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${q.originalIndex}, 'quick')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
+                        </div>
+                      </td>
+                    ` : ''}
+                  </tr>
+                `;
+              }).join('')}
             </tbody>
           </table>
         `;
