@@ -44,7 +44,8 @@
     
     html, body {
       width: 100%;
-      height: 100%;
+      height: auto;
+      min-height: 100%;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
@@ -64,13 +65,13 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 15px;
+      padding-top: 20px;
       overflow-y: auto;
     }
 
     .app-lock-card {
       position: fixed;
-      top: 15px;
+      top: 20px;
       background: var(--bg-card);
       border-radius: 16px;
       padding: 1.25rem;
@@ -83,24 +84,30 @@
       animation: modalSlideIn 0.25s ease-out;
     }
 
-    /* CENTERED HEADER & DOT MATRIX LOGO */
+    /* CENTERED HEADER & INNOVATIVE IMPLEMENTATION LOGO */
     .top-hero-header {
       background: var(--bg-header);
-      padding: 0.5rem 1rem;
+      padding: 0.6rem 1rem;
       border-bottom: 2px solid var(--google-blue);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      position: relative;
     }
 
     @keyframes pulseGlow {
-      0%, 100% { opacity: 0.3; transform: scale(0.96); }
-      50% { opacity: 0.8; transform: scale(1.03); }
+      0%, 100% { opacity: 0.4; transform: scale(0.96); }
+      50% { opacity: 0.9; transform: scale(1.04); }
+    }
+    @keyframes gearRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .svg-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; transform-origin: center; }
+    .svg-gear-rotate { animation: gearRotate 12s linear infinite; transform-origin: 155px 30px; }
 
     .header-text-group {
       display: flex;
@@ -108,7 +115,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      margin-top: 0.25rem;
+      margin-top: 0.2rem;
     }
 
     .text-main-title {
@@ -128,29 +135,28 @@
       text-transform: uppercase;
     }
 
-    /* COMPACT FLOATING TOAST RELEASE NOTIFICATION */
-    .latest-release-toast {
-      display: none;
+    /* LIGHTBULB NEW RELEASE ICON BUTTON IN HEADER */
+    .release-bulb-btn {
+      position: absolute;
+      right: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid var(--google-yellow);
+      color: var(--google-yellow);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
       align-items: center;
-      gap: 0.4rem;
-      background: #0f172a;
-      color: #ffffff;
-      padding: 0.25rem 0.75rem;
-      border-radius: 16px;
-      font-size: 0.72rem;
-      font-weight: 500;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      border: 1px solid var(--google-blue);
+      justify-content: center;
       cursor: pointer;
-      margin: 0.25rem auto;
-      width: fit-content;
-      max-width: 90%;
-      transition: transform 0.2s ease;
-      animation: modalSlideIn 0.25s ease-out;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
     }
-    .latest-release-toast:hover {
-      transform: translateY(-1px);
-      background: #1e293b;
+    .release-bulb-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      background: rgba(245, 158, 11, 0.35);
     }
 
     .top-utility-bar {
@@ -162,7 +168,7 @@
       border-bottom: 1px solid #334155;
     }
     .top-utility-nav { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-    .top-utility-right { display: flex; align-items: center; gap: 0.5rem; }
+    .top-utility-right { display: flex; align-items: center; gap: 0.5rem; position: relative; }
     
     .top-utility-btn {
       color: #ffffff;
@@ -184,7 +190,7 @@
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      padding: 0.3rem 0.85rem;
+      padding: 0.35rem 0.85rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -194,7 +200,7 @@
     .tab-btn {
       background: #f1f3f4;
       border: 1px solid var(--border-color);
-      padding: 0.3rem 0.75rem;
+      padding: 0.35rem 0.85rem;
       font-family: 'Google Sans', sans-serif;
       font-size: 0.8rem;
       font-weight: 500;
@@ -206,9 +212,9 @@
       border-radius: 14px;
     }
     [data-theme="dark"] .tab-btn { background: #334155; color: #94a3b8; }
-    .tab-btn.learning-tab.active { background: var(--google-blue-light); color: var(--google-blue); border-color: var(--google-blue); }
-    .tab-btn.doc-tab.active { background: var(--google-purple-light); color: var(--google-purple); border-color: var(--google-purple); }
     .tab-btn.quick-tab.active { background: var(--google-green-light); color: var(--google-green); border-color: var(--google-green); }
+    .tab-btn.doc-tab.active { background: var(--google-purple-light); color: var(--google-purple); border-color: var(--google-purple); }
+    .tab-btn.learning-tab.active { background: var(--google-blue-light); color: var(--google-blue); border-color: var(--google-blue); }
 
     .kpi-bookmark-small {
       display: inline-flex;
@@ -230,7 +236,7 @@
       box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
     }
 
-    .container { width: 100%; padding: 0.35rem 0.85rem; display: flex; flex-direction: column; flex: 1; height: fit-content; }
+    .container { width: 100%; padding: 0.4rem 0.85rem; display: flex; flex-direction: column; height: fit-content; }
     .tab-content { display: none; flex-direction: column; height: fit-content; }
     .tab-content.active { display: flex; }
 
@@ -245,7 +251,6 @@
       gap: 0.25rem;
     }
     .filter-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
-    .filter-actions-group { display: flex; align-items: center; gap: 0.35rem; }
     .filter-label-catchy { font-family: 'Google Sans', sans-serif; font-weight: 700; font-size: 0.75rem; color: var(--google-blue); display: flex; align-items: center; gap: 0.3rem; }
     .styled-dropdown-catchy { padding: 0.3rem 0.5rem; font-family: 'Google Sans', sans-serif; font-size: 0.8rem; font-weight: 500; border: 1px solid var(--border-color); border-radius: 6px; outline: none; background: var(--bg-card); color: var(--text-primary); }
 
@@ -262,7 +267,7 @@
 
     /* ZERO EMPTY SPACE SCROLL WRAPPER */
     .view-scroll-wrapper {
-      max-height: calc(100vh - 210px);
+      max-height: calc(100vh - 190px);
       overflow-y: auto;
       padding-right: 2px;
       height: fit-content;
@@ -334,8 +339,6 @@
       font-weight: bold;
     }
 
-    .item-select-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--google-red); display: inline-block; }
-
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; max-height: calc(100vh - 210px); height: fit-content; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
     .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border-color); text-align: left; }
@@ -406,7 +409,6 @@
       display: flex; align-items: center; justify-content: space-between;
     }
 
-    /* USER PROFILE MENU DROPDOWN */
     .profile-menu-popover {
       display: none;
       flex-direction: column;
@@ -442,7 +444,7 @@
 </head>
 <body>
 
-  <!-- MANDATORY PASSCODE VERIFICATION LOCK OVERLAY -->
+  <!-- MANDATORY PASSCODE VERIFICATION OVERLAY -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 36px; color: var(--google-blue); margin-bottom: 0.3rem;">lock</span>
@@ -470,49 +472,39 @@
     </div>
   </div>
 
-  <!-- CENTERED HEADER WITH MAXVAL SYMPHONY DOT MATRIX VECTOR LOGO -->
+  <!-- CENTERED HEADER WITH MAXVAL SYMPHONY INNOVATIVE IMPLEMENTATION LOGO -->
   <div class="top-hero-header">
-    <svg width="180" height="55" viewBox="0 0 200 65" xmlns="http://www.w3.org/2000/svg">
-      <g id="symphony-dots" class="svg-pulse-glow" transform="translate(30, 2)">
-        <!-- Row 1 -->
-        <circle cx="50" cy="8" r="3.5" fill="#10b981"/>
-        <circle cx="62" cy="3" r="3.5" fill="#ef4444"/>
-        <circle cx="74" cy="3" r="3.5" fill="#ef4444"/>
-        <circle cx="86" cy="8" r="3.5" fill="#3b82f6"/>
-
-        <!-- Row 2 -->
-        <circle cx="38" cy="18" r="3.5" fill="#f59e0b"/>
-        <circle cx="50" cy="16" r="3.5" fill="#10b981"/>
-        <circle cx="62" cy="13" r="3.5" fill="#ef4444"/>
-        <circle cx="74" cy="13" r="3.5" fill="#ef4444"/>
-        <circle cx="86" cy="16" r="3.5" fill="#3b82f6"/>
-        <circle cx="98" cy="18" r="3.5" fill="#f59e0b"/>
-
-        <!-- Row 3 -->
-        <circle cx="50" cy="27" r="3.5" fill="#10b981"/>
-        <circle cx="62" cy="24" r="3.5" fill="#ef4444"/>
-        <circle cx="74" cy="24" r="3.5" fill="#ef4444"/>
-        <circle cx="86" cy="27" r="3.5" fill="#3b82f6"/>
-
-        <!-- Row 4 -->
-        <circle cx="59" cy="35" r="3.5" fill="#ef4444"/>
-        <circle cx="77" cy="35" r="3.5" fill="#ef4444"/>
-
-        <!-- Bottom Dot -->
-        <circle cx="68" cy="43" r="3.5" fill="#f59e0b"/>
+    <svg width="220" height="50" viewBox="0 0 240 55" xmlns="http://www.w3.org/2000/svg">
+      <!-- IMPLEMENTATION CYCLE VECTOR (Idea -> Execution -> Value) -->
+      <g transform="translate(10, 5)">
+        <!-- Bulb Idea Node -->
+        <g class="svg-pulse-glow">
+          <path d="M 20,8 C 14,8 14,17 20,20 C 24,22 22,26 20,28 L 20,30 L 28,30 L 28,28 C 26,26 24,22 28,20 C 34,17 34,8 28,8 Z" fill="#3b82f6" />
+          <line x1="24" y1="3" x2="24" y2="0" stroke="#f59e0b" stroke-width="2"/>
+          <line x1="12" y1="10" x2="9" y2="7" stroke="#f59e0b" stroke-width="2"/>
+          <line x1="36" y1="10" x2="39" y2="7" stroke="#f59e0b" stroke-width="2"/>
+        </g>
+        <!-- Execution Arrow -->
+        <path d="M 38,18 Q 50,10 62,18 L 58,15 M 62,18 L 58,22" stroke="#10b981" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Implementation Gear Node -->
+        <g class="svg-gear-rotate">
+          <circle cx="75" cy="22" r="10" fill="none" stroke="#ef4444" stroke-width="3" stroke-dasharray="4, 3"/>
+          <circle cx="75" cy="22" r="4" fill="#3b82f6"/>
+        </g>
+        <!-- Value Return Arrow -->
+        <path d="M 62,32 Q 50,40 38,32 L 42,29 M 38,32 L 42,35" stroke="#f59e0b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
       </g>
     </svg>
+
     <div class="header-text-group">
       <div class="text-main-title">Symphony Implementation</div>
       <div class="text-subtitle">Learning and Documentation HUB</div>
     </div>
-  </div>
 
-  <!-- COMPACT FLOATING TOAST RELEASE NOTIFICATION -->
-  <div id="latestReleaseNotificationBar" class="latest-release-toast" onclick="navigateToLatestRelease()">
-    <span class="material-icons-outlined" style="font-size:15px; color:var(--google-yellow);">campaign</span>
-    <span id="latestReleaseText">NEW RELEASE: "IP Basics" published in LEARNING HUB click here</span>
-    <span class="material-icons-outlined" style="font-size:13px; margin-left:0.2rem;">arrow_forward</span>
+    <!-- LIGHTBULB RELEASE NOTIFICATION BUTTON -->
+    <button type="button" class="release-bulb-btn" id="releaseBulbBtn" onclick="openReleaseModal()" title="View Latest Release Info">
+      <span class="material-icons-outlined" style="font-size:22px;">lightbulb</span>
+    </button>
   </div>
 
   <div class="top-utility-bar">
@@ -522,8 +514,8 @@
         <span class="material-icons-outlined" style="font-size:13px;">add_circle</span><span>Submit Link</span>
       </button>
 
-      <!-- RIGHT SIDE: DARK MODE & SIGN IN WITH DROPDOWN OPTIONS -->
-      <div class="top-utility-right" style="position:relative;">
+      <!-- RIGHT SIDE: DARK MODE & SIGN IN POPUP MENU -->
+      <div class="top-utility-right">
         <button type="button" class="top-utility-btn" onclick="toggleThemeMode()" title="Toggle Dark/Light Mode">
           <span class="material-icons-outlined" style="font-size:13px;" id="themeToggleIcon">dark_mode</span>
         </button>
@@ -534,7 +526,7 @@
           <span class="material-icons-outlined" style="font-size:12px;">expand_more</span>
         </button>
 
-        <!-- PROFILE DROPDOWN MENU CONTAINING DASHBOARD & POWER CONTROLS -->
+        <!-- PROFILE DROPDOWN MENU -->
         <div class="profile-menu-popover" id="profilePopoverMenu">
           <button type="button" class="menu-item-btn" onclick="openUserAnalyticsDashboard(); closeProfilePopoverMenu();">
             <span class="material-icons-outlined" style="font-size:15px; color:var(--google-purple);">insights</span>
@@ -555,16 +547,17 @@
     </div>
   </div>
 
+  <!-- RE-ORDERED TABS: 1ST QUICK LINKS, 2ND DOCUMENT HUB, 3RD LEARNING HUB -->
   <header>
     <nav class="nav-tabs">
-      <button class="tab-btn learning-tab active" onclick="switchTab('learningHubTab', this)">
-        <span class="material-icons-outlined" style="font-size:16px;">school</span><span>Learning Hub</span>
+      <button class="tab-btn quick-tab active" onclick="switchTab('quickLinksTab', this)">
+        <span class="material-icons-outlined" style="font-size:16px;">link</span><span>Quick Links</span>
       </button>
       <button class="tab-btn doc-tab" onclick="switchTab('documentHubTab', this)">
         <span class="material-icons-outlined" style="font-size:16px;">description</span><span>Document Hub</span>
       </button>
-      <button class="tab-btn quick-tab" onclick="switchTab('quickLinksTab', this)">
-        <span class="material-icons-outlined" style="font-size:16px;">link</span><span>Quick Links</span>
+      <button class="tab-btn learning-tab" onclick="switchTab('learningHubTab', this)">
+        <span class="material-icons-outlined" style="font-size:16px;">school</span><span>Learning Hub</span>
       </button>
     </nav>
 
@@ -581,42 +574,40 @@
       <span id="inlineSuccessText">Operation completed successfully!</span>
     </div>
 
-    <!-- LEARNING HUB TAB -->
-    <div id="learningHubTab" class="tab-content active">
+    <!-- QUICK LINKS TAB (1ST TAB) -->
+    <div id="quickLinksTab" class="tab-content active">
       <section class="filter-card-highlight">
         <div class="filter-header-row">
-          <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
-          
+          <label class="filter-label-catchy"><span class="material-icons-outlined">link</span> QUICK LINKS MODULE</label>
           <div style="display:flex; align-items:center; gap:0.5rem;">
-            <select id="learningSortSelect" class="styled-dropdown-catchy" onchange="handleSortChange('learning', this.value)">
+            <select id="quickSortSelect" class="styled-dropdown-catchy" onchange="handleSortChange('quick', this.value)">
               <option value="NEWEST">Sort: Newest First</option>
               <option value="OLDEST">Sort: Oldest First</option>
               <option value="AZ">Sort: Title A-Z</option>
             </select>
-            <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:12px;">visibility</span> Views: <strong id="learningActiveCount">0</strong></div>
+            <div class="active-count-badge" style="color:var(--google-green); background:var(--google-green-light);">
+              <span class="material-icons-outlined" style="font-size:12px;">visibility</span> Views: <strong id="quickActiveCount">0</strong>
+            </div>
           </div>
         </div>
-        <select id="moduleSelect" class="styled-dropdown-catchy">
-          <option value="ALL">-- All Learning Modules --</option>
-        </select>
       </section>
 
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="Search learning topics...">
+          <input type="text" id="quickSearchInput" class="search-input" placeholder="Filter quick links...">
         </div>
         <div class="view-mode-toggle">
-          <button class="view-btn active" id="learningGridBtn" onclick="switchViewMode('learning', 'grid')" title="Grid View"><span class="material-icons-outlined">grid_view</span></button>
-          <button class="view-btn" id="learningListBtn" onclick="switchViewMode('learning', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
+          <button class="view-btn active" id="quickGridBtn" onclick="switchViewMode('quick', 'grid')" title="Grid View"><span class="material-icons-outlined">grid_view</span></button>
+          <button class="view-btn" id="quickListBtn" onclick="switchViewMode('quick', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
         </div>
       </section>
       <div class="view-scroll-wrapper">
-        <main id="learningViewContainer"></main>
+        <main id="quickLinksContainer"></main>
       </div>
     </div>
 
-    <!-- DOCUMENT HUB TAB -->
+    <!-- DOCUMENT HUB TAB (2ND TAB) -->
     <div id="documentHubTab" class="tab-content">
       <section class="filter-card-highlight">
         <div class="filter-header-row">
@@ -650,36 +641,56 @@
       </div>
     </div>
 
-    <!-- QUICK LINKS TAB -->
-    <div id="quickLinksTab" class="tab-content">
+    <!-- LEARNING HUB TAB (3RD TAB) -->
+    <div id="learningHubTab" class="tab-content">
       <section class="filter-card-highlight">
         <div class="filter-header-row">
-          <label class="filter-label-catchy"><span class="material-icons-outlined">link</span> QUICK LINKS MODULE</label>
+          <label for="moduleSelect" class="filter-label-catchy"><span class="material-icons-outlined">tune</span> SELECT MODULE</label>
+          
           <div style="display:flex; align-items:center; gap:0.5rem;">
-            <select id="quickSortSelect" class="styled-dropdown-catchy" onchange="handleSortChange('quick', this.value)">
+            <select id="learningSortSelect" class="styled-dropdown-catchy" onchange="handleSortChange('learning', this.value)">
               <option value="NEWEST">Sort: Newest First</option>
               <option value="OLDEST">Sort: Oldest First</option>
               <option value="AZ">Sort: Title A-Z</option>
             </select>
-            <div class="active-count-badge" style="color:var(--google-green); background:var(--google-green-light);">
-              <span class="material-icons-outlined" style="font-size:12px;">visibility</span> Views: <strong id="quickActiveCount">0</strong>
-            </div>
+            <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:12px;">visibility</span> Views: <strong id="learningActiveCount">0</strong></div>
           </div>
         </div>
+        <select id="moduleSelect" class="styled-dropdown-catchy">
+          <option value="ALL">-- All Learning Modules --</option>
+        </select>
       </section>
 
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
-          <input type="text" id="quickSearchInput" class="search-input" placeholder="Filter quick links...">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search learning topics...">
         </div>
         <div class="view-mode-toggle">
-          <button class="view-btn active" id="quickGridBtn" onclick="switchViewMode('quick', 'grid')" title="Grid View"><span class="material-icons-outlined">grid_view</span></button>
-          <button class="view-btn" id="quickListBtn" onclick="switchViewMode('quick', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
+          <button class="view-btn active" id="learningGridBtn" onclick="switchViewMode('learning', 'grid')" title="Grid View"><span class="material-icons-outlined">grid_view</span></button>
+          <button class="view-btn" id="learningListBtn" onclick="switchViewMode('learning', 'list')" title="List View"><span class="material-icons-outlined">view_list</span></button>
         </div>
       </section>
       <div class="view-scroll-wrapper">
-        <main id="quickLinksContainer"></main>
+        <main id="learningViewContainer"></main>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELEASE MODAL TRIGGERED BY LIGHTBULB -->
+  <div class="modal-overlay" id="releaseModalOverlay">
+    <div class="modal-content" style="max-width:400px; text-align:center;">
+      <div class="modal-header">
+        <h2>Latest Release Announcement</h2>
+        <button class="modal-close-btn" onclick="closeModal('releaseModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="padding: 0.5rem 0;">
+        <span class="material-icons-outlined" style="font-size: 40px; color: var(--google-yellow);">lightbulb</span>
+        <p style="font-size: 0.88rem; font-weight: 700; margin-top: 0.35rem;" id="releaseModalTitle">No recent releases logged</p>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.25rem;" id="releaseModalDetails">Check back for future platform updates.</p>
+        <button type="button" class="btn-submit" style="width: 100%; margin-top: 1rem;" onclick="navigateToLatestRelease(); closeModal('releaseModalOverlay');">
+          <span>Navigate To Resource</span>
+        </button>
       </div>
     </div>
   </div>
@@ -786,9 +797,9 @@
         <div class="form-group">
           <label>Target Hub *</label>
           <select id="targetHub" onchange="toggleFormFields(this.value)">
-            <option value="learning">Learning Hub</option>
-            <option value="document">Document Hub</option>
             <option value="quick">Quick Links</option>
+            <option value="document">Document Hub</option>
+            <option value="learning">Learning Hub</option>
           </select>
         </div>
 
@@ -797,7 +808,7 @@
           <input type="email" id="submitterEmail" readonly style="background:var(--bg-body);">
         </div>
 
-        <div id="learningFields">
+        <div id="learningFields" style="display:none;">
           <div class="form-group">
             <label>Resource Title *</label>
             <input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims" oninput="autoGenerateDescriptionOnTitleInput(this.value)">
@@ -828,7 +839,7 @@
           <div class="form-group"><label>Type of Doc *</label><input type="text" id="newDocType" placeholder="e.g., Installation Guide"></div>
         </div>
 
-        <div id="quickFields" style="display:none;">
+        <div id="quickFields">
           <div class="form-group"><label>Link Name *</label><input type="text" id="newQuickName" placeholder="e.g., Project Allocation Tracker"></div>
         </div>
 
@@ -871,7 +882,7 @@
     </div>
   </div>
 
-  <!-- PROGRESS DASHBOARD MODAL WITH MANUAL REFRESH BUTTON & CONSTRAINED SCROLLING -->
+  <!-- PROGRESS DASHBOARD MODAL -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 680px; max-height: 80vh; overflow-y: auto;">
       <div class="modal-header">
@@ -940,10 +951,9 @@
     let docDataset = [...localCustomDocs, ...baseDocDataset];
     let quickDataset = [...localCustomQuick, ...baseQuickLinks];
 
-    // PERSISTENT LATEST RELEASE TRACKER
     let latestRelease = JSON.parse(localStorage.getItem('kc_latest_release_v1') || 'null');
 
-    let activeTab = 'learningHubTab';
+    let activeTab = 'quickLinksTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
     let pendingOtpEmail = "";
     let authenticatedSessionEmail = "";
@@ -954,18 +964,15 @@
     let quickSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v17') || '[]'));
 
-    // Sorting Prefs
     let learningSortMode = 'NEWEST';
     let docSortMode = 'NEWEST';
     let quickSortMode = 'NEWEST';
 
-    // View Modes
     let learningViewMode = localStorage.getItem('user_pref_learning_view') || 'grid';
     let docViewMode = localStorage.getItem('user_pref_doc_view') || 'list';
     let quickViewMode = localStorage.getItem('user_pref_quick_view') || 'grid';
     let filterBookmarksOnly = false;
 
-    // Power User Configuration
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
     let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
@@ -998,7 +1005,6 @@
       return str.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-').replace(/[^\x00-\x7F]/g, '').trim();
     }
 
-    /* DARK MODE TOGGLE */
     function toggleThemeMode() {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -1007,11 +1013,11 @@
       document.getElementById('themeToggleIcon').textContent = newTheme === 'dark' ? 'light_mode' : 'dark_mode';
     }
 
-    // Load Theme
     if (localStorage.getItem('kc_theme_pref') === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
       document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('themeToggleIcon').textContent = 'light_mode';
+        const icon = document.getElementById('themeToggleIcon');
+        if (icon) icon.textContent = 'light_mode';
       });
     }
 
@@ -1028,7 +1034,6 @@
       }
     }
 
-    /* JSONP COMMUNICATOR */
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
       window[cbName] = function(data) {
@@ -1220,22 +1225,23 @@
 
     function updatePowerUserUIElements() {
       const powerTabBtn = document.getElementById('powerUsersTabBtn');
-      if (isPowerUser(currentUser)) {
-        if (powerTabBtn) powerTabBtn.style.display = 'flex';
+      if (powerTabBtn) powerTabBtn.style.display = isPowerUser(currentUser) ? 'flex' : 'none';
+    }
+
+    function checkLatestReleaseNotification() {
+      const bulbBtn = document.getElementById('releaseBulbBtn');
+      if (latestRelease && latestRelease.title) {
+        bulbBtn.style.display = 'flex';
       } else {
-        if (powerTabBtn) powerTabBtn.style.display = 'flex';
+        bulbBtn.style.display = 'none';
       }
     }
 
-    /* COMPACT FLOATING TOAST NOTIFICATION */
-    function checkLatestReleaseNotification() {
-      const banner = document.getElementById('latestReleaseNotificationBar');
-      if (latestRelease && latestRelease.title) {
-        document.getElementById('latestReleaseText').textContent = `NEW RELEASE: "${latestRelease.title}" published in ${latestRelease.hub.toUpperCase()} HUB click here`;
-        banner.style.display = 'inline-flex';
-      } else {
-        banner.style.display = 'none';
-      }
+    function openReleaseModal() {
+      if (!latestRelease) return;
+      document.getElementById('releaseModalTitle').textContent = latestRelease.title;
+      document.getElementById('releaseModalDetails').textContent = `Published in ${latestRelease.hub.toUpperCase()} HUB by ${extractDisplayName(latestRelease.submitter)}`;
+      document.getElementById('releaseModalOverlay').classList.add('open');
     }
 
     function navigateToLatestRelease() {
@@ -1275,7 +1281,6 @@
       }
     }
 
-    /* PREREQUISITE CHECK GUARD FOR COMPLETION */
     function toggleTopicCompletion(resId, isDoc = false) {
       if (!currentUser) { checkUserLoginState(); return; }
       const analytics = getUserAnalytics();
@@ -1307,7 +1312,6 @@
       return found ? found.name : resId;
     }
 
-    /* REAL-TIME LINK VIEW LOGGING ACROSS ALL HUBS */
     function trackDocView(pkgName, docType) {
       if (!currentUser) return;
       const analytics = getUserAnalytics();
@@ -1486,7 +1490,6 @@
       setTimeout(notifyIframeHeight, 100);
     }
 
-    /* CONFIRMATION POPUP & DASHBOARD USER DELETION */
     window.deleteUserProgressRecord = function(targetEmail, event) {
       if (event) { event.preventDefault(); event.stopPropagation(); }
       if (!isPowerUser(currentUser)) return;
@@ -1510,7 +1513,6 @@
       }
     };
 
-    /* DRILL-DOWN USER DETAILS MODAL SHOWING LOGS ACROSS ALL HUBS */
     function viewUserDetailBreakdown(email, event) {
       if(event) event.stopPropagation();
       const analytics = getUserAnalytics();
@@ -1698,9 +1700,9 @@
       if (!dlField.value) dlField.value = currentUser;
 
       const targetSelect = document.getElementById('targetHub');
-      if (activeTab === 'learningHubTab') targetSelect.value = 'learning';
+      if (activeTab === 'quickLinksTab') targetSelect.value = 'quick';
       else if (activeTab === 'documentHubTab') targetSelect.value = 'document';
-      else targetSelect.value = 'quick';
+      else targetSelect.value = 'learning';
 
       toggleFormFields(targetSelect.value);
 
@@ -1768,24 +1770,42 @@
       pendingAction = null;
     }
 
-    function executeDeleteItem(hub, index) {
-      if (hub === 'learning') {
-        dataset.splice(index, 1);
-        const customRemaining = dataset.filter(item => item.id.startsWith('res_custom_'));
-        localStorage.setItem('kc_custom_learning_v17', JSON.stringify(customRemaining));
-        renderLearningHub();
-      } else if (hub === 'document') {
-        docDataset.splice(index, 1);
-        const customDocsRemaining = docDataset.filter(doc => !baseDocDataset.some(b => b.link === doc.link && b.pkg === doc.pkg));
-        localStorage.setItem('kc_custom_docs_v17', JSON.stringify(customDocsRemaining));
-        renderDocumentHub();
-      } else {
-        quickDataset.splice(index, 1);
-        const customQuickRemaining = quickDataset.filter(q => q.id && q.id.startsWith('ql_custom_'));
-        localStorage.setItem('kc_custom_quick_v17', JSON.stringify(customQuickRemaining));
-        renderQuickLinks();
+    function promptGlobalSyncConfirmation(callback) {
+      if (isPowerUser(currentUser)) {
+        const applyGlobal = confirm("Publish & Apply changes globally for all users?");
+        if (applyGlobal) {
+          syncGlobalCustomDataCloud();
+        }
       }
-      showInlineBanner("Item successfully deleted.");
+      callback();
+    }
+
+    function syncGlobalCustomDataCloud() {
+      const globalPayload = JSON.stringify({
+        learning: dataset.filter(item => item.id.startsWith('res_custom_')),
+        docs: docDataset.filter(doc => doc.id && doc.id.startsWith('doc_custom_')),
+        quick: quickDataset.filter(q => q.id && q.id.startsWith('ql_custom_'))
+      });
+      callGasJsonp({ action: 'SYNC_GLOBAL_DATA', data: globalPayload }, function() {});
+    }
+
+    function executeDeleteItem(hub, index) {
+      promptGlobalSyncConfirmation(() => {
+        if (hub === 'learning') {
+          dataset.splice(index, 1);
+          localStorage.setItem('kc_custom_learning_v17', JSON.stringify(dataset.filter(item => item.id.startsWith('res_custom_'))));
+          renderLearningHub();
+        } else if (hub === 'document') {
+          docDataset.splice(index, 1);
+          localStorage.setItem('kc_custom_docs_v17', JSON.stringify(docDataset.filter(doc => doc.id && doc.id.startsWith('doc_custom_'))));
+          renderDocumentHub();
+        } else {
+          quickDataset.splice(index, 1);
+          localStorage.setItem('kc_custom_quick_v17', JSON.stringify(quickDataset.filter(q => q.id && q.id.startsWith('ql_custom_'))));
+          renderQuickLinks();
+        }
+        showInlineBanner("Item successfully deleted.");
+      });
     }
 
     function executeEditItem(hub, index) {
@@ -1820,7 +1840,6 @@
       scrollParentToTop();
     }
 
-    /* PREPEND NEWEST ENTRIES TO TOP */
     function handleAddSubmission(e) {
       if (e) { e.preventDefault(); e.stopPropagation(); }
 
@@ -1912,34 +1931,36 @@
       localStorage.setItem('kc_latest_release_v1', JSON.stringify(latestRelease));
       checkLatestReleaseNotification();
 
-      if (shouldSend) {
-        callGasJsonp({
-          action: 'SEND_NOTIFICATION_EMAIL',
-          hubName: targetHub,
-          title: releaseTitle,
-          link: link,
-          submitter: submitterEmail,
-          dlAddress: dlAddress,
-          releaseDate: currentDateStr
-        }, function() {});
-      }
+      promptGlobalSyncConfirmation(() => {
+        if (shouldSend) {
+          callGasJsonp({
+            action: 'SEND_NOTIFICATION_EMAIL',
+            hubName: targetHub,
+            title: releaseTitle,
+            link: link,
+            submitter: submitterEmail,
+            dlAddress: dlAddress,
+            releaseDate: currentDateStr
+          }, function() {});
+        }
 
-      closeModal('addModalOverlay');
-      showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live and email sent.");
-      
-      submitBtn.textContent = "Publish Link Live";
-      submitBtn.disabled = false;
+        closeModal('addModalOverlay');
+        showInlineBanner(editIndex !== "" ? "Resource updated successfully!" : "Success! New link published live.");
+        
+        submitBtn.textContent = "Publish Link Live";
+        submitBtn.disabled = false;
 
-      document.getElementById('editItemIndex').value = "";
-      document.getElementById('editItemType').value = "";
-      document.getElementById('newTitle').value = '';
-      document.getElementById('newPkg').value = '';
-      document.getElementById('newVer').value = '';
-      document.getElementById('newDocType').value = '';
-      document.getElementById('newQuickName').value = '';
-      document.getElementById('newLink').value = '';
-      document.getElementById('newDescription').value = '';
-      document.getElementById('customCategoryInput').value = '';
+        document.getElementById('editItemIndex').value = "";
+        document.getElementById('editItemType').value = "";
+        document.getElementById('newTitle').value = '';
+        document.getElementById('newPkg').value = '';
+        document.getElementById('newVer').value = '';
+        document.getElementById('newDocType').value = '';
+        document.getElementById('newQuickName').value = '';
+        document.getElementById('newLink').value = '';
+        document.getElementById('newDescription').value = '';
+        document.getElementById('customCategoryInput').value = '';
+      });
 
       return false;
     }
@@ -2174,7 +2195,7 @@
       setTimeout(notifyIframeHeight, 50);
     }
 
-    /* RENDER QUICK LINKS TAB WITH BOOKMARKS SUPPORT */
+    /* RENDER QUICK LINKS TAB */
     function renderQuickLinks() {
       const container = document.getElementById('quickLinksContainer');
       let filtered = quickDataset.map((q, originalIndex) => ({ ...q, originalIndex })).filter(q => {
@@ -2276,9 +2297,9 @@
       checkUserLoginState();
       syncDropdownOptions();
       syncDocPackageOptions();
-      renderLearningHub();
-      renderDocumentHub();
       renderQuickLinks();
+      renderDocumentHub();
+      renderLearningHub();
 
       document.getElementById('addResourceForm').addEventListener('submit', handleAddSubmission);
 
