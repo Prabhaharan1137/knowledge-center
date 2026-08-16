@@ -84,7 +84,7 @@
       animation: modalSlideIn 0.25s ease-out;
     }
 
-    /* CENTERED HEADER & LOGO ON RIGHT */
+    /* HEADER & COLOR ROTATING ORBIT LOGO ON LEFT */
     .top-hero-header {
       background: var(--bg-header);
       padding: 0.6rem 1rem;
@@ -95,17 +95,30 @@
       position: relative;
     }
 
-    .header-center-container {
+    .header-logo-flex {
       display: flex;
       align-items: center;
       gap: 0.85rem;
     }
 
+    /* COLOR ROTATING ORBIT ANIMATIONS */
+    @keyframes orbitRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(0.96); }
+      50% { opacity: 0.9; transform: scale(1.04); }
+    }
+
+    .svg-orbit-rotate { animation: orbitRotate 8s linear infinite; transform-origin: 22px 22px; }
+    .svg-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; transform-origin: 22px 22px; }
+
     .header-text-group {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      text-align: center;
+      text-align: left;
     }
 
     .text-main-title {
@@ -123,14 +136,7 @@
       letter-spacing: 0.8px;
       margin-top: 2px;
       text-transform: uppercase;
-      text-align: center;
     }
-
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.4; transform: scale(0.96); }
-      50% { opacity: 0.9; transform: scale(1.04); }
-    }
-    .svg-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; transform-origin: center; }
 
     .top-utility-bar {
       background-color: #1e293b;
@@ -264,7 +270,7 @@
 
     /* ZERO TRAILING EMPTY SPACE SCROLL CONTAINER */
     .view-scroll-wrapper {
-      max-height: calc(100vh - 190px);
+      max-height: calc(100vh - 180px);
       overflow-y: auto;
       padding-right: 2px;
       height: fit-content;
@@ -298,6 +304,7 @@
       border: 1px solid var(--google-yellow) !important;
     }
 
+    /* CONDITIONAL PULSING HIGHLIGHT FOR NEW RELEASES */
     .resource-card.newly-updated-highlight {
       border: 2px solid var(--google-blue) !important;
       animation: pulseHighlight 2s infinite;
@@ -468,21 +475,25 @@
     </div>
   </div>
 
-  <!-- CENTERED HEADER WITH LOGO ON RIGHT -->
+  <!-- HEADER WITH LOGO ON LEFT & ROTATING ORBIT ANIMATION -->
   <div class="top-hero-header">
-    <div class="header-center-container">
+    <div class="header-logo-flex">
+      <!-- IMPLEMENTATION LOGO WITH COLOR ROTATING ORBIT -->
+      <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="svg-pulse-glow">
+        <circle cx="22" cy="22" r="20" fill="none" stroke="#3b82f6" stroke-width="1.8" opacity="0.4"/>
+        <g class="svg-orbit-rotate">
+          <circle cx="22" cy="3" r="3.5" fill="#10b981" />
+          <circle cx="41" cy="22" r="3.5" fill="#ef4444" />
+          <circle cx="22" cy="41" r="3.5" fill="#f59e0b" />
+          <circle cx="3" cy="22" r="3.5" fill="#3b82f6" />
+        </g>
+        <path d="M 22,12 C 16,12 16,20 22,22 C 28,24 28,32 22,32" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+
       <div class="header-text-group">
         <div class="text-main-title">Symphony Implementation</div>
         <div class="text-subtitle">Learning and Documentation HUB</div>
       </div>
-
-      <!-- ANIMATED IMPLEMENTATION LOGO ON RIGHT -->
-      <svg width="42" height="42" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="svg-pulse-glow">
-        <circle cx="25" cy="25" r="22" fill="none" stroke="#3b82f6" stroke-width="2"/>
-        <path d="M 25,10 C 18,10 18,20 25,23 C 32,26 32,36 25,36" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="25" cy="16" r="3" fill="#ef4444" />
-        <circle cx="25" cy="30" r="3" fill="#f59e0b" />
-      </svg>
     </div>
   </div>
 
@@ -899,7 +910,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbziS_E1jQWWWow7iM4NtfHfAije_druD6FbJLw3B9Fu9sGDE06rmC-4ktyuW1ZPtEHz/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyedMBg_2nPVc2Ie5b5dB9B5lItt_fjLK3x2gneYfJR6rf1N35o73rYwshqHZzXBWgY/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -2095,8 +2106,13 @@
       const userRecord = (analytics.users && analytics.users[currentUser]) ? analytics.users[currentUser] : { completedTopics: [] };
       const completedCount = userRecord.completedTopics ? userRecord.completedTopics.length : 0;
       
+      // Calculate tab-specific bookmarks & views
+      const tabBookmarkCount = filtered.filter(item => bookmarkedIds.has(item.id)).length;
       document.getElementById('learningActiveCount').textContent = `${completedCount} / ${dataset.length} Completed`;
-      document.getElementById('kpiBookmarks').textContent = bookmarkedIds.size;
+
+      if (activeTab === 'learningHubTab') {
+        document.getElementById('kpiBookmarks').textContent = tabBookmarkCount;
+      }
 
       if (filtered.length === 0) {
         container.innerHTML = `<div style="text-align:center; padding:1.25rem;"><span class="material-icons-outlined" style="font-size:32px; color:var(--text-secondary);">search_off</span><h3>No matching learning items found</h3></div>`;
@@ -2112,7 +2128,7 @@
           const style = getCategoryStyle(res.category);
           const isBookmarked = bookmarkedIds.has(res.id);
           const isCompleted = userRecord.completedTopics ? userRecord.completedTopics.includes(res.id) : false;
-          const isNewlyUpdated = (latestRelease && latestRelease.id === res.id) || res.isNew;
+          const isNewlyUpdated = (latestRelease && latestRelease.id === res.id);
 
           return `
             <article class="resource-card ${isBookmarked ? 'bookmarked-card-highlight' : ''} ${isNewlyUpdated ? 'newly-updated-highlight' : ''}" data-id="${res.id}" data-index="${res.originalIndex}">
@@ -2215,7 +2231,12 @@
 
       filtered = sortArrayData(filtered, docSortMode, 'pkg');
 
-      document.getElementById('docActiveCount').textContent = `${filtered.length} Total Documents`;
+      const tabBookmarkCount = filtered.filter(doc => bookmarkedIds.has(doc.id || `doc_${doc.originalIndex}`)).length;
+      document.getElementById('docActiveCount').textContent = `${filtered.length} Documents`;
+
+      if (activeTab === 'documentHubTab') {
+        document.getElementById('kpiBookmarks').textContent = tabBookmarkCount;
+      }
 
       if (filtered.length === 0) {
         container.innerHTML = `<div style="text-align: center; padding: 1.25rem;">No matching documents found.</div>`;
@@ -2271,9 +2292,10 @@
         container.innerHTML = filtered.map(doc => {
           const docId = doc.id || `doc_${doc.originalIndex}`;
           const isBookmarked = bookmarkedIds.has(docId);
+          const isNewlyUpdated = (latestRelease && latestRelease.id === docId);
 
           return `
-            <article class="resource-card ${isBookmarked ? 'bookmarked-card-highlight' : ''}" data-id="${docId}">
+            <article class="resource-card ${isBookmarked ? 'bookmarked-card-highlight' : ''} ${isNewlyUpdated ? 'newly-updated-highlight' : ''}" data-id="${docId}">
               <div>
                 <div class="card-header">
                   <span class="doc-type-tag">${doc.type}</span>
@@ -2316,7 +2338,12 @@
 
       filtered = sortArrayData(filtered, quickSortMode, 'name');
 
-      document.getElementById('quickActiveCount').textContent = `${filtered.length} Total Quick Links`;
+      const tabBookmarkCount = filtered.filter(q => bookmarkedIds.has(q.id)).length;
+      document.getElementById('quickActiveCount').textContent = `${filtered.length} Quick Links`;
+
+      if (activeTab === 'quickLinksTab') {
+        document.getElementById('kpiBookmarks').textContent = tabBookmarkCount;
+      }
 
       if (filtered.length === 0) {
         container.innerHTML = `<div style="text-align:center; padding:1.25rem;">No matching quick links found.</div>`;
@@ -2330,8 +2357,10 @@
         container.className = 'resources-grid';
         container.innerHTML = filtered.map(q => {
           const isBookmarked = bookmarkedIds.has(q.id);
+          const isNewlyUpdated = (latestRelease && latestRelease.id === q.id);
+
           return `
-            <article class="resource-card ${isBookmarked ? 'bookmarked-card-highlight' : ''}" data-id="${q.id}">
+            <article class="resource-card ${isBookmarked ? 'bookmarked-card-highlight' : ''} ${isNewlyUpdated ? 'newly-updated-highlight' : ''}" data-id="${q.id}">
               <div>
                 <div class="card-header">
                   <span class="category-badge" style="background:var(--google-green-light); color:var(--google-green);">Quick Link</span>
