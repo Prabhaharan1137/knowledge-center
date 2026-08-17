@@ -909,7 +909,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwWikTXG3sUnn4hIuWhidZ_STU9NyEq04qZj2i16zsyRdvxlLpgbGIN5ASlNja3SRKc/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwhw0n6WCAGGiyM7ZCYkBRltmjPCT2eQvDnxC5ClsyZWd7BSI7lBLmdskZz9hEHKy7k/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1185,7 +1185,7 @@
     }
 
     function detectGoogleSessionAccount() {
-      callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
+      callGasJsonp({ action: 'GET_ACTIVE_EMAIL', clientEmail: currentUser || '' }, function(data) {
         if (data && data.email && data.email.includes('@maxval.com')) {
           authenticatedSessionEmail = data.email.toLowerCase().trim();
           document.getElementById('detectedEmailAddress').textContent = authenticatedSessionEmail;
@@ -1352,7 +1352,9 @@
     function updatePowerUserUIElements() {
       const isPower = isPowerUser(currentUser);
       const powerTabBtn = document.getElementById('powerUsersTabBtn');
-      if (powerTabBtn) powerTabBtn.style.display = isPower ? 'flex' : 'none';
+      if (powerTabBtn) {
+        powerTabBtn.style.display = isPower ? 'flex' : 'none';
+      }
     }
 
     function checkLatestReleaseNotification() {
@@ -2315,8 +2317,8 @@
                 </a>
                 ${powerUserActive ? `
                   <div class="action-icons">
-                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
-                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
+                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
                   </div>
                 ` : ''}
               </div>
