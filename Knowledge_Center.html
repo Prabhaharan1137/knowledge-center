@@ -101,7 +101,7 @@
       gap: 0.85rem;
     }
 
-    /* LOGO KEYFRAME ANIMATIONS */
+    /* EXACT LOGO KEYFRAME ANIMATIONS */
     @keyframes orbitRotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -972,7 +972,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyqKeOAwbZVZm33ZJkOk4jp1pbWWHaoRaefDJPiMG3ghR6RRT6mi1-U7UAURlLQOc0R/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbLHwPLa52BZ7YY9DrqFAosyfhDKMdp1yVQKlKOlXaNsLV05oNvyiIjxZg02VHKtsn9/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1416,9 +1416,7 @@
     function updatePowerUserUIElements() {
       const isPower = isPowerUser(currentUser);
       const powerTabBtn = document.getElementById('powerUsersTabBtn');
-      if (powerTabBtn) {
-        powerTabBtn.style.display = isPower ? 'flex' : 'none';
-      }
+      if (powerTabBtn) powerTabBtn.style.display = isPower ? 'flex' : 'none';
     }
 
     function checkLatestReleaseNotification() {
