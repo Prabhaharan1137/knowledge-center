@@ -84,7 +84,7 @@
       animation: modalSlideIn 0.25s ease-out;
     }
 
-    /* CENTERED HEADER & LOGO ON LEFT */
+    /* CENTERED HEADER & ROTATING ORBIT LOGO ON LEFT */
     .top-hero-header {
       background: var(--bg-header);
       padding: 0.6rem 1rem;
@@ -425,7 +425,7 @@
       right: 0;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       z-index: 10000;
-      min-width: 200px;
+      min-width: 210px;
     }
     .profile-menu-popover.open { display: flex; }
     .menu-item-btn {
@@ -475,7 +475,7 @@
     </div>
   </div>
 
-  <!-- HEADER WITH LOGO ON LEFT & ROTATING ORBIT ANIMATION -->
+  <!-- HEADER WITH LOGO ON LEFT & CENTERED TYPOGRAPHY -->
   <div class="top-hero-header">
     <div class="header-logo-flex">
       <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="svg-pulse-glow">
@@ -515,16 +515,16 @@
           <span class="material-icons-outlined" style="font-size:12px;">expand_more</span>
         </button>
 
-        <!-- PROFILE DROPDOWN MENU CONTAINING DASHBOARD & POWER CONTROLS -->
+        <!-- PROFILE DROPDOWN MENU CONTAINING POWER CONTROLS, DASHBOARD & SIGN OUT -->
         <div class="profile-menu-popover" id="profilePopoverMenu">
-          <button type="button" class="menu-item-btn" onclick="openUserAnalyticsDashboard(); closeProfilePopoverMenu();">
-            <span class="material-icons-outlined" style="font-size:15px; color:var(--google-purple);">insights</span>
-            <span>User Progress Dashboard</span>
-          </button>
-          
           <button type="button" class="menu-item-btn" id="powerUsersTabBtn" style="display:none;" onclick="promptPowerUserSettings(); closeProfilePopoverMenu();">
             <span class="material-icons-outlined" style="font-size:15px; color:var(--google-blue);">admin_panel_settings</span>
             <span>Power User Controls</span>
+          </button>
+
+          <button type="button" class="menu-item-btn" onclick="openUserAnalyticsDashboard(); closeProfilePopoverMenu();">
+            <span class="material-icons-outlined" style="font-size:15px; color:var(--google-purple);">insights</span>
+            <span>User Progress Dashboard</span>
           </button>
 
           <button type="button" class="menu-item-btn" onclick="openProfileModal(); closeProfilePopoverMenu();">
@@ -1195,6 +1195,7 @@
         if (data && data.powerUsers) {
           data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
         }
+        updatePowerUserUIElements();
       });
     }
 
