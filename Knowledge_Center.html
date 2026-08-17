@@ -101,28 +101,28 @@
       gap: 0.85rem;
     }
 
-    /* EXACT LOGO KEYFRAME ANIMATIONS */
-    @keyframes orbitRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+    /* EXACT SVG LOGO ANIMATIONS */
     @keyframes pulseGlow {
       0%, 100% { opacity: 0.85; transform: scale(0.98); }
-      50% { opacity: 1; transform: scale(1.05); }
+      50% { opacity: 1; transform: scale(1.03); }
     }
-    @keyframes gearSpin {
+    @keyframes gearSpinLeft {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    @keyframes gearSpinReverse {
+    @keyframes gearSpinRight {
       from { transform: rotate(0deg); }
       to { transform: rotate(-360deg); }
     }
+    @keyframes orbitRays {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
 
-    .svg-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; transform-origin: center; }
-    .svg-gear-left { animation: gearSpin 12s linear infinite; transform-origin: 16px 82px; }
-    .svg-gear-right { animation: gearSpinReverse 12s linear infinite; transform-origin: 84px 82px; }
-    .svg-rays-orbit { animation: orbitRotate 15s linear infinite; transform-origin: 50px 48px; }
+    .svg-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; transform-origin: 500px 450px; }
+    .svg-gear-left { animation: gearSpinLeft 14s linear infinite; transform-origin: 230px 750px; }
+    .svg-gear-right { animation: gearSpinRight 14s linear infinite; transform-origin: 770px 750px; }
+    .svg-rays-orbit { animation: orbitRays 20s linear infinite; transform-origin: 500px 380px; }
 
     .header-text-group {
       display: flex;
@@ -490,64 +490,75 @@
   <div class="top-hero-header">
     <div class="header-logo-flex">
       <div class="header-logo-container">
-        <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <!-- ROTATING RAYS & CORNER GEAR ORBITS -->
+        <svg width="48" height="48" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+          <!-- ROTATING OUTER SUNBURST RAYS & ORBITS -->
           <g class="svg-rays-orbit">
-            <line x1="50" y1="5" x2="50" y2="10" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
-            <line x1="72" y1="12" x2="69" y2="16" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
-            <line x1="88" y1="28" x2="83" y2="31" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
-            <line x1="95" y1="50" x2="90" y2="50" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
-            <line x1="28" y1="12" x2="31" y2="16" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-            <line x1="12" y1="28" x2="17" y2="31" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-            <line x1="5" y1="50" x2="10" y2="50" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="500" cy="100" r="14" fill="#f97316"/>
+            <line x1="500" y1="130" x2="500" y2="180" stroke="#f97316" stroke-width="12" stroke-linecap="round"/>
+            <line x1="680" y1="180" x2="650" y2="220" stroke="#3b82f6" stroke-width="12" stroke-linecap="round"/>
+            <line x1="820" y1="320" x2="770" y2="350" stroke="#3b82f6" stroke-width="12" stroke-linecap="round"/>
+            <line x1="870" y1="500" x2="810" y2="500" stroke="#f59e0b" stroke-width="12" stroke-linecap="round"/>
+            <line x1="320" y1="180" x2="350" y2="220" stroke="#10b981" stroke-width="12" stroke-linecap="round"/>
+            <line x1="180" y1="320" x2="230" y2="350" stroke="#10b981" stroke-width="12" stroke-linecap="round"/>
+            <line x1="130" y1="500" x2="190" y2="500" stroke="#f59e0b" stroke-width="12" stroke-linecap="round"/>
           </g>
-          
-          <!-- GEAR LEFT -->
+
+          <!-- ROTATING LEFT GEAR (YELLOW/RED) -->
           <g class="svg-gear-left">
-            <circle cx="16" cy="82" r="9" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="3,2"/>
-            <circle cx="16" cy="82" r="3" fill="#f59e0b"/>
+            <circle cx="230" cy="750" r="85" fill="none" stroke="#f59e0b" stroke-width="16" stroke-dasharray="22,14"/>
+            <circle cx="230" cy="750" r="30" fill="none" stroke="#ef4444" stroke-width="10"/>
+            <circle cx="230" cy="750" r="12" fill="#f59e0b"/>
           </g>
-          
-          <!-- GEAR RIGHT -->
+
+          <!-- ROTATING RIGHT GEAR (BLUE/GREEN) -->
           <g class="svg-gear-right">
-            <circle cx="84" cy="82" r="9" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="3,2"/>
-            <circle cx="84" cy="82" r="3" fill="#3b82f6"/>
+            <circle cx="770" cy="750" r="85" fill="none" stroke="#3b82f6" stroke-width="16" stroke-dasharray="22,14"/>
+            <circle cx="770" cy="750" r="30" fill="none" stroke="#10b981" stroke-width="10"/>
+            <circle cx="770" cy="750" r="12" fill="#3b82f6"/>
           </g>
-          
-          <!-- PULSING BULB DOT-MATRIX MATRIX -->
+
+          <!-- PULSING BULB BODY WITH CONNECTED HUMAN FIGURE -->
           <g class="svg-pulse-glow">
-            <!-- GREEN DOT SECTOR -->
-            <circle cx="38" cy="28" r="2.8" fill="#10b981"/>
-            <circle cx="34" cy="35" r="2.8" fill="#10b981"/>
-            <circle cx="32" cy="43" r="2.8" fill="#10b981"/>
-            <circle cx="32" cy="52" r="2.8" fill="#f59e0b"/>
-            <circle cx="35" cy="60" r="2.8" fill="#f59e0b"/>
+            <!-- GREEN DOT-MATRIX ARCH -->
+            <circle cx="340" cy="280" r="14" fill="#10b981"/>
+            <circle cx="310" cy="340" r="14" fill="#10b981"/>
+            <circle cx="290" cy="410" r="14" fill="#10b981"/>
+            <circle cx="280" cy="480" r="14" fill="#f59e0b"/>
+            <circle cx="290" cy="550" r="14" fill="#f59e0b"/>
+            <circle cx="320" cy="620" r="14" fill="#f59e0b"/>
 
-            <!-- ORANGE / RED SECTOR -->
-            <circle cx="45" cy="22" r="2.8" fill="#f97316"/>
-            <circle cx="50" cy="21" r="2.8" fill="#f97316"/>
-            <circle cx="55" cy="22" r="2.8" fill="#f97316"/>
-            <circle cx="45" cy="30" r="2.8" fill="#f97316"/>
-            <circle cx="50" cy="29" r="2.8" fill="#ef4444"/>
-            <circle cx="55" cy="30" r="2.8" fill="#f97316"/>
+            <!-- ORANGE / RED TOP SECTOR -->
+            <circle cx="410" cy="220" r="14" fill="#f97316"/>
+            <circle cx="450" cy="205" r="14" fill="#f97316"/>
+            <circle cx="500" cy="200" r="14" fill="#ef4444"/>
+            <circle cx="550" cy="205" r="14" fill="#f97316"/>
+            <circle cx="590" cy="220" r="14" fill="#f97316"/>
 
-            <!-- BLUE DOT SECTOR -->
-            <circle cx="62" cy="28" r="2.8" fill="#3b82f6"/>
-            <circle cx="66" cy="35" r="2.8" fill="#3b82f6"/>
-            <circle cx="68" cy="43" r="2.8" fill="#3b82f6"/>
-            <circle cx="68" cy="52" r="2.8" fill="#3b82f6"/>
-            <circle cx="65" cy="60" r="2.8" fill="#3b82f6"/>
+            <!-- BLUE DOT-MATRIX ARCH -->
+            <circle cx="660" cy="280" r="14" fill="#3b82f6"/>
+            <circle cx="690" cy="340" r="14" fill="#3b82f6"/>
+            <circle cx="710" cy="410" r="14" fill="#3b82f6"/>
+            <circle cx="720" cy="480" r="14" fill="#3b82f6"/>
+            <circle cx="710" cy="550" r="14" fill="#3b82f6"/>
+            <circle cx="680" cy="620" r="14" fill="#3b82f6"/>
 
-            <!-- INNER HUMAN PERSON ICON DOTS -->
-            <circle cx="50" cy="40" r="3" fill="#f97316"/>
-            <circle cx="45" cy="50" r="2.2" fill="#10b981"/>
-            <circle cx="55" cy="50" r="2.2" fill="#3b82f6"/>
-            <circle cx="50" cy="48" r="2" fill="#ef4444"/>
-            <circle cx="50" cy="58" r="2" fill="#3b82f6"/>
+            <!-- CENTER HUMAN FIGURES & NETWORK NODES -->
+            <circle cx="500" cy="360" r="18" fill="#f97316"/>
+            <circle cx="440" cy="470" r="12" fill="#10b981"/>
+            <circle cx="560" cy="470" r="12" fill="#3b82f6"/>
+            <line x1="500" y1="378" x2="440" y2="470" stroke="#f97316" stroke-width="5"/>
+            <line x1="500" y1="378" x2="560" y2="470" stroke="#f97316" stroke-width="5"/>
+            <line x1="440" y1="470" x2="560" y2="470" stroke="#f59e0b" stroke-width="5"/>
+            
+            <circle cx="500" cy="450" r="10" fill="#ef4444"/>
+            <circle cx="500" cy="530" r="10" fill="#10b981"/>
+            <circle cx="500" cy="600" r="10" fill="#3b82f6"/>
+            <line x1="500" y1="450" x2="500" y2="600" stroke="#3b82f6" stroke-width="6"/>
 
-            <!-- BULB BASE -->
-            <rect x="42" y="68" width="16" height="3" rx="1.5" fill="#10b981"/>
-            <rect x="44" y="73" width="12" height="3" rx="1.5" fill="#f59e0b"/>
+            <!-- LIGHTBULB BASE STRIPES -->
+            <rect x="420" y="680" width="160" height="24" rx="12" fill="#10b981"/>
+            <rect x="440" y="720" width="120" height="20" rx="10" fill="#f59e0b"/>
+            <rect x="465" y="755" width="70" stroke="#3b82f6" height="16" rx="8" fill="#3b82f6"/>
           </g>
         </svg>
       </div>
@@ -972,7 +983,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbLHwPLa52BZ7YY9DrqFAosyfhDKMdp1yVQKlKOlXaNsLV05oNvyiIjxZg02VHKtsn9/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzAy1HKBadtb5O8v5qgNZ0K2_d9Xl4VEC-vFFy5YEYGndsA5fcrOhwT8euq6A1EI1S3/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
