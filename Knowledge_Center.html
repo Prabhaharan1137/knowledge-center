@@ -165,8 +165,6 @@
       font-size: 0.75rem;
     }
     .top-utility-btn.accent-add { background: var(--google-blue); border-color: var(--google-blue); }
-    .top-utility-btn.power-standalone-btn { background: rgba(147, 52, 230, 0.25); border-color: var(--google-purple); color: #e9d5ff; font-weight: 700; }
-    .top-utility-btn.power-standalone-btn:hover { background: rgba(147, 52, 230, 0.45); }
     .user-profile-badge { background: rgba(16, 185, 129, 0.25) !important; border-color: #10b981 !important; font-weight: 700 !important; }
 
     header {
@@ -505,14 +503,8 @@
         <span class="material-icons-outlined" style="font-size:13px;">add_circle</span><span>Submit Link</span>
       </button>
 
-      <!-- RIGHT SIDE: STANDALONE POWER BUTTON, DARK MODE & SIGN IN POPUP MENU -->
+      <!-- RIGHT SIDE: DARK MODE & SIGN IN POPUP MENU -->
       <div class="top-utility-right">
-        <!-- DEDICATED POWER CONTROLS BUTTON -->
-        <button type="button" class="top-utility-btn power-standalone-btn" id="standalonePowerBtn" style="display:none;" onclick="promptPowerUserSettings()" title="Open Power User Controls">
-          <span class="material-icons-outlined" style="font-size:13px; color:#c084fc;">admin_panel_settings</span>
-          <span>Power Controls</span>
-        </button>
-
         <button type="button" class="top-utility-btn" onclick="toggleThemeMode()" title="Toggle Dark/Light Mode">
           <span class="material-icons-outlined" style="font-size:13px;" id="themeToggleIcon">dark_mode</span>
         </button>
@@ -1360,10 +1352,7 @@
     function updatePowerUserUIElements() {
       const isPower = isPowerUser(currentUser);
       const powerTabBtn = document.getElementById('powerUsersTabBtn');
-      const standalonePowerBtn = document.getElementById('standalonePowerBtn');
-      
       if (powerTabBtn) powerTabBtn.style.display = isPower ? 'flex' : 'none';
-      if (standalonePowerBtn) standalonePowerBtn.style.display = isPower ? 'inline-flex' : 'none';
     }
 
     function checkLatestReleaseNotification() {
@@ -2326,8 +2315,8 @@
                 </a>
                 ${powerUserActive ? `
                   <div class="action-icons">
-                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
-                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
+                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
+                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
                   </div>
                 ` : ''}
               </div>
