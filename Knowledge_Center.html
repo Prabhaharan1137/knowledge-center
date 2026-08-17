@@ -84,7 +84,7 @@
       animation: modalSlideIn 0.25s ease-out;
     }
 
-    /* CENTERED TYPOGRAPHY WITH ANIMATED LOGO ON RIGHT */
+    /* CENTERED HEADER & ROTATING ORBIT LOGO ON LEFT */
     .top-hero-header {
       background: var(--bg-header);
       padding: 0.6rem 1rem;
@@ -98,54 +98,30 @@
     .header-logo-flex {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 1.2rem;
-      width: 100%;
-      max-width: 800px;
-      position: relative;
+      gap: 0.85rem;
     }
+
+    @keyframes orbitRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(0.96); }
+      50% { opacity: 0.9; transform: scale(1.04); }
+    }
+
+    .svg-orbit-rotate { animation: orbitRotate 8s linear infinite; transform-origin: 22px 22px; }
+    .svg-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; transform-origin: 22px 22px; }
 
     .header-text-group {
       display: flex;
       flex-direction: column;
       justify-content: center;
       text-align: center;
-      order: 1;
-      margin: 0 auto;
     }
-
-    .header-logo-container {
-      order: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* LOGO ANIMATIONS */
-    @keyframes orbitRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.85; transform: scale(0.98); }
-      50% { opacity: 1; transform: scale(1.05); }
-    }
-    @keyframes gearSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    @keyframes gearSpinReverse {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(-360deg); }
-    }
-
-    .svg-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; transform-origin: center; }
-    .svg-gear-left { animation: gearSpin 12s linear infinite; transform-origin: 16px 82px; }
-    .svg-gear-right { animation: gearSpinReverse 12s linear infinite; transform-origin: 84px 82px; }
-    .svg-rays-orbit { animation: orbitRotate 15s linear infinite; transform-origin: 50px 48px; }
 
     .text-main-title {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 800;
       color: #ffffff;
       letter-spacing: 0.8px;
@@ -154,7 +130,7 @@
     }
 
     .text-subtitle {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 600;
       color: #94a3b8;
       letter-spacing: 0.8px;
@@ -293,6 +269,7 @@
     .view-btn { background: var(--bg-card); border: none; padding: 0.2rem 0.45rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: 500; }
 
+    /* ZERO TRAILING EMPTY SPACE CONTAINER */
     .view-scroll-wrapper {
       max-height: calc(100vh - 180px);
       overflow-y: auto;
@@ -498,80 +475,24 @@
     </div>
   </div>
 
-  <!-- HEADER WITH CENTERED TYPOGRAPHY & ANIMATED LOGO ON RIGHT -->
+  <!-- HEADER WITH LOGO ON LEFT & CENTERED TYPOGRAPHY -->
   <div class="top-hero-header">
     <div class="header-logo-flex">
-      
-      <!-- CENTERED TEXT GROUP -->
+      <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="svg-pulse-glow">
+        <circle cx="22" cy="22" r="20" fill="none" stroke="#3b82f6" stroke-width="1.8" opacity="0.4"/>
+        <g class="svg-orbit-rotate">
+          <circle cx="22" cy="3" r="3.5" fill="#10b981" />
+          <circle cx="41" cy="22" r="3.5" fill="#ef4444" />
+          <circle cx="22" cy="41" r="3.5" fill="#f59e0b" />
+          <circle cx="3" cy="22" r="3.5" fill="#3b82f6" />
+        </g>
+        <path d="M 22,12 C 16,12 16,20 22,22 C 28,24 28,32 22,32" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+
       <div class="header-text-group">
-        <div class="text-main-title">Symphony implementation</div>
+        <div class="text-main-title">Symphony Implementation</div>
         <div class="text-subtitle">Learning and Documentation HUB</div>
       </div>
-
-      <!-- ANIMATED SYMPHONY DOT MATRIX LOGO ON RIGHT -->
-      <div class="header-logo-container">
-        <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <!-- ROTATING RAYS & CORNER GEAR ORBITS -->
-          <g class="svg-rays-orbit">
-            <line x1="50" y1="5" x2="50" y2="10" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
-            <line x1="72" y1="12" x2="69" y2="16" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
-            <line x1="88" y1="28" x2="83" y2="31" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
-            <line x1="95" y1="50" x2="90" y2="50" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
-            <line x1="28" y1="12" x2="31" y2="16" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-            <line x1="12" y1="28" x2="17" y2="31" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-            <line x1="5" y1="50" x2="10" y2="50" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
-          </g>
-          
-          <!-- GEAR LEFT -->
-          <g class="svg-gear-left">
-            <circle cx="16" cy="82" r="9" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="3,2"/>
-            <circle cx="16" cy="82" r="3" fill="#f59e0b"/>
-          </g>
-          
-          <!-- GEAR RIGHT -->
-          <g class="svg-gear-right">
-            <circle cx="84" cy="82" r="9" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="3,2"/>
-            <circle cx="84" cy="82" r="3" fill="#3b82f6"/>
-          </g>
-          
-          <!-- PULSING BULB DOT-MATRIX MATRIX -->
-          <g class="svg-pulse-glow">
-            <!-- GREEN DOT SECTOR -->
-            <circle cx="38" cy="28" r="2.8" fill="#10b981"/>
-            <circle cx="34" cy="35" r="2.8" fill="#10b981"/>
-            <circle cx="32" cy="43" r="2.8" fill="#10b981"/>
-            <circle cx="32" cy="52" r="2.8" fill="#f59e0b"/>
-            <circle cx="35" cy="60" r="2.8" fill="#f59e0b"/>
-
-            <!-- ORANGE / RED SECTOR -->
-            <circle cx="45" cy="22" r="2.8" fill="#f97316"/>
-            <circle cx="50" cy="21" r="2.8" fill="#f97316"/>
-            <circle cx="55" cy="22" r="2.8" fill="#f97316"/>
-            <circle cx="45" cy="30" r="2.8" fill="#f97316"/>
-            <circle cx="50" cy="29" r="2.8" fill="#ef4444"/>
-            <circle cx="55" cy="30" r="2.8" fill="#f97316"/>
-
-            <!-- BLUE DOT SECTOR -->
-            <circle cx="62" cy="28" r="2.8" fill="#3b82f6"/>
-            <circle cx="66" cy="35" r="2.8" fill="#3b82f6"/>
-            <circle cx="68" cy="43" r="2.8" fill="#3b82f6"/>
-            <circle cx="68" cy="52" r="2.8" fill="#3b82f6"/>
-            <circle cx="65" cy="60" r="2.8" fill="#3b82f6"/>
-
-            <!-- INNER HUMAN PERSON ICON DOTS -->
-            <circle cx="50" cy="40" r="3" fill="#f97316"/>
-            <circle cx="45" cy="50" r="2.2" fill="#10b981"/>
-            <circle cx="55" cy="50" r="2.2" fill="#3b82f6"/>
-            <circle cx="50" cy="48" r="2" fill="#ef4444"/>
-            <circle cx="50" cy="58" r="2" fill="#3b82f6"/>
-
-            <!-- BULB BASE -->
-            <rect x="42" y="68" width="16" height="3" rx="1.5" fill="#10b981"/>
-            <rect x="44" y="73" width="12" height="3" rx="1.5" fill="#f59e0b"/>
-          </g>
-        </svg>
-      </div>
-
     </div>
   </div>
 
@@ -779,7 +700,7 @@
       </div>
       <div style="padding: 0.4rem 0;">
         <span class="material-icons-outlined" style="font-size: 44px; color: var(--google-green);">account_circle</span>
-        <p style="font-size: 0.9rem; font-weight: 700; margin-top: 0.25rem;" id="modalProfileDisplay">User</p>
+        <p style="font-size: 0.9rem; font-weight: 700; margin-top: 0.25rem;" id="modalProfileDisplay">Prabhaharan</p>
         <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.85rem;" id="modalProfileEmail">user@maxval.com</p>
         <button type="button" class="btn-danger" style="width: 100%; justify-content: center; padding: 0.5rem;" onclick="handleSignOut()">
           <span class="material-icons-outlined" style="font-size: 14px;">logout</span><span>Sign Out</span>
