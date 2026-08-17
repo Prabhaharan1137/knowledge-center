@@ -84,7 +84,7 @@
       animation: modalSlideIn 0.25s ease-out;
     }
 
-    /* HEADER & ROTATING ORBIT LOGO ON LEFT */
+    /* CENTERED HEADER & LOGO ON LEFT */
     .top-hero-header {
       background: var(--bg-header);
       padding: 0.6rem 1rem;
@@ -117,7 +117,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      text-align: left;
+      text-align: center;
     }
 
     .text-main-title {
@@ -126,6 +126,7 @@
       color: #ffffff;
       letter-spacing: 0.8px;
       font-family: 'Google Sans', sans-serif;
+      text-align: center;
     }
 
     .text-subtitle {
@@ -135,6 +136,7 @@
       letter-spacing: 0.8px;
       margin-top: 2px;
       text-transform: uppercase;
+      text-align: center;
     }
 
     .top-utility-bar {
@@ -907,7 +909,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyedMBg_2nPVc2Ie5b5dB9B5lItt_fjLK3x2gneYfJR6rf1N35o73rYwshqHZzXBWgY/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxUhxVMktmatbx-v0d5w_FKojyfxwcc66XZX6GjNoFCIc--qhCiHmvg3p-7FHa3QLrp/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1095,7 +1097,7 @@
     let quickViewMode = localStorage.getItem('user_pref_quick_view') || 'grid';
     let filterBookmarksOnly = false;
 
-    const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
+    const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com", "pso_imp@maxval.com"];
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
     let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
     let powerUserOverride = localStorage.getItem('kc_power_override') !== 'normal';
@@ -1347,7 +1349,9 @@
 
     function updatePowerUserUIElements() {
       const powerTabBtn = document.getElementById('powerUsersTabBtn');
-      if (powerTabBtn) powerTabBtn.style.display = isPowerUser(currentUser) ? 'flex' : 'none';
+      if (powerTabBtn) {
+        powerTabBtn.style.display = isPowerUser(currentUser) ? 'flex' : 'none';
+      }
     }
 
     function checkLatestReleaseNotification() {
