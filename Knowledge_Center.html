@@ -1339,7 +1339,8 @@
     function isPowerUser(email) {
       if (!email) return false;
       if (!powerUserOverride) return false;
-      return powerUsers.has(email.toLowerCase().trim());
+      const cleanEmail = email.toLowerCase().trim();
+      return powerUsers.has(cleanEmail);
     }
 
     function togglePowerUserModeOverride() {
@@ -2325,8 +2326,8 @@
                 </a>
                 ${powerUserActive ? `
                   <div class="action-icons">
-                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">edit</span></button>
-                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:16px;">delete</span></button>
+                    <button class="action-btn edit-btn" onclick="handleActionRequest('edit', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">edit</span></button>
+                    <button class="action-btn delete-btn" onclick="handleActionRequest('delete', ${doc.originalIndex}, 'document')"><span class="material-icons-outlined" style="font-size:15px;">delete</span></button>
                   </div>
                 ` : ''}
               </div>
