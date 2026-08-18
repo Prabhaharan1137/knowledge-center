@@ -83,7 +83,7 @@
       z-index: 10000000;
     }
 
-    /* CENTERED HEADER & STATIC GEAR LOGO ON LEFT (NO ANIMATIONS) */
+    /* HEADER & LIGHTBULB VECTOR STYLING (STATIC GLOW, NO ANIMATIONS) */
     .top-hero-header {
       background: var(--bg-header);
       padding: 0.6rem 1rem;
@@ -100,11 +100,10 @@
       gap: 0.85rem;
     }
 
-    /* STATIC VECTOR SETTINGS (ALL ANIMATIONS REMOVED) */
-    .svg-pulse-glow { transform-origin: 500px 450px; }
-    .svg-gear-left { transform-origin: 230px 750px; }
-    .svg-gear-right { transform-origin: 770px 750px; }
-    .svg-rays-orbit { transform-origin: 500px 380px; }
+    .header-logo-container svg {
+      filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4)) 
+              drop-shadow(0 0 10px rgba(16, 185, 129, 0.3));
+    }
 
     .header-text-group {
       display: flex;
@@ -258,9 +257,6 @@
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: 500; }
 
     .view-scroll-wrapper {
-      max-height: calc(100vh - 180px);
-      overflow-y: auto;
-      padding-right: 2px;
       height: fit-content;
     }
 
@@ -319,7 +315,7 @@
       font-weight: bold;
     }
 
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; max-height: calc(100vh - 210px); height: fit-content; }
+    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; height: fit-content; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
     .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border-color); text-align: left; }
     .doc-table td { padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
@@ -446,13 +442,13 @@
     </div>
   </div>
 
-  <!-- HEADER WITH STATIC VECTOR LOGO ON LEFT (NO ANIMATIONS / TRANSPARENT BG) -->
+  <!-- HEADER WITH LIGHTBULB VECTOR LOGO (MATCHES DARK THEME HEADER, STATIC NEON GLOW) -->
   <div class="top-hero-header">
     <div class="header-logo-flex">
       <div class="header-logo-container">
         <svg width="48" height="48" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-          <!-- STATIC SUNBURST RAYS & ORBITS -->
-          <g class="svg-rays-orbit">
+          <!-- TOP SUNBURST RAYS & ORBITS -->
+          <g>
             <circle cx="500" cy="100" r="14" fill="#f97316"/>
             <line x1="500" y1="130" x2="500" y2="180" stroke="#f97316" stroke-width="12" stroke-linecap="round"/>
             <line x1="680" y1="180" x2="650" y2="220" stroke="#3b82f6" stroke-width="12" stroke-linecap="round"/>
@@ -463,23 +459,23 @@
             <line x1="130" y1="500" x2="190" y2="500" stroke="#f59e0b" stroke-width="12" stroke-linecap="round"/>
           </g>
 
-          <!-- STATIC LEFT GEAR (YELLOW/RED) -->
-          <g class="svg-gear-left">
+          <!-- LEFT GEAR (YELLOW/RED) -->
+          <g>
             <circle cx="230" cy="750" r="85" fill="none" stroke="#f59e0b" stroke-width="16" stroke-dasharray="22,14"/>
             <circle cx="230" cy="750" r="30" fill="none" stroke="#ef4444" stroke-width="10"/>
             <circle cx="230" cy="750" r="12" fill="#f59e0b"/>
           </g>
 
-          <!-- STATIC RIGHT GEAR (BLUE/GREEN) -->
-          <g class="svg-gear-right">
+          <!-- RIGHT GEAR (BLUE/GREEN) -->
+          <g>
             <circle cx="770" cy="750" r="85" fill="none" stroke="#3b82f6" stroke-width="16" stroke-dasharray="22,14"/>
             <circle cx="770" cy="750" r="30" fill="none" stroke="#10b981" stroke-width="10"/>
             <circle cx="770" cy="750" r="12" fill="#3b82f6"/>
           </g>
 
-          <!-- STATIC BULB BODY WITH CONNECTED HUMAN FIGURE -->
-          <g class="svg-pulse-glow">
-            <!-- GREEN DOT-MATRIX ARCH -->
+          <!-- LIGHTBULB BODY WITH HUMAN FIGURE -->
+          <g>
+            <!-- GREEN ARCH -->
             <circle cx="340" cy="280" r="14" fill="#10b981"/>
             <circle cx="310" cy="340" r="14" fill="#10b981"/>
             <circle cx="290" cy="410" r="14" fill="#10b981"/>
@@ -494,7 +490,7 @@
             <circle cx="550" cy="205" r="14" fill="#f97316"/>
             <circle cx="590" cy="220" r="14" fill="#f97316"/>
 
-            <!-- BLUE DOT-MATRIX ARCH -->
+            <!-- BLUE ARCH -->
             <circle cx="660" cy="280" r="14" fill="#3b82f6"/>
             <circle cx="690" cy="340" r="14" fill="#3b82f6"/>
             <circle cx="710" cy="410" r="14" fill="#3b82f6"/>
@@ -502,7 +498,7 @@
             <circle cx="710" cy="550" r="14" fill="#3b82f6"/>
             <circle cx="680" cy="620" r="14" fill="#3b82f6"/>
 
-            <!-- CENTER HUMAN FIGURES & NETWORK NODES -->
+            <!-- CENTER HUMAN FIGURE NODES -->
             <circle cx="500" cy="360" r="18" fill="#f97316"/>
             <circle cx="440" cy="470" r="12" fill="#10b981"/>
             <circle cx="560" cy="470" r="12" fill="#3b82f6"/>
@@ -942,7 +938,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzAy1HKBadtb5O8v5qgNZ0K2_d9Xl4VEC-vFFy5YEYGndsA5fcrOhwT8euq6A1EI1S3/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycby0XXUShLJLni5Rg0feznwD3X-rLw6Pum3GRV6Xii8jUwyeVXvoy5wASoXXEBQd-k3a/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1130,9 +1126,15 @@
     let quickViewMode = localStorage.getItem('user_pref_quick_view') || 'grid';
     let filterBookmarksOnly = false;
 
-    const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com", "pso_imp@maxval.com"];
+    // MANDATORY CASE-INSENSITIVE POWER USERS LIST
+    const DEFAULT_POWER_USERS = [
+      "prabhaharan.j@maxval.com", 
+      "prabhaharan@maxval.com", 
+      "admin@maxval.com", 
+      "pso_imp@maxval.com"
+    ];
     let savedPowerUsers = JSON.parse(localStorage.getItem('kc_power_users_v17') || '[]');
-    let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers]);
+    let powerUsers = new Set([...DEFAULT_POWER_USERS, ...savedPowerUsers].map(u => u.toLowerCase().trim()));
     let powerUserOverride = localStorage.getItem('kc_power_override') !== 'normal';
 
     let aiDebounceTimer = null;
@@ -1180,7 +1182,7 @@
 
     function notifyIframeHeight() {
       if (window.parent && window.parent !== window) {
-        const height = document.documentElement.scrollHeight || document.body.scrollHeight;
+        const height = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, 800);
         window.parent.postMessage({ type: 'kc-iframe-height', height: height }, '*');
       }
     }
@@ -1291,7 +1293,7 @@
         btn.textContent = "Verify Passcode & Access Portal";
         btn.disabled = false;
         if (data && data.status === "SUCCESS") {
-          currentUser = pendingOtpEmail;
+          currentUser = pendingOtpEmail.toLowerCase().trim();
           localStorage.setItem('kc_user_maxval_email', currentUser);
           
           const analytics = getUserAnalytics();
@@ -1363,10 +1365,8 @@
 
     function isPowerUser(email) {
       if (!powerUserOverride) return false;
-      if (email && powerUsers.has(email.toLowerCase().trim())) return true;
-      if (currentUser && powerUsers.has(currentUser.toLowerCase().trim())) return true;
-      if (authenticatedSessionEmail && powerUsers.has(authenticatedSessionEmail.toLowerCase().trim())) return true;
-      return false;
+      const targetUser = (email || currentUser || authenticatedSessionEmail || "").toLowerCase().trim();
+      return powerUsers.has(targetUser);
     }
 
     function togglePowerUserModeOverride() {
@@ -1772,16 +1772,18 @@
       renderPowerUsersList();
       updatePowerUserUIElements();
 
-      if (input === currentUser) {
-        alert("Your account has been granted Power User privileges! The system will sign you out so your elevated controls take effect.");
-        handleSignOut();
+      if (input === currentUser.toLowerCase()) {
+        alert("Your account has been granted Power User privileges!");
+        renderLearningHub();
+        renderDocumentHub();
+        renderQuickLinks();
       } else {
         showInlineBanner(`Power User notification email sent to ${input}.`);
       }
     }
 
     function handleRemovePowerUser(email) {
-      powerUsers.delete(email);
+      powerUsers.delete(email.toLowerCase());
       localStorage.setItem('kc_power_users_v17', JSON.stringify(Array.from(powerUsers)));
       renderPowerUsersList();
       updatePowerUserUIElements();
