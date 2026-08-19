@@ -83,7 +83,7 @@
       z-index: 10000000;
     }
 
-    /* HEADER & LOGO ANIMATIONS (GLOWING BULB & ROTATING GEARS) */
+    /* HEADER & LOGO ANIMATIONS */
     .top-hero-header {
       background: var(--bg-header);
       padding: 0.6rem 1rem;
@@ -975,7 +975,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycby6AdwW5sxOM869N1Qg_0IiGl6JesYxOAhAFMInU_fYKcDXHEZXr0uMj3wEVWJfJVVv/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxWaTkDs2CVMjOZL-6zDuAQAh0HiGpyrO50E6RM6iIEiNoTXzTRrKe-xjhLk6NZGEZC/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -1163,7 +1163,7 @@
     let quickViewMode = localStorage.getItem('user_pref_quick_view') || 'grid';
     let filterBookmarksOnly = false;
 
-    // MANDATORY CASE-INSENSITIVE POWER USERS ROSTER
+    // MASTER POWER USERS LIST
     const DEFAULT_POWER_USERS = [
       "prabhaharan.j@maxval.com", 
       "prabhaharan@maxval.com", 
@@ -1283,7 +1283,7 @@
       } else {
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
-        updatePowerUserUIElements();
+        detectGoogleSessionAccount(); // Run verification to guarantee Power User state
         checkLatestReleaseNotification();
       }
     }
@@ -1614,7 +1614,8 @@
 
       callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(remoteAnalytics) {
         let currentLocal = getUserAnalytics();
-        let merged = { users: { ...(remoteAnalytics ? remoteAnalytics.users : {}), ...currentLocal.users } };
+        let globalUsers = (remoteAnalytics && remoteAnalytics.users) ? remoteAnalytics.users : {};
+        let merged = { users: { ...globalUsers, ...currentLocal.users } };
         renderDashboardTable(merged);
       });
 
