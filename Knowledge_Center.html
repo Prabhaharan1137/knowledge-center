@@ -201,7 +201,7 @@
   <iframe name="hidden_email_iframe" id="hidden_email_iframe" style="display:none;"></iframe>
 
   <!-- HIDDEN BACKGROUND FORM TARGETING UPDATED GOOGLE APPS SCRIPT DEPLOYMENT -->
-  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbyZvkqF7oSO6q_J63_ciY2cPrbEHp908fYJ5ahNvnAx5nYZ_8VHh_ovBo-DUQKku_U2/exec" method="POST" target="hidden_email_iframe" style="display:none;">
+  <form id="hiddenGasForm" action="https://script.google.com/a/macros/maxval.com/s/AKfycbzpeKZJ3vwDdLHDPTsblEBqHDCqy3PYHNN1vQs3S7CoOhWTAA6f-SClCgCH6lRMY04/exec" method="POST" target="hidden_email_iframe" style="display:none;">
     <input type="hidden" name="dlAddress" id="gas_dlAddress">
     <input type="hidden" name="submitter" id="gas_submitter">
     <input type="hidden" name="title" id="gas_title">
@@ -238,7 +238,7 @@
         <span class="material-icons-outlined" style="font-size:15px;">insights</span><span>User Progress Dashboard</span>
       </button>
 
-      <!-- POWER USER CONTROLS BUTTON -->
+      <!-- POWER USER CONTROLS BUTTON (VISIBLE FOR POWER USERS) -->
       <button type="button" class="top-utility-btn" id="powerUsersTabBtn" style="display:none; background:var(--google-purple); border-color:var(--google-purple);" onclick="openPowerUserModal()">
         <span class="material-icons-outlined" style="font-size:15px;">admin_panel_settings</span><span>Power Controls</span>
       </button>
@@ -436,7 +436,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyZvkqF7oSO6q_J63_ciY2cPrbEHp908fYJ5ahNvnAx5nYZ_8VHh_ovBo-DUQKku_U2/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzpeKZJ3vwDdLHDPTsblEBqHDCqy3PYHNN1vQs3S7CoOhWTAA6f-SClCgCH6lRMY04/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -680,7 +680,7 @@
     function verifyPowerUserRole() {
       callGasJsonp({ action: 'GET_ACTIVE_EMAIL', clientEmail: currentUser }, function(data) {
         if (data && (data.isPowerUser || checkIsPowerUserLocal(currentUser))) {
-          data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
+          if (data.powerUsers) data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
           document.getElementById('powerUsersTabBtn').style.display = 'inline-flex';
         }
       });
