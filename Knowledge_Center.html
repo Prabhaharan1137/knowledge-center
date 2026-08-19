@@ -44,8 +44,7 @@
     
     html, body {
       width: 100%;
-      height: auto;
-      min-height: 100%;
+      height: 100%;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
@@ -83,7 +82,6 @@
       z-index: 10000000;
     }
 
-    /* HEADER & LOGO ANIMATIONS */
     .top-hero-header {
       background: var(--bg-header);
       padding: 0.6rem 1rem;
@@ -102,13 +100,11 @@
 
     @keyframes bulbPulseGlow {
       0%, 100% {
-        filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5)) 
-                drop-shadow(0 0 10px rgba(16, 185, 129, 0.4));
+        filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5)) drop-shadow(0 0 10px rgba(16, 185, 129, 0.4));
         transform: scale(0.98);
       }
       50% {
-        filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.8)) 
-                drop-shadow(0 0 18px rgba(245, 158, 11, 0.7));
+        filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.8)) drop-shadow(0 0 18px rgba(245, 158, 11, 0.7));
         transform: scale(1.02);
       }
     }
@@ -253,15 +249,9 @@
       font-weight: 500;
       cursor: pointer;
     }
-    .kpi-bookmark-small.filter-active {
-      background: var(--google-yellow-bg);
-      border-color: var(--google-yellow);
-      color: var(--google-yellow);
-      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
-    }
 
-    .container { width: 100%; padding: 0.4rem 0.85rem; display: flex; flex-direction: column; height: auto; }
-    .tab-content { display: none; flex-direction: column; height: auto; }
+    .container { width: 100%; padding: 0.4rem 0.85rem; display: flex; flex-direction: column; flex: 1; }
+    .tab-content { display: none; flex-direction: column; flex: 1; }
     .tab-content.active { display: flex; }
 
     .filter-card-highlight { 
@@ -289,12 +279,20 @@
     .view-btn { background: var(--bg-card); border: none; padding: 0.2rem 0.45rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: 500; }
 
+    /* RE-ENABLED ACTIVE VERTICAL SCROLLBAR FOR CONTENT OVERFLOW */
     .view-scroll-wrapper {
-      height: auto;
-      overflow: visible;
+      max-height: calc(100vh - 200px);
+      overflow-y: auto;
+      padding-right: 4px;
     }
 
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.55rem; height: auto; }
+    /* CUSTOM SCROLLBAR DESIGN */
+    .view-scroll-wrapper::-webkit-scrollbar { width: 6px; }
+    .view-scroll-wrapper::-webkit-scrollbar-track { background: var(--bg-body); border-radius: 4px; }
+    .view-scroll-wrapper::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+    .view-scroll-wrapper::-webkit-scrollbar-thumb:hover { background: var(--google-blue); }
+
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.55rem; }
     
     .resource-card { 
       background: var(--bg-card); 
@@ -309,7 +307,6 @@
     }
 
     .resource-card:hover { background-color: var(--google-blue-light); border-color: var(--google-blue); }
-    .resource-card.selected-card { border-color: var(--google-red); background-color: rgba(239, 68, 68, 0.1); }
 
     .resource-card.bookmarked-card-highlight {
       background-color: var(--google-yellow-bg) !important;
@@ -349,7 +346,7 @@
       font-weight: bold;
     }
 
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; height: auto; }
+    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; max-height: calc(100vh - 210px); }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
     .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border-color); text-align: left; }
     .doc-table td { padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
@@ -364,8 +361,6 @@
     }
     .modal-overlay.open { display: flex; }
     
-    #powerUserDetailModalOverlay { z-index: 10000005 !important; }
-
     .modal-content { 
       background: var(--bg-card); 
       border-radius: var(--radius); 
@@ -401,7 +396,6 @@
 
     .detail-list { list-style: none; padding: 0; margin: 0; max-height: 140px; overflow-y: auto; font-size: 0.78rem; border: 1px solid var(--border-color); border-radius: 6px; }
     .detail-list li { padding: 0.3rem 0.5rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
-    .detail-list li:last-child { border-bottom: none; }
 
     .success-alert-banner {
       display: none; background: var(--google-green-light); border: 1px solid var(--google-green); color: var(--google-green);
@@ -461,13 +455,11 @@
         Verified Session: <span id="detectedEmailAddress">...</span>
       </div>
 
-      <!-- STEP 1: REQUEST PASSCODE FORM -->
       <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.55rem;">
         <input type="email" id="loginEmailInput" placeholder="your.name@maxval.com" required style="padding: 0.55rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.85rem; text-align: center; font-weight: 500; outline: none;">
         <button type="submit" class="btn-submit" id="sendOtpBtn" style="padding: 0.5rem; font-size: 0.82rem;">Send Passcode to Inbox</button>
       </form>
 
-      <!-- STEP 2: VERIFY PASSCODE FORM -->
       <form id="otpVerifyForm" onsubmit="handleVerifyOtp(event)" style="display: none; flex-direction: column; gap: 0.55rem; margin-top: 0.35rem;">
         <p style="font-size: 0.75rem; color: var(--google-green); font-weight: 600;">Passcode sent! Check your inbox for the 6-digit code.</p>
         <input type="text" id="otpCodeInput" placeholder="6-Digit Passcode" required maxlength="6" style="padding: 0.5rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.05rem; text-align: center; font-weight: 700; letter-spacing: 5px; outline: none;">
@@ -476,14 +468,12 @@
     </div>
   </div>
 
-  <!-- HEADER WITH ANIMATED LIGHTBULB & ROTATING GEARS -->
+  <!-- HEADER WITH ANIMATED BULB AND GEARS -->
   <div class="top-hero-header">
     <div class="header-logo-flex">
       <div class="header-logo-container">
         <svg width="52" height="52" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-          <!-- GLOWING BULB GROUP -->
           <g class="anim-glow-bulb">
-            <!-- TOP RAYS & ORBITS -->
             <circle cx="210" cy="120" r="32" fill="none" stroke="#f59e0b" stroke-width="12"/>
             <circle cx="790" cy="120" r="32" fill="none" stroke="#3b82f6" stroke-width="12"/>
             <circle cx="260" cy="210" r="14" fill="#f59e0b"/>
@@ -494,7 +484,6 @@
             <line x1="370" y1="160" x2="390" y2="195" stroke="#10b981" stroke-width="12" stroke-linecap="round"/>
             <line x1="630" y1="160" x2="610" y2="195" stroke="#3b82f6" stroke-width="12" stroke-linecap="round"/>
 
-            <!-- OUTER DOT-MATRIX ORBITS -->
             <circle cx="200" cy="480" r="10" fill="#f59e0b"/>
             <circle cx="225" cy="510" r="10" fill="#f59e0b"/>
             <circle cx="260" cy="530" r="10" fill="#10b981"/>
@@ -502,7 +491,6 @@
             <circle cx="775" cy="510" r="10" fill="#3b82f6"/>
             <circle cx="740" cy="530" r="10" fill="#3b82f6"/>
 
-            <!-- LIGHTBULB MAIN ARCH -->
             <circle cx="360" cy="260" r="14" fill="#10b981"/>
             <circle cx="330" cy="320" r="14" fill="#10b981"/>
             <circle cx="310" cy="390" r="14" fill="#10b981"/>
@@ -525,7 +513,6 @@
             <circle cx="660" cy="600" r="14" fill="#3b82f6"/>
             <circle cx="620" cy="660" r="14" fill="#3b82f6"/>
 
-            <!-- CENTER CONNECTED HUMAN FIGURE NETWORK -->
             <circle cx="500" cy="350" r="20" fill="#f97316"/>
             <circle cx="430" cy="480" r="14" fill="#10b981"/>
             <circle cx="570" cy="480" r="14" fill="#3b82f6"/>
@@ -538,20 +525,17 @@
             <circle cx="500" cy="600" r="10" fill="#3b82f6"/>
             <line x1="500" y1="460" x2="500" y2="600" stroke="#3b82f6" stroke-width="6"/>
 
-            <!-- BASE STRIPES -->
             <rect x="420" y="690" width="160" height="24" rx="12" fill="#10b981"/>
             <rect x="440" y="730" width="120" height="20" rx="10" fill="#f59e0b"/>
             <rect x="465" y="765" width="70" height="16" rx="8" fill="#3b82f6"/>
           </g>
 
-          <!-- ROTATING LEFT GEAR (YELLOW/RED) -->
           <g class="anim-gear-spin-left">
             <circle cx="250" cy="770" r="75" fill="none" stroke="#f59e0b" stroke-width="16" stroke-dasharray="20,12"/>
             <circle cx="250" cy="770" r="28" fill="none" stroke="#ef4444" stroke-width="10"/>
             <circle cx="250" cy="770" r="12" fill="#f59e0b"/>
           </g>
 
-          <!-- ROTATING RIGHT GEAR (BLUE/GREEN) -->
           <g class="anim-gear-spin-right">
             <circle cx="750" cy="770" r="75" fill="none" stroke="#3b82f6" stroke-width="16" stroke-dasharray="20,12"/>
             <circle cx="750" cy="770" r="28" fill="none" stroke="#10b981" stroke-width="10"/>
