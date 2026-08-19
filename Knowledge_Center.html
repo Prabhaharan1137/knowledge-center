@@ -251,6 +251,12 @@
       font-weight: 500;
       cursor: pointer;
     }
+    .kpi-bookmark-small.filter-active {
+      background: var(--google-yellow-bg);
+      border-color: var(--google-yellow);
+      color: var(--google-yellow);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
 
     .container { width: 100%; padding: 0.4rem 0.85rem; display: flex; flex-direction: column; flex: 1; }
     .tab-content { display: none; flex-direction: column; flex: 1; }
@@ -281,7 +287,7 @@
     .view-btn { background: var(--bg-card); border: none; padding: 0.2rem 0.45rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: 500; }
 
-    /* UNBOUNDED FULL SCROLLING WRAPPER FOR IFRAME HEIGHT EXPANSION */
+    /* UNBOUNDED FULL SCROLLING WRAPPER */
     .view-scroll-wrapper {
       height: auto;
       overflow: visible;
@@ -356,6 +362,8 @@
     }
     .modal-overlay.open { display: flex; }
     
+    #powerUserDetailModalOverlay { z-index: 10000005 !important; }
+
     .modal-content { 
       background: var(--bg-card); 
       border-radius: var(--radius); 
@@ -893,7 +901,7 @@
         </div>
 
         <div class="form-group">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; justify-space-between; align-items:center;">
             <label>Description (AI Pre-populated, editable)</label>
             <button type="button" class="btn-secondary" style="padding:0.1rem 0.35rem; font-size:0.68rem;" onclick="refreshAiDescriptionInModal()" title="Re-generate AI Description">
               <span class="material-icons-outlined" style="font-size:12px;">refresh</span> Auto-Synthesize AI Description
@@ -967,7 +975,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyGkz98Th0M9LHTXD5YSci2IvpEydme2zma06GjEN31IT8EE8rKI6d7711sjD5S7bJY/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwxKZ6MM7Ijpfk6kbLgjBg_bFWPaevlm3YVXBfuCF4VLNbfvEqRmg6ZxpqerIsRDBEQ/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
