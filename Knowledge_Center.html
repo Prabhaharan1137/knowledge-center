@@ -83,6 +83,7 @@
       z-index: 10000000;
     }
 
+    /* HEADER & LOGO ANIMATIONS */
     .top-hero-header {
       background: var(--bg-header);
       padding: 0.6rem 1rem;
@@ -250,6 +251,12 @@
       font-weight: 500;
       cursor: pointer;
     }
+    .kpi-bookmark-small.filter-active {
+      background: var(--google-yellow-bg);
+      border-color: var(--google-yellow);
+      color: var(--google-yellow);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
 
     .container { width: 100%; padding: 0.4rem 0.85rem; display: flex; flex-direction: column; flex: 1; }
     .tab-content { display: none; flex-direction: column; flex: 1; }
@@ -280,13 +287,13 @@
     .view-btn { background: var(--bg-card); border: none; padding: 0.2rem 0.45rem; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; }
     .view-btn.active { background: var(--google-blue-light); color: var(--google-blue); font-weight: 500; }
 
-    /* UNBOUNDED FULL SCROLLING FOR GOOGLE SITES IFRAME EXPANSION */
+    /* UNBOUNDED FULL SCROLLING WRAPPER */
     .view-scroll-wrapper {
       height: auto;
       overflow: visible;
     }
 
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.55rem; }
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.55rem; height: auto; }
     
     .resource-card { 
       background: var(--bg-card); 
@@ -355,6 +362,8 @@
     }
     .modal-overlay.open { display: flex; }
     
+    #powerUserDetailModalOverlay { z-index: 10000005 !important; }
+
     .modal-content { 
       background: var(--bg-card); 
       border-radius: var(--radius); 
@@ -961,7 +970,7 @@
 
   <script>
     const ADMIN_PIN = "1234";
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxC77aUwic7tPfra1tXfroxvw9BtkwASArS81TryLKCAQ6s_qGu3_wf45XSU_ZVpuwU/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyGkz98Th0M9LHTXD5YSci2IvpEydme2zma06GjEN31IT8EE8rKI6d7711sjD5S7bJY/exec";
 
     const DEFAULT_CATEGORIES = [
       "Intellectual Property", "Introduction to Symphony", "Invention Module",
@@ -2185,7 +2194,6 @@
       
       const tabBookmarkCount = filtered.filter(item => bookmarkedIds.has(item.id)).length;
       
-      // Calculate Total Views across all Learning topics
       let totalLearningViews = 0;
       if (analytics.users) {
         Object.keys(analytics.users).forEach(uKey => {
