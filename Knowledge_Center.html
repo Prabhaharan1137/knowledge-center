@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Symphony Implementation - Learning and Documentation Hub</title>
+  <title>Symphony Implementation - Learning and Document Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <style>
@@ -76,10 +76,10 @@
       100% { transform: translate3d(-100%, 0, 0); }
     }
 
-    /* LIGHTBULB LOGO STYLING */
-    .idea-lightbulb-svg {
+    .idea-lightbulb-svg, .custom-header-logo-img {
       width: 52px;
       height: 52px;
+      object-fit: contain;
       vertical-align: middle;
     }
 
@@ -105,7 +105,7 @@
     .brand-title-main {
       font-family: 'Google Sans', sans-serif;
       font-size: 1.3rem;
-      font-weight: 400; /* Regular weight */
+      font-weight: 400;
       color: #ffffff;
       display: flex;
       align-items: center;
@@ -115,7 +115,7 @@
     .brand-subtitle {
       font-family: 'Google Sans', sans-serif;
       font-size: 0.95rem;
-      font-weight: 400; /* Regular weight */
+      font-weight: 400;
       color: #ffffff;
       text-align: center;
     }
@@ -279,7 +279,8 @@
       position: relative;
     }
     .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--google-blue); }
-    
+    .resource-card.mandatory-card { border: 2px solid var(--google-red) !important; background: #fff5f5; }
+
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.45rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
     .category-badge { font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.45rem; border-radius: 10px; }
@@ -291,10 +292,10 @@
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; }
     .action-btn:hover { background: rgba(0, 0, 0, 0.08); }
     
-    /* GOLDEN BOOKMARK STARS */
     .bookmark-btn.bookmarked span, .gold-star span { color: #fbbc05 !important; }
 
     .new-tag-pill { background: var(--google-purple); color: #fff; font-size: 0.6rem; font-weight: 600; padding: 0.1rem 0.35rem; border-radius: 4px; text-transform: uppercase; margin-left: 0.3rem; }
+    .mandatory-tag-pill { background: var(--google-red); color: #fff; font-size: 0.6rem; font-weight: 600; padding: 0.1rem 0.35rem; border-radius: 4px; margin-left: 0.3rem; }
     .completion-status-tag { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 500; }
     .completion-status-tag.completed { background: var(--google-green-light); color: var(--google-green); }
     .completion-status-tag.pending { background: var(--bg-body); color: var(--text-secondary); border: 1px solid var(--border-color); }
@@ -311,7 +312,7 @@
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow-y: auto;
     }
     .modal-overlay.open { display: flex; }
-    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 520px; padding: 1.25rem; box-shadow: var(--shadow-md); margin-top: 10px; border: 1px solid var(--border-color); }
+    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 540px; padding: 1.25rem; box-shadow: var(--shadow-md); margin-top: 10px; border: 1px solid var(--border-color); }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
     .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1.05rem; font-weight: 500; }
     .modal-close-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); }
@@ -335,6 +336,9 @@
       background: var(--google-purple-light); color: var(--google-purple);
       padding: 0.4rem 0.65rem; border-radius: 6px; font-size: 0.8rem; margin-bottom: 0.35rem;
     }
+
+    .detail-list { list-style: none; padding: 0; margin: 0; max-height: 180px; overflow-y: auto; font-size: 0.82rem; border: 1px solid var(--border-color); border-radius: 6px; }
+    .detail-list li { padding: 0.4rem 0.65rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
 
     @media (max-width: 600px) {
       .top-utility-bar { flex-direction: column; gap: 0.5rem; align-items: stretch; }
@@ -373,41 +377,37 @@
     </div>
   </div>
 
-  <!-- TOP HERO HEADER WITH IDEA LIGHTBULB LOGO & CENTERED WHITE TITLE -->
+  <!-- TOP HERO HEADER WITH LOGO & CENTERED WHITE TITLE -->
   <div class="top-hero-header">
     <div class="header-title-container">
       <div class="brand-title-main">
-        <!-- VECTOR RECREATION OF IDEA LIGHTBULB NETWORK LOGO -->
-        <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
-          <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
-          <circle class="symphony-dot green" cx="50" cy="30" r="6" fill="#34a853"/>
-          <circle cx="150" cy="30" r="12" fill="none" stroke="#fbbc05" stroke-width="4"/>
-          <circle class="symphony-dot yellow" cx="150" cy="30" r="6" fill="#fbbc05"/>
-          
-          <path d="M 60,110 C 30,80 40,40 100,20 C 160,40 170,80 140,110 C 130,125 125,140 125,155 L 75,155 C 75,140 70,125 60,110 Z" fill="none" stroke="#34a853" stroke-width="5"/>
-          
-          <!-- Inner Network Circles -->
-          <circle class="symphony-dot red" cx="100" cy="70" r="10" fill="#ea4335"/>
-          <circle class="symphony-dot blue" cx="80" cy="95" r="8" fill="#4285f4"/>
-          <circle class="symphony-dot blue" cx="120" cy="95" r="8" fill="#4285f4"/>
-          <circle class="symphony-dot green" cx="100" cy="120" r="8" fill="#34a853"/>
-          <line x1="100" y1="70" x2="80" y2="95" stroke="#ea4335" stroke-width="3"/>
-          <line x1="100" y1="70" x2="120" y2="95" stroke="#ea4335" stroke-width="3"/>
-          <line x1="80" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
-          <line x1="120" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
-
-          <!-- Lightbulb Base -->
-          <rect x="80" y="160" width="40" height="8" rx="3" fill="#ea4335"/>
-          <rect x="85" y="172" width="30" height="6" rx="3" fill="#fbbc05"/>
-          <rect x="92" y="182" width="16" height="5" rx="2" fill="#4285f4"/>
-        </svg>
+        <span id="logoContainer">
+          <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
+            <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
+            <circle class="symphony-dot green" cx="50" cy="30" r="6" fill="#34a853"/>
+            <circle cx="150" cy="30" r="12" fill="none" stroke="#fbbc05" stroke-width="4"/>
+            <circle class="symphony-dot yellow" cx="150" cy="30" r="6" fill="#fbbc05"/>
+            <path d="M 60,110 C 30,80 40,40 100,20 C 160,40 170,80 140,110 C 130,125 125,140 125,155 L 75,155 C 75,140 70,125 60,110 Z" fill="none" stroke="#34a853" stroke-width="5"/>
+            <circle class="symphony-dot red" cx="100" cy="70" r="10" fill="#ea4335"/>
+            <circle class="symphony-dot blue" cx="80" cy="95" r="8" fill="#4285f4"/>
+            <circle class="symphony-dot blue" cx="120" cy="95" r="8" fill="#4285f4"/>
+            <circle class="symphony-dot green" cx="100" cy="120" r="8" fill="#34a853"/>
+            <line x1="100" y1="70" x2="80" y2="95" stroke="#ea4335" stroke-width="3"/>
+            <line x1="100" y1="70" x2="120" y2="95" stroke="#ea4335" stroke-width="3"/>
+            <line x1="80" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
+            <line x1="120" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
+            <rect x="80" y="160" width="40" height="8" rx="3" fill="#ea4335"/>
+            <rect x="85" y="172" width="30" height="6" rx="3" fill="#fbbc05"/>
+            <rect x="92" y="182" width="16" height="5" rx="2" fill="#4285f4"/>
+          </svg>
+        </span>
         <span>Symphony Implementation</span>
       </div>
       <div class="brand-subtitle">Learning and Documentation Hub</div>
     </div>
   </div>
 
-  <!-- TOP UTILITY BAR (LEFT: SUBMIT LINK, RIGHT: VIEW THEME BUTTON + PROFILE) -->
+  <!-- TOP UTILITY BAR -->
   <div class="top-utility-bar">
     <div class="top-utility-left">
       <button type="button" class="top-utility-btn accent-add" id="submitNewLinkBtn" onclick="openAddModal()">
@@ -477,7 +477,8 @@
             <select id="learningSortSelect" class="styled-dropdown-catchy" onchange="renderLearningHub()">
               <option value="default">Default (New Releases First)</option>
               <option value="date">Created Date (Newest First)</option>
-              <option value="title">Title (A - Z)</option>
+              <option value="title_asc">Title (A - Z)</option>
+              <option value="title_desc">Title (Z - A)</option>
               <option value="category">Category / Module</option>
             </select>
           </div>
@@ -535,8 +536,8 @@
             <select id="docSortSelect" class="styled-dropdown-catchy" onchange="renderDocumentHub()">
               <option value="default">Default (New Releases First)</option>
               <option value="date">Created Date (Newest First)</option>
-              <option value="package">Package Name</option>
-              <option value="type">Doc Type</option>
+              <option value="package_asc">Package Name (A - Z)</option>
+              <option value="package_desc">Package Name (Z - A)</option>
             </select>
           </div>
         </div>
@@ -578,7 +579,7 @@
     </div>
   </div>
 
-  <!-- PROFILE / SETTINGS CONTROL MODAL WITH BUTTONS FOR DASHBOARD & POWER USERS -->
+  <!-- PROFILE / SETTINGS CONTROL MODAL -->
   <div class="modal-overlay" id="profileModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -594,15 +595,27 @@
 
       <div style="padding: 1rem 0; display:flex; flex-direction:column; gap:0.65rem;">
         <button type="button" class="btn-secondary" onclick="closeModal('profileModalOverlay'); openUserAnalyticsDashboard();">
-          <span class="material-icons-outlined" style="font-size:18px;">insights</span><span>User Dashboard</span>
+          <span class="material-icons-outlined" style="font-size:18px;">insights</span><span>User Progress Dashboard</span>
         </button>
 
         <button type="button" class="btn-secondary" id="powerPrivilegesBtn" onclick="openPowerUserPrivilegesModal()">
-          <span class="material-icons-outlined" style="font-size:18px;">admin_panel_settings</span><span>Power User Privilege</span>
+          <span class="material-icons-outlined" style="font-size:18px;">admin_panel_settings</span><span>Power User Privileges</span>
         </button>
 
         <button type="button" class="btn-secondary" id="powerUsersListBtn" onclick="openPowerUsersListModal()">
           <span class="material-icons-outlined" style="font-size:18px;">people</span><span>Power Users List</span>
+        </button>
+
+        <button type="button" class="btn-secondary" id="mandatoryConfigBtn" onclick="openMandatoryConfigModal()">
+          <span class="material-icons-outlined" style="font-size:18px;">assignment_late</span><span>Mandatory Modules & Reminders</span>
+        </button>
+
+        <button type="button" class="btn-secondary" id="onboardingConfigBtn" onclick="openJoinersConfigModal()">
+          <span class="material-icons-outlined" style="font-size:18px;">person_add</span><span>New Joiners Onboarding</span>
+        </button>
+
+        <button type="button" class="btn-secondary" id="logoUploadBtn" onclick="openLogoUploadModal()">
+          <span class="material-icons-outlined" style="font-size:18px;">image</span><span>Custom Logo URL</span>
         </button>
 
         <button type="button" class="btn-secondary" style="color:var(--google-red); border-color:var(--google-red); margin-top:0.5rem;" onclick="handleSignOut()">
@@ -647,7 +660,68 @@
     </div>
   </div>
 
-  <!-- ADD LINK MODAL FOR ALL LOGGED-IN USERS (QUICK LINKS, LEARNING, DOCS) -->
+  <!-- MANDATORY MODULES & REMINDERS CONFIG MODAL -->
+  <div class="modal-overlay" id="mandatoryConfigModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Mandatory Modules & Reminders</h2>
+        <button class="modal-close-btn" onclick="closeModal('mandatoryConfigModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="padding:0.5rem 0; display:flex; flex-direction:column; gap:0.75rem;">
+        <div class="form-group">
+          <label>Select Module / Resource *</label>
+          <select id="mandatoryModuleSelect"></select>
+        </div>
+        <div class="form-group">
+          <label>Due Date *</label>
+          <input type="date" id="mandatoryDueDate">
+        </div>
+        <button type="button" class="btn-submit" onclick="saveMandatorySetting()">Set Mandatory & Due Date</button>
+
+        <div style="margin-top:1rem;">
+          <label style="font-size:0.8rem; font-weight:500;">Active Mandatory Items:</label>
+          <div id="mandatoryItemsList" style="max-height:160px; overflow-y:auto; margin-top:0.4rem;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW JOINERS ONBOARDING MODAL -->
+  <div class="modal-overlay" id="joinersConfigModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>New Joiners Onboarding Control</h2>
+        <button class="modal-close-btn" onclick="closeModal('joinersConfigModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="padding:0.5rem 0;">
+        <form onsubmit="handleAddJoiner(event)" style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+          <input type="email" id="newJoinerEmail" placeholder="new.joiner@maxval.com" required style="flex:1; padding:0.45rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.85rem;">
+          <button type="submit" class="btn-submit" style="padding:0.45rem 0.85rem;">Restrict to Mandatory</button>
+        </form>
+        <div id="joinersListContainer" style="max-height:200px; overflow-y:auto;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM LOGO URL MODAL -->
+  <div class="modal-overlay" id="logoUploadModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Header Logo Settings</h2>
+        <button class="modal-close-btn" onclick="closeModal('logoUploadModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="padding:0.5rem 0; display:flex; flex-direction:column; gap:0.75rem;">
+        <div class="form-group">
+          <label>Custom Image URL *</label>
+          <input type="url" id="customLogoUrlInput" placeholder="https://..." style="padding:0.45rem; border:1px solid var(--border-color); border-radius:6px;">
+        </div>
+        <button type="button" class="btn-submit" onclick="saveCustomLogoUrl()">Save Custom Logo</button>
+        <button type="button" class="btn-secondary" onclick="resetDefaultLogo()">Reset Vector Logo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD LINK MODAL -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -721,7 +795,7 @@
     </div>
   </div>
 
-  <!-- PROGRESS DASHBOARD MODAL -->
+  <!-- USER PROGRESS DASHBOARD MODAL FOR POWER USERS -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 760px;">
       <div class="modal-header">
@@ -735,7 +809,8 @@
               <th>User Email</th>
               <th>Last Active</th>
               <th>Completed Topics</th>
-              <th>Docs Viewed</th>
+              <th>Recent Document Viewed</th>
+              <th style="text-align:right;">Actions</th>
             </tr>
           </thead>
           <tbody id="userAnalyticsTableBody"></tbody>
@@ -744,8 +819,32 @@
     </div>
   </div>
 
+  <!-- USER DRILL-DOWN BREAKDOWN MODAL -->
+  <div class="modal-overlay" id="userDetailBreakdownModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="drilldownUserTitle">User Details</h2>
+        <button class="modal-close-btn" onclick="closeModal('userDetailBreakdownModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:var(--google-green);">Completed Modules:</label>
+          <ul class="detail-list" id="drilldownCompletedList"></ul>
+        </div>
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:var(--google-red);">Pending Mandatory Modules:</label>
+          <ul class="detail-list" id="drilldownPendingList"></ul>
+        </div>
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:var(--google-purple);">Viewed Documents History:</label>
+          <ul class="detail-list" id="drilldownViewedList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbw7Y75ko9OiY4kZ3LE4gPc_9AyUY8AneO5rEwgQJxv6jh2kdA27PGY5Cz0zWN_HYA5q/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbz5W6iKlaFgFhuh34jCdLv6_WsBWBG6_R0SPrNXu7Dgr1Rylkvn7uRVrffHawK2AvIB/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" },
@@ -780,6 +879,9 @@
     let dataset = [...baseDataset];
     let docDataset = [...baseDocDataset];
 
+    let mandatoryData = {}; // { id: dueDate }
+    let joinersData = {};   // { email: true/false }
+
     let activeTab = 'quickLinksTab';
     let currentUser = localStorage.getItem('kc_user_maxval_email');
     let pendingOtpEmail = "";
@@ -787,15 +889,15 @@
     let searchQuery = '';
     let selectedDocPackage = 'ALL';
     let docSearchQuery = '';
-    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v20') || '[]'));
+    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v21') || '[]'));
     let filterOnlyBookmarks = false;
 
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
     let powerUsers = new Set(DEFAULT_POWER_USERS);
     let isPowerUserViewMode = true;
 
-    let learningHubLayoutMode = 'grid'; // 'grid' or 'table'
-    let docHubLayoutMode = 'table'; // 'table' or 'grid'
+    let learningHubLayoutMode = 'grid';
+    let docHubLayoutMode = 'table';
 
     function cleanAsciiText(str) { return str ? str.replace(/[^\x00-\x7F]/g, '').trim() : ''; }
 
@@ -914,7 +1016,19 @@
         if (data && data.powerUsers) {
           data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
         }
+        if (data && data.logoUrl) {
+          renderCustomLogo(data.logoUrl);
+        }
+        if (data && data.mandatoryData) mandatoryData = data.mandatoryData;
+        if (data && data.joinersData) joinersData = data.joinersData;
       });
+    }
+
+    function renderCustomLogo(url) {
+      const container = document.getElementById('logoContainer');
+      if (url) {
+        container.innerHTML = `<img src="${url}" class="custom-header-logo-img" alt="Logo">`;
+      }
     }
 
     function handleRequestOtp(e) {
@@ -946,9 +1060,28 @@
           localStorage.setItem('kc_user_maxval_email', currentUser);
           document.getElementById('mandatoryLockOverlay').style.display = 'none';
           updateUserBadgeDisplay();
+          syncUserAnalyticsToBackend();
           loadGlobalCustomLinks();
         } else alert("Invalid verification code.");
       });
+    }
+
+    function syncUserAnalyticsToBackend() {
+      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v21') || '[]'));
+      let viewedLog = JSON.parse(localStorage.getItem('user_viewed_log_v21') || '[]');
+      let payload = {
+        lastLogin: new Date().toLocaleString(),
+        completedTopics: Array.from(completedSet),
+        seenDocs: viewedLog
+      };
+      callGasJsonp({ action: 'SYNC_USER_ANALYTICS', email: currentUser, data: JSON.stringify(payload) }, function(){});
+    }
+
+    function trackDocView(pkg, type) {
+      let viewedLog = JSON.parse(localStorage.getItem('user_viewed_log_v21') || '[]');
+      viewedLog.unshift({ pkg, type, timestamp: new Date().toLocaleString() });
+      localStorage.setItem('user_viewed_log_v21', JSON.stringify(viewedLog.slice(0, 15)));
+      syncUserAnalyticsToBackend();
     }
 
     function updateUserBadgeDisplay() {
@@ -961,6 +1094,9 @@
         const isPower = powerUsers.has(currentUser.toLowerCase().trim());
         document.getElementById('powerPrivilegesBtn').style.display = isPower ? 'inline-flex' : 'none';
         document.getElementById('powerUsersListBtn').style.display = isPower ? 'inline-flex' : 'none';
+        document.getElementById('mandatoryConfigBtn').style.display = isPower ? 'inline-flex' : 'none';
+        document.getElementById('onboardingConfigBtn').style.display = isPower ? 'inline-flex' : 'none';
+        document.getElementById('logoUploadBtn').style.display = isPower ? 'inline-flex' : 'none';
       }
     }
 
@@ -973,16 +1109,17 @@
 
     function toggleBookmark(id) {
       if (bookmarkedIds.has(id)) bookmarkedIds.delete(id); else bookmarkedIds.add(id);
-      localStorage.setItem('user_private_bookmarks_v20', JSON.stringify(Array.from(bookmarkedIds)));
+      localStorage.setItem('user_private_bookmarks_v21', JSON.stringify(Array.from(bookmarkedIds)));
       renderCurrentActiveTab();
     }
 
     function toggleTopicCompletion(resId, e) {
       if (e) e.stopPropagation();
-      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v20') || '[]'));
+      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v21') || '[]'));
       if (completedSet.has(resId)) completedSet.delete(resId);
       else completedSet.add(resId);
-      localStorage.setItem('user_completed_topics_v20', JSON.stringify(Array.from(completedSet)));
+      localStorage.setItem('user_completed_topics_v21', JSON.stringify(Array.from(completedSet)));
+      syncUserAnalyticsToBackend();
       renderLearningHub();
     }
 
@@ -998,6 +1135,7 @@
           docDataset = [...baseDocDataset, ...globalCustomDocs];
 
           syncDropdownOptions();
+          populateMandatorySelect();
           renderCurrentActiveTab();
           checkSameDayReleases();
         }
@@ -1025,7 +1163,6 @@
       document.getElementById(tabId).classList.add('active');
       if (el) el.classList.add('active');
 
-      // Update Target Hub Dropdown to match Tab
       const targetHubSelect = document.getElementById('targetHub');
       if (tabId === 'quickLinksTab') targetHubSelect.value = 'quick';
       else if (tabId === 'learningHubTab') targetHubSelect.value = 'learning';
@@ -1039,6 +1176,11 @@
       return currentUser && powerUsers.has(currentUser.toLowerCase().trim()) && isPowerUserViewMode;
     }
 
+    function isUserRestrictedNewJoiner() {
+      if (!currentUser) return false;
+      return joinersData[currentUser.toLowerCase().trim()] === true;
+    }
+
     function renderQuickLinksHub() {
       const grid = document.getElementById('quickLinksGrid');
       let filtered = quickDataset.filter(item => filterOnlyBookmarks ? bookmarkedIds.has(item.id) : true);
@@ -1046,7 +1188,7 @@
       const activeBookmarksCount = quickDataset.filter(d => bookmarkedIds.has(d.id)).length;
       document.getElementById('kpiBookmarks').textContent = activeBookmarksCount;
 
-      grid.innerHTML = filtered.map((item, idx) => {
+      grid.innerHTML = filtered.map(item => {
         const isBookmarked = bookmarkedIds.has(item.id);
         return `
           <article class="resource-card" style="border-top: 3px solid var(--google-blue);">
@@ -1061,15 +1203,13 @@
               <p class="card-desc">${item.description}</p>
             </div>
             <div class="card-actions">
-              <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+              <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${item.category}', '${item.name}')">
                 <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
               </a>
               ${isPowerUserActive() ? `
-                <div class="action-icons">
-                  <button class="action-btn" onclick="executeDeleteItem('quick', '${item.link}')" title="Delete Quick Link">
-                    <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
-                  </button>
-                </div>
+                <button class="action-btn" onclick="executeDeleteItem('quick', '${item.link}')" title="Delete Quick Link">
+                  <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
+                </button>
               ` : ''}
             </div>
           </article>
@@ -1079,9 +1219,13 @@
 
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
-      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v20') || '[]'));
+      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v21') || '[]'));
+      let isRestricted = isUserRestrictedNewJoiner();
 
       let filtered = dataset.filter(res => {
+        const isMandatory = !!mandatoryData[res.id];
+        if (isRestricted && !isMandatory && !completedSet.has(res.id)) return false;
+
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery) || (res.description && res.description.toLowerCase().includes(searchQuery));
         const matchesBookmark = filterOnlyBookmarks ? bookmarkedIds.has(res.id) : true;
@@ -1089,7 +1233,8 @@
       });
 
       const sortMode = document.getElementById('learningSortSelect').value;
-      if (sortMode === 'title') filtered.sort((a,b) => a.name.localeCompare(b.name));
+      if (sortMode === 'title_asc') filtered.sort((a,b) => a.name.localeCompare(b.name));
+      else if (sortMode === 'title_desc') filtered.sort((a,b) => b.name.localeCompare(a.name));
       else if (sortMode === 'category') filtered.sort((a,b) => a.category.localeCompare(b.category));
       else if (sortMode === 'date') filtered.sort((a,b) => (b.releaseDate || '').localeCompare(a.releaseDate || ''));
       else {
@@ -1114,8 +1259,10 @@
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = completedSet.has(res.id);
         const isNew = res.releaseDate === todayStr;
+        const dueDate = mandatoryData[res.id];
+
         return `
-          <article class="resource-card">
+          <article class="resource-card ${dueDate ? 'mandatory-card' : ''}">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">${res.category}</span>
@@ -1130,14 +1277,18 @@
                   </button>
                 </div>
               </div>
-              <h3 class="card-title">${res.name} ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}</h3>
+              <h3 class="card-title">
+                ${res.name} 
+                ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}
+                ${dueDate ? `<span class="mandatory-tag-pill" title="Due: ${dueDate}">DUE: ${dueDate}</span>` : ''}
+              </h3>
               <p class="card-desc">${res.description || 'Comprehensive learning module.'}</p>
             </div>
             <div class="card-actions">
               <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
                 ${isCompleted ? '✓ Completed' : 'Pending'}
               </span>
-              <a href="${res.link}" target="_blank" class="link-btn"><span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+              <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
               ${isPowerUserActive() ? `
                 <button class="action-btn" onclick="executeDeleteItem('learning', '${res.link}')" title="Delete Resource">
                   <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
@@ -1154,6 +1305,8 @@
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = completedSet.has(res.id);
         const isNew = res.releaseDate === todayStr;
+        const dueDate = mandatoryData[res.id];
+
         return `
           <tr>
             <td style="text-align:center;">
@@ -1161,7 +1314,12 @@
                 <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
               </button>
             </td>
-            <td><strong>${res.name}</strong> ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}<br><span style="font-size:0.72rem; color:var(--text-secondary);">${res.category}</span></td>
+            <td>
+              <strong>${res.name}</strong> 
+              ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}
+              ${dueDate ? `<span class="mandatory-tag-pill">DUE: ${dueDate}</span>` : ''}
+              <br><span style="font-size:0.72rem; color:var(--text-secondary);">${res.category}</span>
+            </td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${res.description || 'N/A'}</td>
             <td style="text-align:center;">
               <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)">
@@ -1171,7 +1329,7 @@
               </button>
             </td>
             <td style="text-align:right;">
-              <a href="${res.link}" target="_blank" class="link-btn"><span>Open</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+              <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Open</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
               ${isPowerUserActive() ? `
                 <button class="action-btn" onclick="executeDeleteItem('learning', '${res.link}')" title="Delete Resource">
                   <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
@@ -1193,8 +1351,8 @@
       });
 
       const sortMode = document.getElementById('docSortSelect').value;
-      if (sortMode === 'package') filtered.sort((a,b) => a.pkg.localeCompare(b.pkg));
-      else if (sortMode === 'type') filtered.sort((a,b) => a.type.localeCompare(b.type));
+      if (sortMode === 'package_asc') filtered.sort((a,b) => a.pkg.localeCompare(b.pkg));
+      else if (sortMode === 'package_desc') filtered.sort((a,b) => b.pkg.localeCompare(a.pkg));
       else if (sortMode === 'date') filtered.sort((a,b) => (b.releaseDate || '').localeCompare(a.releaseDate || ''));
       else {
         filtered.sort((a, b) => {
@@ -1229,7 +1387,7 @@
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${doc.description || 'Technical Documentation.'}</td>
             <td style="text-align:right;">
-              <a href="${doc.link}" target="_blank" class="link-btn"><span>View Doc</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+              <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>View Doc</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
               ${isPowerUserActive() ? `
                 <button class="action-btn" onclick="executeDeleteItem('document', '${doc.link}')" title="Delete Doc">
                   <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
@@ -1259,7 +1417,7 @@
               <p class="card-desc">${doc.description || 'Technical Documentation.'}</p>
             </div>
             <div class="card-actions">
-              <a href="${doc.link}" target="_blank" class="link-btn"><span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+              <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
               ${isPowerUserActive() ? `
                 <button class="action-btn" onclick="executeDeleteItem('document', '${doc.link}')" title="Delete Doc">
                   <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
@@ -1289,9 +1447,96 @@
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
     function openProfileModal() { document.getElementById('profileModalOverlay').classList.add('open'); }
     function openPowerUserPrivilegesModal() { document.getElementById('powerPrivilegesModalOverlay').classList.add('open'); }
-    function openPowerUsersListModal() {
-      renderPowerUsersList();
-      document.getElementById('powerUsersListModalOverlay').classList.add('open');
+    function openPowerUsersListModal() { renderPowerUsersList(); document.getElementById('powerUsersListModalOverlay').classList.add('open'); }
+    function openMandatoryConfigModal() { renderMandatoryItemsList(); document.getElementById('mandatoryConfigModalOverlay').classList.add('open'); }
+    function openJoinersConfigModal() { renderJoinersList(); document.getElementById('joinersConfigModalOverlay').classList.add('open'); }
+    function openLogoUploadModal() { document.getElementById('logoUploadModalOverlay').classList.add('open'); }
+
+    function populateMandatorySelect() {
+      const select = document.getElementById('mandatoryModuleSelect');
+      select.innerHTML = dataset.map(d => `<option value="${d.id}">${d.name} (${d.category})</option>`).join('');
+    }
+
+    function saveMandatorySetting() {
+      const resId = document.getElementById('mandatoryModuleSelect').value;
+      const dueDate = document.getElementById('mandatoryDueDate').value;
+      if (resId && dueDate) {
+        mandatoryData[resId] = dueDate;
+        callGasJsonp({ action: 'SAVE_MANDATORY_MODULES', data: JSON.stringify(mandatoryData) }, function() {
+          renderMandatoryItemsList();
+          renderLearningHub();
+        });
+      }
+    }
+
+    function removeMandatorySetting(resId) {
+      delete mandatoryData[resId];
+      callGasJsonp({ action: 'SAVE_MANDATORY_MODULES', data: JSON.stringify(mandatoryData) }, function() {
+        renderMandatoryItemsList();
+        renderLearningHub();
+      });
+    }
+
+    function renderMandatoryItemsList() {
+      const container = document.getElementById('mandatoryItemsList');
+      const keys = Object.keys(mandatoryData);
+      container.innerHTML = keys.map(id => {
+        const found = dataset.find(d => d.id === id);
+        return `
+          <div class="power-user-chip">
+            <span><strong>${found ? found.name : id}</strong> - Due: ${mandatoryData[id]}</span>
+            <button type="button" onclick="removeMandatorySetting('${id}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
+              <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleAddJoiner(e) {
+      e.preventDefault();
+      const input = document.getElementById('newJoinerEmail').value.trim().toLowerCase();
+      if (input && input.includes('@maxval.com')) {
+        joinersData[input] = true;
+        document.getElementById('newJoinerEmail').value = '';
+        callGasJsonp({ action: 'SAVE_NEW_JOINERS_DATA', data: JSON.stringify(joinersData) }, function() {
+          renderJoinersList();
+        });
+      }
+    }
+
+    function toggleJoinerAccess(email) {
+      joinersData[email] = !joinersData[email];
+      callGasJsonp({ action: 'SAVE_NEW_JOINERS_DATA', data: JSON.stringify(joinersData) }, function() {
+        renderJoinersList();
+      });
+    }
+
+    function renderJoinersList() {
+      const container = document.getElementById('joinersListContainer');
+      const keys = Object.keys(joinersData);
+      container.innerHTML = keys.map(e => `
+        <div class="power-user-chip">
+          <span>${e} (${joinersData[e] ? 'Restricted' : 'Full Access'})</span>
+          <button type="button" onclick="toggleJoinerAccess('${e}')" style="background:none; border:none; color:var(--google-blue); cursor:pointer;">
+            <span class="material-icons-outlined" style="font-size:16px;">swap_horiz</span>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function saveCustomLogoUrl() {
+      const url = document.getElementById('customLogoUrlInput').value.trim();
+      callGasJsonp({ action: 'SAVE_LOGO_URL', logoUrl: url }, function() {
+        renderCustomLogo(url);
+        closeModal('logoUploadModalOverlay');
+      });
+    }
+
+    function resetDefaultLogo() {
+      callGasJsonp({ action: 'SAVE_LOGO_URL', logoUrl: '' }, function() {
+        location.reload();
+      });
     }
 
     function renderPowerUsersList() {
@@ -1366,26 +1611,77 @@
       });
     }
 
+    let globalAnalyticsCache = {};
+
     function openUserAnalyticsDashboard() {
       document.getElementById('userDashboardModalOverlay').classList.add('open');
       const tbody = document.getElementById('userAnalyticsTableBody');
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:1rem;">Loading user activity...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">Loading user activity sorted by recent login...</td></tr>`;
 
       callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(data) {
-        let users = (data && data.users) ? data.users : {};
-        let userKeys = Object.keys(users);
+        globalAnalyticsCache = (data && data.users) ? data.users : {};
+        let userKeys = Object.keys(globalAnalyticsCache);
+
+        // SORT BY RECENT LOGIN FIRST
+        userKeys.sort((a, b) => new Date(globalAnalyticsCache[b].lastLogin || 0) - new Date(globalAnalyticsCache[a].lastLogin || 0));
+
         if (userKeys.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:1rem;">No analytics recorded yet.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">No analytics recorded yet.</td></tr>`;
           return;
         }
-        tbody.innerHTML = userKeys.map(u => `
-          <tr>
-            <td><strong>${u}</strong></td>
-            <td>${users[u].lastLogin || 'N/A'}</td>
-            <td>${users[u].completedTopics ? users[u].completedTopics.length : 0} Completed</td>
-            <td>${users[u].seenDocs ? users[u].seenDocs.length : 0} Viewed</td>
-          </tr>
-        `).join('');
+
+        tbody.innerHTML = userKeys.map(u => {
+          let record = globalAnalyticsCache[u];
+          let recentDoc = (record.seenDocs && record.seenDocs.length > 0) ? `${record.seenDocs[0].pkg} - ${record.seenDocs[0].type}` : 'None';
+          return `
+            <tr>
+              <td><strong>${u}</strong></td>
+              <td>${record.lastLogin || 'N/A'}</td>
+              <td><span style="color:var(--google-green); font-weight:500;">${record.completedTopics ? record.completedTopics.length : 0} Completed</span></td>
+              <td style="font-size:0.78rem; color:var(--text-secondary);">${recentDoc}</td>
+              <td style="text-align:right;">
+                <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="openDrilldownModal('${u}')">Details</button>
+                <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem; color:var(--google-red);" onclick="sendReminderEmail('${u}')">Reminder</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      });
+    }
+
+    function openDrilldownModal(email) {
+      const u = globalAnalyticsCache[email] || { completedTopics: [], seenDocs: [] };
+      document.getElementById('drilldownUserTitle').textContent = `User Progress Breakdown: ${email}`;
+
+      const completedIds = u.completedTopics || [];
+      const completedList = dataset.filter(d => completedIds.includes(d.id));
+      document.getElementById('drilldownCompletedList').innerHTML = completedList.length > 0 ?
+        completedList.map(item => `<li><span>${item.name} (${item.category})</span><span class="material-icons-outlined" style="color:var(--google-green); font-size:16px;">check_circle</span></li>`).join('') :
+        `<li><span style="color:var(--text-secondary);">No completed modules recorded.</span></li>`;
+
+      const mandatoryKeys = Object.keys(mandatoryData);
+      const pendingMandatory = mandatoryKeys.filter(k => !completedIds.includes(k));
+      document.getElementById('drilldownPendingList').innerHTML = pendingMandatory.length > 0 ?
+        pendingMandatory.map(k => {
+          let item = dataset.find(d => d.id === k);
+          return `<li><span>${item ? item.name : k} (Due: ${mandatoryData[k]})</span><span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">error_outline</span></li>`;
+        }).join('') : `<li><span style="color:var(--google-green);">All mandatory modules completed!</span></li>`;
+
+      const seenDocs = u.seenDocs || [];
+      document.getElementById('drilldownViewedList').innerHTML = seenDocs.length > 0 ?
+        seenDocs.map(doc => `<li><span>${doc.pkg} - ${doc.type}</span><span style="font-size:0.72rem; color:var(--text-secondary);">${doc.timestamp || ''}</span></li>`).join('') :
+        `<li><span style="color:var(--text-secondary);">No document history recorded.</span></li>`;
+
+      document.getElementById('userDetailBreakdownModalOverlay').classList.add('open');
+    }
+
+    function sendReminderEmail(email) {
+      let pendingKeys = Object.keys(mandatoryData);
+      let title = pendingKeys.length > 0 ? (dataset.find(d => d.id === pendingKeys[0]) || {}).name || 'Mandatory Learning' : 'Mandatory Module Review';
+      let dueDate = pendingKeys.length > 0 ? mandatoryData[pendingKeys[0]] : 'ASAP';
+
+      callGasJsonp({ action: 'SEND_MODULE_REMINDER', email: email, moduleTitle: title, dueDate: dueDate }, function(res) {
+        alert(res.success ? `Reminder notification dispatched to ${email}` : `Failed: ${res.error}`);
       });
     }
 
