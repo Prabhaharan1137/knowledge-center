@@ -311,7 +311,7 @@
 
     .new-tag-pill { background: var(--google-purple); color: #fff; font-size: 0.58rem; font-weight: 400; padding: 0.08rem 0.3rem; border-radius: 4px; text-transform: uppercase; margin-left: 0.25rem; }
     .mandatory-tag-pill { background: var(--google-red); color: #fff; font-size: 0.58rem; font-weight: 400; padding: 0.08rem 0.3rem; border-radius: 4px; margin-left: 0.25rem; }
-    .completion-status-tag { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.7rem; padding: 0.12rem 0.35rem; border-radius: 4px; font-weight: 400; }
+    .completion-status-tag { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; padding: 0.12rem 0.35rem; border-radius: 4px; font-weight: 400; }
     .completion-status-tag.completed { background: var(--google-green-light); color: var(--google-green); }
     .completion-status-tag.pending { background: var(--bg-body); color: var(--text-secondary); border: 1px solid var(--border-color); }
 
@@ -945,7 +945,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzmMYfeHSJlGONzjGOk1zGis5y9c-xvF7b7xQrxo-wkLdWT3d7mitDS1TUid7-aQ3gT/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzTi7he4x4NLVfip-zwL9iaXagLoFyYMbsaWWwqGFRsZFp-eTPA12YsYhI3b-raoZVu/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1302,7 +1302,6 @@
       if (dataUrl) {
         container.innerHTML = `<img src="${dataUrl}" class="custom-header-logo-img" id="customLogoImgElem" alt="Logo">`;
         
-        // Dynamic image brightness sampling to auto-adapt header theme
         const img = new Image();
         img.src = dataUrl;
         img.onload = function() {
@@ -2274,7 +2273,7 @@
               <td style="font-size:0.78rem; color:var(--text-secondary);">${recentDoc}</td>
               <td style="text-align:right;">
                 <button type="button" class="action-btn" onclick="openDrilldownModal('${u}')" title="Details"><span class="material-icons-outlined" style="font-size:18px;">visibility</span></button>
-                <button type="button" class="action-btn" onclick="sendReminderEmail('${u}')" title="Send Reminder"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">notifications_active</span></button>
+                <button type="button" class="action-btn" onclick="sendTargetedReminderSingle('${u}')" title="Send Targeted Reminder to Unreviewed User"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">notifications_active</span></button>
                 <button type="button" class="action-btn" onclick="deleteUserAnalyticsRecord('${u}')" title="Delete User"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-red);">delete</span></button>
               </td>
             </tr>
@@ -2309,13 +2308,21 @@
       document.getElementById('userDetailBreakdownModalOverlay').classList.add('open');
     }
 
-    function sendReminderEmail(email) {
-      let pendingKeys = Object.keys(mandatoryData);
-      let title = pendingKeys.length > 0 ? (dataset.find(d => d.id === pendingKeys[0]) || {}).name || 'Mandatory Learning' : 'Mandatory Module Review';
-      let dueDate = pendingKeys.length > 0 ? mandatoryData[pendingKeys[0]] : 'ASAP';
+    function sendTargetedReminderSingle(email) {
+      let u = globalAnalyticsCache[email] || { completedTopics: [] };
+      let completedIds = u.completedTopics || [];
+      let pendingKeys = Object.keys(mandatoryData).filter(k => !completedIds.includes(k));
 
-      callGasJsonp({ action: 'SEND_MODULE_REMINDER', email: email, moduleTitle: title, dueDate: dueDate }, function(res) {
-        alert(res.success ? `Reminder notification dispatched to ${email}` : `Failed: ${res.error}`);
+      if (pendingKeys.length === 0) {
+        alert(`${email} has completed all assigned mandatory modules. No reminder needed.`);
+        return;
+      }
+
+      let title = (dataset.find(d => d.id === pendingKeys[0]) || {}).name || 'Assigned Mandatory Module';
+      let dueDate = mandatoryData[pendingKeys[0]] || 'ASAP';
+
+      callGasJsonp({ action: 'SEND_TARGETED_REMINDER', emails: email, moduleTitle: title, dueDate: dueDate }, function(res) {
+        alert(res.status === "SUCCESS" ? `Targeted reminder dispatched to uncompleted user: ${email}` : `Failed: ${res.error}`);
       });
     }
 
