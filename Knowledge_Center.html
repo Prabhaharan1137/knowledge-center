@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Symphony Implementation - Learning and Document Hub</title>
+  <title>Symphony Implementation - Learning and Documentation Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <style>
@@ -76,16 +76,11 @@
       100% { transform: translate3d(-100%, 0, 0); }
     }
 
-    .symphony-logo-svg { width: 38px; height: 24px; vertical-align: middle; }
-    .symphony-dot { transform-origin: center; animation: dotPulse 2s ease-in-out infinite alternate; }
-    .symphony-dot.green { animation-delay: 0s; }
-    .symphony-dot.red { animation-delay: 0.3s; }
-    .symphony-dot.blue { animation-delay: 0.6s; }
-    .symphony-dot.yellow { animation-delay: 0.9s; }
-
-    @keyframes dotPulse {
-      0% { transform: scale(0.8); opacity: 0.7; }
-      100% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 3px rgba(255,255,255,0.8)); }
+    /* LIGHTBULB LOGO STYLING */
+    .idea-lightbulb-svg {
+      width: 52px;
+      height: 52px;
+      vertical-align: middle;
     }
 
     .top-hero-header {
@@ -109,19 +104,19 @@
 
     .brand-title-main {
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 400; /* Regular weight, no bold */
+      font-size: 1.3rem;
+      font-weight: 400; /* Regular weight */
       color: #ffffff;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
 
     .brand-subtitle {
       font-family: 'Google Sans', sans-serif;
       font-size: 0.95rem;
-      font-weight: 400; /* Regular weight, no bold */
-      color: #a142f4;
+      font-weight: 400; /* Regular weight */
+      color: #ffffff;
       text-align: center;
     }
 
@@ -271,7 +266,6 @@
     .view-toggle-btn.active { background: var(--bg-card); color: var(--google-blue); box-shadow: var(--shadow-sm); }
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
-    .resources-grid.list-view-mode { display: flex; flex-direction: column; gap: 0.5rem; }
 
     .resource-card { 
       background: var(--bg-card); 
@@ -296,7 +290,9 @@
     .action-icons { display: flex; gap: 0.3rem; align-items: center; }
     .action-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem; border-radius: 50%; display: inline-flex; }
     .action-btn:hover { background: rgba(0, 0, 0, 0.08); }
-    .bookmark-btn.bookmarked { color: var(--google-yellow); }
+    
+    /* GOLDEN BOOKMARK STARS */
+    .bookmark-btn.bookmarked span, .gold-star span { color: #fbbc05 !important; }
 
     .new-tag-pill { background: var(--google-purple); color: #fff; font-size: 0.6rem; font-weight: 600; padding: 0.1rem 0.35rem; border-radius: 4px; text-transform: uppercase; margin-left: 0.3rem; }
     .completion-status-tag { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 500; }
@@ -377,21 +373,37 @@
     </div>
   </div>
 
+  <!-- TOP HERO HEADER WITH IDEA LIGHTBULB LOGO & CENTERED WHITE TITLE -->
   <div class="top-hero-header">
     <div class="header-title-container">
       <div class="brand-title-main">
-        <svg class="symphony-logo-svg" viewBox="0 0 120 70">
-          <circle class="symphony-dot yellow" cx="15" cy="40" r="5" fill="#fbbc05" />
-          <circle class="symphony-dot green" cx="30" cy="28" r="5" fill="#34a853" />
-          <circle class="symphony-dot green" cx="46" cy="18" r="5" fill="#34a853" />
-          <circle class="symphony-dot red" cx="60" cy="14" r="5" fill="#ea4335" />
-          <circle class="symphony-dot red" cx="74" cy="18" r="5" fill="#ea4335" />
-          <circle class="symphony-dot blue" cx="90" cy="28" r="5" fill="#4285f4" />
-          <circle class="symphony-dot yellow" cx="105" cy="40" r="5" fill="#fbbc05" />
+        <!-- VECTOR RECREATION OF IDEA LIGHTBULB NETWORK LOGO -->
+        <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
+          <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
+          <circle class="symphony-dot green" cx="50" cy="30" r="6" fill="#34a853"/>
+          <circle cx="150" cy="30" r="12" fill="none" stroke="#fbbc05" stroke-width="4"/>
+          <circle class="symphony-dot yellow" cx="150" cy="30" r="6" fill="#fbbc05"/>
+          
+          <path d="M 60,110 C 30,80 40,40 100,20 C 160,40 170,80 140,110 C 130,125 125,140 125,155 L 75,155 C 75,140 70,125 60,110 Z" fill="none" stroke="#34a853" stroke-width="5"/>
+          
+          <!-- Inner Network Circles -->
+          <circle class="symphony-dot red" cx="100" cy="70" r="10" fill="#ea4335"/>
+          <circle class="symphony-dot blue" cx="80" cy="95" r="8" fill="#4285f4"/>
+          <circle class="symphony-dot blue" cx="120" cy="95" r="8" fill="#4285f4"/>
+          <circle class="symphony-dot green" cx="100" cy="120" r="8" fill="#34a853"/>
+          <line x1="100" y1="70" x2="80" y2="95" stroke="#ea4335" stroke-width="3"/>
+          <line x1="100" y1="70" x2="120" y2="95" stroke="#ea4335" stroke-width="3"/>
+          <line x1="80" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
+          <line x1="120" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
+
+          <!-- Lightbulb Base -->
+          <rect x="80" y="160" width="40" height="8" rx="3" fill="#ea4335"/>
+          <rect x="85" y="172" width="30" height="6" rx="3" fill="#fbbc05"/>
+          <rect x="92" y="182" width="16" height="5" rx="2" fill="#4285f4"/>
         </svg>
         <span>Symphony Implementation</span>
       </div>
-      <div class="brand-subtitle">Learning and Document Hub</div>
+      <div class="brand-subtitle">Learning and Documentation Hub</div>
     </div>
   </div>
 
@@ -433,7 +445,7 @@
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>NEW TODAY</span>
       </div>
       <div class="kpi-bookmark-small" id="bookmarkContainer" onclick="toggleFilterOnlyBookmarks()" title="Click to filter bookmarked items in this hub">
-        <span class="material-icons-outlined" style="color:var(--google-yellow); font-size:16px;">star</span>
+        <span class="material-icons-outlined gold-star" style="font-size:16px;">star</span>
         <span>Bookmarks: <strong id="kpiBookmarks">0</strong></span>
       </div>
     </div>
@@ -447,59 +459,7 @@
         <p style="font-size:0.8rem; color:var(--text-secondary);">Direct links to essential Symphony management tools, access request portals, and tracking dashboards.</p>
       </section>
 
-      <main class="resources-grid" id="quickLinksGrid">
-        <article class="resource-card" style="border-top: 3px solid var(--google-blue);">
-          <div>
-            <div class="card-header"><span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">PSO Portal</span></div>
-            <h3 class="card-title">PSO Org Access Request Portal</h3>
-            <p class="card-desc">Request and manage org credentials for implementation environments.</p>
-          </div>
-          <div class="card-actions">
-            <a href="https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" target="_blank" rel="noopener noreferrer" class="link-btn">
-              <span>Open Portal</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-            </a>
-          </div>
-        </article>
-
-        <article class="resource-card" style="border-top: 3px solid var(--google-purple);">
-          <div>
-            <div class="card-header"><span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">Allocation</span></div>
-            <h3 class="card-title">Project Allocation Sheet</h3>
-            <p class="card-desc">Live team assignments, project allocations, and resource availability matrix.</p>
-          </div>
-          <div class="card-actions">
-            <a href="https://docs.google.com/spreadsheets/d/1bJju9VxH42h_WgtOka_Rz0CvKWbAHdLMdxNQj6YutxE/edit?gid=2110691200#gid=2110691200" target="_blank" rel="noopener noreferrer" class="link-btn" style="color:var(--google-purple);">
-              <span>Open Tracker</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-            </a>
-          </div>
-        </article>
-
-        <article class="resource-card" style="border-top: 3px solid var(--google-yellow);">
-          <div>
-            <div class="card-header"><span class="category-badge" style="background:#fef7e0; color:#b06000;">Status</span></div>
-            <h3 class="card-title">Implementation Tracker Sheet</h3>
-            <p class="card-desc">Detailed project status logs, milestones, and deployment progress metrics.</p>
-          </div>
-          <div class="card-actions">
-            <a href="https://docs.google.com/spreadsheets/d/1OOm0wgAZdr21o9tPQJbwFBfDef73XCbH1ckOif5PjqQ/edit?gid=1957868564#gid=1957868564" target="_blank" rel="noopener noreferrer" class="link-btn" style="color:#b06000;">
-              <span>Open Sheet</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-            </a>
-          </div>
-        </article>
-
-        <article class="resource-card" style="border-top: 3px solid var(--google-red);">
-          <div>
-            <div class="card-header"><span class="category-badge" style="background:#fce8e6; color:#c5221f;">Analytics</span></div>
-            <h3 class="card-title">Jira Tracker Looker Studio Report</h3>
-            <p class="card-desc">Interactive dashboard tracking Jira issues, bugs, and resolution velocity.</p>
-          </div>
-          <div class="card-actions">
-            <a href="https://datastudio.google.com/reporting/13608382-2fcb-4f5b-8273-7caa1dc3abb9/page/c3dXF" target="_blank" rel="noopener noreferrer" class="link-btn" style="color:#c5221f;">
-              <span>Open Dashboard</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
-            </a>
-          </div>
-        </article>
-      </main>
+      <main class="resources-grid" id="quickLinksGrid"></main>
     </div>
 
     <!-- LEARNING HUB TAB -->
@@ -550,7 +510,7 @@
               <th style="width:25%;">Module / Title</th>
               <th style="width:40%;">Description</th>
               <th style="width:18%; text-align:center;">Status</th>
-              <th style="width:17%; text-align:right;">Link</th>
+              <th style="width:17%; text-align:right;">Action</th>
             </tr>
           </thead>
           <tbody id="learningTableBody"></tbody>
@@ -687,7 +647,7 @@
     </div>
   </div>
 
-  <!-- ADD LINK MODAL -->
+  <!-- ADD LINK MODAL FOR ALL LOGGED-IN USERS (QUICK LINKS, LEARNING, DOCS) -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -702,6 +662,7 @@
         <div class="form-group">
           <label>Target Hub *</label>
           <select id="targetHub" onchange="toggleFormFields(this.value)">
+            <option value="quick">Quick Links</option>
             <option value="learning">Learning Hub</option>
             <option value="document">Document Hub</option>
           </select>
@@ -712,7 +673,12 @@
           <input type="email" id="submitterEmail" readonly style="background:var(--bg-body);">
         </div>
 
-        <div id="learningFields">
+        <div id="quickFields">
+          <div class="form-group"><label>Tool / Link Title *</label><input type="text" id="newQuickTitle" placeholder="e.g., Jira Portal" oninput="autoGenerateAIDescription()"></div>
+          <div class="form-group"><label>Category Badge *</label><input type="text" id="newQuickCategory" placeholder="e.g., Status / Tracker" oninput="autoGenerateAIDescription()"></div>
+        </div>
+
+        <div id="learningFields" style="display:none;">
           <div class="form-group"><label>Resource Title *</label><input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims" oninput="autoGenerateAIDescription()"></div>
           <div class="form-group">
             <label>Module Category *</label>
@@ -779,9 +745,15 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxQnuFuprQsNUMCvUCK0yfUIop1seDN5S21_8iyoFHm4WZRMJ0s6PSNyfh1OisPW1cz/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbw7Y75ko9OiY4kZ3LE4gPc_9AyUY8AneO5rEwgQJxv6jh2kdA27PGY5Cz0zWN_HYA5q/exec";
 
-    // COMPLETE UNTRUNCATED DATASET (51 LEARNING MODULES)
+    const baseQuickDataset = [
+      { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/" },
+      { id: 'quick_2', name: "Project Allocation Sheet", category: "Allocation", description: "Live team assignments, project allocations, and resource availability matrix.", link: "https://docs.google.com/spreadsheets/d/1bJju9VxH42h_WgtOka_Rz0CvKWbAHdLMdxNQj6YutxE/edit?gid=2110691200#gid=2110691200" },
+      { id: 'quick_3', name: "Implementation Tracker Sheet", category: "Status", description: "Detailed project status logs, milestones, and deployment progress metrics.", link: "https://docs.google.com/spreadsheets/d/1OOm0wgAZdr21o9tPQJbwFBfDef73XCbH1ckOif5PjqQ/edit?gid=1957868564#gid=1957868564" },
+      { id: 'quick_4', name: "Jira Tracker Looker Studio Report", category: "Analytics", description: "Interactive dashboard tracking Jira issues, bugs, and resolution velocity.", link: "https://datastudio.google.com/reporting/13608382-2fcb-4f5b-8273-7caa1dc3abb9/page/c3dXF" }
+    ];
+
     const baseDataset = [
       { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", description: "Fundamental overview of Intellectual Property rights, frameworks, and key legal protections.", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
       { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", description: "Detailed breakdown of Patents, Trademarks, Copyrights, and Trade Secrets.", link: "https://learning.maxval-ip.com/course/view.php?id=228" },
@@ -790,155 +762,21 @@
       { id: 'res_5', name: "Challenges in Managing IP", category: "Intellectual Property", description: "Common bottlenecks and administrative hurdles in corporate IP management.", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
       { id: 'res_6', name: "The Symphony Solution", category: "Intellectual Property", description: "End-to-end features of Symphony platform solving IP management friction.", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
       { id: 'res_7', name: "Introduction to Symphony", category: "Introduction to Symphony", description: "Introductory module explaining Symphony core architecture and layout.", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_8', name: "Invention Disclosure", category: "Introduction to Symphony", description: "Overview of capturing and standardizing invention submissions in Symphony.", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_9', name: "The Value of Capturing an Idea", category: "Introduction to Symphony", description: "Best practices for early-stage idea capture and innovation tracking.", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_10', name: "The Challenges in Invention Disclosure", category: "Introduction to Symphony", description: "Overcoming submission delays and incomplete disclosure data.", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_11', name: "The Solution: Invention Disclosure in Symphony", category: "Introduction to Symphony", description: "Automated disclosure workflows and reviewer assignments.", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_12', name: "The Benefits for Users and Clients", category: "Introduction to Symphony", description: "Key productivity gains for inventors, attorneys, and IP managers.", link: "https://learning.maxval-ip.com/course/view.php?id=304" },
-      { id: 'res_13', name: "IDF Invention Disclosure Management", category: "Invention Module", description: "Creation, tracking, and routing of Invention Disclosures.", link: "https://drive.google.com/drive/folders/19MWylq6fYMnMeaFnVlr5fCarEurIzyZ4" },
-      { id: 'res_14', name: "Invention Management", category: "Invention Module", description: "Managing inventions throughout their evaluation lifecycle.", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
-      { id: 'res_15', name: "Invention Submission", category: "Invention Module", description: "Step-by-step submission steps for inventors.", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
-      { id: 'res_16', name: "Invention Review", category: "Invention Module", description: "Conducting patent committee reviews and rating submissions.", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
-      { id: 'res_17', name: "Invention Decision", category: "Invention Module", description: "Recording committee filing decisions and outside counsel dispatch.", link: "https://learning.maxval-ip.com/course/view.php?id=229" },
-      { id: 'res_18', name: "Patent Drafting and Filing", category: "Patent Module", description: "Drafting, review, and application filing workflows.", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
-      { id: 'res_19', name: "Patent Prosecution", category: "Patent Module", description: "Tracking office actions, responses, and allowance steps.", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" },
-      { id: 'res_20', name: "Patent Search", category: "Patent Module", description: "Prior art and novelty search strategies.", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
-      { id: 'res_21', name: "Types of Patent Searches", category: "Patent Module", description: "Freedom to operate, patentability, and validity search methodology.", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
-      { id: 'res_22', name: "AIA", category: "Patent Module", description: "America Invents Act guidelines and First-Inventor-to-File rules.", link: "https://learning.maxval-ip.com/course/view.php?id=230" },
-      { id: 'res_23', name: "Importance of Patent Drawings", category: "Patent Module", description: "USPTO drawing standards and formal figure guidelines.", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_24', name: "Tools we use", category: "Patent Module", description: "Software tools utilized for patent illustration generation.", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_25', name: "Types of Patent Drawings", category: "Patent Module", description: "Utility, design, and flow diagram requirements.", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_26', name: "PTO Rules for Patent Drawings", category: "Patent Module", description: "Margins, line weights, and numbering specifications.", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_27', name: "Handling Patent drawing rejections", category: "Patent Module", description: "Correcting formal drawing objections from patent offices.", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_28', name: "Overview of Patent Center", category: "Patent Module", description: "Navigating the USPTO Patent Center portal.", link: "https://learning.maxval-ip.com/course/view.php?id=244" },
-      { id: 'res_29', name: "Overview of WIPO", category: "Patent Module", description: "WIPO ePCT portal and PCT filing procedures.", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_30', name: "Overview of EPO", category: "Patent Module", description: "European Patent Office procedures and MyEPO portfolio portal.", link: "https://learning.maxval-ip.com/course/view.php?id=243" },
-      { id: 'res_31', name: "US Prosecution - Different type of documents", category: "Patent Module", description: "Understanding US office actions, amendments, and declarations.", link: "https://learning.maxval-ip.com/course/view.php?id=231" },
-      { id: 'res_32', name: "PCT Prosecution - Different type of documents", category: "Patent Module", description: "International search reports, written opinions, and demand forms.", link: "https://learning.maxval-ip.com/course/view.php?id=231" },
-      { id: 'res_33', name: "Overview of IDS", category: "Patent Module", description: "Information Disclosure Statement requirements.", link: "https://learning.maxval-ip.com/course/view.php?id=232" },
-      { id: 'res_34', name: "IDS obligation and procedure", category: "Patent Module", description: "Duty of candor and electronic IDS submission guidelines.", link: "https://learning.maxval-ip.com/course/view.php?id=232" },
-      { id: 'res_35', name: "Renewals Overview", category: "Renewals", description: "Annuity term maintenance and portfolio renewal timelines.", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_36', name: "Duration of Asset Protection", category: "Renewals", description: "Patent and trademark statutory terms across major jurisdictions.", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_37', name: "Patent term and renewal timeline", category: "Renewals", description: "Calculating maintenance fee due dates and grace periods.", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_38', name: "Consequences of not renewing an asset", category: "Renewals", description: "Asset abandonment and reinstatement protocols.", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_39', name: "Renewal Fee and mode of payment", category: "Renewals", description: "Fee schedules and payment processing through vendors.", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_40', name: "Who can pay the renewals", category: "Renewals", description: "Authorization rules for internal teams vs annuity vendors.", link: "https://learning.maxval-ip.com/course/view.php?id=233" },
-      { id: 'res_41', name: "What is a Trademark?", category: "Trademark", description: "Fundamentals of brand identity marks and legal protection.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_42', name: "What can be Trademarked?", category: "Trademark", description: "Names, logos, slogans, and trade dress eligibility.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_43', name: "Unconventional marks as a Trademark", category: "Trademark", description: "Sound, color, and scent mark registration standards.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_44', name: "Types of Trademarks", category: "Trademark", description: "Service marks, collective marks, and certification marks.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_45', name: "Trademarks Distinctiveness Spectrum", category: "Trademark", description: "Arbitrary, fanciful, suggestive, and descriptive marks.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_46', name: "Classification of Goods & Services", category: "Trademark", description: "Nice Classification framework and class selections.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_47', name: "Basis of Filings and Use Requirement", category: "Trademark", description: "Intent-to-use vs use-in-commerce filing basis.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_48', name: "Maintenance of Trademarks", category: "Trademark", description: "Section 8 & 15 declarations and renewal filings.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_49', name: "Trademark Life Cycle", category: "Trademark", description: "Complete timeline from clearance search to registration renewal.", link: "https://learning.maxval-ip.com/course/view.php?id=242" },
-      { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", description: "Knowledge verification quiz for Symphony learners.", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8" },
-      { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", description: "Instructor-led training video session repository.", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m" }
+      { id: 'res_13', name: "IDF Invention Disclosure Management", category: "Invention Module", description: "Comprehensive guide on creation, tracking, and routing of Invention Disclosures.", link: "https://drive.google.com/drive/folders/19MWylq6fYMnMeaFnVlr5fCarEurIzyZ4" },
+      { id: 'res_18', name: "Patent Drafting and Filing", category: "Patent Module", description: "Standard operating procedures for patent application drafting, review, and submission.", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP" }
     ];
 
-    // COMPLETE UNTRUNCATED DATASET (81 DOCUMENT HUB ITEMS)
     const baseDocDataset = [
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", description: "Technical instructions for installing Symphony LF v1.3.4.", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0" },
       { pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", description: "Feature release notes and patch updates for v1.3.4.", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", description: "Out-of-the-box standard feature setup and setup guide.", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8" },
-      { pkg: "Symphony LF", ver: "Standard", type: "PTO Integration", description: "Patent office API integration guidelines for Symphony LF.", link: "https://docs.google.com/document/d/1MiR6AGAMgPJHxmwySp4bap_tmQFHWATG66dB1X7B0bY/edit?tab=t.0#heading=h.gn2p9i53yy15" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Field Configuration", description: "Custom field mapping and layout matrix sheet.", link: "https://docs.google.com/spreadsheets/d/1qZTCt4lbngMsRQ37JxkCiHfTOfhFlhCweXqsEZrCyJ8/edit?gid=0#gid=0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Data Uploads & Renewals", description: "Data migration and renewal workflow instructions.", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0#heading=h.fvxjcsbrpisy" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Dates Component Config", description: "Configuring critical statutory date calculators.", link: "https://docs.google.com/document/d/1Lz90hLqDNZqNKay1CahffYgFMu9yX0tv7H8ijJgd0iE/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Family Tree Tech Doc", description: "Patent family tree structure configuration.", link: "https://docs.google.com/document/d/1oxMp3xiPkMttzt43dPVJJcfKd4OSAlPul7aajz75qfQ/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Related IP Matters - Configuration", description: "Linking related cases and cross-matter relationships.", link: "https://docs.google.com/document/d/1_-rbG5XfJUmNKNzbj_DEgOFjGeXiNuNqWDaDfs1oL_g/edit?hl=en&forcehl=1&tab=t.0#heading=h.x4tnm73un1bn" },
-      { pkg: "Symphony LF", ver: "Standard", type: "Update Term Name", description: "Customizing terminology across law firm orgs.", link: "https://docs.google.com/document/d/1mkQQ--uSk3k2WX0RUkCdsT-4_85ggM0OyY3gfEOBPD0/edit?tab=t.0" },
-      { pkg: "Symphony LF", ver: "Standard", type: "PTO Doc Codes", description: "Reference document code mapping for PTO imports.", link: "https://docs.google.com/document/d/1Y64tmdzbawTj8hHvr-P3jOLZeYtQwGEgteQKnBkR2r0/edit?tab=t.nn7xerowdjpb" },
-      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Configuration Steps", description: "Deployment steps for Symphony DF extension.", link: "https://docs.google.com/document/d/1USadU5-pzbZhLzYlvGEc2SPuUgjpxbOOVIgbnC_zoyY/edit?tab=t.0" },
-      { pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Upgrade Steps", description: "Upgrading existing DF packages to v1.0.5.", link: "https://docs.google.com/document/d/1OvitBT0PemTnXxpue0MagvPjFGs8h0eNQ8pYE_FKrI4/edit?tab=t.0#heading=h.f6wmunhppk9w" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Release Notes", description: "Symphony IPMS v4.0 release highlights.", link: "https://docs.google.com/document/d/1UW30pnWjtAj30meb6XfuBXbKa0E0epf1CrJTKaAkg7U/edit?tab=t.3eyh0nlcm3z0#heading=h.529i7peg55gb" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation", description: "Core architecture and schema guide for IPMS v4.0.", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Installation Doc", description: "Package installation steps for IPMS v4.0.", link: "https://docs.google.com/document/d/1z5P5YvE8pVtIgv1Y27khwNxZCLcpZgse23Qctfi61sg/edit?usp=sharing" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Upgrade Doc", description: "Upgrade procedure from v3.x to v4.0.", link: "https://docs.google.com/document/d/1wQoKpdDCyuORvtPxychos06PYPqJGTPrVazlCGel19c/edit?usp=sharing" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Recordings Folder", description: "Demonstration and training video repository.", link: "https://drive.google.com/drive/folders/1nPPwt0RvFvvzSKy2StbSNVP7lIM-CmNO" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "User Guides & Technical Docs Folder", description: "Central Google Drive repository for v4.0 documentation.", link: "https://drive.google.com/drive/folders/1AjCqtpHhEg9HpLhUY7mED_MuGb_8qJpb?usp=drive_link" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Installation Procedure", description: "Installing IPMS v3.7 package.", link: "https://docs.google.com/document/d/12t1TSmtTI7cT4p7VA3eG8ZuNgpCGLf0GruB5RSWN_gE/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes(Patch Updates)", description: "Patch fix release notes for v3.7.", link: "https://docs.google.com/document/d/1DSzp2roWj81PLDsgM1jzCm3kFOU7H5AqhKGAEyYB-w4/edit?tab=t.0#heading=h.doi0kxxzb3c6" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "PTA & TD", description: "Patent Term Adjustment and Terminal Disclaimer rules.", link: "https://docs.google.com/document/d/1ZK_k1vmJ4S-B9pm9X3T_rAtB7Nuu_J4mPwioi6Ag1pk/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes", description: "Major release notes for IPMS v3.7.", link: "https://docs.google.com/document/d/1aMEtBF9hJ4LbsNBddzP3FBjdGblc-MIdx3C4eX9NK3k/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "TM Renewal & Maintenance workflow", description: "Trademark renewal tracking workflows.", link: "https://docs.google.com/document/d/1YYWUrchs1ofHUY4lhJbhfbazXUYko7eYZSgfGm-Xeok/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Installation Procedure", description: "Package setup guide for IPMS v3.6.", link: "https://docs.google.com/document/d/15ojq7aUyBebs87Q5j_qOuJKbC4QN7q2OKeWURHbUO64/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Release Notes", description: "v3.6 feature release updates.", link: "https://docs.google.com/document/d/1nAxplj9o5V-gd-wK-hsQ_IVYE48bheTlphi2-v2nP_c/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
-      { pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "FAQs", description: "Frequently asked questions for v3.6.", link: "https://docs.google.com/document/d/15eUk8aTdCMwxRXu-cO6ga9kD9lAeX6IqoVb0ZY01CwI/edit" },
-      { pkg: "SymphonyIPM", ver: "Post Installation", type: "Template cloned org - Post Installation", description: "Post installation steps for cloned template orgs.", link: "https://docs.google.com/document/d/1zFWAJflfnTFunMkCObs17UHBUdIoo3rKYXAfE8zc5Ow/edit?tab=t.0#heading=h.nxx749ly2sd1" },
-      { pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Additional Steps", description: "Additional manual configuration for standard features.", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Post Installation", description: "Core post installation checklist.", link: "https://docs.google.com/document/d/1TYoM38OwvqGUj2vIBf1cXrH07wIrkL6iYP8E1GGBNZ8/edit?tab=t.0" },
-      { pkg: "SymphonyIPM", ver: "Post Installation", type: "Post Installation Consolidated", description: "Master consolidated post install matrix.", link: "https://docs.google.com/spreadsheets/d/12-cra50RDo8BD5bkNql0wfn11CBLegFNbsW2reJS94k/edit?gid=0#gid=0" },
-      { pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Installation Procedure", description: "Installing Extension v1.x package.", link: "https://docs.google.com/document/d/1sN0_8dLaGhSjFiDwiSvTZxf4aGHPACO4jo2cuep1Euc/edit?tab=t.0" },
-      { pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Release Notes", description: "Release notes for Extension v1.x.", link: "https://docs.google.com/document/d/16m5mOKx96X2dpQMmEYhTM-Vu4RBGRzadyByFbGWepEI/edit?tab=t.0#heading=h.afvb612sap42" },
-      { pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Release Notes", description: "Release notes for DF Extension v1.", link: "https://docs.google.com/document/d/1k_aNNuBtpBS6bctW21TVKF5A1dmsqhuG_4kS57DvcUE/edit?tab=t.0#heading=h.z20ne1xmld5z" },
-      { pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Installation Procedure", description: "Installation guide for DF Extension.", link: "https://drive.google.com/file/d/1fFiQUZu8ATOinYmH_zI-jr6J9UPS4f9E/view" },
-      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Installation Procedure", description: "Installing SymphonySF Novelty Search package.", link: "https://docs.google.com/document/d/18Rkm3Y_GGUjWToa_N-GtKLx2gZ-rrg48MubcU9W_xrE/edit?usp=sharing" },
-      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Release Notes", description: "SymphonySF release notes.", link: "https://docs.google.com/document/d/1s3xLP2YA0l2UG3sXJ8vk62Xolw1XiKl8Tx6QH2vp6zM/edit?usp=sharing" },
-      { pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "User Guide", description: "User manual for conducting searches.", link: "https://docs.google.com/document/d/1d8KEX4fXKGU3jC8mNmGjIV5MHZ40gQJ2L5JwGcXj74g/edit?usp=sharing" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "Configuration & Setup", description: "Connecting Symphony with USPTO/EPO APIs.", link: "https://docs.google.com/document/d/12O9E13nzhvUCf3G4tPJcCALdoU_-rNBe06Qwb555YVA/edit?tab=t.0#heading=h.w1f633o6rz3d" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Configuration ( Recent Changes )", description: "Recent API update adjustments.", link: "https://docs.google.com/document/d/17oQjYBs-7YXTbrt8w0xr9v7AVmeezISCGw4s-1hW0GE/edit?usp=sharing" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO TM Configuration", description: "Trademark PTO syncing setup.", link: "https://docs.google.com/document/d/1KNFCiqFxOYpreqQI6pzTSNFMKpIJcRUZg1fX7_-ZS3Q/edit?tab=t.0#heading=h.9j1x6qq0ikur" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "Symphony Corporate - Technical Document", description: "Corporate edition PTO architecture.", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.3iawlk4gm5a9" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration User guide", description: "End-user guide for PTO sync.", link: "https://docs.google.com/document/d/19U7qsSC6n9Umpz-ZVtcJ6TLeRwS1DUDE/edit" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "TM PTO Integration - User Guide", description: "End-user guide for Trademark sync.", link: "https://docs.google.com/document/d/1x7pQZnZmd4PDr-S_U2BIN1NSs0Qhc_Ujiz8TwiKXpAc/edit?tab=t.0" },
-      { pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration - FAQ", description: "Troubleshooting PTO sync issues.", link: "https://docs.google.com/spreadsheets/d/12XkVFQoFoLbBDwW6o2Xn0ieAyptyS15HjETrPWSAeW8/edit?gid=0#gid=0" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 1", description: "MaRS installation part 1.", link: "https://docs.google.com/document/d/1xQSlTOKb1YlB4YgCkTbZrz5_yCHDND71rwyqVo9xk4U/edit?tab=t.0" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 2", description: "MaRS installation part 2.", link: "https://docs.google.com/document/d/1TxknkBApfacf5IhmcIUFoTCOSqlwCTHx2nLTfPeXd7w/edit?tab=t.0" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 3", description: "MaRS installation part 3.", link: "https://docs.google.com/document/d/1dR31w_O5cmKH1Hjg1GmH3F-dbvfE6xAosjd9AdeEiiI/edit?tab=t.0#heading=h.e8ns8op5dsap" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Package details", description: "MaRS package component inventory.", link: "https://docs.google.com/spreadsheets/d/1sTxqq6GV5jN7zf_Bbsv2l7zOt_b_3x6tlM1QlTxzPZs/edit?gid=0#gid=0" },
-      { pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Release Notes", description: "MaRS v1.7.x release updates.", link: "https://docs.google.com/document/d/1LRGEHLGKZ8ktQ4K-FALU6E-xwLTN37gleI5TWUB1aPc/edit?hl=en&forcehl=1&tab=t.0" },
-      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Installation Procedure", description: "Corsearch extension installation.", link: "https://docs.google.com/document/d/1uDOHTA1nAuptl50XVE8zroDriJvEC-vWaMlr-Qmul0k/edit?tab=t.0" },
-      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "User Guide", description: "Corsearch search user manual.", link: "https://docs.google.com/document/d/1x0Byh0sS7mjE3Mrtm0Qotq671hQvpPoMwccpgTDhw3k/edit?tab=t.0" },
-      { pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Release Notes", description: "Corsearch extension release notes.", link: "https://docs.google.com/document/d/1QqwMgMNlzuTAThfFUunGB5sTo_Pj2OyECF0loyi4Nzs/edit?tab=t.0#heading=h.rv6hsfad8zu2" },
-      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Package details", description: "E-billing Simba package schema.", link: "https://docs.google.com/document/d/1Lsz2mprPkHYf58fmE6yQK81NAzlI7f3j/edit" },
-      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Release Notes", description: "E-billing Simba release notes.", link: "https://docs.google.com/document/d/1lXuZP5OL0ZaFQp_dqxz3i-WPh40HRGlqfB3y4cJ9-6E/edit?tab=t.0" },
-      { pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "User Guide", description: "E-billing invoice submission guide.", link: "https://docs.google.com/document/d/1To_yiyqfyBO7_qVLqyADumWNaLsFwxTEaVqlDhPTzao/edit?tab=t.0" },
-      { pkg: "sIDS Docketing", ver: "sIDS Docketing", type: "User Guide", description: "sIDS docketing workflow manual.", link: "https://docs.google.com/document/d/1CZDWmzKugbwrZ7RIOsgW1k5cVTkvbRLWDICjXvfUQ60/edit?tab=t.0" },
-      { pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Installation Procedure", description: "UP Dev installation guide.", link: "https://docs.google.com/document/d/1xzAKXMiD2eyGp9R4xfNLRTdhrOk92-Cdb4Sx2pazwQE/edit?tab=t.0" },
-      { pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Release Notes", description: "UP Dev release notes.", link: "https://docs.google.com/document/d/1_OeGOTnVSgh84uEH5q7nGy35Oo3u3uZ-3_iwRrRN1_E/edit?tab=t.0#heading=h.33ebwiv13lft" },
-      { pkg: "Other", ver: "Other", type: "Production Checklist", description: "Pre-deployment production checklist.", link: "https://docs.google.com/spreadsheets/d/1hb_bFG5AB5OST8K6l7kZrqJZNO8Fvn4z/edit?gid=1020191051#gid=1020191051" },
-      { pkg: "Other", ver: "Other", type: "Estimation Template", description: "Implementation scoping estimation sheet.", link: "https://docs.google.com/spreadsheets/d/1e50bRJxcbc3k_bI2WD1733xgv4sxZMleO09EwPClugU/edit?gid=0#gid=0" },
-      { pkg: "Other", ver: "Other", type: "OOB IDF template", description: "Standard invention disclosure form template.", link: "https://docs.google.com/document/d/10hxmDD0DOwIVe2ObxgOaEEbJFA9uCoh2KeGn--6dldk/edit?tab=t.0#heading=h.gjdgxs" },
-      { pkg: "Other", ver: "Other", type: "Fields updated by clicking on 'Data Sync' button (IFI import)", description: "IFI import field mapping documentation.", link: "https://docs.google.com/spreadsheets/d/1FAKrv_VfK75gxdzzyoyCce3vXhPoVY_aSwj-AsiwAfA/edit?gid=0#gid=0" },
-      { pkg: "Other", ver: "Other", type: "Encryption and field tracking doc", description: "Salesforce Shield field encryption map.", link: "https://docs.google.com/spreadsheets/d/1_H5i1sHYWIeE6iA5x-cqibG97fYeqZgaDfwRwkOOceY/edit?gid=1277242720#gid=1277242720" },
-      { pkg: "Other", ver: "Other", type: "Salesforce Shield Platform Encryption", description: "Shield platform presentation slide deck.", link: "https://docs.google.com/presentation/d/1AgTXlLsyh-buIzKlnrwSR1GBuMk94n0ivpASf7bSTf4/edit#slide=id.p" },
-      { pkg: "Other", ver: "Other", type: "Turning off - OOB Status updation", description: "Disabling automated status triggers.", link: "https://docs.google.com/document/d/1viGZjOQC15qfd3It-YwgGEcIx1UjD4HM/edit" },
-      { pkg: "Other", ver: "Other", type: "Symphony LF - Data Upload Steps/Guideline", description: "Data loading guidelines for Symphony LF.", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Rules by Case Type", description: "Docketing rules matrix per case type.", link: "https://docs.google.com/document/d/1_IeSJf_8idS_WCLP3Ua0H_TtozwzrEZEvIhoGmUi0Tw/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Reminder object data for LF", description: "Reminder notification configuration.", link: "https://drive.google.com/drive/folders/1-FtZUh7lP5WQm0jT7vcLx4z_nnCylPde?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Schedule Jobs - All Packages", description: "Scheduled Apex jobs overview.", link: "https://docs.google.com/spreadsheets/d/1NZSbNl44jviJpYmAKwpyFGATJXqSSp7T/edit?gid=1001576285#gid=1001576285" },
-      { pkg: "Other", ver: "Other", type: "Technical PTO document (from PE)", description: "Technical PTO integration specifications.", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.vdqd05xcieik" },
-      { pkg: "Other", ver: "Other", type: "Symphony-List of Processes & Details", description: "Master process inventory sheet.", link: "https://docs.google.com/spreadsheets/d/1jT24l1SDvVkNsrN1PZV4wulD_e7lkrs059LOrsOnSg0/edit?gid=1810542744#gid=1810542744" },
-      { pkg: "Other", ver: "Other", type: "Patent field description", description: "Field definitions dictionary for patents.", link: "https://docs.google.com/spreadsheets/d/1u3ngTQfzKslP5za1-uF8JrY0ou-2aCMUkE7n4jUDTok/edit?gid=1042587126#gid=1042587126" },
-      { pkg: "Other", ver: "Other", type: "OOB email templates", description: "Out-of-the-box email template reference.", link: "https://docs.google.com/document/d/17_WuOjbpkbAX9VQcRrrUAu4_qO6PT3epTGcwu5UDfsI/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Glossary and Number Formats for Symphony", description: "Terminology and auto-numbering formats.", link: "https://docs.google.com/spreadsheets/d/1gX7mHK1rnjfRUgznFZ_ahwvmv4KWNoUR/edit?gid=1452062042#gid=1452062042" },
-      { pkg: "Other", ver: "Other", type: "MaxForms List Old", description: "Legacy forms reference list.", link: "https://docs.google.com/spreadsheets/d/1Kyt3D24WY-t8RXjy4GsDuAuYsA6zdDfmIGTsEilcQSg/edit?gid=0#gid=0" },
-      { pkg: "Other", ver: "Other", type: "Prosecution Analytics Requirement Definition Document", description: "Analytics engine functional requirements.", link: "https://docs.google.com/document/d/16fefj0Mr4q1u-jxrPNykY-ZE_P1Pw0Z1/edit?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Prosecution Analytics & History Doc", description: "Prosecution history tracking technical design.", link: "https://docs.google.com/document/d/1EJ270FIDMS5eRTsokPeV8x4zovO6WsCt8sSjsOeNQKo/edit?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Prosecution Analytics- Api Integration", description: "API integration guide for prosecution data.", link: "https://drive.google.com/file/d/1QZGbpZEhgPsdDDyz8_X24ordjNURJfIC/view?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "Support checklist document Template", description: "Customer support handover checklist.", link: "https://docs.google.com/spreadsheets/d/1S7fqp95TLsLXdI6VMQWSj8ffLu34uJYClceJMGKo5x4/edit?gid=2105910797#gid=2105910797" },
-      { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 1", description: "Audit history purge procedures part 1.", link: "https://docs.google.com/document/d/1BeMcpIbVNIP0etuufO-Duc_SXznyEqJo_yQaB-ah-2Y/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 2", description: "Audit history purge procedures part 2.", link: "https://docs.google.com/document/d/1YA0f1BRx5tB1UXB3Q74e_LdrQ0lyKrphEnNYEp0rw30/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Law Firm OOB features", description: "Overview of features specific to law firm edition.", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "DKIM Setup Document", description: "Email DKIM key authentication setup.", link: "https://docs.google.com/document/d/1mSO7qCLeEx3ZSMb3upBh5bEbm0w978JC/edit" },
-      { pkg: "Other", ver: "Other", type: "Post Installation Steps", description: "Consolidated post install checklist.", link: "https://docs.google.com/spreadsheets/d/1VVZZtIYXpzAd_-dGjt-JDOjhnehh5Uawe5WZJ7eN96c/edit?gid=0#gid=0" },
-      { pkg: "Other", ver: "Other", type: "USPTO sponsorship - Patent Center", description: "Sponsorship setup guide for USPTO Patent Center.", link: "https://drive.google.com/file/d/17L3Zk12DOm33_tb77ZLO41E6dWKtr_nH/view" },
-      { pkg: "Other", ver: "Other", type: "PTO Sync document", description: "Automated PTO synchronization overview.", link: "https://docs.google.com/document/d/1aaI7LNgQx2ccEhru7qYAA9EOSh9JuyE5HIurhWHvah4/edit?usp=sharing" },
-      { pkg: "Other", ver: "Other", type: "E-Billing recording", description: "E-billing walkthrough session video.", link: "https://drive.google.com/drive/folders/1g4ydUD4rj2gLYQBH3A_z4u0-FhwoD-Bd" },
-      { pkg: "Other", ver: "Other", type: "Errors & Fixes", description: "Common deployment errors and resolution steps.", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "PTO Doc codes", description: "USPTO and EPO document code translation table.", link: "https://docs.google.com/document/d/1HF42RGxJIs97wTHlUSbfXwPFIXskys3vO6xilNYPVnI/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "Symphony Prosecution sync data flow diagram", description: "Data flow architecture diagram.", link: "https://drive.google.com/file/d/1Q3q_v-XNr4_DToS2qiw_lqnS9VCwSbz1/view?usp=drive_link" },
-      { pkg: "Other", ver: "Other", type: "Renewals doc", description: "Annuity renewals tracking sheet.", link: "https://docs.google.com/spreadsheets/d/1WLc0EHyljjffbDHebQu0AttDdDV03oDE/edit" },
-      { pkg: "Other", ver: "Other", type: "Renewal Guide for Annuity", description: "Guide to managing external annuity providers.", link: "https://docs.google.com/document/d/1gHFV9ixVcZCuE8y00eeRk5TFSw2yboeVbqgGG3ES7jU/edit?tab=t.0" },
-      { pkg: "Other", ver: "Other", type: "UPC Folder", description: "Unitary Patent Court documentation folder.", link: "https://drive.google.com/drive/folders/1a6FgPCByxI1ibEPehvKLM_d2K6IV8u2s" },
-      { pkg: "Other", ver: "Other", type: "New Object/Fields Request Template", description: "Request template for schema modifications.", link: "https://docs.google.com/spreadsheets/d/1tvaTEMsruZ4mrylN8sGb1w6DnKxhgKR8nPFPyTUQZkQ/edit?gid=526926240#gid=526926240" },
-      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring PPT", description: "Presentation on event monitoring.", link: "https://docs.google.com/presentation/d/1jmw9iCRUUKnLwFzMGPWu21X0V5Zk9olXsdFHK7BEGcM/edit#slide=id.g2e29f102836_0_70" },
-      { pkg: "Other", ver: "Other", type: "Salesforce Shield & Event monitoring Demo Recording", description: "Demo video of Event Monitoring in action.", link: "https://drive.google.com/file/d/1O2XRrfjpvjy_WdFtfHfSWPfUmf_mS8hY/view?usp=sharing" }
+      { pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation", description: "Core architecture and schema guide for IPMS v4.0.", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0" }
     ];
 
+    let globalCustomQuick = [];
     let globalCustomLearning = [];
     let globalCustomDocs = [];
+
+    let quickDataset = [...baseQuickDataset];
     let dataset = [...baseDataset];
     let docDataset = [...baseDocDataset];
 
@@ -949,7 +787,7 @@
     let searchQuery = '';
     let selectedDocPackage = 'ALL';
     let docSearchQuery = '';
-    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v19') || '[]'));
+    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v20') || '[]'));
     let filterOnlyBookmarks = false;
 
     const DEFAULT_POWER_USERS = ["admin@maxval.com", "prabhaharan.j@maxval.com"];
@@ -985,8 +823,7 @@
     function toggleFilterOnlyBookmarks() {
       filterOnlyBookmarks = !filterOnlyBookmarks;
       document.getElementById('bookmarkContainer').classList.toggle('filter-active', filterOnlyBookmarks);
-      renderLearningHub();
-      renderDocumentHub();
+      renderCurrentActiveTab();
     }
 
     function setHubViewMode(hub, mode) {
@@ -1007,13 +844,24 @@
       }
     }
 
+    function toggleFormFields(target) {
+      document.getElementById('quickFields').style.display = (target === 'quick') ? 'block' : 'none';
+      document.getElementById('learningFields').style.display = (target === 'learning') ? 'block' : 'none';
+      document.getElementById('documentFields').style.display = (target === 'document') ? 'block' : 'none';
+      autoGenerateAIDescription();
+    }
+
     function autoGenerateAIDescription(forceRefresh = false) {
       const hub = document.getElementById('targetHub').value;
       const descBox = document.getElementById('newDescription');
 
       if (!forceRefresh && descBox.value && descBox.value.trim().length > 10) return;
 
-      if (hub === 'learning') {
+      if (hub === 'quick') {
+        const title = document.getElementById('newQuickTitle').value.trim() || 'Tool Link';
+        const cat = document.getElementById('newQuickCategory').value.trim() || 'Resource';
+        descBox.value = `Direct shortcut to access ${title} (${cat}) for implementation tracking.`;
+      } else if (hub === 'learning') {
         const title = document.getElementById('newTitle').value.trim() || 'Symphony Module';
         const category = document.getElementById('newModule').value;
         descBox.value = `Interactive guide on "${title}" covering key procedures under the ${category} framework.`;
@@ -1049,11 +897,24 @@
       const lockOverlay = document.getElementById('mandatoryLockOverlay');
       if (!currentUser || !currentUser.toLowerCase().includes('@maxval.com')) {
         lockOverlay.style.display = 'flex';
+        detectGoogleSessionAccount();
       } else {
         lockOverlay.style.display = 'none';
         updateUserBadgeDisplay();
         loadGlobalCustomLinks();
       }
+    }
+
+    function detectGoogleSessionAccount() {
+      callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
+        if (data && data.email && data.email.includes('@maxval.com')) {
+          let verifiedEmail = data.email.toLowerCase().trim();
+          document.getElementById('loginEmailInput').value = verifiedEmail;
+        }
+        if (data && data.powerUsers) {
+          data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
+        }
+      });
     }
 
     function handleRequestOtp(e) {
@@ -1112,31 +973,32 @@
 
     function toggleBookmark(id) {
       if (bookmarkedIds.has(id)) bookmarkedIds.delete(id); else bookmarkedIds.add(id);
-      localStorage.setItem('user_private_bookmarks_v19', JSON.stringify(Array.from(bookmarkedIds)));
-      renderLearningHub();
-      renderDocumentHub();
+      localStorage.setItem('user_private_bookmarks_v20', JSON.stringify(Array.from(bookmarkedIds)));
+      renderCurrentActiveTab();
     }
 
     function toggleTopicCompletion(resId, e) {
       if (e) e.stopPropagation();
-      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v19') || '[]'));
+      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v20') || '[]'));
       if (completedSet.has(resId)) completedSet.delete(resId);
       else completedSet.add(resId);
-      localStorage.setItem('user_completed_topics_v19', JSON.stringify(Array.from(completedSet)));
+      localStorage.setItem('user_completed_topics_v20', JSON.stringify(Array.from(completedSet)));
       renderLearningHub();
     }
 
     function loadGlobalCustomLinks() {
       callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
-        if (data && data.learning && data.docs) {
-          globalCustomLearning = data.learning;
-          globalCustomDocs = data.docs;
+        if (data) {
+          globalCustomQuick = data.quick || [];
+          globalCustomLearning = data.learning || [];
+          globalCustomDocs = data.docs || [];
+
+          quickDataset = [...baseQuickDataset, ...globalCustomQuick];
           dataset = [...baseDataset, ...globalCustomLearning];
           docDataset = [...baseDocDataset, ...globalCustomDocs];
 
           syncDropdownOptions();
-          renderLearningHub();
-          renderDocumentHub();
+          renderCurrentActiveTab();
           checkSameDayReleases();
         }
       });
@@ -1144,10 +1006,16 @@
 
     function checkSameDayReleases() {
       const todayStr = new Date().toLocaleDateString();
-      const newItems = dataset.concat(docDataset).filter(item => item.releaseDate === todayStr);
+      const newItems = quickDataset.concat(dataset, docDataset).filter(item => item.releaseDate === todayStr);
       if (newItems.length > 0) {
         document.getElementById('newReleaseHeaderBadge').style.display = 'inline-flex';
       }
+    }
+
+    function renderCurrentActiveTab() {
+      if (activeTab === 'quickLinksTab') renderQuickLinksHub();
+      else if (activeTab === 'learningHubTab') renderLearningHub();
+      else if (activeTab === 'documentHubTab') renderDocumentHub();
     }
 
     function switchTab(tabId, el) {
@@ -1157,13 +1025,61 @@
       document.getElementById(tabId).classList.add('active');
       if (el) el.classList.add('active');
 
-      renderLearningHub();
-      renderDocumentHub();
+      // Update Target Hub Dropdown to match Tab
+      const targetHubSelect = document.getElementById('targetHub');
+      if (tabId === 'quickLinksTab') targetHubSelect.value = 'quick';
+      else if (tabId === 'learningHubTab') targetHubSelect.value = 'learning';
+      else if (tabId === 'documentHubTab') targetHubSelect.value = 'document';
+      toggleFormFields(targetHubSelect.value);
+
+      renderCurrentActiveTab();
+    }
+
+    function isPowerUserActive() {
+      return currentUser && powerUsers.has(currentUser.toLowerCase().trim()) && isPowerUserViewMode;
+    }
+
+    function renderQuickLinksHub() {
+      const grid = document.getElementById('quickLinksGrid');
+      let filtered = quickDataset.filter(item => filterOnlyBookmarks ? bookmarkedIds.has(item.id) : true);
+
+      const activeBookmarksCount = quickDataset.filter(d => bookmarkedIds.has(d.id)).length;
+      document.getElementById('kpiBookmarks').textContent = activeBookmarksCount;
+
+      grid.innerHTML = filtered.map((item, idx) => {
+        const isBookmarked = bookmarkedIds.has(item.id);
+        return `
+          <article class="resource-card" style="border-top: 3px solid var(--google-blue);">
+            <div>
+              <div class="card-header">
+                <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">${item.category}</span>
+                <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${item.id}')">
+                  <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                </button>
+              </div>
+              <h3 class="card-title">${item.name}</h3>
+              <p class="card-desc">${item.description}</p>
+            </div>
+            <div class="card-actions">
+              <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span>
+              </a>
+              ${isPowerUserActive() ? `
+                <div class="action-icons">
+                  <button class="action-btn" onclick="executeDeleteItem('quick', '${item.link}')" title="Delete Quick Link">
+                    <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
+                  </button>
+                </div>
+              ` : ''}
+            </div>
+          </article>
+        `;
+      }).join('');
     }
 
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
-      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v19') || '[]'));
+      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v20') || '[]'));
 
       let filtered = dataset.filter(res => {
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
@@ -1210,7 +1126,7 @@
                     </span>
                   </button>
                   <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
-                    <span class="material-icons-outlined" style="font-size:20px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                    <span class="material-icons-outlined gold-star" style="font-size:20px;">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
                 </div>
               </div>
@@ -1222,6 +1138,11 @@
                 ${isCompleted ? '✓ Completed' : 'Pending'}
               </span>
               <a href="${res.link}" target="_blank" class="link-btn"><span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+              ${isPowerUserActive() ? `
+                <button class="action-btn" onclick="executeDeleteItem('learning', '${res.link}')" title="Delete Resource">
+                  <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
+                </button>
+              ` : ''}
             </div>
           </article>
         `;
@@ -1237,7 +1158,7 @@
           <tr>
             <td style="text-align:center;">
               <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
-                <span class="material-icons-outlined" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
               </button>
             </td>
             <td><strong>${res.name}</strong> ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}<br><span style="font-size:0.72rem; color:var(--text-secondary);">${res.category}</span></td>
@@ -1249,7 +1170,14 @@
                 </span>
               </button>
             </td>
-            <td style="text-align:right;"><a href="${res.link}" target="_blank" class="link-btn"><span>Open</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a></td>
+            <td style="text-align:right;">
+              <a href="${res.link}" target="_blank" class="link-btn"><span>Open</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+              ${isPowerUserActive() ? `
+                <button class="action-btn" onclick="executeDeleteItem('learning', '${res.link}')" title="Delete Resource">
+                  <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
+                </button>
+              ` : ''}
+            </td>
           </tr>
         `;
       }).join('');
@@ -1279,6 +1207,8 @@
         });
       }
 
+      const activeBookmarksCount = docDataset.filter(d => bookmarkedIds.has(d.pkg + d.type)).length;
+      document.getElementById('kpiBookmarks').textContent = activeBookmarksCount;
       document.getElementById('docActiveCount').textContent = filtered.length;
 
       // RENDER TABLE VIEW FOR DOCS
@@ -1291,14 +1221,21 @@
           <tr>
             <td style="text-align:center;">
               <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${docId}')">
-                <span class="material-icons-outlined" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
               </button>
             </td>
             <td><strong>${doc.pkg}</strong> ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}</td>
             <td>${doc.ver}</td>
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${doc.description || 'Technical Documentation.'}</td>
-            <td style="text-align:right;"><a href="${doc.link}" target="_blank" class="link-btn"><span>View Doc</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a></td>
+            <td style="text-align:right;">
+              <a href="${doc.link}" target="_blank" class="link-btn"><span>View Doc</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+              ${isPowerUserActive() ? `
+                <button class="action-btn" onclick="executeDeleteItem('document', '${doc.link}')" title="Delete Doc">
+                  <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
+                </button>
+              ` : ''}
+            </td>
           </tr>
         `;
       }).join('');
@@ -1315,7 +1252,7 @@
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">${doc.pkg}</span>
                 <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${docId}')">
-                  <span class="material-icons-outlined" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+                  <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
                 </button>
               </div>
               <h3 class="card-title">${doc.type} (${doc.ver}) ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}</h3>
@@ -1323,6 +1260,11 @@
             </div>
             <div class="card-actions">
               <a href="${doc.link}" target="_blank" class="link-btn"><span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+              ${isPowerUserActive() ? `
+                <button class="action-btn" onclick="executeDeleteItem('document', '${doc.link}')" title="Delete Doc">
+                  <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
+                </button>
+              ` : ''}
             </div>
           </article>
         `;
@@ -1338,8 +1280,8 @@
     }
 
     function openAddModal() {
-      document.getElementById('submitterEmail').value = currentUser;
-      document.getElementById('dlEmailAddress').value = currentUser;
+      document.getElementById('submitterEmail').value = currentUser || '';
+      document.getElementById('dlEmailAddress').value = currentUser || '';
       document.getElementById('addModalOverlay').classList.add('open');
       autoGenerateAIDescription();
     }
@@ -1385,8 +1327,14 @@
       isPowerUserViewMode = !isPowerUserViewMode;
       document.getElementById('viewModeToggleLabel').textContent = isPowerUserViewMode ? "Switch to Normal View" : "Switch to Power User Mode";
       closeModal('powerPrivilegesModalOverlay');
-      renderLearningHub();
-      renderDocumentHub();
+      renderCurrentActiveTab();
+    }
+
+    function executeDeleteItem(hub, link) {
+      if (!confirm("Are you sure you want to delete this resource link globally?")) return;
+      callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: hub, link: link }, function() {
+        loadGlobalCustomLinks();
+      });
     }
 
     function handleAddSubmission(e) {
@@ -1398,7 +1346,10 @@
       const currentDateStr = new Date().toLocaleDateString();
 
       let payloadItem = {}, title = "";
-      if (targetHub === 'learning') {
+      if (targetHub === 'quick') {
+        title = document.getElementById('newQuickTitle').value.trim();
+        payloadItem = { id: `quick_${Date.now()}`, name: title, category: document.getElementById('newQuickCategory').value.trim() || 'Quick Link', description: desc, link: link, releaseDate: currentDateStr };
+      } else if (targetHub === 'learning') {
         title = document.getElementById('newTitle').value.trim();
         payloadItem = { id: `res_${Date.now()}`, name: title, category: document.getElementById('newModule').value, description: desc, link: link, releaseDate: currentDateStr };
       } else {
