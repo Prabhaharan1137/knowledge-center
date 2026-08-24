@@ -220,7 +220,7 @@
       background: var(--google-purple-light);
       color: var(--google-purple);
       border: 1px solid var(--google-purple);
-      padding: 0.25rem 0.55rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 12px;
       font-size: 0.72rem;
       font-weight: 400;
@@ -320,7 +320,6 @@
     .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-color: var(--google-blue); }
     .resource-card.mandatory-card { border: 1.5px solid var(--google-red) !important; background: #fff5f5; }
     body.dark-mode .resource-card.mandatory-card { background: #2c1616; }
-    .resource-card.focused-highlight { border: 2px solid var(--google-purple) !important; box-shadow: 0 0 12px var(--google-purple); }
 
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.35rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 400; color: var(--text-primary); }
@@ -485,7 +484,7 @@
     </div>
   </div>
 
-  <!-- NAVIGATION TAB SEQUENCE: 1. QUICK LINKS -> 2. DOCUMENT HUB -> 3. LEARNING HUB -> 4. MANDATORY MODULES -->
+  <!-- NAVIGATION TAB SEQUENCE: 1. QUICK LINKS -> 2. DOCUMENT HUB -> 3. LEARNING HUB -> 4. MANDATORY DOCS LIST -->
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn quick-tab active" onclick="switchTab('quickLinksTab', this)">
@@ -498,7 +497,7 @@
         <span class="material-icons-outlined" style="font-size:18px;">school</span><span>Learning Hub</span>
       </button>
       <button class="tab-btn mandatory-tab" id="mandatoryNavTab" style="display:none;" onclick="switchTab('mandatoryTab', this)">
-        <span class="material-icons-outlined" style="font-size:18px;">assignment_late</span><span>Mandatory Modules</span>
+        <span class="material-icons-outlined" style="font-size:18px;">assignment_late</span><span>Mandatory Docs List</span>
       </button>
     </nav>
 
@@ -516,10 +515,10 @@
   <div class="container">
     <!-- COMPACT QUICK LINKS SHORTCUT ROW -->
     <div class="compact-quick-shortcuts">
-      <button type="button" class="quick-shortcut-btn" onclick="switchTab('quickLinksTab', document.querySelector('.quick-tab'))">⚡ Bolt Shortcuts</button>
-      <button type="button" class="quick-shortcut-btn" onclick="switchTab('quickLinksTab', document.querySelector('.quick-tab'))">📄 Quick Portals</button>
+      <button type="button" class="quick-shortcut-btn" onclick="switchTab('quickLinksTab', document.querySelector('.quick-tab'))">⚡ Quick Links</button>
       <button type="button" class="quick-shortcut-btn" onclick="switchTab('documentHubTab', document.querySelector('.doc-tab'))">📚 Document Hub</button>
       <button type="button" class="quick-shortcut-btn" onclick="switchTab('learningHubTab', document.querySelector('.learning-tab'))">🎓 Learning Hub</button>
+      <button type="button" class="quick-shortcut-btn" onclick="switchTab('mandatoryTab', document.querySelector('.mandatory-tab'))">📌 Mandatory Docs List</button>
     </div>
 
     <!-- 1. QUICK LINKS TAB -->
@@ -644,10 +643,10 @@
       <main class="resources-grid" id="resourcesGrid"></main>
     </div>
 
-    <!-- 4. MANDATORY TAB -->
+    <!-- 4. MANDATORY DOCS LIST TAB -->
     <div id="mandatoryTab" class="tab-content">
       <section class="filter-card-highlight" style="border-color:var(--google-red);">
-        <div style="color:var(--google-red); font-size:0.82rem; font-weight:400;"><span class="material-icons-outlined">assignment_late</span> YOUR ASSIGNED MANDATORY MODULES</div>
+        <div style="color:var(--google-red); font-size:0.82rem; font-weight:400;"><span class="material-icons-outlined">assignment_late</span> YOUR ASSIGNED MANDATORY DOCUMENTS</div>
         <p style="font-size:0.78rem; color:var(--text-secondary);">Required training materials assigned specifically to your profile with completion due dates.</p>
       </section>
 
@@ -743,7 +742,7 @@
     </div>
   </div>
 
-  <!-- MANDATORY MODULES & MULTI-SELECT REMINDERS CONFIG MODAL WITH TABS -->
+  <!-- MANDATORY MODULES & MULTI-SELECT REMINDERS CONFIG MODAL WITH USER ROSTER LIST -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -759,17 +758,32 @@
 
       <div class="modal-body-scroll" style="display:flex; flex-direction:column; gap:0.65rem;">
         <div class="form-group">
-          <label>Assign Users by Email (Comma-Separated) *</label>
-          <input type="text" id="mandatoryAssignedEmailsInput" placeholder="user1@maxval.com, user2@maxval.com">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label>Select Target Users from Roster *</label>
+            <div>
+              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllUserRoster(true)">Select All</button>
+              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllUserRoster(false)">Deselect All</button>
+            </div>
+          </div>
+          <div class="checkbox-multi-grid" id="userRosterCheckboxContainer"></div>
         </div>
+
         <div class="form-group">
-          <label>Select Items (Multi-Select) *</label>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label>Select Mandatory Items (Multi-Select) *</label>
+            <div>
+              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllMandatoryItems(true)">Select All</button>
+              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllMandatoryItems(false)">Deselect All</button>
+            </div>
+          </div>
           <div class="checkbox-multi-grid" id="mandatoryMultiCheckboxContainer"></div>
         </div>
+
         <div class="form-group">
           <label>Completion Due Date *</label>
           <input type="date" id="mandatoryDueDate">
         </div>
+
         <div class="form-group">
           <label>Configurable Reminder Trigger Timing *</label>
           <select id="triggerTimingSelect" class="styled-dropdown-catchy">
@@ -780,10 +794,11 @@
             <option value="Recurring 7 Days">Recurring (Every 7 Days)</option>
           </select>
         </div>
+
         <button type="button" class="btn-submit" onclick="saveMandatorySettingsMulti()">Save Mandatory Assignments</button>
 
         <div style="margin-top:0.85rem;">
-          <label style="font-size:0.78rem; font-weight:400;">Active Mandatory Items:</label>
+          <label style="font-size:0.78rem; font-weight:400;">Active Mandatory Assignments:</label>
           <div id="mandatoryItemsList" style="max-height:140px; overflow-y:auto; margin-top:0.35rem;"></div>
         </div>
       </div>
@@ -807,7 +822,14 @@
       <div class="modal-body-scroll">
         <form onsubmit="handleAddJoiner(event)" style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:0.85rem;">
           <input type="email" id="newJoinerEmail" placeholder="new.joiner@maxval.com" required style="padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
-          <label style="font-size:0.75rem; color:var(--text-secondary);">Select Mandatory Onboarding Modules for this Joiner:</label>
+          
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label style="font-size:0.75rem; color:var(--text-secondary);">Select Onboarding Modules for Joiner:</label>
+            <div>
+              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllJoinerItems(true)">Select All</button>
+              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllJoinerItems(false)">Deselect All</button>
+            </div>
+          </div>
           <div class="checkbox-multi-grid" id="joinerModulesCheckboxContainer"></div>
           <button type="submit" class="btn-submit" style="padding:0.45rem 0.75rem;">Add Restricted Joiner</button>
         </form>
@@ -972,7 +994,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxD4l65JVmsBySKu-wYJ_lkFrQ0Eb5NgEwMpa2j7afHUJi-lUch7eb28ACsao9ycKVE/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwHZ0MgNB544oijxLDsQJGjhp3ZnieNod6aVobpVKUQ9d-yeDWTgDgACCsSnG6qLVpy/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1136,6 +1158,7 @@
 
     let mandatoryData = {}; 
     let joinersData = {};   
+    let registeredUsersList = [];
 
     let activeTab = 'quickLinksTab';
     let activeMandatorySubtab = 'quick';
@@ -1299,11 +1322,9 @@
         if (data && data.powerUsers) {
           data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
         }
-        if (data && data.logoData) {
-          renderCustomLogo(data.logoData);
-        }
         if (data && data.mandatoryData) mandatoryData = data.mandatoryData;
         if (data && data.joinersData) joinersData = data.joinersData;
+        if (data && data.registeredUsers) registeredUsersList = data.registeredUsers;
         if (data && data.autoEmailFreq) {
           document.getElementById('autoEmailFreqSelect').value = data.autoEmailFreq;
         }
@@ -1318,67 +1339,6 @@
 
       const uncompletedMandatory = mandatoryKeys.filter(k => !completedSet.has(k));
       mandatoryNav.style.display = uncompletedMandatory.length > 0 ? 'inline-flex' : 'none';
-    }
-
-    function renderCustomLogo(dataUrl) {
-      const container = document.getElementById('logoContainer');
-      const heroHeader = document.getElementById('heroHeaderElem');
-      const mainTitle = document.getElementById('brandTitleMainElem');
-      const subTitle = document.getElementById('titleTextSub');
-
-      if (dataUrl) {
-        container.innerHTML = `<img src="${dataUrl}" class="custom-header-logo-img" id="customLogoImgElem" alt="Logo">`;
-        
-        const img = new Image();
-        img.src = dataUrl;
-        img.onload = function() {
-          try {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 10; canvas.height = 10;
-            ctx.drawImage(img, 0, 0, 10, 10);
-            const imgData = ctx.getImageData(0, 0, 10, 10).data;
-            let r=0, g=0, b=0;
-            for (let i=0; i<imgData.length; i+=4) {
-              r += imgData[i]; g += imgData[i+1]; b += imgData[i+2];
-            }
-            let avgBrightness = (r + g + b) / (imgData.length / 4 * 3);
-            if (avgBrightness > 180) {
-              heroHeader.style.background = '#f8f9fa';
-              mainTitle.style.color = '#202124';
-              subTitle.style.color = '#5f6368';
-            } else {
-              heroHeader.style.background = 'linear-gradient(135deg, #101012 0%, #1f2023 100%)';
-              mainTitle.style.color = '#ffffff';
-              subTitle.style.color = '#ffffff';
-            }
-          } catch(e) {}
-        };
-      } else {
-        container.innerHTML = `
-          <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
-            <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
-            <circle class="symphony-dot green" cx="50" cy="30" r="6" fill="#34a853"/>
-            <circle cx="150" cy="30" r="12" fill="none" stroke="#fbbc05" stroke-width="4"/>
-            <circle class="symphony-dot yellow" cx="150" cy="30" r="6" fill="#fbbc05"/>
-            <path d="M 60,110 C 30,80 40,40 100,20 C 160,40 170,80 140,110 C 130,125 125,140 125,155 L 75,155 C 75,140 70,125 60,110 Z" fill="none" stroke="#34a853" stroke-width="5"/>
-            <circle class="symphony-dot red" cx="100" cy="70" r="10" fill="#ea4335"/>
-            <circle class="symphony-dot blue" cx="80" cy="95" r="8" fill="#4285f4"/>
-            <circle class="symphony-dot blue" cx="120" cy="95" r="8" fill="#4285f4"/>
-            <circle class="symphony-dot green" cx="100" cy="120" r="8" fill="#34a853"/>
-            <line x1="100" y1="70" x2="80" y2="95" stroke="#ea4335" stroke-width="3"/>
-            <line x1="100" y1="70" x2="120" y2="95" stroke="#ea4335" stroke-width="3"/>
-            <line x1="80" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
-            <line x1="120" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
-            <rect x="80" y="160" width="40" height="8" rx="3" fill="#ea4335"/>
-            <rect x="85" y="172" width="30" height="6" rx="3" fill="#fbbc05"/>
-            <rect x="92" y="182" width="16" height="5" rx="2" fill="#4285f4"/>
-          </svg>
-        `;
-        heroHeader.style.background = 'linear-gradient(135deg, #101012 0%, #1f2023 100%)';
-        mainTitle.style.color = '#ffffff';
-        subTitle.style.color = '#ffffff';
-      }
     }
 
     function handleRequestOtp(e) {
@@ -1492,6 +1452,7 @@
 
           syncDropdownOptions();
           renderMandatoryMultiCheckboxes();
+          renderUserRosterCheckboxes();
           renderJoinersMultiCheckboxes();
           checkMandatoryNavVisibility();
           renderCurrentActiveTab();
@@ -2029,7 +1990,7 @@
     function openProfileModal() { document.getElementById('profileModalOverlay').classList.add('open'); }
     function openPowerUserPrivilegesModal() { document.getElementById('powerPrivilegesModalOverlay').classList.add('open'); }
     function openPowerUsersListModal() { renderPowerUsersList(); document.getElementById('powerUsersListModalOverlay').classList.add('open'); }
-    function openMandatoryConfigModal() { renderMandatoryMultiCheckboxes(); document.getElementById('mandatoryConfigModalOverlay').classList.add('open'); }
+    function openMandatoryConfigModal() { renderUserRosterCheckboxes(); renderMandatoryMultiCheckboxes(); document.getElementById('mandatoryConfigModalOverlay').classList.add('open'); }
     function openJoinersConfigModal() { renderJoinersMultiCheckboxes(); renderJoinersList(); document.getElementById('joinersConfigModalOverlay').classList.add('open'); }
 
     function switchMandatoryTab(hub, btn) {
@@ -2037,6 +1998,29 @@
       document.querySelectorAll('#mandatoryConfigModalOverlay .modal-tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderMandatoryMultiCheckboxes();
+    }
+
+    function renderUserRosterCheckboxes() {
+      const container = document.getElementById('userRosterCheckboxContainer');
+      if (registeredUsersList.length === 0) {
+        container.innerHTML = `<p style="font-size:0.75rem; color:var(--text-secondary);">No registered users logged in yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = registeredUsersList.map(u => `
+        <label class="checkbox-item">
+          <input type="checkbox" value="${u}" class="roster-user-chk">
+          <span>${u}</span>
+        </label>
+      `).join('');
+    }
+
+    function selectAllUserRoster(select) {
+      document.querySelectorAll('.roster-user-chk').forEach(cb => cb.checked = select);
+    }
+
+    function selectAllMandatoryItems(select) {
+      document.querySelectorAll('.mandatory-chk').forEach(cb => cb.checked = select);
     }
 
     function renderMandatoryMultiCheckboxes() {
@@ -2061,20 +2045,26 @@
     }
 
     function saveMandatorySettingsMulti() {
-      const checkboxes = document.querySelectorAll('.mandatory-chk:checked');
+      const userCheckboxes = document.querySelectorAll('.roster-user-chk:checked');
+      const itemCheckboxes = document.querySelectorAll('.mandatory-chk:checked');
       const dueDate = document.getElementById('mandatoryDueDate').value;
       const freq = document.getElementById('autoEmailFreqSelect').value;
-      const assignedEmails = document.getElementById('mandatoryAssignedEmailsInput').value.trim();
+      const manualEmails = document.getElementById('mandatoryAssignedEmailsInput').value.trim();
 
-      checkboxes.forEach(cb => {
-        mandatoryData[cb.value] = dueDate || 'ASAP';
+      let assignedUserList = Array.from(userCheckboxes).map(cb => cb.value);
+      if (manualEmails) {
+        let splitManual = manualEmails.split(',').map(e => e.trim().toLowerCase()).filter(e => e.length > 0);
+        assignedUserList = Array.from(new Set([...assignedUserList, ...splitManual]));
+      }
+
+      itemCheckboxes.forEach(cb => {
+        mandatoryData[cb.value] = { dueDate: dueDate || 'ASAP', users: assignedUserList };
       });
 
       callGasJsonp({ 
-        action: 'SAVE_MANDATORY_MODULES', 
+        action: 'SAVE_MANDATORY_ASSIGNMENTS', 
         data: JSON.stringify(mandatoryData), 
-        autoFreq: freq,
-        triggerConfig: JSON.stringify({ timing: document.getElementById('triggerTimingSelect').value, assignedEmails: assignedEmails })
+        triggerConfig: JSON.stringify({ timing: document.getElementById('triggerTimingSelect').value, freq: freq })
       }, function() {
         alert("Mandatory assignments and reminder frequencies saved!");
         renderMandatoryItemsList();
@@ -2085,7 +2075,7 @@
 
     function removeMandatorySetting(resId) {
       delete mandatoryData[resId];
-      callGasJsonp({ action: 'SAVE_MANDATORY_MODULES', data: JSON.stringify(mandatoryData) }, function() {
+      callGasJsonp({ action: 'SAVE_MANDATORY_ASSIGNMENTS', data: JSON.stringify(mandatoryData) }, function() {
         renderMandatoryMultiCheckboxes();
         checkMandatoryNavVisibility();
         renderCurrentActiveTab();
@@ -2096,10 +2086,14 @@
       const container = document.getElementById('mandatoryItemsList');
       const keys = Object.keys(mandatoryData);
       container.innerHTML = keys.map(id => {
+        let item = mandatoryData[id];
         let found = quickDataset.find(d => d.id === id) || dataset.find(d => d.id === id) || docDataset.find(d => (d.id === id || (d.pkg + d.type) === id));
+        let displayDueDate = typeof item === 'object' ? item.dueDate : item;
+        let assignedCount = typeof item === 'object' && item.users ? item.users.length : 'All Users';
+
         return `
           <div class="power-user-chip">
-            <span><strong>${found ? (found.name || found.pkg + ' ' + found.type) : id}</strong> - Due: ${mandatoryData[id]}</span>
+            <span><strong>${found ? (found.name || found.pkg + ' ' + found.type) : id}</strong> (Due: ${displayDueDate}) - ${assignedCount} Users</span>
             <button type="button" onclick="removeMandatorySetting('${id}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
               <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
             </button>
@@ -2133,6 +2127,10 @@
       }).join('');
     }
 
+    function selectAllJoinerItems(select) {
+      document.querySelectorAll('.joiner-module-chk').forEach(cb => cb.checked = select);
+    }
+
     function handleAddJoiner(e) {
       e.preventDefault();
       const input = document.getElementById('newJoinerEmail').value.trim().toLowerCase();
@@ -2140,14 +2138,16 @@
         const checkboxes = document.querySelectorAll('.joiner-module-chk:checked');
         let selectedModuleIds = Array.from(checkboxes).map(cb => cb.value);
 
-        if (!joinersData[input]) joinersData[input] = { restricted: true, quick: [], learning: [], document: [] };
+        if (!joinersData[input]) joinersData[input] = { restricted: true, status: 'In Progress', assignedModules: [], quick: [], learning: [], document: [] };
         joinersData[input].restricted = true;
+        joinersData[input].status = 'In Progress';
+        joinersData[input].assignedModules = Array.from(new Set([...(joinersData[input].assignedModules || []), ...selectedModuleIds]));
         joinersData[input][activeJoinersSubtab] = selectedModuleIds;
 
         document.getElementById('newJoinerEmail').value = '';
         callGasJsonp({ action: 'SAVE_NEW_JOINERS_DATA', data: JSON.stringify(joinersData) }, function() {
           renderJoinersList();
-          alert(`New joiner ${input} added with restricted module view!`);
+          alert(`New joiner ${input} added with onboarding modules!`);
         });
       }
     }
@@ -2164,7 +2164,7 @@
       const keys = Object.keys(joinersData);
       container.innerHTML = keys.map(e => `
         <div class="power-user-chip">
-          <span>${e} (${joinersData[e].restricted ? 'Restricted' : 'Full Access'})</span>
+          <span>${e} [Status: ${joinersData[e].status || 'In Progress'}]</span>
           <button type="button" onclick="removeJoiner('${e}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
             <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
           </button>
@@ -2257,8 +2257,8 @@
       }
 
       if (isMandatory) {
-        mandatoryData[itemId] = "ASAP";
-        callGasJsonp({ action: 'SAVE_MANDATORY_MODULES', data: JSON.stringify(mandatoryData) }, function(){});
+        mandatoryData[itemId] = { dueDate: "ASAP", users: [] };
+        callGasJsonp({ action: 'SAVE_MANDATORY_ASSIGNMENTS', data: JSON.stringify(mandatoryData) }, function(){});
       }
 
       callGasJsonp({ action: 'SAVE_CUSTOM_LINK', hub: targetHub, item: JSON.stringify(payloadItem) }, function() {
@@ -2324,7 +2324,7 @@
       document.getElementById('drilldownPendingList').innerHTML = pendingMandatory.length > 0 ?
         pendingMandatory.map(k => {
           let item = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
-          return `<li><span>${item ? (item.name || item.pkg) : k} (Due: ${mandatoryData[k]})</span><span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">error_outline</span></li>`;
+          return `<li><span>${item ? (item.name || item.pkg) : k} (Due: ${typeof mandatoryData[k] === 'object' ? mandatoryData[k].dueDate : mandatoryData[k]})</span><span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">error_outline</span></li>`;
         }).join('') : `<li><span style="color:var(--google-green);">All mandatory modules completed!</span></li>`;
 
       const seenDocs = u.seenDocs || [];
@@ -2346,7 +2346,7 @@
       }
 
       let title = (dataset.find(d => d.id === pendingKeys[0]) || {}).name || 'Assigned Mandatory Module';
-      let dueDate = mandatoryData[pendingKeys[0]] || 'ASAP';
+      let dueDate = typeof mandatoryData[pendingKeys[0]] === 'object' ? mandatoryData[pendingKeys[0]].dueDate : (mandatoryData[pendingKeys[0]] || 'ASAP');
 
       callGasJsonp({ action: 'SEND_TARGETED_REMINDER', emails: email, moduleTitle: title, dueDate: dueDate, triggerTiming: "On Demand" }, function(res) {
         alert(res.status === "SUCCESS" ? `Targeted reminder dispatched to uncompleted user: ${email}` : `Failed: ${res.error}`);
