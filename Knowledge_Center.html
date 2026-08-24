@@ -171,6 +171,7 @@
       gap: 0.5rem;
     }
     
+    /* ANIMATED TABS WITH SMOOTH TRANSITION */
     .nav-tabs { display: flex; gap: 0.4rem; align-items: center; }
     .tab-btn {
       background: var(--bg-body);
@@ -185,12 +186,12 @@
       align-items: center;
       gap: 0.4rem;
       border-radius: 18px;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .tab-btn.quick-tab.active { background: #e6f4ea; color: var(--google-green); border-color: var(--google-green); }
-    .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); }
-    .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); }
-    .tab-btn.mandatory-tab.active { background: #fce8e6; color: var(--google-red); border-color: var(--google-red); }
+    .tab-btn.quick-tab.active { background: #e6f4ea; color: var(--google-green); border-color: var(--google-green); transform: translateY(-1px); }
+    .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); transform: translateY(-1px); }
+    .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); transform: translateY(-1px); }
+    .tab-btn.mandatory-tab.active { background: #fce8e6; color: var(--google-red); border-color: var(--google-red); transform: translateY(-1px); }
 
     .header-right-badges { display: flex; align-items: center; gap: 0.5rem; }
     .kpi-bookmark-small {
@@ -254,8 +255,20 @@
     }
 
     .container { width: 100%; padding: 0.65rem 1rem; display: flex; flex-direction: column; }
-    .tab-content { display: none; flex-direction: column; }
-    .tab-content.active { display: flex; }
+    
+    /* ANIMATED TAB SWITCHING EFFECT */
+    .tab-content { 
+      display: none; 
+      flex-direction: column; 
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .tab-content.active { 
+      display: flex; 
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .filter-card-highlight { 
       background: var(--bg-card); 
@@ -353,7 +366,7 @@
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow: hidden;
     }
     .modal-overlay.open { display: flex; }
-    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 560px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 15px; border: 1px solid var(--border-color); max-height: 85vh; display: flex; flex-direction: column; }
+    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 620px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 15px; border: 1px solid var(--border-color); max-height: 85vh; display: flex; flex-direction: column; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-shrink: 0; }
     .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1rem; font-weight: 400; }
     .modal-body-scroll { overflow-y: auto; flex: 1; padding-right: 0.25rem; }
@@ -380,6 +393,12 @@
       padding: 0.35rem 0.55rem; border-radius: 6px; font-size: 0.78rem; margin-bottom: 0.3rem;
     }
 
+    .user-split-view-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
     .detail-list { list-style: none; padding: 0; margin: 0; max-height: 160px; overflow-y: auto; font-size: 0.78rem; border: 1px solid var(--border-color); border-radius: 6px; }
     .detail-list li { padding: 0.35rem 0.55rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
 
@@ -399,6 +418,7 @@
       .top-utility-right { justify-content: space-between; }
       .filter-controls-grid { grid-template-columns: 1fr; }
       .resources-grid { grid-template-columns: 1fr; }
+      .user-split-view-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -431,7 +451,7 @@
     </div>
   </div>
 
-  <!-- TOP HERO HEADER WITH LOGO & CENTERED WHITE TITLE -->
+  <!-- TOP HERO HEADER WITH VECTOR LIGHTBULB LOGO & CENTERED WHITE TITLE -->
   <div class="top-hero-header" id="heroHeaderElem">
     <div class="header-title-container">
       <div class="brand-title-main" id="brandTitleMainElem">
@@ -742,11 +762,11 @@
     </div>
   </div>
 
-  <!-- MANDATORY MODULES & MULTI-SELECT REMINDERS CONFIG MODAL WITH USER ROSTER LIST -->
+  <!-- MANDATORY MODULES & REMINDERS CONFIG MODAL -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 720px;">
       <div class="modal-header">
-        <h2>Mandatory Modules & Reminders</h2>
+        <h2>Mandatory Modules & Reminders Management</h2>
         <button class="modal-close-btn" onclick="closeModal('mandatoryConfigModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
       
@@ -756,46 +776,49 @@
         <button type="button" class="modal-tab-btn" onclick="switchMandatoryTab('learning', this)">Learning Hub</button>
       </div>
 
-      <div class="modal-body-scroll" style="display:flex; flex-direction:column; gap:0.65rem;">
-        <div class="form-group">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <label>Select Target Users from Roster *</label>
-            <div>
-              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllUserRoster(true)">Select All</button>
-              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllUserRoster(false)">Deselect All</button>
+      <div class="modal-body-scroll">
+        <div class="user-split-view-grid">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
+              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Target Users from Roster *</label>
+              <div>
+                <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllUserRoster(true)">Select All</button>
+                <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllUserRoster(false)">Deselect All</button>
+              </div>
             </div>
+            <div class="checkbox-multi-grid" id="userRosterCheckboxContainer"></div>
           </div>
-          <div class="checkbox-multi-grid" id="userRosterCheckboxContainer"></div>
-        </div>
 
-        <div class="form-group">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <label>Select Mandatory Items (Multi-Select) *</label>
-            <div>
-              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllMandatoryItems(true)">Select All</button>
-              <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllMandatoryItems(false)">Deselect All</button>
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
+              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Modules (Multi-Select) *</label>
+              <div>
+                <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllMandatoryItems(true)">Select All</button>
+                <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllMandatoryItems(false)">Deselect All</button>
+              </div>
             </div>
+            <div class="checkbox-multi-grid" id="mandatoryMultiCheckboxContainer"></div>
           </div>
-          <div class="checkbox-multi-grid" id="mandatoryMultiCheckboxContainer"></div>
         </div>
 
-        <div class="form-group">
-          <label>Completion Due Date *</label>
-          <input type="date" id="mandatoryDueDate">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.65rem;">
+          <div class="form-group">
+            <label>Completion Due Date *</label>
+            <input type="date" id="mandatoryDueDate">
+          </div>
+          <div class="form-group">
+            <label>Configurable Reminder Trigger Timing *</label>
+            <select id="triggerTimingSelect" class="styled-dropdown-catchy">
+              <option value="Before Due Date">Before Due Date (2 Days Prior)</option>
+              <option value="On Due Date">On Due Date</option>
+              <option value="After Due Date">After Due Date (Overdue Notice)</option>
+              <option value="Recurring 3 Days">Recurring (Every 3 Days)</option>
+              <option value="Recurring 7 Days">Recurring (Every 7 Days)</option>
+            </select>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>Configurable Reminder Trigger Timing *</label>
-          <select id="triggerTimingSelect" class="styled-dropdown-catchy">
-            <option value="Before Due Date">Before Due Date (2 Days Prior)</option>
-            <option value="On Due Date">On Due Date</option>
-            <option value="After Due Date">After Due Date (Overdue Notice)</option>
-            <option value="Recurring 3 Days">Recurring (Every 3 Days)</option>
-            <option value="Recurring 7 Days">Recurring (Every 7 Days)</option>
-          </select>
-        </div>
-
-        <button type="button" class="btn-submit" onclick="saveMandatorySettingsMulti()">Save Mandatory Assignments</button>
+        <button type="button" class="btn-submit" style="margin-top:0.65rem; width:100%;" onclick="saveMandatorySettingsMulti()">Assign Mandatory & Trigger Email Notification</button>
 
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Mandatory Assignments:</label>
@@ -942,9 +965,9 @@
 
   <!-- USER PROGRESS DASHBOARD MODAL FOR POWER USERS -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
-    <div class="modal-content" style="max-width: 820px;">
+    <div class="modal-content" style="max-width: 840px;">
       <div class="modal-header">
-        <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
+        <h2 id="dashboardModalTitle">Implementation User Roster & Progress Dashboard</h2>
         <div style="display:flex; align-items:center; gap:0.4rem;">
           <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="openUserAnalyticsDashboard()">
             <span class="material-icons-outlined" style="font-size:14px;">refresh</span><span>Refresh Live</span>
@@ -952,14 +975,20 @@
           <button class="modal-close-btn" onclick="closeModal('userDashboardModalOverlay')"><span class="material-icons-outlined">close</span></button>
         </div>
       </div>
+
+      <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.5rem 0.75rem; margin-bottom:0.65rem; display:flex; gap:1.5rem;">
+        <span style="font-size:0.8rem; font-weight:400;">Total Users: <strong id="rosterTotalUsersCount">0</strong></span>
+        <span style="font-size:0.8rem; font-weight:400; color:var(--google-red);">Mandatory Assigned: <strong id="rosterMandatoryAssignedCount">0</strong></span>
+      </div>
+
       <div class="table-container">
         <table class="doc-table">
           <thead>
             <tr>
-              <th>User Email</th>
+              <th>User</th>
+              <th>Mandatory Assigned</th>
+              <th>Status</th>
               <th>Last Active</th>
-              <th>Completed Modules</th>
-              <th>Recent Document Viewed</th>
               <th style="text-align:right;">Actions</th>
             </tr>
           </thead>
@@ -976,25 +1005,12 @@
         <h2 id="drilldownUserTitle">User Details</h2>
         <button class="modal-close-btn" onclick="closeModal('userDetailBreakdownModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
-      <div class="modal-body-scroll" style="display:flex; flex-direction:column; gap:0.65rem;">
-        <div>
-          <label style="font-size:0.75rem; font-weight:400; color:var(--google-green);">Completed Modules:</label>
-          <ul class="detail-list" id="drilldownCompletedList"></ul>
-        </div>
-        <div>
-          <label style="font-size:0.75rem; font-weight:400; color:var(--google-red);">Pending Mandatory Modules:</label>
-          <ul class="detail-list" id="drilldownPendingList"></ul>
-        </div>
-        <div>
-          <label style="font-size:0.75rem; font-weight:400; color:var(--google-purple);">Viewed Documents History:</label>
-          <ul class="detail-list" id="drilldownViewedList"></ul>
-        </div>
-      </div>
+      <div class="modal-body-scroll" style="display:flex; flex-direction:column; gap:0.65rem;" id="drilldownBodyContainer"></div>
     </div>
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwHZ0MgNB544oijxLDsQJGjhp3ZnieNod6aVobpVKUQ9d-yeDWTgDgACCsSnG6qLVpy/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwaWf_9K11knN5ROo2rj0oogJjndIAJy24hv5EtOol31v3ExKurQUkhYs4UN0Ht9uQ-/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1158,7 +1174,7 @@
 
     let mandatoryData = {}; 
     let joinersData = {};   
-    let registeredUsersList = [];
+    let implementationRosterList = [];
 
     let activeTab = 'quickLinksTab';
     let activeMandatorySubtab = 'quick';
@@ -1182,10 +1198,12 @@
 
     function cleanAsciiText(str) { return str ? str.replace(/[^\x00-\x7F]/g, '').trim() : ''; }
 
-    function formatUserDisplayName(email) {
-      if (!email) return "Sign In";
-      let namePart = email.split('@')[0].split('.')[0];
-      return namePart.charAt(0).toUpperCase() + namePart.slice(1);
+    function deriveDisplayName(email) {
+      if (!email) return "User";
+      let prefix = email.split('@')[0];
+      let parts = prefix.split('.');
+      let formattedParts = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1));
+      return formattedParts.join(' ');
     }
 
     function toggleThemeView() {
@@ -1322,11 +1340,11 @@
         if (data && data.powerUsers) {
           data.powerUsers.forEach(u => powerUsers.add(u.toLowerCase().trim()));
         }
+        if (data && data.roster) implementationRosterList = data.roster;
         if (data && data.mandatoryData) mandatoryData = data.mandatoryData;
         if (data && data.joinersData) joinersData = data.joinersData;
-        if (data && data.registeredUsers) registeredUsersList = data.registeredUsers;
-        if (data && data.autoEmailFreq) {
-          document.getElementById('autoEmailFreqSelect').value = data.autoEmailFreq;
+        if (data && data.triggerConfig) {
+          if (data.triggerConfig.timing) document.getElementById('triggerTimingSelect').value = data.triggerConfig.timing;
         }
         checkMandatoryNavVisibility();
       });
@@ -1337,7 +1355,13 @@
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
       const mandatoryKeys = Object.keys(mandatoryData);
 
-      const uncompletedMandatory = mandatoryKeys.filter(k => !completedSet.has(k));
+      const uncompletedMandatory = mandatoryKeys.filter(k => {
+        let entry = mandatoryData[k];
+        let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
+        let isForMe = assignedUsers.length === 0 || assignedUsers.indexOf(currentUser.toLowerCase().trim()) > -1;
+        return isForMe && !completedSet.has(k);
+      });
+
       mandatoryNav.style.display = uncompletedMandatory.length > 0 ? 'inline-flex' : 'none';
     }
 
@@ -1398,8 +1422,8 @@
     function updateUserBadgeDisplay() {
       const displayElem = document.getElementById('activeUserDisplay');
       if (currentUser) {
-        displayElem.textContent = formatUserDisplayName(currentUser);
-        document.getElementById('modalProfileDisplayName').textContent = formatUserDisplayName(currentUser);
+        displayElem.textContent = deriveDisplayName(currentUser);
+        document.getElementById('modalProfileDisplayName').textContent = deriveDisplayName(currentUser);
         document.getElementById('modalProfileEmail').textContent = currentUser;
 
         let avatarUrl = `https://lh3.googleusercontent.com/a/default-user`;
@@ -1740,7 +1764,7 @@
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = completedSet.has(res.id);
         const isNew = res.releaseDate === todayStr;
-        const dueDate = mandatoryData[res.id];
+        const dueDate = mandatoryData[res.id] ? (typeof mandatoryData[res.id] === 'object' ? mandatoryData[res.id].dueDate : mandatoryData[res.id]) : null;
 
         return `
           <article class="resource-card ${dueDate ? 'mandatory-card' : ''}">
@@ -1791,7 +1815,7 @@
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = completedSet.has(res.id);
         const isNew = res.releaseDate === todayStr;
-        const dueDate = mandatoryData[res.id];
+        const dueDate = mandatoryData[res.id] ? (typeof mandatoryData[res.id] === 'object' ? mandatoryData[res.id].dueDate : mandatoryData[res.id]) : null;
 
         return `
           <tr>
@@ -1837,8 +1861,16 @@
 
       let mandatoryItems = [];
       mandatoryKeys.forEach(k => {
-        let found = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
-        if (found && !completedSet.has(k)) mandatoryItems.push({ ...found, dueDate: mandatoryData[k] });
+        let entry = mandatoryData[k];
+        let dueDate = typeof entry === 'object' ? entry.dueDate : entry;
+        let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
+
+        let isForMe = assignedUsers.length === 0 || assignedUsers.indexOf(currentUser.toLowerCase().trim()) > -1;
+
+        if (isForMe && !completedSet.has(k)) {
+          let found = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
+          if (found) mandatoryItems.push({ ...found, dueDate: dueDate });
+        }
       });
 
       if (mandatoryItems.length === 0) {
@@ -1885,8 +1917,8 @@
       }
 
       let quickMatches = quickDataset.filter(i => i.name.toLowerCase().includes(query) || i.description.toLowerCase().includes(query));
-      let learningMatches = dataset.filter(i => i.name.toLowerCase().includes(query) || i.category.toLowerCase().includes(query) || i.description.toLowerCase().includes(query));
       let docMatches = docDataset.filter(i => i.pkg.toLowerCase().includes(query) || i.type.toLowerCase().includes(query) || i.description.toLowerCase().includes(query));
+      let learningMatches = dataset.filter(i => i.name.toLowerCase().includes(query) || i.category.toLowerCase().includes(query) || i.description.toLowerCase().includes(query));
 
       if (quickMatches.length === 0 && learningMatches.length === 0 && docMatches.length === 0) {
         container.innerHTML = `<p style="font-size:0.8rem; color:var(--text-secondary); text-align:center;">No matching resources found across any hub.</p>`;
@@ -2002,15 +2034,12 @@
 
     function renderUserRosterCheckboxes() {
       const container = document.getElementById('userRosterCheckboxContainer');
-      if (registeredUsersList.length === 0) {
-        container.innerHTML = `<p style="font-size:0.75rem; color:var(--text-secondary);">No registered users logged in yet.</p>`;
-        return;
-      }
+      let rosterList = implementationRosterList.length > 0 ? implementationRosterList : Array.from(powerUsers);
 
-      container.innerHTML = registeredUsersList.map(u => `
+      container.innerHTML = rosterList.map(u => `
         <label class="checkbox-item">
           <input type="checkbox" value="${u}" class="roster-user-chk">
-          <span>${u}</span>
+          <span>${deriveDisplayName(u)} (${u})</span>
         </label>
       `).join('');
     }
@@ -2048,28 +2077,50 @@
       const userCheckboxes = document.querySelectorAll('.roster-user-chk:checked');
       const itemCheckboxes = document.querySelectorAll('.mandatory-chk:checked');
       const dueDate = document.getElementById('mandatoryDueDate').value;
-      const freq = document.getElementById('autoEmailFreqSelect').value;
-      const manualEmails = document.getElementById('mandatoryAssignedEmailsInput').value.trim();
+      const timingSelect = document.getElementById('triggerTimingSelect').value;
 
-      let assignedUserList = Array.from(userCheckboxes).map(cb => cb.value);
-      if (manualEmails) {
-        let splitManual = manualEmails.split(',').map(e => e.trim().toLowerCase()).filter(e => e.length > 0);
-        assignedUserList = Array.from(new Set([...assignedUserList, ...splitManual]));
+      let selectedUsers = Array.from(userCheckboxes).map(cb => cb.value);
+      let selectedItems = Array.from(itemCheckboxes).map(cb => cb.value);
+
+      if (selectedUsers.length === 0 || selectedItems.length === 0) {
+        alert("Validation Required: You must select at least ONE target user AND at least ONE document/module.");
+        return;
       }
 
-      itemCheckboxes.forEach(cb => {
-        mandatoryData[cb.value] = { dueDate: dueDate || 'ASAP', users: assignedUserList };
+      selectedItems.forEach(itemId => {
+        mandatoryData[itemId] = {
+          dueDate: dueDate || 'ASAP',
+          users: selectedUsers
+        };
       });
 
       callGasJsonp({ 
         action: 'SAVE_MANDATORY_ASSIGNMENTS', 
         data: JSON.stringify(mandatoryData), 
-        triggerConfig: JSON.stringify({ timing: document.getElementById('triggerTimingSelect').value, freq: freq })
-      }, function() {
-        alert("Mandatory assignments and reminder frequencies saved!");
-        renderMandatoryItemsList();
-        checkMandatoryNavVisibility();
-        renderCurrentActiveTab();
+        triggerConfig: JSON.stringify({ timing: timingSelect })
+      }, function(res) {
+        if (res && res.status === "SUCCESS") {
+          alert("Mandatory assignment successfully created! Triggering email notifications to assigned users.");
+          
+          selectedItems.forEach(itemId => {
+            let found = quickDataset.find(d => d.id === itemId) || dataset.find(d => d.id === itemId) || docDataset.find(d => (d.id === itemId || (d.pkg + d.type) === itemId));
+            let title = found ? (found.name || found.pkg + ' ' + found.type) : 'Mandatory Module';
+            
+            callGasJsonp({
+              action: 'SEND_TARGETED_REMINDER',
+              emails: selectedUsers.join(','),
+              moduleTitle: title,
+              dueDate: dueDate || 'ASAP',
+              triggerTiming: timingSelect
+            }, function(){});
+          });
+
+          renderMandatoryItemsList();
+          checkMandatoryNavVisibility();
+          renderCurrentActiveTab();
+        } else {
+          alert(res ? res.message : "Failed to save mandatory assignment.");
+        }
       });
     }
 
@@ -2086,14 +2137,14 @@
       const container = document.getElementById('mandatoryItemsList');
       const keys = Object.keys(mandatoryData);
       container.innerHTML = keys.map(id => {
-        let item = mandatoryData[id];
+        let entry = mandatoryData[id];
         let found = quickDataset.find(d => d.id === id) || dataset.find(d => d.id === id) || docDataset.find(d => (d.id === id || (d.pkg + d.type) === id));
-        let displayDueDate = typeof item === 'object' ? item.dueDate : item;
-        let assignedCount = typeof item === 'object' && item.users ? item.users.length : 'All Users';
+        let displayDueDate = typeof entry === 'object' ? entry.dueDate : entry;
+        let assignedCount = typeof entry === 'object' && entry.users ? entry.users.length : 'All';
 
         return `
           <div class="power-user-chip">
-            <span><strong>${found ? (found.name || found.pkg + ' ' + found.type) : id}</strong> (Due: ${displayDueDate}) - ${assignedCount} Users</span>
+            <span><strong>${found ? (found.name || found.pkg + ' ' + found.type) : id}</strong> (Due: ${displayDueDate}) - ${assignedCount} Users Assigned</span>
             <button type="button" onclick="removeMandatorySetting('${id}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
               <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
             </button>
@@ -2138,9 +2189,9 @@
         const checkboxes = document.querySelectorAll('.joiner-module-chk:checked');
         let selectedModuleIds = Array.from(checkboxes).map(cb => cb.value);
 
-        if (!joinersData[input]) joinersData[input] = { restricted: true, status: 'In Progress', assignedModules: [], quick: [], learning: [], document: [] };
+        if (!joinersData[input]) joinersData[input] = { restricted: true, status: 'Not Started', assignedModules: [], quick: [], learning: [], document: [] };
         joinersData[input].restricted = true;
-        joinersData[input].status = 'In Progress';
+        joinersData[input].status = 'Not Started';
         joinersData[input].assignedModules = Array.from(new Set([...(joinersData[input].assignedModules || []), ...selectedModuleIds]));
         joinersData[input][activeJoinersSubtab] = selectedModuleIds;
 
@@ -2164,7 +2215,7 @@
       const keys = Object.keys(joinersData);
       container.innerHTML = keys.map(e => `
         <div class="power-user-chip">
-          <span>${e} [Status: ${joinersData[e].status || 'In Progress'}]</span>
+          <span>${deriveDisplayName(e)} (${e}) - Status: [${joinersData[e].status || 'Not Started'}]</span>
           <button type="button" onclick="removeJoiner('${e}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
             <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
           </button>
@@ -2176,7 +2227,7 @@
       const container = document.getElementById('powerUserListContainer');
       container.innerHTML = Array.from(powerUsers).map(u => `
         <div class="power-user-chip">
-          <span>${u}</span>
+          <span>${deriveDisplayName(u)} (${u})</span>
           <button type="button" onclick="removePowerUser('${u}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
             <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
           </button>
@@ -2220,10 +2271,16 @@
       });
     }
 
-    function deleteUserAnalyticsRecord(email) {
-      if (!confirm(`Are you sure you want to delete progress record for ${email}?`)) return;
-      callGasJsonp({ action: 'DELETE_USER_ANALYTICS', email: email, requesterEmail: currentUser }, function() {
-        openUserAnalyticsDashboard();
+    function deleteImplementationRosterUser(email) {
+      if (!confirm(`Are you sure you want to remove ${deriveDisplayName(email)} (${email}) from the active implementation roster?`)) return;
+      callGasJsonp({ action: 'DELETE_IMPLEMENTATION_USER', email: email, requesterEmail: currentUser }, function(res) {
+        if (res && res.status === "SUCCESS") {
+          alert(`User ${email} removed from active roster.`);
+          detectGoogleSessionAccount();
+          openUserAnalyticsDashboard();
+        } else {
+          alert(res ? res.message : "Deletion failed.");
+        }
       });
     }
 
@@ -2276,80 +2333,126 @@
     function openUserAnalyticsDashboard() {
       document.getElementById('userDashboardModalOverlay').classList.add('open');
       const tbody = document.getElementById('userAnalyticsTableBody');
-      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">Loading user activity sorted by recent login...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">Loading implementation user roster...</td></tr>`;
 
       callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(data) {
         globalAnalyticsCache = (data && data.users) ? data.users : {};
-        let userKeys = Object.keys(globalAnalyticsCache);
+        let rosterList = implementationRosterList.length > 0 ? implementationRosterList : Object.keys(globalAnalyticsCache);
 
-        userKeys.sort((a, b) => new Date(globalAnalyticsCache[b].lastLogin || 0) - new Date(globalAnalyticsCache[a].lastLogin || 0));
+        document.getElementById('rosterTotalUsersCount').textContent = rosterList.length;
 
-        if (userKeys.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">No analytics recorded yet.</td></tr>`;
-          return;
-        }
+        let mandatoryAssignedCount = 0;
+        const mandatoryKeys = Object.keys(mandatoryData);
 
-        tbody.innerHTML = userKeys.map(u => {
-          let record = globalAnalyticsCache[u];
+        tbody.innerHTML = rosterList.map(u => {
+          let record = globalAnalyticsCache[u] || { lastLogin: 'N/A', completedTopics: [], seenDocs: [] };
+          let userCompleted = new Set(record.completedTopics || []);
+          
+          let myMandatory = mandatoryKeys.filter(k => {
+            let entry = mandatoryData[k];
+            let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
+            return assignedUsers.length === 0 || assignedUsers.indexOf(u) > -1;
+          });
+
+          if (myMandatory.length > 0) mandatoryAssignedCount++;
+
+          let myPendingMandatory = myMandatory.filter(k => !userCompleted.has(k));
+          let statusLabel = myPendingMandatory.length === 0 ? '<span style="color:var(--google-green); font-weight:400;">Complete</span>' : `<span style="color:var(--google-red); font-weight:400;">Pending (${myPendingMandatory.length})</span>`;
           let recentDoc = (record.seenDocs && record.seenDocs.length > 0) ? `${record.seenDocs[0].pkg} - ${record.seenDocs[0].type}` : 'None';
+
           return `
-            <tr>
-              <td><strong>${u}</strong></td>
-              <td>${record.lastLogin || 'N/A'}</td>
-              <td><span style="color:var(--google-green); font-weight:400;">${record.completedTopics ? record.completedTopics.length : 0} Completed</span></td>
-              <td style="font-size:0.78rem; color:var(--text-secondary);">${recentDoc}</td>
-              <td style="text-align:right;">
-                <button type="button" class="action-btn" onclick="openDrilldownModal('${u}')" title="Details"><span class="material-icons-outlined" style="font-size:18px;">visibility</span></button>
-                <button type="button" class="action-btn" onclick="sendTargetedReminderSingle('${u}')" title="Send Targeted Reminder to Unreviewed User"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">notifications_active</span></button>
-                <button type="button" class="action-btn" onclick="deleteUserAnalyticsRecord('${u}')" title="Delete User"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-red);">delete</span></button>
+            <tr onclick="openDrilldownModal('${u}')" style="cursor:pointer;">
+              <td><strong>${deriveDisplayName(u)}</strong><br><span style="font-size:0.72rem; color:var(--text-secondary);">${u}</span></td>
+              <td style="text-align:center;"><span class="active-count-badge">${myMandatory.length} Items</span></td>
+              <td>${statusLabel}</td>
+              <td style="font-size:0.78rem; color:var(--text-secondary);">${record.lastLogin || 'N/A'}</td>
+              <td style="text-align:right;" onclick="event.stopPropagation();">
+                <button type="button" class="action-btn" onclick="openDrilldownModal('${u}')" title="View Details"><span class="material-icons-outlined" style="font-size:18px;">visibility</span></button>
+                <button type="button" class="action-btn" onclick="sendTargetedReminderSingle('${u}')" title="Send Reminder"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">notifications_active</span></button>
+                <button type="button" class="action-btn" onclick="deleteImplementationRosterUser('${u}')" title="Remove User"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-red);">delete</span></button>
               </td>
             </tr>
           `;
         }).join('');
+
+        document.getElementById('rosterMandatoryAssignedCount').textContent = mandatoryAssignedCount;
       });
     }
 
     function openDrilldownModal(email) {
       const u = globalAnalyticsCache[email] || { completedTopics: [], seenDocs: [] };
-      document.getElementById('drilldownUserTitle').textContent = `User Progress Breakdown: ${email}`;
+      document.getElementById('drilldownUserTitle').textContent = `User Details: ${deriveDisplayName(email)}`;
 
       const completedIds = u.completedTopics || [];
       const completedList = dataset.filter(d => completedIds.includes(d.id));
-      document.getElementById('drilldownCompletedList').innerHTML = completedList.length > 0 ?
-        completedList.map(item => `<li><span>${item.name} (${item.category})</span><span class="material-icons-outlined" style="color:var(--google-green); font-size:16px;">check_circle</span></li>`).join('') :
-        `<li><span style="color:var(--text-secondary);">No completed modules recorded.</span></li>`;
-
       const mandatoryKeys = Object.keys(mandatoryData);
-      const pendingMandatory = mandatoryKeys.filter(k => !completedIds.includes(k));
-      document.getElementById('drilldownPendingList').innerHTML = pendingMandatory.length > 0 ?
-        pendingMandatory.map(k => {
-          let item = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
-          return `<li><span>${item ? (item.name || item.pkg) : k} (Due: ${typeof mandatoryData[k] === 'object' ? mandatoryData[k].dueDate : mandatoryData[k]})</span><span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">error_outline</span></li>`;
-        }).join('') : `<li><span style="color:var(--google-green);">All mandatory modules completed!</span></li>`;
+      const myMandatory = mandatoryKeys.filter(k => {
+        let entry = mandatoryData[k];
+        let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
+        return assignedUsers.length === 0 || assignedUsers.indexOf(email) > -1;
+      });
 
-      const seenDocs = u.seenDocs || [];
-      document.getElementById('drilldownViewedList').innerHTML = seenDocs.length > 0 ?
-        seenDocs.map(doc => `<li><span>${doc.pkg} - ${doc.type}</span><span style="font-size:0.72rem; color:var(--text-secondary);">${doc.timestamp || ''}</span></li>`).join('') :
-        `<li><span style="color:var(--text-secondary);">No document history recorded.</span></li>`;
+      const myPendingMandatory = myMandatory.filter(k => !completedIds.includes(k));
+      let pct = myMandatory.length > 0 ? Math.round(((myMandatory.length - myPendingMandatory.length) / myMandatory.length) * 100) : 100;
 
+      let html = `
+        <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.65rem; margin-bottom:0.5rem;">
+          <strong style="font-size:0.9rem;">${deriveDisplayName(email)}</strong> (${email})
+          <div style="display:flex; justify-content:space-between; margin-top:0.4rem; font-size:0.8rem;">
+            <span>Total Mandatory: <strong>${myMandatory.length}</strong></span>
+            <span>Completed: <strong style="color:var(--google-green);">${myMandatory.length - myPendingMandatory.length}</strong></span>
+            <span>Pending: <strong style="color:var(--google-red);">${myPendingMandatory.length}</strong></span>
+            <span>Progress: <strong>${pct}%</strong></span>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:0.75rem; font-weight:400; color:var(--google-green);">Completed Documents / Modules:</label>
+          <ul class="detail-list">
+            ${completedList.length > 0 ? completedList.map(item => `<li><span>✓ ${item.name} (${item.category})</span><span class="material-icons-outlined" style="color:var(--google-green); font-size:16px;">check_circle</span></li>`).join('') : '<li><span style="color:var(--text-secondary);">No completed items recorded.</span></li>'}
+          </ul>
+        </div>
+
+        <div>
+          <label style="font-size:0.75rem; font-weight:400; color:var(--google-red);">Pending Mandatory Items:</label>
+          <ul class="detail-list">
+            ${myPendingMandatory.length > 0 ? myPendingMandatory.map(k => {
+              let item = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
+              let dueDate = typeof mandatoryData[k] === 'object' ? mandatoryData[k].dueDate : mandatoryData[k];
+              return `<li><span>○ ${item ? (item.name || item.pkg + ' ' + item.type) : k} (Due: ${dueDate})</span><span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">error_outline</span></li>`;
+            }).join('') : '<li><span style="color:var(--google-green);">All mandatory items completed!</span></li>'}
+          </ul>
+        </div>
+
+        <button type="button" class="btn-submit" style="margin-top:0.5rem;" onclick="sendTargetedReminderSingle('${email}')">Send Reminder Email to ${deriveDisplayName(email)}</button>
+      `;
+
+      document.getElementById('drilldownBodyContainer').innerHTML = html;
       document.getElementById('userDetailBreakdownModalOverlay').classList.add('open');
     }
 
     function sendTargetedReminderSingle(email) {
       let u = globalAnalyticsCache[email] || { completedTopics: [] };
       let completedIds = u.completedTopics || [];
-      let pendingKeys = Object.keys(mandatoryData).filter(k => !completedIds.includes(k));
+      let pendingKeys = Object.keys(mandatoryData).filter(k => {
+        let entry = mandatoryData[k];
+        let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
+        let isForMe = assignedUsers.length === 0 || assignedUsers.indexOf(email) > -1;
+        return isForMe && !completedIds.includes(k);
+      });
 
       if (pendingKeys.length === 0) {
-        alert(`${email} has completed all assigned mandatory modules. No reminder needed.`);
+        alert(`${deriveDisplayName(email)} has completed all assigned mandatory modules. No reminder needed.`);
         return;
       }
 
-      let title = (dataset.find(d => d.id === pendingKeys[0]) || {}).name || 'Assigned Mandatory Module';
-      let dueDate = typeof mandatoryData[pendingKeys[0]] === 'object' ? mandatoryData[pendingKeys[0]].dueDate : (mandatoryData[pendingKeys[0]] || 'ASAP');
+      let firstPending = pendingKeys[0];
+      let item = quickDataset.find(d => d.id === firstPending) || dataset.find(d => d.id === firstPending) || docDataset.find(d => (d.id === firstPending || (d.pkg + d.type) === firstPending));
+      let title = item ? (item.name || item.pkg + ' ' + item.type) : 'Mandatory Learning';
+      let dueDate = typeof mandatoryData[firstPending] === 'object' ? mandatoryData[firstPending].dueDate : (mandatoryData[firstPending] || 'ASAP');
 
       callGasJsonp({ action: 'SEND_TARGETED_REMINDER', emails: email, moduleTitle: title, dueDate: dueDate, triggerTiming: "On Demand" }, function(res) {
-        alert(res.status === "SUCCESS" ? `Targeted reminder dispatched to uncompleted user: ${email}` : `Failed: ${res.error}`);
+        alert(res.status === "SUCCESS" ? `Targeted reminder email sent to ${deriveDisplayName(email)} (${email})!` : `Failed: ${res.error}`);
       });
     }
 
