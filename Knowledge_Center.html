@@ -77,39 +77,39 @@
     }
 
     .idea-lightbulb-svg {
-      width: 54px;
-      height: 54px;
+      width: 56px;
+      height: 56px;
       object-fit: contain;
       vertical-align: middle;
-      margin-bottom: 0.35rem;
+      flex-shrink: 0;
     }
 
+    /* HEADER WITH LOGO ON LEFT AND TEXT ON RIGHT */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
-      padding: 1.25rem 1.25rem;
+      padding: 1.1rem 1.5rem;
       border-bottom: 2px solid var(--google-blue);
-      text-align: center;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 1rem;
     }
 
     .header-title-container {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      gap: 0.2rem;
-      text-align: center;
+      gap: 0.1rem;
+      text-align: left;
     }
 
     .brand-title-main {
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       font-weight: 500;
       color: #ffffff;
-      text-align: center;
+      line-height: 1.2;
     }
 
     .brand-subtitle {
@@ -117,7 +117,6 @@
       font-size: 0.88rem;
       font-weight: 400;
       color: #ffffff;
-      text-align: center;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -169,21 +168,21 @@
       gap: 0.5rem;
     }
     
-    /* ANIMATED TABS SWITCHING WITH FADE/SLIDE EFFECT */
+    /* ANIMATED COMPACT TABS SWITCHING */
     .nav-tabs { display: flex; gap: 0.4rem; align-items: center; }
     .tab-btn {
       background: var(--bg-body);
       border: 1px solid var(--border-color);
-      padding: 0.35rem 0.75rem;
+      padding: 0.3rem 0.7rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 400;
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      border-radius: 18px;
+      gap: 0.35rem;
+      border-radius: 16px;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .tab-btn.quick-tab.active { background: #e6f4ea; color: var(--google-green); border-color: var(--google-green); transform: translateY(-1px); }
@@ -198,7 +197,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 0.25rem 0.65rem;
+      padding: 0.2rem 0.55rem;
       font-size: 0.75rem;
       font-weight: 400;
       cursor: pointer;
@@ -337,7 +336,7 @@
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow: hidden;
     }
     .modal-overlay.open { display: flex; }
-    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 620px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 15px; border: 1px solid var(--border-color); max-height: 85vh; display: flex; flex-direction: column; }
+    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 640px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 15px; border: 1px solid var(--border-color); max-height: 85vh; display: flex; flex-direction: column; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-shrink: 0; }
     .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1rem; font-weight: 400; }
     .modal-body-scroll { overflow-y: auto; flex: 1; padding-right: 0.25rem; }
@@ -385,6 +384,8 @@
     .global-search-category-hdr { font-size: 0.72rem; font-weight: 400; color: var(--google-blue); text-transform: uppercase; margin-top: 0.4rem; margin-bottom: 0.2rem; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 0.15rem; }
 
     @media (max-width: 600px) {
+      .top-hero-header { flex-direction: column; text-align: center; }
+      .header-title-container { align-items: center; }
       .top-utility-bar { flex-direction: column; gap: 0.5rem; align-items: stretch; }
       .top-utility-right { justify-content: space-between; }
       .filter-controls-grid { grid-template-columns: 1fr; }
@@ -422,27 +423,27 @@
     </div>
   </div>
 
-  <!-- TOP HERO HEADER WITH EXACT LOGO & CENTERED WHITE HIERARCHY -->
+  <!-- TOP HERO HEADER WITH LOGO ON LEFT & TYPOGRAPHY ON RIGHT -->
   <div class="top-hero-header" id="heroHeaderElem">
+    <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
+      <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
+      <circle class="symphony-dot green" cx="50" cy="30" r="6" fill="#34a853"/>
+      <circle cx="150" cy="30" r="12" fill="none" stroke="#fbbc05" stroke-width="4"/>
+      <circle class="symphony-dot yellow" cx="150" cy="30" r="6" fill="#fbbc05"/>
+      <path d="M 60,110 C 30,80 40,40 100,20 C 160,40 170,80 140,110 C 130,125 125,140 125,155 L 75,155 C 75,140 70,125 60,110 Z" fill="none" stroke="#34a853" stroke-width="5"/>
+      <circle class="symphony-dot red" cx="100" cy="70" r="10" fill="#ea4335"/>
+      <circle class="symphony-dot blue" cx="80" cy="95" r="8" fill="#4285f4"/>
+      <circle class="symphony-dot blue" cx="120" cy="95" r="8" fill="#4285f4"/>
+      <circle class="symphony-dot green" cx="100" cy="120" r="8" fill="#34a853"/>
+      <line x1="100" y1="70" x2="80" y2="95" stroke="#ea4335" stroke-width="3"/>
+      <line x1="100" y1="70" x2="120" y2="95" stroke="#ea4335" stroke-width="3"/>
+      <line x1="80" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
+      <line x1="120" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
+      <rect x="80" y="160" width="40" height="8" rx="3" fill="#ea4335"/>
+      <rect x="85" y="172" width="30" height="6" rx="3" fill="#fbbc05"/>
+      <rect x="92" y="182" width="16" height="5" rx="2" fill="#4285f4"/>
+    </svg>
     <div class="header-title-container">
-      <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
-        <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
-        <circle class="symphony-dot green" cx="50" cy="30" r="6" fill="#34a853"/>
-        <circle cx="150" cy="30" r="12" fill="none" stroke="#fbbc05" stroke-width="4"/>
-        <circle class="symphony-dot yellow" cx="150" cy="30" r="6" fill="#fbbc05"/>
-        <path d="M 60,110 C 30,80 40,40 100,20 C 160,40 170,80 140,110 C 130,125 125,140 125,155 L 75,155 C 75,140 70,125 60,110 Z" fill="none" stroke="#34a853" stroke-width="5"/>
-        <circle class="symphony-dot red" cx="100" cy="70" r="10" fill="#ea4335"/>
-        <circle class="symphony-dot blue" cx="80" cy="95" r="8" fill="#4285f4"/>
-        <circle class="symphony-dot blue" cx="120" cy="95" r="8" fill="#4285f4"/>
-        <circle class="symphony-dot green" cx="100" cy="120" r="8" fill="#34a853"/>
-        <line x1="100" y1="70" x2="80" y2="95" stroke="#ea4335" stroke-width="3"/>
-        <line x1="100" y1="70" x2="120" y2="95" stroke="#ea4335" stroke-width="3"/>
-        <line x1="80" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
-        <line x1="120" y1="95" x2="100" y2="120" stroke="#34a853" stroke-width="3"/>
-        <rect x="80" y="160" width="40" height="8" rx="3" fill="#ea4335"/>
-        <rect x="85" y="172" width="30" height="6" rx="3" fill="#fbbc05"/>
-        <rect x="92" y="182" width="16" height="5" rx="2" fill="#4285f4"/>
-      </svg>
       <div class="brand-title-main" id="brandTitleMainElem">Symphony Implementation Team</div>
       <div class="brand-subtitle" id="titleTextSub">LEARNING & DOCUMENTATION HUB</div>
     </div>
@@ -471,7 +472,7 @@
     </div>
   </div>
 
-  <!-- NAVIGATION BAR (SINGLE INSTANCE) -->
+  <!-- BOOKMARKS & NAVIGATION BAR (SINGLE INSTANCE) -->
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn quick-tab active" onclick="switchTab('quickLinksTab', this)">
@@ -636,7 +637,7 @@
 
       <div class="modal-body-scroll" style="padding: 0.85rem 0; display:flex; flex-direction:column; gap:0.6rem;">
         <button type="button" class="btn-secondary" onclick="closeModal('profileModalOverlay'); openUserAnalyticsDashboard();">
-          <span class="material-icons-outlined" style="font-size:18px;">insights</span><span>User Progress Dashboard</span>
+          <span class="material-icons-outlined" style="font-size:18px;">insights</span><span>Implementation User Progress Dashboard</span>
         </button>
 
         <button type="button" class="btn-secondary" id="powerPrivilegesBtn" onclick="openPowerUserPrivilegesModal()">
@@ -652,7 +653,7 @@
         </button>
 
         <button type="button" class="btn-secondary" id="onboardingConfigBtn" onclick="openJoinersConfigModal()">
-          <span class="material-icons-outlined" style="font-size:18px;">person_add</span><span>New Joiners Onboarding</span>
+          <span class="material-icons-outlined" style="font-size:18px;">person_add</span><span>New Joiners Onboarding Control</span>
         </button>
 
         <button type="button" class="btn-secondary" style="color:var(--google-red); border-color:var(--google-red); margin-top:0.4rem;" onclick="handleSignOut()">
@@ -710,7 +711,7 @@
 
   <!-- MANDATORY MODULES & REMINDERS CONFIG MODAL WITH USER ROSTER -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
-    <div class="modal-content" style="max-width: 720px;">
+    <div class="modal-content" style="max-width: 740px;">
       <div class="modal-header">
         <h2>Mandatory Modules & Reminders Management</h2>
         <button class="modal-close-btn" onclick="closeModal('mandatoryConfigModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -726,7 +727,7 @@
         <div class="user-split-view-grid">
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Target Users from Roster *</label>
+              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Target Implementation Users *</label>
               <div>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllUserRoster(true)">Select All</button>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllUserRoster(false)">Deselect All</button>
@@ -753,7 +754,7 @@
             <input type="date" id="mandatoryDueDate">
           </div>
           <div class="form-group">
-            <label>Configurable Reminder Trigger Timing *</label>
+            <label>Configurable Reminder Trigger Schedule *</label>
             <select id="triggerTimingSelect" class="styled-dropdown-catchy">
               <option value="Before Due Date">Before Due Date (2 Days Prior)</option>
               <option value="On Due Date">On Due Date</option>
@@ -764,7 +765,7 @@
           </div>
         </div>
 
-        <button type="button" class="btn-submit" style="margin-top:0.65rem; width:100%;" onclick="saveMandatorySettingsMulti()">Assign Mandatory & Trigger Email Notification</button>
+        <button type="button" class="btn-submit" style="margin-top:0.65rem; width:100%;" onclick="saveMandatorySettingsMulti()">Assign Mandatory & Trigger Notification</button>
 
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Mandatory Assignments:</label>
@@ -848,10 +849,7 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label>Your MaxVal Email *</label>
-            <input type="email" id="submitterEmail" readonly style="background:var(--bg-body);">
-          </div>
+          <div class="form-group"><label>URL / Link *</label><input type="url" id="newLink" placeholder="https://..." required></div>
 
           <div id="quickFields">
             <div class="form-group"><label>Tool / Link Title *</label><input type="text" id="newQuickTitle" placeholder="e.g., Jira Portal" oninput="autoGenerateAIDescription()"></div>
@@ -896,20 +894,23 @@
             </label>
           </div>
 
-          <div class="form-group"><label>URL / Link *</label><input type="url" id="newLink" placeholder="https://..." required></div>
+          <div class="form-group">
+            <label>Your MaxVal Email *</label>
+            <input type="email" id="submitterEmail" readonly style="background:var(--bg-body);">
+          </div>
 
           <div class="form-group">
             <label>Notification Recipient Email(s) *</label>
             <input type="text" id="dlEmailAddress" placeholder="e.g., team@maxval.com" required>
           </div>
 
-          <button type="submit" class="btn-submit" id="submitBtn">Publish Link Live</button>
+          <button type="submit" class="btn-submit" id="submitBtn">Submit Link</button>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- USER PROGRESS DASHBOARD MODAL WITH TWO TAB PANELS -->
+  <!-- IMPLEMENTATION USER PROGRESS DASHBOARD MODAL WITH TWO SUBTABS -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 860px;">
       <div class="modal-header">
@@ -923,11 +924,11 @@
       </div>
 
       <div class="modal-subtabs">
-        <button type="button" class="modal-tab-btn active" id="dashboardTab1Btn" onclick="switchDashboardSubtab('all_progress', this)">Tab 1 - User Documents & Progress</button>
-        <button type="button" class="modal-tab-btn" id="dashboardTab2Btn" onclick="switchDashboardSubtab('mandatory_progress', this)">Tab 2 - Mandatory Progress</button>
+        <button type="button" class="modal-tab-btn active" id="dashboardTab1Btn" onclick="switchDashboardSubtab('all_progress', this)">User Documents & Progress</button>
+        <button type="button" class="modal-tab-btn" id="dashboardTab2Btn" onclick="switchDashboardSubtab('mandatory_progress', this)">Mandatory Progress</button>
       </div>
 
-      <!-- TAB 1: ALL DOCUMENTS & PROGRESS -->
+      <!-- TAB 1: USER DOCUMENTS & PROGRESS -->
       <div id="dashboardSubtabAll" style="display:block;">
         <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.5rem 0.75rem; margin-bottom:0.65rem; display:flex; gap:1.5rem; font-size:0.8rem;">
           <span>Total Users: <strong id="rosterTotalUsersCount">0</strong></span>
@@ -940,10 +941,10 @@
           <table class="doc-table">
             <thead>
               <tr>
-                <th>User</th>
-                <th style="text-align:center;">Documents</th>
-                <th style="text-align:center;">Completed</th>
-                <th style="text-align:center;">Pending</th>
+                <th>User Email</th>
+                <th>Last Active</th>
+                <th style="text-align:center;">Completed Modules</th>
+                <th>Recent Document Viewed</th>
                 <th style="text-align:right;">Actions</th>
               </tr>
             </thead>
@@ -965,7 +966,7 @@
           <table class="doc-table">
             <thead>
               <tr>
-                <th>User</th>
+                <th>User Email</th>
                 <th style="text-align:center;">Mandatory Items</th>
                 <th style="text-align:center;">Status</th>
                 <th style="text-align:center;">Completion %</th>
@@ -991,7 +992,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwGF17wd7fS4NBa56xzY1JA6JFqw-QhTaJWryeI6nefq0WNUBDTLCHd7l-WC_IdP6y9/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyl351TpTB8vYYXaA1kTgZRSceVrFGBU9t--O3uT-3JK4B__pXX9ES2Bor5kg5bWyhd/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1328,23 +1329,7 @@
         if (data && data.triggerConfig) {
           if (data.triggerConfig.timing) document.getElementById('triggerTimingSelect').value = data.triggerConfig.timing;
         }
-        checkMandatoryNavVisibility();
       });
-    }
-
-    function checkMandatoryNavVisibility() {
-      const mandatoryNav = document.getElementById('mandatoryNavTab');
-      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
-      const mandatoryKeys = Object.keys(mandatoryData);
-
-      const uncompletedMandatory = mandatoryKeys.filter(k => {
-        let entry = mandatoryData[k];
-        let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
-        let isForMe = assignedUsers.length === 0 || assignedUsers.indexOf(currentUser.toLowerCase().trim()) > -1;
-        return isForMe && !completedSet.has(k);
-      });
-
-      mandatoryNav.style.display = uncompletedMandatory.length > 0 ? 'inline-flex' : 'none';
     }
 
     function handleRequestOtp(e) {
@@ -1440,7 +1425,6 @@
       else completedSet.add(resId);
       localStorage.setItem('user_completed_topics_v23', JSON.stringify(Array.from(completedSet)));
       syncUserAnalyticsToBackend();
-      checkMandatoryNavVisibility();
       renderLearningHub();
       renderDocumentHub();
     }
@@ -1460,7 +1444,6 @@
           renderMandatoryMultiCheckboxes();
           renderUserRosterCheckboxes();
           renderJoinersMultiCheckboxes();
-          checkMandatoryNavVisibility();
           renderCurrentActiveTab();
           checkSameDayReleases();
         }
@@ -1507,7 +1490,6 @@
       if (activeTab === 'quickLinksTab') renderQuickLinksHub();
       else if (activeTab === 'documentHubTab') renderDocumentHub();
       else if (activeTab === 'learningHubTab') renderLearningHub();
-      else if (activeTab === 'mandatoryTab') renderMandatoryTabContent();
     }
 
     function switchTab(tabId, el) {
@@ -1836,53 +1818,6 @@
       }).join('');
     }
 
-    function renderMandatoryTabContent() {
-      const grid = document.getElementById('mandatoryGrid');
-      const mandatoryKeys = Object.keys(mandatoryData);
-      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
-
-      let mandatoryItems = [];
-      mandatoryKeys.forEach(k => {
-        let entry = mandatoryData[k];
-        let dueDate = typeof entry === 'object' ? entry.dueDate : entry;
-        let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
-
-        let isForMe = assignedUsers.length === 0 || assignedUsers.indexOf(currentUser.toLowerCase().trim()) > -1;
-
-        if (isForMe && !completedSet.has(k)) {
-          let found = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
-          if (found) mandatoryItems.push({ ...found, dueDate: dueDate });
-        }
-      });
-
-      if (mandatoryItems.length === 0) {
-        grid.innerHTML = `<p style="font-size:0.8rem; color:var(--text-secondary);">All assigned mandatory modules completed!</p>`;
-        return;
-      }
-
-      grid.innerHTML = mandatoryItems.map(item => {
-        const isCompleted = completedSet.has(item.id || (item.pkg + item.type));
-        return `
-          <article class="resource-card mandatory-card">
-            <div>
-              <div class="card-header">
-                <span class="category-badge" style="background:var(--google-red); color:#fff;">MANDATORY</span>
-                <span style="font-size:0.75rem; color:var(--google-red); font-weight:400;">Due: ${item.dueDate}</span>
-              </div>
-              <h3 class="card-title">${item.name || (item.pkg + ' ' + item.type)}</h3>
-              <p class="card-desc">${item.description || 'Assigned mandatory resource.'}</p>
-            </div>
-            <div class="card-actions">
-              <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                ${isCompleted ? '✓ Completed' : 'Pending Review'}
-              </span>
-              <a href="${item.link}" target="_blank" class="link-btn" onclick="trackDocView('${item.category || item.pkg}', '${item.name || item.type}')"><span>Open Resource</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
-            </div>
-          </article>
-        `;
-      }).join('');
-    }
-
     function openGlobalSearchModal() {
       document.getElementById('globalSearchModalOverlay').classList.add('open');
       document.getElementById('globalSearchInput').value = '';
@@ -2065,7 +2000,7 @@
       let selectedItems = Array.from(itemCheckboxes).map(cb => cb.value);
 
       if (selectedUsers.length === 0 || selectedItems.length === 0) {
-        alert("Validation Required: You must select at least ONE target user AND at least ONE document/module.");
+        alert("Validation Required: You must select at least ONE target Implementation User AND at least ONE document/module.");
         return;
       }
 
@@ -2082,7 +2017,7 @@
         triggerConfig: JSON.stringify({ timing: timingSelect })
       }, function(res) {
         if (res && res.status === "SUCCESS") {
-          alert("Mandatory assignment successfully created! Triggering email notifications to assigned users.");
+          alert("Mandatory assignment successfully created! Triggering notification email to assigned users.");
           
           selectedItems.forEach(itemId => {
             let found = quickDataset.find(d => d.id === itemId) || dataset.find(d => d.id === itemId) || docDataset.find(d => (d.id === itemId || (d.pkg + d.type) === itemId));
@@ -2098,7 +2033,6 @@
           });
 
           renderMandatoryItemsList();
-          checkMandatoryNavVisibility();
           renderCurrentActiveTab();
         } else {
           alert(res ? res.message : "Failed to save mandatory assignment.");
@@ -2110,7 +2044,6 @@
       delete mandatoryData[resId];
       callGasJsonp({ action: 'SAVE_MANDATORY_ASSIGNMENTS', data: JSON.stringify(mandatoryData) }, function() {
         renderMandatoryMultiCheckboxes();
-        checkMandatoryNavVisibility();
         renderCurrentActiveTab();
       });
     }
@@ -2122,11 +2055,11 @@
         let entry = mandatoryData[id];
         let found = quickDataset.find(d => d.id === id) || dataset.find(d => d.id === id) || docDataset.find(d => (d.id === id || (d.pkg + d.type) === id));
         let displayDueDate = typeof entry === 'object' ? entry.dueDate : entry;
-        let assignedCount = typeof entry === 'object' && entry.users ? entry.users.length : 'All';
+        let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
 
         return `
           <div class="power-user-chip">
-            <span><strong>${found ? (found.name || found.pkg + ' ' + found.type) : id}</strong> (Due: ${displayDueDate}) - ${assignedCount} Users Assigned</span>
+            <span><strong>${found ? (found.name || found.pkg + ' ' + found.type) : id}</strong> (Due: ${displayDueDate}) - ${assignedUsers.length} Users</span>
             <button type="button" onclick="removeMandatorySetting('${id}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
               <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
             </button>
@@ -2303,7 +2236,7 @@
       callGasJsonp({ action: 'SAVE_CUSTOM_LINK', hub: targetHub, item: JSON.stringify(payloadItem) }, function() {
         callGasJsonp({ action: 'SEND_PUBLISH_NOTIFICATION', dlAddress: dlAddress, submitter: currentUser, title: title, hubName: targetHub, link: link, releaseDate: currentDateStr }, function() {
           submitBtn.disabled = false;
-          submitBtn.textContent = "Publish Link Live";
+          submitBtn.textContent = "Submit Link";
           closeModal('addModalOverlay');
           loadGlobalCustomLinks();
         });
@@ -2326,7 +2259,7 @@
       const tbody = document.getElementById('userAnalyticsTableBody');
       const tbodyMandatory = document.getElementById('mandatoryAnalyticsTableBody');
       
-      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">Loading user activity...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">Loading implementation user roster...</td></tr>`;
       tbodyMandatory.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">Loading mandatory progress...</td></tr>`;
 
       callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(data) {
@@ -2341,7 +2274,7 @@
 
         const mandatoryKeys = Object.keys(mandatoryData);
 
-        // TAB 1: ALL USER DOCUMENTS & PROGRESS
+        // TAB 1: USER DOCUMENTS & PROGRESS
         tbody.innerHTML = rosterList.map(u => {
           let record = globalAnalyticsCache[u] || { lastLogin: 'N/A', completedTopics: [], seenDocs: [] };
           let userCompleted = new Set(record.completedTopics || []);
@@ -2350,13 +2283,14 @@
           let pendingDocsCount = Math.max(0, totalDocsAssignedForUser - completedDocsCount);
 
           totalCompletedAllCount += completedDocsCount;
+          let recentDoc = (record.seenDocs && record.seenDocs.length > 0) ? `${record.seenDocs[0].pkg} - ${record.seenDocs[0].type}` : 'None';
 
           return `
             <tr onclick="openDrilldownModal('${u}')" style="cursor:pointer;">
               <td><strong>${deriveDisplayName(u)}</strong><br><span style="font-size:0.72rem; color:var(--text-secondary);">${u}</span></td>
-              <td style="text-align:center;">${totalDocsAssignedForUser}</td>
+              <td style="font-size:0.78rem; color:var(--text-secondary);">${record.lastLogin || 'N/A'}</td>
               <td style="text-align:center;"><span style="color:var(--google-green); font-weight:400;">${completedDocsCount}</span></td>
-              <td style="text-align:center;"><span style="color:var(--google-red); font-weight:400;">${pendingDocsCount}</span></td>
+              <td style="font-size:0.78rem; color:var(--text-secondary);">${recentDoc}</td>
               <td style="text-align:right;" onclick="event.stopPropagation();">
                 <button type="button" class="action-btn" onclick="openDrilldownModal('${u}')" title="View Details"><span class="material-icons-outlined" style="font-size:18px;">visibility</span></button>
                 <button type="button" class="action-btn" onclick="sendTargetedReminderSingle('${u}')" title="Send Reminder"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">notifications_active</span></button>
@@ -2390,7 +2324,7 @@
 
           let myPendingCount = myMandatory.length - myCompletedMandatory.length;
           let completionPct = myMandatory.length > 0 ? Math.round((myCompletedMandatory.length / myMandatory.length) * 100) : 100;
-          let statusTag = myPendingCount === 0 ? '<span style="color:var(--google-green);">Complete</span>' : `<span style="color:var(--google-red);">Pending (${myPendingCount})</span>`;
+          let statusTag = myPendingCount === 0 ? '<span style="color:var(--google-green);">Completed</span>' : `<span style="color:var(--google-red);">Pending (${myPendingCount})</span>`;
 
           return `
             <tr onclick="openDrilldownModal('${u}')" style="cursor:pointer;">
@@ -2428,12 +2362,16 @@
 
       const myPendingMandatory = myMandatory.filter(k => !completedIds.includes(k));
       let pct = myMandatory.length > 0 ? Math.round(((myMandatory.length - myPendingMandatory.length) / myMandatory.length) * 100) : 100;
+      let totalAssignedDocs = quickDataset.length + dataset.length + docDataset.length;
+
+      let seenDocsHistory = u.seenDocs || [];
 
       let html = `
         <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.65rem; margin-bottom:0.5rem;">
           <strong style="font-size:0.9rem;">${deriveDisplayName(email)}</strong> (${email})
-          <div style="display:flex; justify-content:space-between; margin-top:0.4rem; font-size:0.8rem;">
-            <span>Total Mandatory: <strong>${myMandatory.length}</strong></span>
+          <div style="display:flex; justify-content:space-between; margin-top:0.4rem; font-size:0.78rem;">
+            <span>All Docs Total: <strong>${totalAssignedDocs}</strong></span>
+            <span>Mandatory Total: <strong>${myMandatory.length}</strong></span>
             <span>Completed: <strong style="color:var(--google-green);">${myMandatory.length - myPendingMandatory.length}</strong></span>
             <span>Pending: <strong style="color:var(--google-red);">${myPendingMandatory.length}</strong></span>
             <span>Progress: <strong>${pct}%</strong></span>
@@ -2441,24 +2379,31 @@
         </div>
 
         <div>
-          <label style="font-size:0.75rem; font-weight:400; color:var(--google-green);">Completed Documents / Modules:</label>
+          <label style="font-size:0.75rem; font-weight:400; color:var(--google-green);">Completed Modules:</label>
           <ul class="detail-list">
-            ${completedList.length > 0 ? completedList.map(item => `<li><span>✓ ${item.name} (${item.category})</span><span class="material-icons-outlined" style="color:var(--google-green); font-size:16px;">check_circle</span></li>`).join('') : '<li><span style="color:var(--text-secondary);">No completed items recorded.</span></li>'}
+            ${completedList.length > 0 ? completedList.map(item => `<li><span>✓ ${item.name} (${item.category})</span><span class="material-icons-outlined" style="color:var(--google-green); font-size:16px;">check_circle</span></li>`).join('') : '<li><span style="color:var(--text-secondary);">No completed modules recorded.</span></li>'}
           </ul>
         </div>
 
         <div>
-          <label style="font-size:0.75rem; font-weight:400; color:var(--google-red);">Pending Mandatory Items:</label>
+          <label style="font-size:0.75rem; font-weight:400; color:var(--google-red);">Pending Required Modules:</label>
           <ul class="detail-list">
             ${myPendingMandatory.length > 0 ? myPendingMandatory.map(k => {
               let item = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
               let dueDate = typeof mandatoryData[k] === 'object' ? mandatoryData[k].dueDate : mandatoryData[k];
               return `<li><span>○ ${item ? (item.name || item.pkg + ' ' + item.type) : k} (Due: ${dueDate})</span><span class="material-icons-outlined" style="color:var(--google-red); font-size:16px;">error_outline</span></li>`;
-            }).join('') : '<li><span style="color:var(--google-green);">All mandatory items completed!</span></li>'}
+            }).join('') : '<li><span style="color:var(--google-green);">All mandatory modules completed!</span></li>'}
           </ul>
         </div>
 
-        <button type="button" class="btn-submit" style="margin-top:0.5rem;" onclick="sendTargetedReminderSingle('${email}')">Send Reminder Email to ${deriveDisplayName(email)}</button>
+        <div>
+          <label style="font-size:0.75rem; font-weight:400; color:var(--google-purple);">Viewed Documents History:</label>
+          <ul class="detail-list">
+            ${seenDocsHistory.length > 0 ? seenDocsHistory.map(doc => `<li><span>${doc.pkg} - ${doc.type}</span><span style="font-size:0.7rem; color:var(--text-secondary);">${doc.timestamp || ''}</span></li>`).join('') : '<li><span style="color:var(--text-secondary);">No document history recorded.</span></li>'}
+          </ul>
+        </div>
+
+        <button type="button" class="btn-submit" style="margin-top:0.5rem;" onclick="sendTargetedReminderSingle('${email}')">Send Reminder</button>
       `;
 
       document.getElementById('drilldownBodyContainer').innerHTML = html;
