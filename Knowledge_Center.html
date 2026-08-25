@@ -76,48 +76,40 @@
       100% { transform: translate3d(-100%, 0, 0); }
     }
 
-    /* ANIMATED LOGO SYMBOL ON LEFT */
     .idea-lightbulb-svg {
-      width: 54px;
-      height: 54px;
+      width: 52px;
+      height: 52px;
       object-fit: contain;
       vertical-align: middle;
       flex-shrink: 0;
-      animation: logoPulseGlow 3s infinite ease-in-out;
     }
 
-    @keyframes logoPulseGlow {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(26, 115, 232, 0.4)); }
-      50% { transform: scale(1.05); filter: drop-shadow(0 0 8px rgba(147, 52, 230, 0.8)); }
-    }
-
-    /* BLACK BACKGROUND HERO HEADER WITH EXACT CENTERED TYPOGRAPHY */
+    /* HEADER LAYOUT: LOGO ON LEFT, TYPOGRAPHY ON RIGHT */
     .top-hero-header {
-      background: #000000;
-      padding: 1.1rem 1.5rem;
+      background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
+      padding: 1rem 1.25rem;
       border-bottom: 2px solid var(--google-blue);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
+      gap: 0.85rem;
     }
 
     .header-title-container {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       gap: 0.1rem;
-      text-align: center;
+      text-align: left;
     }
 
     .brand-title-main {
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 500;
       color: #ffffff;
       line-height: 1.2;
-      text-align: center;
     }
 
     .brand-subtitle {
@@ -127,7 +119,6 @@
       color: #ffffff;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      text-align: center;
     }
 
     .top-utility-bar {
@@ -169,7 +160,7 @@
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      padding: 0.4rem 1rem;
+      padding: 0.35rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -177,27 +168,29 @@
       gap: 0.5rem;
     }
     
-    .nav-tabs { display: flex; gap: 0.4rem; align-items: center; }
+    /* SMALLER & COMPACT BOOKMARKS / NAVIGATION TABS */
+    .nav-tabs { display: flex; gap: 0.35rem; align-items: center; }
     .tab-btn {
       background: var(--bg-body);
       border: 1px solid var(--border-color);
-      padding: 0.3rem 0.7rem;
+      padding: 0.28rem 0.65rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 400;
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.35rem;
-      border-radius: 16px;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      gap: 0.3rem;
+      border-radius: 14px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    .tab-btn .material-icons-outlined { font-size: 16px; }
     .tab-btn.quick-tab.active { background: #e6f4ea; color: var(--google-green); border-color: var(--google-green); transform: translateY(-1px); }
     .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); transform: translateY(-1px); }
     .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); transform: translateY(-1px); }
 
-    .header-right-badges { display: flex; align-items: center; gap: 0.5rem; }
+    .header-right-badges { display: flex; align-items: center; gap: 0.4rem; }
     .kpi-bookmark-small {
       display: inline-flex;
       align-items: center;
@@ -205,8 +198,8 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 0.25rem 0.65rem;
-      font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.72rem;
       font-weight: 400;
       cursor: pointer;
       user-select: none;
@@ -225,16 +218,16 @@
       background: var(--google-purple-light);
       color: var(--google-purple);
       border: 1px solid var(--google-purple);
-      padding: 0.2rem 0.5rem;
+      padding: 0.18rem 0.45rem;
       border-radius: 12px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 400;
-      text-transform: lowercase;
       cursor: pointer;
     }
 
     .container { width: 100%; padding: 0.65rem 1rem; display: flex; flex-direction: column; }
     
+    /* ANIMATED CONTENT SWITCHING */
     .tab-content { 
       display: none; 
       flex-direction: column; 
@@ -311,7 +304,6 @@
     .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-color: var(--google-blue); }
     .resource-card.mandatory-card { border: 1.5px solid var(--google-red) !important; background: #fff5f5; }
     body.dark-mode .resource-card.mandatory-card { background: #2c1616; }
-    .resource-card.new-today-glow, tr.new-today-glow { border: 2px solid var(--google-purple) !important; box-shadow: 0 0 12px var(--google-purple); background: var(--google-purple-light); }
 
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.35rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 400; color: var(--text-primary); }
@@ -326,7 +318,7 @@
     
     .bookmark-btn.bookmarked span, .gold-star span { color: #fbbc05 !important; }
 
-    .new-tag-pill { background: var(--google-purple); color: #fff; font-size: 0.58rem; font-weight: 400; padding: 0.08rem 0.3rem; border-radius: 4px; text-transform: lowercase; margin-left: 0.25rem; }
+    .new-tag-pill { background: var(--google-purple); color: #fff; font-size: 0.58rem; font-weight: 400; padding: 0.08rem 0.3rem; border-radius: 4px; text-transform: uppercase; margin-left: 0.25rem; }
     .mandatory-tag-pill { background: var(--google-red); color: #fff; font-size: 0.58rem; font-weight: 400; padding: 0.08rem 0.3rem; border-radius: 4px; margin-left: 0.25rem; }
     .completion-status-tag { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; padding: 0.12rem 0.35rem; border-radius: 4px; font-weight: 400; }
     .completion-status-tag.completed { background: var(--google-green-light); color: var(--google-green); }
@@ -337,7 +329,7 @@
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 400; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
-    /* DIALOG MODALS */
+    /* DIALOG MODAL CONSTRAINTS & INTERNAL SCROLLING */
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 16, 18, 0.85);
@@ -345,7 +337,7 @@
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow: hidden;
     }
     .modal-overlay.open { display: flex; }
-    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 680px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 15px; border: 1px solid var(--border-color); max-height: 85vh; display: flex; flex-direction: column; }
+    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 640px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 15px; border: 1px solid var(--border-color); max-height: 85vh; display: flex; flex-direction: column; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-shrink: 0; }
     .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1rem; font-weight: 400; }
     .modal-body-scroll { overflow-y: auto; flex: 1; padding-right: 0.25rem; }
@@ -415,7 +407,7 @@
 
     @media (max-width: 600px) {
       .top-hero-header { flex-direction: column; text-align: center; }
-      .header-title-container { align-items: center; text-align: center; }
+      .header-title-container { align-items: center; }
       .top-utility-bar { flex-direction: column; gap: 0.5rem; align-items: stretch; }
       .top-utility-right { justify-content: space-between; }
       .filter-controls-grid { grid-template-columns: 1fr; }
@@ -456,7 +448,7 @@
     </div>
   </div>
 
-  <!-- TOP HERO HEADER: BLACK BACKGROUND WITH EXACT ANIMATED LOGO ON LEFT & CENTERED TEXT -->
+  <!-- TOP HERO HEADER WITH LOGO ON LEFT & TYPOGRAPHY ON RIGHT -->
   <div class="top-hero-header" id="heroHeaderElem">
     <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
       <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
@@ -505,7 +497,7 @@
     </div>
   </div>
 
-  <!-- BOOKMARKS & NAVIGATION BAR -->
+  <!-- BOOKMARKS & NAVIGATION BAR (SINGLE INSTANCE) -->
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn quick-tab active" onclick="switchTab('quickLinksTab', this)">
@@ -521,7 +513,7 @@
 
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
-        <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>new release</span>
+        <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>NEW TODAY</span>
       </div>
       <div class="kpi-bookmark-small" id="bookmarkContainer" onclick="toggleFilterOnlyBookmarks()" title="Click to filter bookmarked items in this hub">
         <span class="material-icons-outlined gold-star" style="font-size:16px;">star</span>
@@ -567,7 +559,7 @@
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
-          <input type="text" id="docSearchInput" class="search-input" placeholder="Search / Filter...">
+          <input type="text" id="docSearchInput" class="search-input" placeholder="My Modules Search / Filter...">
         </div>
         <div class="view-toggle-group">
           <button type="button" class="view-toggle-btn active" id="docTableToggleBtn" onclick="setHubViewMode('document', 'table')" title="Table List View"><span class="material-icons-outlined" style="font-size:18px;">table_chart</span></button>
@@ -583,9 +575,9 @@
               <th style="width:20%;">Package Name</th>
               <th style="width:12%;">Version</th>
               <th style="width:18%;">Type of Doc</th>
-              <th style="width:28%;">Description</th>
-              <th style="width:12%; text-align:center;">Status</th>
-              <th style="width:10%; text-align:right;">Action</th>
+              <th style="width:25%;">Description</th>
+              <th style="width:13%; text-align:center;">Status</th>
+              <th style="width:12%; text-align:right;">Action</th>
             </tr>
           </thead>
           <tbody id="docTableBody"></tbody>
@@ -619,6 +611,7 @@
         <div class="stats-header-row">
           <div class="stats-badge-container">
             <div class="active-count-badge"><span class="material-icons-outlined" style="font-size:14px;">description</span> Total Modules: <strong id="learningActiveCount">0</strong></div>
+            <div class="completed-count-badge"><span class="material-icons-outlined" style="font-size:14px;">check_circle</span> Completed: <strong id="learningCompletedCount">0</strong></div>
           </div>
         </div>
       </section>
@@ -626,7 +619,7 @@
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="Search / Filter...">
+          <input type="text" id="searchInput" class="search-input" placeholder="My Modules Search / Filter...">
         </div>
         <div class="view-toggle-group">
           <button type="button" class="view-toggle-btn active" id="learningGridToggleBtn" onclick="setHubViewMode('learning', 'grid')" title="Tile View"><span class="material-icons-outlined" style="font-size:18px;">grid_view</span></button>
@@ -695,9 +688,55 @@
     </div>
   </div>
 
-  <!-- MANDATORY MODULES & REMINDERS CONFIG MODAL WITH CROSS-HUB STAGING TABLE -->
+  <!-- NEW RELEASE MULTI-ITEM POPOVER MODAL -->
+  <div class="modal-overlay" id="newReleasePopoverModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🎉 New Releases Published Today</h2>
+        <button class="modal-close-btn" onclick="closeModal('newReleasePopoverModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div class="modal-body-scroll" id="newReleasePopoverListContainer" style="display:flex; flex-direction:column; gap:0.5rem;"></div>
+    </div>
+  </div>
+
+  <!-- POWER USER PRIVILEGE MODAL -->
+  <div class="modal-overlay" id="powerPrivilegesModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Power User Privilege</h2>
+        <button class="modal-close-btn" onclick="closeModal('powerPrivilegesModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div style="padding:0.5rem 0;">
+        <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.85rem;">
+          Toggle active mode between Power User Admin Access and Standard User View.
+        </p>
+        <button type="button" class="btn-secondary" style="width:100%; justify-content:center; color:var(--google-purple); border-color:var(--google-purple);" onclick="togglePowerUserViewMode()">
+          <span class="material-icons-outlined" style="font-size:18px;">swap_horiz</span><span id="viewModeToggleLabel">Switch to Normal View</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POWER USERS LIST MODAL -->
+  <div class="modal-overlay" id="powerUsersListModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Power Users List</h2>
+        <button class="modal-close-btn" onclick="closeModal('powerUsersListModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div class="modal-body-scroll" style="padding:0.4rem 0;">
+        <form onsubmit="handleAddPowerUser(event)" style="display:flex; gap:0.4rem; margin-bottom:0.85rem;">
+          <input type="email" id="newPowerUserEmail" placeholder="user@maxval.com" required style="flex:1; padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
+          <button type="submit" class="btn-submit" style="padding:0.4rem 0.75rem;">Add User</button>
+        </form>
+        <div id="powerUserListContainer" style="max-height:180px; overflow-y:auto;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANDATORY MODULES & REMINDERS CONFIG MODAL WITH USER ROSTER -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
-    <div class="modal-content" style="max-width: 780px;">
+    <div class="modal-content" style="max-width: 740px;">
       <div class="modal-header">
         <h2>Mandatory Modules & Reminders Management</h2>
         <button class="modal-close-btn" onclick="closeModal('mandatoryConfigModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -713,23 +752,18 @@
         <div class="user-split-view-grid">
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Implementation Users *</label>
+              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Target Implementation Users *</label>
               <div>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllUserRoster(true)">Select All</button>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllUserRoster(false)">Deselect All</button>
               </div>
             </div>
             <div class="checkbox-multi-grid" id="userRosterCheckboxContainer"></div>
-            
-            <form onsubmit="handleAddNewUserToRoster(event)" style="display:flex; gap:0.3rem; margin-top:0.4rem;">
-              <input type="email" id="addRosterUserEmailInput" placeholder="add.user@maxval.com" required style="flex:1; padding:0.3rem; border:1px solid var(--border-color); border-radius:4px; font-size:0.75rem;">
-              <button type="submit" class="btn-submit" style="padding:0.3rem 0.6rem; font-size:0.75rem;">+ Add</button>
-            </form>
           </div>
 
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Modules (Cross-Hub Multi-Select) *</label>
+              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Modules (Multi-Select Across Hubs) *</label>
               <div>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllMandatoryItems(true)">Select All</button>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllMandatoryItems(false)">Deselect All</button>
@@ -737,11 +771,6 @@
             </div>
             <div class="checkbox-multi-grid" id="mandatoryMultiCheckboxContainer"></div>
           </div>
-        </div>
-
-        <div style="margin-top:0.65rem; background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.5rem;">
-          <strong style="font-size:0.78rem; display:block; margin-bottom:0.25rem;">Selected Items Staging Preview (Across All Hubs):</strong>
-          <div id="stagingTablePreview" style="font-size:0.75rem; color:var(--text-secondary); max-height:80px; overflow-y:auto;">0 items staged. Select checkboxes above to preview.</div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.65rem;">
@@ -771,9 +800,9 @@
     </div>
   </div>
 
-  <!-- NEW JOINERS ONBOARDING MODAL WITH MATRIX LIST -->
+  <!-- NEW JOINERS ONBOARDING MODAL -->
   <div class="modal-overlay" id="joinersConfigModalOverlay">
-    <div class="modal-content" style="max-width:780px;">
+    <div class="modal-content">
       <div class="modal-header">
         <h2>New Joiners Onboarding Control</h2>
         <button class="modal-close-btn" onclick="closeModal('joinersConfigModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -790,21 +819,16 @@
           <input type="email" id="newJoinerEmail" placeholder="new.joiner@maxval.com" required style="padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
           
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <label style="font-size:0.75rem; color:var(--text-secondary);">Select Onboarding Modules for Joiner (Cross-Hub Multi-Select):</label>
+            <label style="font-size:0.75rem; color:var(--text-secondary);">Select Onboarding Modules for Joiner:</label>
             <div>
               <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllJoinerItems(true)">Select All</button>
               <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllJoinerItems(false)">Deselect All</button>
             </div>
           </div>
           <div class="checkbox-multi-grid" id="joinerModulesCheckboxContainer"></div>
-          
-          <button type="submit" class="btn-submit" style="padding:0.45rem 0.75rem; margin-top:0.4rem;">Add Restricted Joiner & Send Onboarding Email</button>
+          <button type="submit" class="btn-submit" style="padding:0.45rem 0.75rem;">Add Restricted Joiner</button>
         </form>
-
-        <div style="margin-top:0.5rem;">
-          <label style="font-size:0.78rem; font-weight:400; display:block; margin-bottom:0.3rem;">Onboarded Joiners Matrix & Progress Table:</label>
-          <div id="joinersListContainer" style="max-height:180px; overflow-y:auto;"></div>
-        </div>
+        <div id="joinersListContainer" style="max-height:160px; overflow-y:auto;"></div>
       </div>
     </div>
   </div>
@@ -850,6 +874,7 @@
             </select>
           </div>
 
+          <!-- FORM FIELD ORDER: URL FIRST, DESCRIPTION SECOND, SUBMIT BUTTON THIRD -->
           <div class="form-group"><label>URL / Link *</label><input type="url" id="newLink" placeholder="https://..." required></div>
 
           <div id="quickFields">
@@ -867,7 +892,7 @@
             <div class="form-group"><label>Resource Title *</label><input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims" oninput="autoGenerateAIDescription()"></div>
             <div class="form-group">
               <label>Module Category *</label>
-              <select id="newModule" onchange="handleModuleCategoryChange(this.value)">
+              <select id="newModule" onchange="autoGenerateAIDescription()">
                 <option value="Intellectual Property">Intellectual Property</option>
                 <option value="Introduction to Symphony">Introduction to Symphony</option>
                 <option value="Invention Module">Invention Module</option>
@@ -876,9 +901,7 @@
                 <option value="Trademark">Trademark</option>
                 <option value="Assessment">Assessment</option>
                 <option value="Additional Reference Materials">Additional Reference Materials</option>
-                <option value="__NEW_MODULE__">+ Create New Module Category</option>
               </select>
-              <input type="text" id="customNewModuleInput" placeholder="Enter New Module Name..." style="display:none; margin-top:0.3rem;" oninput="autoGenerateAIDescription()">
             </div>
           </div>
 
@@ -981,7 +1004,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzWx_3DlCnISjESQLlZ-VujAEkYMqOsBQ9S8CTNtRvK2zL_5jfh6u82FvcjcC5GCrx3/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwPTiByllLcjmI1Ekl8_zk6kWHrFuvA_WwxzOIH0GuOUAB_ysv6b-V6Wnsl1c_K85np/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1226,18 +1249,6 @@
       autoGenerateAIDescription();
     }
 
-    function handleModuleCategoryChange(val) {
-      const customInput = document.getElementById('customNewModuleInput');
-      if (val === '__NEW_MODULE__') {
-        customInput.style.display = 'block';
-        customInput.required = true;
-      } else {
-        customInput.style.display = 'none';
-        customInput.required = false;
-      }
-      autoGenerateAIDescription();
-    }
-
     function autoGenerateAIDescription(forceRefresh = false) {
       const hub = document.getElementById('targetHub').value;
       const descBox = document.getElementById('newDescription');
@@ -1250,8 +1261,7 @@
         descBox.value = `Direct shortcut to access ${title} (${cat}) for implementation tracking.`;
       } else if (hub === 'learning') {
         const title = document.getElementById('newTitle').value.trim() || 'Symphony Module';
-        const selectVal = document.getElementById('newModule').value;
-        const category = selectVal === '__NEW_MODULE__' ? (document.getElementById('customNewModuleInput').value.trim() || 'New Category') : selectVal;
+        const category = document.getElementById('newModule').value;
         descBox.value = `Interactive guide on "${title}" covering key procedures under the ${category} framework.`;
       } else {
         const pkg = document.getElementById('newPkg').value.trim() || 'Symphony';
@@ -1425,12 +1435,6 @@
       renderCurrentActiveTab();
     }
 
-    function isItemRequiredForUser(resId) {
-      let isMandatory = !!mandatoryData[resId];
-      let isJoinerMandatory = isUserRestrictedNewJoiner() && joinersData[currentUser.toLowerCase().trim()] && (joinersData[currentUser.toLowerCase().trim()].assignedModules || []).includes(resId);
-      return isMandatory || isJoinerMandatory;
-    }
-
     function toggleTopicCompletion(resId, e) {
       if (e) e.stopPropagation();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1475,24 +1479,28 @@
       const todayStr = new Date().toLocaleDateString();
       const newItems = quickDataset.concat(dataset, docDataset).filter(item => item.releaseDate === todayStr);
 
-      if (newItems.length > 0) {
+      if (newItems.length === 1) {
         let single = newItems[0];
-
         if (single.pkg) switchTab('documentHubTab', document.querySelector('.doc-tab'));
         else if (single.category && single.category.includes('Module')) switchTab('learningHubTab', document.querySelector('.learning-tab'));
         else switchTab('quickLinksTab', document.querySelector('.quick-tab'));
-
-        setTimeout(() => {
-          let cardElems = document.querySelectorAll('.resource-card, tr');
-          cardElems.forEach(card => {
-            if (card.innerHTML.includes(single.name || single.type)) {
-              card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              card.classList.add('new-today-glow');
-              setTimeout(() => card.classList.remove('new-today-glow'), 3000);
-            }
-          });
-        }, 300);
+      } else if (newItems.length > 1) {
+        openNewReleasePopoverModal(newItems);
       }
+    }
+
+    function openNewReleasePopoverModal(items) {
+      const container = document.getElementById('newReleasePopoverListContainer');
+      container.innerHTML = items.map(i => `
+        <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.55rem; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong style="font-size:0.82rem; display:block;">${i.name || i.pkg + ' ' + i.type}</strong>
+            <p style="font-size:0.72rem; color:var(--text-secondary);">${i.description || 'New Release'}</p>
+          </div>
+          <a href="${i.link}" target="_blank" class="link-btn" onclick="closeModal('newReleasePopoverModalOverlay')">Open <span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+        </div>
+      `).join('');
+      document.getElementById('newReleasePopoverModalOverlay').classList.add('open');
     }
 
     function renderCurrentActiveTab() {
@@ -1534,6 +1542,7 @@
       let filtered = quickDataset.filter(item => {
         if (allowedIds && !allowedIds.includes(item.id)) return false;
         
+        // ZERO BOOKMARK FALLBACK: IF NO BOOKMARKS EXIST, SHOW ALL
         if (filterOnlyBookmarks && bookmarkedIds.size > 0) {
           return bookmarkedIds.has(item.id);
         }
@@ -1590,6 +1599,7 @@
         const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
         const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) || doc.type.toLowerCase().includes(docSearchQuery) || (doc.description && doc.description.toLowerCase().includes(docSearchQuery));
         
+        // ZERO BOOKMARK FALLBACK
         let matchesBookmark = true;
         if (filterOnlyBookmarks && bookmarkedIds.size > 0) {
           matchesBookmark = bookmarkedIds.has(docId);
@@ -1616,15 +1626,13 @@
       document.getElementById('kpiBookmarks').textContent = activeBookmarksCount;
       document.getElementById('docActiveCount').textContent = filtered.length;
 
-      // STREAMLINED TABLE ACTION COLUMN WITH SINGLE "LINK" BUTTON
+      // RENDER TABLE VIEW FOR DOCS WITH COMPLETION STATUS
       const tbody = document.getElementById('docTableBody');
       tbody.innerHTML = filtered.map(doc => {
         const docId = doc.id || (doc.pkg + doc.type);
         const isBookmarked = bookmarkedIds.has(docId);
         const isCompleted = completedSet.has(docId);
         const isNew = doc.releaseDate === todayStr;
-        const isRequired = isItemRequiredForUser(docId);
-
         return `
           <tr>
             <td style="text-align:center;">
@@ -1632,68 +1640,63 @@
                 <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
               </button>
             </td>
-            <td><strong>${doc.pkg}</strong> ${isNew ? '<span class="new-tag-pill">new release</span>' : ''}</td>
+            <td><strong>${doc.pkg}</strong> ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}</td>
             <td>${doc.ver}</td>
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${doc.description || 'Technical Documentation.'}</td>
             <td style="text-align:center;">
-              ${isRequired ? `
-                <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)">
-                  <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                    ${isCompleted ? '✓ Completed' : 'Pending Review'}
-                  </span>
-                </button>
-              ` : `<span style="font-size:0.72rem; color:var(--text-secondary);">Optional</span>`}
+              <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)">
+                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                  ${isCompleted ? '✓ Completed' : 'Pending Review'}
+                </span>
+              </button>
             </td>
             <td style="text-align:right;">
-              <div style="display:inline-flex; align-items:center; gap:0.25rem;">
-                <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>Link</span><span class="material-icons-outlined" style="font-size:13px;">open_in_new</span></a>
-                ${isPowerUserActive() ? `
-                  <button class="action-btn" onclick="openEditModal('document', '${docId}')" title="Edit Doc"><span class="material-icons-outlined" style="font-size:15px; color:var(--google-blue);">edit</span></button>
-                  <button class="action-btn" onclick="executeDeleteItem('document', '${doc.link}')" title="Delete Doc"><span class="material-icons-outlined" style="font-size:15px; color:var(--google-red);">delete</span></button>
-                ` : ''}
-              </div>
+              <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>View Doc</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+              ${isPowerUserActive() ? `
+                <button class="action-btn" onclick="openEditModal('document', '${docId}')" title="Edit Doc">
+                  <span class="material-icons-outlined" style="font-size:16px; color:var(--google-blue);">edit</span>
+                </button>
+                <button class="action-btn" onclick="executeDeleteItem('document', '${doc.link}')" title="Delete Doc">
+                  <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span>
+                </button>
+              ` : ''}
             </td>
           </tr>
         `;
       }).join('');
 
+      // RENDER TILE VIEW FOR DOCS
       const gridContainer = document.getElementById('docGridContainer');
       gridContainer.innerHTML = filtered.map(doc => {
         const docId = doc.id || (doc.pkg + doc.type);
         const isBookmarked = bookmarkedIds.has(docId);
         const isCompleted = completedSet.has(docId);
         const isNew = doc.releaseDate === todayStr;
-        const isRequired = isItemRequiredForUser(docId);
-
         return `
           <article class="resource-card">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">${doc.pkg}</span>
                 <div class="action-icons">
-                  ${isRequired ? `
-                    <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion">
-                      <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
-                        ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
-                      </span>
-                    </button>
-                  ` : ''}
+                  <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion">
+                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
+                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                    </span>
+                  </button>
                   <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${docId}')">
                     <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
                 </div>
               </div>
-              <h3 class="card-title">${doc.type} (${doc.ver}) ${isNew ? '<span class="new-tag-pill">new release</span>' : ''}</h3>
+              <h3 class="card-title">${doc.type} (${doc.ver}) ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}</h3>
               <p class="card-desc">${doc.description || 'Technical Documentation.'}</p>
             </div>
             <div class="card-actions">
-              ${isRequired ? `
-                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                  ${isCompleted ? '✓ Completed' : 'Pending Review'}
-                </span>
-              ` : '<span style="font-size:0.72rem; color:var(--text-secondary);">Optional</span>'}
-              <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+              <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                ${isCompleted ? '✓ Completed' : 'Pending Review'}
+              </span>
+              <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>View Doc</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
               ${isPowerUserActive() ? `
                 <div class="action-icons">
                   <button class="action-btn" onclick="openEditModal('document', '${docId}')" title="Edit Doc">
@@ -1722,6 +1725,7 @@
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery) || (res.description && res.description.toLowerCase().includes(searchQuery));
         
+        // ZERO BOOKMARK FALLBACK
         let matchesBookmark = true;
         if (filterOnlyBookmarks && bookmarkedIds.size > 0) {
           matchesBookmark = bookmarkedIds.has(res.id);
@@ -1748,14 +1752,15 @@
       const activeBookmarksCount = dataset.filter(d => bookmarkedIds.has(d.id)).length;
       document.getElementById('kpiBookmarks').textContent = activeBookmarksCount;
       document.getElementById('learningActiveCount').textContent = filtered.length;
+      document.getElementById('learningCompletedCount').textContent = completedSet.size;
 
+      // RENDER TILE VIEW
       const grid = document.getElementById('resourcesGrid');
       grid.innerHTML = filtered.map(res => {
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = completedSet.has(res.id);
         const isNew = res.releaseDate === todayStr;
         const dueDate = mandatoryData[res.id] ? (typeof mandatoryData[res.id] === 'object' ? mandatoryData[res.id].dueDate : mandatoryData[res.id]) : null;
-        const isRequired = isItemRequiredForUser(res.id);
 
         return `
           <article class="resource-card ${dueDate ? 'mandatory-card' : ''}">
@@ -1763,13 +1768,11 @@
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">${res.category}</span>
                 <div class="action-icons">
-                  ${isRequired ? `
-                    <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion">
-                      <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
-                        ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
-                      </span>
-                    </button>
-                  ` : ''}
+                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion">
+                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
+                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                    </span>
+                  </button>
                   <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
                     <span class="material-icons-outlined gold-star" style="font-size:20px;">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
@@ -1777,18 +1780,16 @@
               </div>
               <h3 class="card-title">
                 ${res.name} 
-                ${isNew ? '<span class="new-tag-pill">new release</span>' : ''}
+                ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}
                 ${dueDate ? `<span class="mandatory-tag-pill" title="Due: ${dueDate}">DUE: ${dueDate}</span>` : ''}
               </h3>
               <p class="card-desc">${res.description || 'Comprehensive learning module.'}</p>
             </div>
             <div class="card-actions">
-              ${isRequired ? `
-                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                  ${isCompleted ? '✓ Completed' : 'Pending'}
-                </span>
-              ` : '<span style="font-size:0.72rem; color:var(--text-secondary);">Optional</span>'}
-              <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+              <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                ${isCompleted ? '✓ Completed' : 'Pending'}
+              </span>
+              <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Open Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
               ${isPowerUserActive() ? `
                 <div class="action-icons">
                   <button class="action-btn" onclick="openEditModal('learning', '${res.id}')" title="Edit Resource">
@@ -1804,13 +1805,13 @@
         `;
       }).join('');
 
+      // RENDER TABLE VIEW
       const tbody = document.getElementById('learningTableBody');
       tbody.innerHTML = filtered.map(res => {
         const isBookmarked = bookmarkedIds.has(res.id);
         const isCompleted = completedSet.has(res.id);
         const isNew = res.releaseDate === todayStr;
         const dueDate = mandatoryData[res.id] ? (typeof mandatoryData[res.id] === 'object' ? mandatoryData[res.id].dueDate : mandatoryData[res.id]) : null;
-        const isRequired = isItemRequiredForUser(res.id);
 
         return `
           <tr>
@@ -1821,22 +1822,20 @@
             </td>
             <td>
               <strong>${res.name}</strong> 
-              ${isNew ? '<span class="new-tag-pill">new release</span>' : ''}
+              ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}
               ${dueDate ? `<span class="mandatory-tag-pill">DUE: ${dueDate}</span>` : ''}
               <br><span style="font-size:0.72rem; color:var(--text-secondary);">${res.category}</span>
             </td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${res.description || 'N/A'}</td>
             <td style="text-align:center;">
-              ${isRequired ? `
-                <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)">
-                  <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                    ${isCompleted ? '✓ Completed' : 'Pending'}
-                  </span>
-                </button>
-              ` : `<span style="font-size:0.72rem; color:var(--text-secondary);">Optional</span>`}
+              <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)">
+                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                  ${isCompleted ? '✓ Completed' : 'Pending'}
+                </span>
+              </button>
             </td>
             <td style="text-align:right;">
-              <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+              <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Open</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
               ${isPowerUserActive() ? `
                 <button class="action-btn" onclick="openEditModal('learning', '${res.id}')" title="Edit Resource">
                   <span class="material-icons-outlined" style="font-size:16px; color:var(--google-blue);">edit</span>
@@ -1884,7 +1883,7 @@
               <strong style="font-size:0.82rem; display:block;">${m.name}</strong>
               <p style="font-size:0.72rem; color:var(--text-secondary); line-height:1.2;">${m.description}</p>
             </div>
-            <a href="${m.link}" target="_blank" class="link-btn" style="white-space:nowrap;">Link <span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+            <a href="${m.link}" target="_blank" class="link-btn" style="white-space:nowrap;">Open <span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
           </div>
         `).join('');
       }
@@ -1897,7 +1896,7 @@
               <strong style="font-size:0.82rem; display:block;">${m.pkg} (${m.ver}) - ${m.type}</strong>
               <p style="font-size:0.72rem; color:var(--text-secondary); line-height:1.2;">${m.description}</p>
             </div>
-            <a href="${m.link}" target="_blank" class="link-btn" style="white-space:nowrap;">Link <span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+            <a href="${m.link}" target="_blank" class="link-btn" style="white-space:nowrap;">View <span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
           </div>
         `).join('');
       }
@@ -1910,7 +1909,7 @@
               <strong style="font-size:0.82rem; display:block;">${m.name}</strong>
               <p style="font-size:0.72rem; color:var(--text-secondary); line-height:1.2;">${m.description}</p>
             </div>
-            <a href="${m.link}" target="_blank" class="link-btn" style="white-space:nowrap;">Link <span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+            <a href="${m.link}" target="_blank" class="link-btn" style="white-space:nowrap;">Open <span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
           </div>
         `).join('');
       }
@@ -1994,32 +1993,12 @@
       `).join('');
     }
 
-    function handleAddNewUserToRoster(e) {
-      e.preventDefault();
-      const input = document.getElementById('addRosterUserEmailInput').value.trim().toLowerCase();
-      if (input && input.includes('@maxval.com')) {
-        callGasJsonp({ action: 'ADD_IMPLEMENTATION_USER', email: input, requesterEmail: currentUser }, function(res) {
-          if (res && res.status === "SUCCESS") {
-            showToast(`User ${input} added to implementation roster!`);
-            document.getElementById('addRosterUserEmailInput').value = '';
-            detectGoogleSessionAccount();
-            setTimeout(renderUserRosterCheckboxes, 500);
-          } else {
-            alert(res ? res.message : "Failed to add user.");
-          }
-        });
-      }
-    }
-
     function selectAllUserRoster(select) {
       document.querySelectorAll('.roster-user-chk').forEach(cb => cb.checked = select);
     }
 
     function selectAllMandatoryItems(select) {
-      document.querySelectorAll('.mandatory-chk').forEach(cb => {
-        cb.checked = select;
-        updateStagingTablePreview();
-      });
+      document.querySelectorAll('.mandatory-chk').forEach(cb => cb.checked = select);
     }
 
     function renderMandatoryMultiCheckboxes() {
@@ -2034,32 +2013,13 @@
         let isChecked = !!mandatoryData[itemId];
         return `
           <label class="checkbox-item">
-            <input type="checkbox" value="${itemId}" class="mandatory-chk" ${isChecked ? 'checked' : ''} onchange="updateStagingTablePreview()">
+            <input type="checkbox" value="${itemId}" class="mandatory-chk" ${isChecked ? 'checked' : ''}>
             <span>${d.name || (d.pkg + ' - ' + d.type)} (${d.category || d.pkg})</span>
           </label>
         `;
       }).join('');
 
-      updateStagingTablePreview();
       renderMandatoryItemsList();
-    }
-
-    function updateStagingTablePreview() {
-      const checkboxes = document.querySelectorAll('.mandatory-chk:checked');
-      const container = document.getElementById('stagingTablePreview');
-
-      if (checkboxes.length === 0) {
-        container.innerHTML = "0 items staged. Select checkboxes above to preview.";
-        return;
-      }
-
-      let items = Array.from(checkboxes).map(cb => {
-        let id = cb.value;
-        let found = quickDataset.find(d => d.id === id) || dataset.find(d => d.id === id) || docDataset.find(d => (d.id === id || (d.pkg + d.type) === id));
-        return `• ${found ? (found.name || found.pkg + ' ' + found.type) : id}`;
-      });
-
-      container.innerHTML = `<strong>Staged Items (${items.length}):</strong><br>` + items.join('<br>');
     }
 
     function saveMandatorySettingsMulti() {
@@ -2131,7 +2091,7 @@
 
         return `
           <div class="power-user-chip" onclick="openAssignmentDetailModal('${id}')" style="cursor:pointer;" title="Click to view full assignment details">
-            <span>📌 <strong>${found ? (found.name || found.pkg + ' ' + found.type) : id}</strong> (Due: ${displayDueDate}) - ${assignedUsers.length} Users</span>
+            <span>📌 <strong>${found ? (found.name || found.pkg + ' ' + found.type) : id}</strong> (Due: ${displayDueDate}) - ${assignedUsers.length} Users Assigned</span>
             <button type="button" onclick="event.stopPropagation(); removeMandatorySetting('${id}');" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
               <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
             </button>
@@ -2145,6 +2105,8 @@
       let found = quickDataset.find(d => d.id === id) || dataset.find(d => d.id === id) || docDataset.find(d => (d.id === id || (d.pkg + d.type) === id));
       let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
       let dueDate = typeof entry === 'object' ? entry.dueDate : entry;
+
+      let userListHtml = assignedUsers.map(u => `<li><span>${deriveDisplayName(u)} (${u})</span></li>`).join('');
 
       alert(`Assignment Details:\n\nModule: ${found ? (found.name || found.pkg + ' ' + found.type) : id}\nDue Date: ${dueDate}\nAssigned Users (${assignedUsers.length}):\n${assignedUsers.join('\n')}`);
     }
@@ -2185,17 +2147,16 @@
         const checkboxes = document.querySelectorAll('.joiner-module-chk:checked');
         let selectedModuleIds = Array.from(checkboxes).map(cb => cb.value);
 
-        if (!joinersData[input]) joinersData[input] = { restricted: true, status: 'Not Started', assignedModules: [], quick: [], learning: [], document: [], isNew: true };
+        if (!joinersData[input]) joinersData[input] = { restricted: true, status: 'Not Started', assignedModules: [], quick: [], learning: [], document: [] };
         joinersData[input].restricted = true;
         joinersData[input].status = 'Not Started';
-        joinersData[input].isNew = true;
         joinersData[input].assignedModules = Array.from(new Set([...(joinersData[input].assignedModules || []), ...selectedModuleIds]));
         joinersData[input][activeJoinersSubtab] = selectedModuleIds;
 
         document.getElementById('newJoinerEmail').value = '';
         callGasJsonp({ action: 'SAVE_NEW_JOINERS_DATA', data: JSON.stringify(joinersData) }, function() {
           renderJoinersList();
-          showToast(`New joiner ${input} onboarded & email sent!`);
+          showToast(`New joiner ${input} onboarded successfully!`);
         });
       }
     }
@@ -2210,41 +2171,14 @@
     function renderJoinersList() {
       const container = document.getElementById('joinersListContainer');
       const keys = Object.keys(joinersData);
-
-      if (keys.length === 0) {
-        container.innerHTML = `<p style="font-size:0.75rem; color:var(--text-secondary);">No onboarding joiners currently configured.</p>`;
-        return;
-      }
-
-      container.innerHTML = `
-        <table class="doc-table" style="font-size:0.75rem;">
-          <thead>
-            <tr>
-              <th>Joiner Email</th>
-              <th style="text-align:center;">Assigned Modules</th>
-              <th style="text-align:center;">Status</th>
-              <th style="text-align:right;">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${keys.map(e => {
-              let assigned = joinersData[e].assignedModules || [];
-              let status = joinersData[e].status || 'Not Started';
-              return `
-                <tr>
-                  <td><strong>${deriveDisplayName(e)}</strong><br><span style="color:var(--text-secondary);">${e}</span></td>
-                  <td style="text-align:center;">${assigned.length} Items</td>
-                  <td style="text-align:center;"><span class="completion-status-tag ${status === 'Completed' ? 'completed' : 'pending'}">${status}</span></td>
-                  <td style="text-align:right;">
-                    <button type="button" class="action-btn" onclick="sendTargetedReminderSingle('${e}')" title="Send Reminder"><span class="material-icons-outlined" style="font-size:16px; color:var(--google-blue);">notifications_active</span></button>
-                    <button type="button" class="action-btn" onclick="removeJoiner('${e}')" title="Remove Joiner"><span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span></button>
-                  </td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
-      `;
+      container.innerHTML = keys.map(e => `
+        <div class="power-user-chip">
+          <span>${deriveDisplayName(e)} (${e}) - Status: [${joinersData[e].status || 'Not Started'}]</span>
+          <button type="button" onclick="removeJoiner('${e}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;">
+            <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
+          </button>
+        </div>
+      `).join('');
     }
 
     function renderPowerUsersList() {
@@ -2284,10 +2218,10 @@
     }
 
     function executeDeleteItem(hub, link) {
-      if (!confirm("Confirmation Required:\n\nAre you sure you want to delete this resource link globally for all users?")) return;
+      if (!confirm("Are you sure you want to delete this resource link globally?")) return;
       callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: hub, link: link, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
-          showToast("Item purged and deleted successfully!");
+          showToast("Item deleted successfully!");
           loadGlobalCustomLinks();
         } else {
           alert(res ? res.message : "Deletion failed.");
@@ -2296,7 +2230,7 @@
     }
 
     function deleteImplementationRosterUser(email) {
-      if (!confirm(`Confirmation Required:\n\nAre you sure you want to remove ${deriveDisplayName(email)} (${email}) from the active implementation roster?`)) return;
+      if (!confirm(`Are you sure you want to remove ${deriveDisplayName(email)} (${email}) from the active implementation roster?`)) return;
       callGasJsonp({ action: 'DELETE_IMPLEMENTATION_USER', email: email, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
           showToast(`User ${email} removed from active roster.`);
@@ -2330,9 +2264,7 @@
         payloadItem = { id: itemId, name: title, category: document.getElementById('newQuickCategory').value.trim() || 'Quick Link', description: desc, link: link, releaseDate: currentDateStr, createdDate: currentDateStr };
       } else if (targetHub === 'learning') {
         title = document.getElementById('newTitle').value.trim();
-        const selectVal = document.getElementById('newModule').value;
-        const finalCategory = selectVal === '__NEW_MODULE__' ? (document.getElementById('customNewModuleInput').value.trim() || 'New Category') : selectVal;
-        payloadItem = { id: itemId, name: title, category: finalCategory, description: desc, link: link, releaseDate: currentDateStr, createdDate: currentDateStr };
+        payloadItem = { id: itemId, name: title, category: document.getElementById('newModule').value, description: desc, link: link, releaseDate: currentDateStr, createdDate: currentDateStr };
       } else {
         const pkg = document.getElementById('newPkg').value.trim();
         title = `${pkg} (${document.getElementById('newDocType').value.trim()})`;
@@ -2409,7 +2341,7 @@
           `;
         }).join('');
 
-        // TAB 2: MANDATORY PROGRESS (CORRECTED STATUS DISPLAY)
+        // TAB 2: MANDATORY PROGRESS
         tbodyMandatory.innerHTML = rosterList.map(u => {
           let record = globalAnalyticsCache[u] || { completedTopics: [] };
           let userCompleted = new Set(record.completedTopics || []);
@@ -2422,21 +2354,15 @@
 
           let myCompletedMandatory = myMandatory.filter(k => userCompleted.has(k));
           let myPendingCount = myMandatory.length - myCompletedMandatory.length;
-
-          let completionPct = "0%";
-          let statusTag = `<span style="color:var(--text-secondary);">Not Assigned Yet</span>`;
-
-          if (myMandatory.length > 0) {
-            completionPct = `${Math.round((myCompletedMandatory.length / myMandatory.length) * 100)}%`;
-            statusTag = myPendingCount === 0 ? '<span style="color:var(--google-green);">Completed</span>' : `<span style="color:var(--google-red);">Pending (${myPendingCount})</span>`;
-          }
+          let completionPct = myMandatory.length > 0 ? Math.round((myCompletedMandatory.length / myMandatory.length) * 100) : 100;
+          let statusTag = myPendingCount === 0 ? '<span style="color:var(--google-green);">Completed</span>' : `<span style="color:var(--google-red);">Pending (${myPendingCount})</span>`;
 
           return `
             <tr onclick="openDrilldownModal('${u}')" style="cursor:pointer;">
               <td><strong>${deriveDisplayName(u)}</strong><br><span style="font-size:0.72rem; color:var(--text-secondary);">${u}</span></td>
               <td style="text-align:center;">${myMandatory.length}</td>
               <td style="text-align:center;">${statusTag}</td>
-              <td style="text-align:center;"><strong>${completionPct}</strong></td>
+              <td style="text-align:center;"><strong>${completionPct}%</strong></td>
               <td style="text-align:right;" onclick="event.stopPropagation();">
                 <button type="button" class="action-btn" onclick="openDrilldownModal('${u}')" title="View Details"><span class="material-icons-outlined" style="font-size:18px;">visibility</span></button>
                 <button type="button" class="action-btn" onclick="sendTargetedReminderSingle('${u}')" title="Send Reminder"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">notifications_active</span></button>
@@ -2461,7 +2387,7 @@
       });
 
       const myPendingMandatory = myMandatory.filter(k => !completedIds.includes(k));
-      let pct = myMandatory.length > 0 ? Math.round(((myMandatory.length - myPendingMandatory.length) / myMandatory.length) * 100) : 0;
+      let pct = myMandatory.length > 0 ? Math.round(((myMandatory.length - myPendingMandatory.length) / myMandatory.length) * 100) : 100;
       let totalAssignedDocs = quickDataset.length + dataset.length + docDataset.length;
 
       let seenDocsHistory = u.seenDocs || [];
