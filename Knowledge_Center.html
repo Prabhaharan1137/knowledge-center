@@ -91,7 +91,7 @@
       50% { transform: scale(1.05); filter: drop-shadow(0 0 8px rgba(147, 52, 230, 0.8)); }
     }
 
-    /* BLACK BACKGROUND HERO HEADER WITH LEFT-ALIGNED LOGO & TEXT */
+    /* BLACK BACKGROUND HERO HEADER WITH EXACT CENTERED TYPOGRAPHY */
     .top-hero-header {
       background: #000000;
       padding: 1.1rem 1.5rem;
@@ -105,10 +105,10 @@
     .header-title-container {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       gap: 0.1rem;
-      text-align: left;
+      text-align: center;
     }
 
     .brand-title-main {
@@ -117,6 +117,7 @@
       font-weight: 500;
       color: #ffffff;
       line-height: 1.2;
+      text-align: center;
     }
 
     .brand-subtitle {
@@ -126,6 +127,7 @@
       color: #ffffff;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      text-align: center;
     }
 
     .top-utility-bar {
@@ -216,7 +218,7 @@
       color: #b06000;
     }
 
-    /* SMALL LETTER "new release" BADGE */
+    /* LOWERCASE "new release" BADGE */
     .new-release-badge {
       display: inline-flex;
       align-items: center;
@@ -566,7 +568,7 @@
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
-          <input type="text" id="docSearchInput" class="search-input" placeholder="Search / Filter...">
+          <input type="text" id="docSearchInput" class="search-input" placeholder="My Modules Search / Filter...">
         </div>
         <div class="view-toggle-group">
           <button type="button" class="view-toggle-btn active" id="docTableToggleBtn" onclick="setHubViewMode('document', 'table')" title="Table List View"><span class="material-icons-outlined" style="font-size:18px;">table_chart</span></button>
@@ -625,7 +627,7 @@
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="Search / Filter...">
+          <input type="text" id="searchInput" class="search-input" placeholder="My Modules Search / Filter...">
         </div>
         <div class="view-toggle-group">
           <button type="button" class="view-toggle-btn active" id="learningGridToggleBtn" onclick="setHubViewMode('learning', 'grid')" title="Tile View"><span class="material-icons-outlined" style="font-size:18px;">grid_view</span></button>
@@ -980,7 +982,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbytU_E6koBQ4lLGoJjTPNROPAKRpfFr4f-Qeeyj7JqEFLuptjiYvJGvIsKA8PkMvqEl/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzw4cy5pbZEgHYKRFoGb1JxUISLP6k9nDcv3bkg0IkQyuMfkntmlup6EcuqA1FxM3Sh/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -2403,7 +2405,7 @@
           `;
         }).join('');
 
-        // TAB 2: MANDATORY PROGRESS (CORRECTED STATUS & EXCLUSIVE MANDATORY METRICS)
+        // TAB 2: MANDATORY PROGRESS (CORRECTED STATUS DISPLAY)
         tbodyMandatory.innerHTML = rosterList.map(u => {
           let record = globalAnalyticsCache[u] || { completedTopics: [] };
           let userCompleted = new Set(record.completedTopics || []);
