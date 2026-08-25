@@ -77,36 +77,36 @@
     }
 
     .idea-lightbulb-svg {
-      width: 52px;
-      height: 52px;
+      width: 54px;
+      height: 54px;
       object-fit: contain;
       vertical-align: middle;
       flex-shrink: 0;
     }
 
-    /* HEADER LAYOUT: LOGO ON LEFT, TYPOGRAPHY ON RIGHT */
+    /* HEADER LAYOUT WITH BLACK BACKGROUND AND CENTERED TEXT */
     .top-hero-header {
-      background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
-      padding: 1rem 1.25rem;
+      background: #000000;
+      padding: 1.25rem 1.5rem;
       border-bottom: 2px solid var(--google-blue);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.85rem;
+      gap: 1rem;
     }
 
     .header-title-container {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       gap: 0.1rem;
-      text-align: left;
+      text-align: center;
     }
 
     .brand-title-main {
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       font-weight: 500;
       color: #ffffff;
       line-height: 1.2;
@@ -160,7 +160,7 @@
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
-      padding: 0.35rem 1rem;
+      padding: 0.4rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -168,29 +168,27 @@
       gap: 0.5rem;
     }
     
-    /* SMALLER & COMPACT BOOKMARKS / NAVIGATION TABS */
-    .nav-tabs { display: flex; gap: 0.35rem; align-items: center; }
+    .nav-tabs { display: flex; gap: 0.4rem; align-items: center; }
     .tab-btn {
       background: var(--bg-body);
       border: 1px solid var(--border-color);
-      padding: 0.28rem 0.65rem;
+      padding: 0.3rem 0.7rem;
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 400;
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.3rem;
-      border-radius: 14px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      gap: 0.35rem;
+      border-radius: 16px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .tab-btn .material-icons-outlined { font-size: 16px; }
     .tab-btn.quick-tab.active { background: #e6f4ea; color: var(--google-green); border-color: var(--google-green); transform: translateY(-1px); }
     .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); transform: translateY(-1px); }
     .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); transform: translateY(-1px); }
 
-    .header-right-badges { display: flex; align-items: center; gap: 0.4rem; }
+    .header-right-badges { display: flex; align-items: center; gap: 0.5rem; }
     .kpi-bookmark-small {
       display: inline-flex;
       align-items: center;
@@ -198,8 +196,8 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 0.2rem 0.55rem;
-      font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
       font-weight: 400;
       cursor: pointer;
       user-select: none;
@@ -218,16 +216,15 @@
       background: var(--google-purple-light);
       color: var(--google-purple);
       border: 1px solid var(--google-purple);
-      padding: 0.18rem 0.45rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 12px;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 400;
       cursor: pointer;
     }
 
     .container { width: 100%; padding: 0.65rem 1rem; display: flex; flex-direction: column; }
     
-    /* ANIMATED CONTENT SWITCHING */
     .tab-content { 
       display: none; 
       flex-direction: column; 
@@ -304,6 +301,7 @@
     .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-color: var(--google-blue); }
     .resource-card.mandatory-card { border: 1.5px solid var(--google-red) !important; background: #fff5f5; }
     body.dark-mode .resource-card.mandatory-card { background: #2c1616; }
+    .resource-card.new-today-glow { border: 2px solid var(--google-purple) !important; box-shadow: 0 0 12px var(--google-purple); }
 
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.35rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 400; color: var(--text-primary); }
@@ -329,7 +327,7 @@
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 400; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
-    /* DIALOG MODAL CONSTRAINTS & INTERNAL SCROLLING */
+    /* MODALS & INTERNAL SCROLL AREA */
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 16, 18, 0.85);
@@ -337,7 +335,7 @@
       display: none; align-items: flex-start; justify-content: center; z-index: 999999; padding: 20px 1rem; overflow: hidden;
     }
     .modal-overlay.open { display: flex; }
-    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 640px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 15px; border: 1px solid var(--border-color); max-height: 85vh; display: flex; flex-direction: column; }
+    .modal-content { background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius); width: 100%; max-width: 680px; padding: 1.1rem; box-shadow: var(--shadow-md); margin-top: 15px; border: 1px solid var(--border-color); max-height: 85vh; display: flex; flex-direction: column; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-shrink: 0; }
     .modal-header h2 { font-family: 'Google Sans', sans-serif; font-size: 1rem; font-weight: 400; }
     .modal-body-scroll { overflow-y: auto; flex: 1; padding-right: 0.25rem; }
@@ -407,7 +405,7 @@
 
     @media (max-width: 600px) {
       .top-hero-header { flex-direction: column; text-align: center; }
-      .header-title-container { align-items: center; }
+      .header-title-container { align-items: center; text-align: center; }
       .top-utility-bar { flex-direction: column; gap: 0.5rem; align-items: stretch; }
       .top-utility-right { justify-content: space-between; }
       .filter-controls-grid { grid-template-columns: 1fr; }
@@ -448,7 +446,7 @@
     </div>
   </div>
 
-  <!-- TOP HERO HEADER WITH LOGO ON LEFT & TYPOGRAPHY ON RIGHT -->
+  <!-- TOP HERO HEADER: BLACK BACKGROUND WITH EXACT LOGO & CENTERED TEXT HIERARCHY -->
   <div class="top-hero-header" id="heroHeaderElem">
     <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
       <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
@@ -497,7 +495,7 @@
     </div>
   </div>
 
-  <!-- BOOKMARKS & NAVIGATION BAR (SINGLE INSTANCE) -->
+  <!-- BOOKMARKS & NAVIGATION BAR -->
   <header>
     <nav class="nav-tabs">
       <button class="tab-btn quick-tab active" onclick="switchTab('quickLinksTab', this)">
@@ -688,55 +686,9 @@
     </div>
   </div>
 
-  <!-- NEW RELEASE MULTI-ITEM POPOVER MODAL -->
-  <div class="modal-overlay" id="newReleasePopoverModalOverlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>🎉 New Releases Published Today</h2>
-        <button class="modal-close-btn" onclick="closeModal('newReleasePopoverModalOverlay')"><span class="material-icons-outlined">close</span></button>
-      </div>
-      <div class="modal-body-scroll" id="newReleasePopoverListContainer" style="display:flex; flex-direction:column; gap:0.5rem;"></div>
-    </div>
-  </div>
-
-  <!-- POWER USER PRIVILEGE MODAL -->
-  <div class="modal-overlay" id="powerPrivilegesModalOverlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Power User Privilege</h2>
-        <button class="modal-close-btn" onclick="closeModal('powerPrivilegesModalOverlay')"><span class="material-icons-outlined">close</span></button>
-      </div>
-      <div style="padding:0.5rem 0;">
-        <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.85rem;">
-          Toggle active mode between Power User Admin Access and Standard User View.
-        </p>
-        <button type="button" class="btn-secondary" style="width:100%; justify-content:center; color:var(--google-purple); border-color:var(--google-purple);" onclick="togglePowerUserViewMode()">
-          <span class="material-icons-outlined" style="font-size:18px;">swap_horiz</span><span id="viewModeToggleLabel">Switch to Normal View</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- POWER USERS LIST MODAL -->
-  <div class="modal-overlay" id="powerUsersListModalOverlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Power Users List</h2>
-        <button class="modal-close-btn" onclick="closeModal('powerUsersListModalOverlay')"><span class="material-icons-outlined">close</span></button>
-      </div>
-      <div class="modal-body-scroll" style="padding:0.4rem 0;">
-        <form onsubmit="handleAddPowerUser(event)" style="display:flex; gap:0.4rem; margin-bottom:0.85rem;">
-          <input type="email" id="newPowerUserEmail" placeholder="user@maxval.com" required style="flex:1; padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
-          <button type="submit" class="btn-submit" style="padding:0.4rem 0.75rem;">Add User</button>
-        </form>
-        <div id="powerUserListContainer" style="max-height:180px; overflow-y:auto;"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MANDATORY MODULES & REMINDERS CONFIG MODAL WITH USER ROSTER -->
+  <!-- MANDATORY MODULES & REMINDERS CONFIG MODAL WITH CROSS-HUB STAGING TABLE -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
-    <div class="modal-content" style="max-width: 740px;">
+    <div class="modal-content" style="max-width: 780px;">
       <div class="modal-header">
         <h2>Mandatory Modules & Reminders Management</h2>
         <button class="modal-close-btn" onclick="closeModal('mandatoryConfigModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -752,18 +704,24 @@
         <div class="user-split-view-grid">
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Target Implementation Users *</label>
+              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Implementation Users *</label>
               <div>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllUserRoster(true)">Select All</button>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllUserRoster(false)">Deselect All</button>
               </div>
             </div>
             <div class="checkbox-multi-grid" id="userRosterCheckboxContainer"></div>
+            
+            <!-- ADD NEW USER TO ROSTER -->
+            <form onsubmit="handleAddNewUserToRoster(event)" style="display:flex; gap:0.3rem; margin-top:0.4rem;">
+              <input type="email" id="addRosterUserEmailInput" placeholder="add.user@maxval.com" required style="flex:1; padding:0.3rem; border:1px solid var(--border-color); border-radius:4px; font-size:0.75rem;">
+              <button type="submit" class="btn-submit" style="padding:0.3rem 0.6rem; font-size:0.75rem;">+ Add</button>
+            </form>
           </div>
 
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Modules (Multi-Select Across Hubs) *</label>
+              <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Modules (Cross-Hub Multi-Select) *</label>
               <div>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllMandatoryItems(true)">Select All</button>
                 <button type="button" class="btn-secondary" style="padding:0.15rem 0.35rem; font-size:0.68rem;" onclick="selectAllMandatoryItems(false)">Deselect All</button>
@@ -771,6 +729,12 @@
             </div>
             <div class="checkbox-multi-grid" id="mandatoryMultiCheckboxContainer"></div>
           </div>
+        </div>
+
+        <!-- STAGING TABLE PREVIEW BEFORE SAVING -->
+        <div style="margin-top:0.65rem; background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.5rem;">
+          <strong style="font-size:0.78rem; display:block; margin-bottom:0.25rem;">Selected Items Staging Preview (Across All Hubs):</strong>
+          <div id="stagingTablePreview" style="font-size:0.75rem; color:var(--text-secondary); max-height:80px; overflow-y:auto;">0 items staged. Select checkboxes above to preview.</div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-top:0.65rem;">
@@ -802,7 +766,7 @@
 
   <!-- NEW JOINERS ONBOARDING MODAL -->
   <div class="modal-overlay" id="joinersConfigModalOverlay">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width:720px;">
       <div class="modal-header">
         <h2>New Joiners Onboarding Control</h2>
         <button class="modal-close-btn" onclick="closeModal('joinersConfigModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -819,34 +783,20 @@
           <input type="email" id="newJoinerEmail" placeholder="new.joiner@maxval.com" required style="padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
           
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <label style="font-size:0.75rem; color:var(--text-secondary);">Select Onboarding Modules for Joiner:</label>
+            <label style="font-size:0.75rem; color:var(--text-secondary);">Select Onboarding Modules for Joiner (Cross-Hub Multi-Select):</label>
             <div>
               <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllJoinerItems(true)">Select All</button>
               <button type="button" class="btn-secondary" style="padding:0.15rem 0.4rem; font-size:0.7rem;" onclick="selectAllJoinerItems(false)">Deselect All</button>
             </div>
           </div>
           <div class="checkbox-multi-grid" id="joinerModulesCheckboxContainer"></div>
-          <button type="submit" class="btn-submit" style="padding:0.45rem 0.75rem;">Add Restricted Joiner</button>
+          
+          <button type="submit" class="btn-submit" style="padding:0.45rem 0.75rem; margin-top:0.4rem;">Add Restricted Joiner</button>
         </form>
-        <div id="joinersListContainer" style="max-height:160px; overflow-y:auto;"></div>
-      </div>
-    </div>
-  </div>
 
-  <!-- GLOBAL CROSS-HUB SEARCH MODAL -->
-  <div class="modal-overlay" id="globalSearchModalOverlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Global Keyword & AI Content Search</h2>
-        <button class="modal-close-btn" onclick="closeModal('globalSearchModalOverlay')"><span class="material-icons-outlined">close</span></button>
-      </div>
-      <div style="display:flex; flex-direction:column; gap:0.65rem;">
-        <div class="search-box">
-          <span class="material-icons-outlined">search</span>
-          <input type="text" id="globalSearchInput" class="search-input" placeholder="Search across Quick Links, Document Hub, and Learning Hub..." oninput="executeGlobalSearch(this.value)">
-        </div>
-        <div class="modal-body-scroll" id="globalSearchResultsContainer" style="max-height:300px; display:flex; flex-direction:column; gap:0.4rem;">
-          <p style="font-size:0.78rem; color:var(--text-secondary); text-align:center;">Type any keyword to search across all hubs...</p>
+        <div style="margin-top:0.5rem;">
+          <label style="font-size:0.78rem; font-weight:400; display:block; margin-bottom:0.3rem;">Onboarded Joiners Roster & Status Table:</label>
+          <div id="joinersListContainer" style="max-height:180px; overflow-y:auto;"></div>
         </div>
       </div>
     </div>
@@ -892,7 +842,7 @@
             <div class="form-group"><label>Resource Title *</label><input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims" oninput="autoGenerateAIDescription()"></div>
             <div class="form-group">
               <label>Module Category *</label>
-              <select id="newModule" onchange="autoGenerateAIDescription()">
+              <select id="newModule" onchange="handleModuleCategoryChange(this.value)">
                 <option value="Intellectual Property">Intellectual Property</option>
                 <option value="Introduction to Symphony">Introduction to Symphony</option>
                 <option value="Invention Module">Invention Module</option>
@@ -901,7 +851,9 @@
                 <option value="Trademark">Trademark</option>
                 <option value="Assessment">Assessment</option>
                 <option value="Additional Reference Materials">Additional Reference Materials</option>
+                <option value="__NEW_MODULE__">+ Create New Module Category</option>
               </select>
+              <input type="text" id="customNewModuleInput" placeholder="Enter New Module Name..." style="display:none; margin-top:0.3rem;" oninput="autoGenerateAIDescription()">
             </div>
           </div>
 
@@ -936,7 +888,7 @@
     </div>
   </div>
 
-  <!-- IMPLEMENTATION USER PROGRESS DASHBOARD MODAL -->
+  <!-- IMPLEMENTATION USER PROGRESS DASHBOARD MODAL WITH TWO SUBTABS -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 860px;">
       <div class="modal-header">
@@ -1004,7 +956,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzZNaWF4HqrTzvUqqilCK-GDiUNUfs59rheLTnr6uzptRQgpp3O32yztYYmsDOMGOsS/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzEgUzpviIXa3iB-94MawAbqTGah9rKTBDLm40JPS0qz1M3Yaqkv_OzZ_XfIvZRAj0/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1149,7 +1101,7 @@
       { id: 'doc_79', pkg: "Other", ver: "Other", type: "Prosecution Analytics- Api Integration", link: "https://drive.google.com/file/d/1QZGbpZEhgPsdDDyz8_X24ordjNURJfIC/view?usp=sharing", description: "API endpoint specifications for analytics integration.", createdDate: "2026-04-22" },
       { id: 'doc_80', pkg: "Other", ver: "Other", type: "Support checklist document Template", link: "https://docs.google.com/spreadsheets/d/1S7fqp95TLsLXdI6VMQWSj8ffLu34uJYClceJMGKo5x4/edit?gid=2105910797#gid=2105910797", description: "Level 1 and Level 2 customer support resolution checklist.", createdDate: "2026-04-23" },
       { id: 'doc_81', pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 1", link: "https://docs.google.com/document/d/1BeMcpIbVNIP0etuufO-Duc_SXznyEqJo_yQaB-ah-2Y/edit?tab=t.0", description: "Field audit trail purging procedure Part 1.", createdDate: "2026-04-24" },
-      { id: 'doc_82', pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 2", link: "https://docs.google.com/document/d/1YA0f1BRx5tB1UXB3Q74e_LdrQ0lyKrphEnNYEp0rw30/edit?tab=t.0", description: "Field audit trail purging procedure Part 2.", createdDate: "2026-04-25" },
+      { id: 'doc_82', pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 2", fill: "https://docs.google.com/document/d/1YA0f1BRx5tB1UXB3Q74e_LdrQ0lyKrphEnNYEp0rw30/edit?tab=t.0", description: "Field audit trail purging procedure Part 2.", createdDate: "2026-04-25" },
       { id: 'doc_83', pkg: "Other", ver: "Other", type: "Law Firm OOB features", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0", description: "Summary of out-of-the-box features for law firm deployments.", createdDate: "2026-04-26" },
       { id: 'doc_84', pkg: "Other", ver: "Other", type: "DKIM Setup Document", link: "https://docs.google.com/document/d/1mSO7qCLeEx3ZSMb3upBh5bEbm0w978JC/edit", description: "Configuring email deliverability and DKIM keys in Salesforce.", createdDate: "2026-04-27" },
       { id: 'doc_85', pkg: "Other", ver: "Other", type: "Post Installation Steps", link: "https://docs.google.com/spreadsheets/d/1VVZZtIYXpzAd_-dGjt-JDOjhnehh5Uawe5WZJ7eN96c/edit?gid=0#gid=0", description: "Quick verification spreadsheet for post-install setup.", createdDate: "2026-04-28" },
@@ -1249,6 +1201,18 @@
       autoGenerateAIDescription();
     }
 
+    function handleModuleCategoryChange(val) {
+      const customInput = document.getElementById('customNewModuleInput');
+      if (val === '__NEW_MODULE__') {
+        customInput.style.display = 'block';
+        customInput.required = true;
+      } else {
+        customInput.style.display = 'none';
+        customInput.required = false;
+      }
+      autoGenerateAIDescription();
+    }
+
     function autoGenerateAIDescription(forceRefresh = false) {
       const hub = document.getElementById('targetHub').value;
       const descBox = document.getElementById('newDescription');
@@ -1261,7 +1225,8 @@
         descBox.value = `Direct shortcut to access ${title} (${cat}) for implementation tracking.`;
       } else if (hub === 'learning') {
         const title = document.getElementById('newTitle').value.trim() || 'Symphony Module';
-        const category = document.getElementById('newModule').value;
+        const selectVal = document.getElementById('newModule').value;
+        const category = selectVal === '__NEW_MODULE__' ? (document.getElementById('customNewModuleInput').value.trim() || 'New Category') : selectVal;
         descBox.value = `Interactive guide on "${title}" covering key procedures under the ${category} framework.`;
       } else {
         const pkg = document.getElementById('newPkg').value.trim() || 'Symphony';
@@ -1479,28 +1444,25 @@
       const todayStr = new Date().toLocaleDateString();
       const newItems = quickDataset.concat(dataset, docDataset).filter(item => item.releaseDate === todayStr);
 
-      if (newItems.length === 1) {
+      if (newItems.length > 0) {
         let single = newItems[0];
+        let targetId = single.id || (single.pkg + single.type);
+
         if (single.pkg) switchTab('documentHubTab', document.querySelector('.doc-tab'));
         else if (single.category && single.category.includes('Module')) switchTab('learningHubTab', document.querySelector('.learning-tab'));
         else switchTab('quickLinksTab', document.querySelector('.quick-tab'));
-      } else if (newItems.length > 1) {
-        openNewReleasePopoverModal(newItems);
-      }
-    }
 
-    function openNewReleasePopoverModal(items) {
-      const container = document.getElementById('newReleasePopoverListContainer');
-      container.innerHTML = items.map(i => `
-        <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.55rem; display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <strong style="font-size:0.82rem; display:block;">${i.name || i.pkg + ' ' + i.type}</strong>
-            <p style="font-size:0.72rem; color:var(--text-secondary);">${i.description || 'New Release'}</p>
-          </div>
-          <a href="${i.link}" target="_blank" class="link-btn" onclick="closeModal('newReleasePopoverModalOverlay')">Open <span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
-        </div>
-      `).join('');
-      document.getElementById('newReleasePopoverModalOverlay').classList.add('open');
+        setTimeout(() => {
+          let cardElems = document.querySelectorAll('.resource-card');
+          cardElems.forEach(card => {
+            if (card.innerHTML.includes(single.name || single.type)) {
+              card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              card.classList.add('new-today-glow');
+              setTimeout(() => card.classList.remove('new-today-glow'), 3000);
+            }
+          });
+        }, 300);
+      }
     }
 
     function renderCurrentActiveTab() {
@@ -1542,7 +1504,6 @@
       let filtered = quickDataset.filter(item => {
         if (allowedIds && !allowedIds.includes(item.id)) return false;
         
-        // ZERO BOOKMARK FALLBACK: IF NO BOOKMARKS EXIST, SHOW ALL
         if (filterOnlyBookmarks && bookmarkedIds.size > 0) {
           return bookmarkedIds.has(item.id);
         }
@@ -1599,7 +1560,6 @@
         const matchesPkg = selectedDocPackage === 'ALL' || doc.pkg === selectedDocPackage;
         const matchesSearch = doc.pkg.toLowerCase().includes(docSearchQuery) || doc.type.toLowerCase().includes(docSearchQuery) || (doc.description && doc.description.toLowerCase().includes(docSearchQuery));
         
-        // ZERO BOOKMARK FALLBACK
         let matchesBookmark = true;
         if (filterOnlyBookmarks && bookmarkedIds.size > 0) {
           matchesBookmark = bookmarkedIds.has(docId);
@@ -1626,7 +1586,6 @@
       document.getElementById('kpiBookmarks').textContent = activeBookmarksCount;
       document.getElementById('docActiveCount').textContent = filtered.length;
 
-      // RENDER TABLE VIEW FOR DOCS WITH COMPLETION STATUS
       const tbody = document.getElementById('docTableBody');
       tbody.innerHTML = filtered.map(doc => {
         const docId = doc.id || (doc.pkg + doc.type);
@@ -1666,7 +1625,6 @@
         `;
       }).join('');
 
-      // RENDER TILE VIEW FOR DOCS
       const gridContainer = document.getElementById('docGridContainer');
       gridContainer.innerHTML = filtered.map(doc => {
         const docId = doc.id || (doc.pkg + doc.type);
@@ -1725,7 +1683,6 @@
         const matchesModule = selectedModule === 'ALL' || res.category === selectedModule;
         const matchesSearch = res.name.toLowerCase().includes(searchQuery) || (res.description && res.description.toLowerCase().includes(searchQuery));
         
-        // ZERO BOOKMARK FALLBACK
         let matchesBookmark = true;
         if (filterOnlyBookmarks && bookmarkedIds.size > 0) {
           matchesBookmark = bookmarkedIds.has(res.id);
@@ -1754,7 +1711,6 @@
       document.getElementById('learningActiveCount').textContent = filtered.length;
       document.getElementById('learningCompletedCount').textContent = completedSet.size;
 
-      // RENDER TILE VIEW
       const grid = document.getElementById('resourcesGrid');
       grid.innerHTML = filtered.map(res => {
         const isBookmarked = bookmarkedIds.has(res.id);
@@ -1805,7 +1761,6 @@
         `;
       }).join('');
 
-      // RENDER TABLE VIEW
       const tbody = document.getElementById('learningTableBody');
       tbody.innerHTML = filtered.map(res => {
         const isBookmarked = bookmarkedIds.has(res.id);
@@ -1993,12 +1948,32 @@
       `).join('');
     }
 
+    function handleAddNewUserToRoster(e) {
+      e.preventDefault();
+      const input = document.getElementById('addRosterUserEmailInput').value.trim().toLowerCase();
+      if (input && input.includes('@maxval.com')) {
+        callGasJsonp({ action: 'ADD_IMPLEMENTATION_USER', email: input, requesterEmail: currentUser }, function(res) {
+          if (res && res.status === "SUCCESS") {
+            showToast(`User ${input} added to implementation roster!`);
+            document.getElementById('addRosterUserEmailInput').value = '';
+            detectGoogleSessionAccount();
+            setTimeout(renderUserRosterCheckboxes, 500);
+          } else {
+            alert(res ? res.message : "Failed to add user.");
+          }
+        });
+      }
+    }
+
     function selectAllUserRoster(select) {
       document.querySelectorAll('.roster-user-chk').forEach(cb => cb.checked = select);
     }
 
     function selectAllMandatoryItems(select) {
-      document.querySelectorAll('.mandatory-chk').forEach(cb => cb.checked = select);
+      document.querySelectorAll('.mandatory-chk').forEach(cb => {
+        cb.checked = select;
+        updateStagingTablePreview();
+      });
     }
 
     function renderMandatoryMultiCheckboxes() {
@@ -2013,13 +1988,32 @@
         let isChecked = !!mandatoryData[itemId];
         return `
           <label class="checkbox-item">
-            <input type="checkbox" value="${itemId}" class="mandatory-chk" ${isChecked ? 'checked' : ''}>
+            <input type="checkbox" value="${itemId}" class="mandatory-chk" ${isChecked ? 'checked' : ''} onchange="updateStagingTablePreview()">
             <span>${d.name || (d.pkg + ' - ' + d.type)} (${d.category || d.pkg})</span>
           </label>
         `;
       }).join('');
 
+      updateStagingTablePreview();
       renderMandatoryItemsList();
+    }
+
+    function updateStagingTablePreview() {
+      const checkboxes = document.querySelectorAll('.mandatory-chk:checked');
+      const container = document.getElementById('stagingTablePreview');
+
+      if (checkboxes.length === 0) {
+        container.innerHTML = "0 items staged. Select checkboxes above to preview.";
+        return;
+      }
+
+      let items = Array.from(checkboxes).map(cb => {
+        let id = cb.value;
+        let found = quickDataset.find(d => d.id === id) || dataset.find(d => d.id === id) || docDataset.find(d => (d.id === id || (d.pkg + d.type) === id));
+        return `• ${found ? (found.name || found.pkg + ' ' + found.type) : id}`;
+      });
+
+      container.innerHTML = `<strong>Staged Items (${items.length}):</strong><br>` + items.join('<br>');
     }
 
     function saveMandatorySettingsMulti() {
@@ -2105,8 +2099,6 @@
       let found = quickDataset.find(d => d.id === id) || dataset.find(d => d.id === id) || docDataset.find(d => (d.id === id || (d.pkg + d.type) === id));
       let assignedUsers = typeof entry === 'object' && entry.users ? entry.users : [];
       let dueDate = typeof entry === 'object' ? entry.dueDate : entry;
-
-      let userListHtml = assignedUsers.map(u => `<li><span>${deriveDisplayName(u)} (${u})</span></li>`).join('');
 
       alert(`Assignment Details:\n\nModule: ${found ? (found.name || found.pkg + ' ' + found.type) : id}\nDue Date: ${dueDate}\nAssigned Users (${assignedUsers.length}):\n${assignedUsers.join('\n')}`);
     }
@@ -2264,7 +2256,9 @@
         payloadItem = { id: itemId, name: title, category: document.getElementById('newQuickCategory').value.trim() || 'Quick Link', description: desc, link: link, releaseDate: currentDateStr, createdDate: currentDateStr };
       } else if (targetHub === 'learning') {
         title = document.getElementById('newTitle').value.trim();
-        payloadItem = { id: itemId, name: title, category: document.getElementById('newModule').value, description: desc, link: link, releaseDate: currentDateStr, createdDate: currentDateStr };
+        const selectVal = document.getElementById('newModule').value;
+        const finalCategory = selectVal === '__NEW_MODULE__' ? (document.getElementById('customNewModuleInput').value.trim() || 'New Category') : selectVal;
+        payloadItem = { id: itemId, name: title, category: finalCategory, description: desc, link: link, releaseDate: currentDateStr, createdDate: currentDateStr };
       } else {
         const pkg = document.getElementById('newPkg').value.trim();
         title = `${pkg} (${document.getElementById('newDocType').value.trim()})`;
@@ -2341,7 +2335,7 @@
           `;
         }).join('');
 
-        // TAB 2: MANDATORY PROGRESS
+        // TAB 2: MANDATORY PROGRESS (CORRECTED "NOT ASSIGNED YET" DISPLAY STATUS)
         tbodyMandatory.innerHTML = rosterList.map(u => {
           let record = globalAnalyticsCache[u] || { completedTopics: [] };
           let userCompleted = new Set(record.completedTopics || []);
@@ -2354,15 +2348,21 @@
 
           let myCompletedMandatory = myMandatory.filter(k => userCompleted.has(k));
           let myPendingCount = myMandatory.length - myCompletedMandatory.length;
-          let completionPct = myMandatory.length > 0 ? Math.round((myCompletedMandatory.length / myMandatory.length) * 100) : 100;
-          let statusTag = myPendingCount === 0 ? '<span style="color:var(--google-green);">Completed</span>' : `<span style="color:var(--google-red);">Pending (${myPendingCount})</span>`;
+
+          let completionPct = "0%";
+          let statusTag = `<span style="color:var(--text-secondary);">Not Assigned Yet</span>`;
+
+          if (myMandatory.length > 0) {
+            completionPct = `${Math.round((myCompletedMandatory.length / myMandatory.length) * 100)}%`;
+            statusTag = myPendingCount === 0 ? '<span style="color:var(--google-green);">Completed</span>' : `<span style="color:var(--google-red);">Pending (${myPendingCount})</span>`;
+          }
 
           return `
             <tr onclick="openDrilldownModal('${u}')" style="cursor:pointer;">
               <td><strong>${deriveDisplayName(u)}</strong><br><span style="font-size:0.72rem; color:var(--text-secondary);">${u}</span></td>
               <td style="text-align:center;">${myMandatory.length}</td>
               <td style="text-align:center;">${statusTag}</td>
-              <td style="text-align:center;"><strong>${completionPct}%</strong></td>
+              <td style="text-align:center;"><strong>${completionPct}</strong></td>
               <td style="text-align:right;" onclick="event.stopPropagation();">
                 <button type="button" class="action-btn" onclick="openDrilldownModal('${u}')" title="View Details"><span class="material-icons-outlined" style="font-size:18px;">visibility</span></button>
                 <button type="button" class="action-btn" onclick="sendTargetedReminderSingle('${u}')" title="Send Reminder"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">notifications_active</span></button>
@@ -2387,7 +2387,7 @@
       });
 
       const myPendingMandatory = myMandatory.filter(k => !completedIds.includes(k));
-      let pct = myMandatory.length > 0 ? Math.round(((myMandatory.length - myPendingMandatory.length) / myMandatory.length) * 100) : 100;
+      let pct = myMandatory.length > 0 ? Math.round(((myMandatory.length - myPendingMandatory.length) / myMandatory.length) * 100) : 0;
       let totalAssignedDocs = quickDataset.length + dataset.length + docDataset.length;
 
       let seenDocsHistory = u.seenDocs || [];
