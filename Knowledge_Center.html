@@ -76,20 +76,21 @@
       100% { transform: translate3d(-100%, 0, 0); }
     }
 
-    /* ACTION ITEM 4: LOGO PLACED DIRECTLY NEXT TO HEADER TITLE */
+    /* ACTION ITEM 3: MAIN HEADER & SUBTITLE CENTER ALIGNED, SUBTITLE SMALL FONT, LOGO NEXT TO HEADER */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
-      padding: 1rem 1.25rem;
+      padding: 0.85rem 1.25rem;
       border-bottom: 2px solid var(--google-blue);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
+      text-align: center;
     }
 
     .idea-lightbulb-svg {
-      width: 44px;
-      height: 44px;
+      width: 38px;
+      height: 38px;
       object-fit: contain;
       vertical-align: middle;
       flex-shrink: 0;
@@ -98,10 +99,10 @@
     .header-title-container {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
-      gap: 0.1rem;
-      text-align: left;
+      gap: 0.15rem;
+      text-align: center;
     }
 
     .brand-title-main {
@@ -110,15 +111,17 @@
       font-weight: 500;
       color: #ffffff;
       line-height: 1.2;
+      text-align: center;
     }
 
     .brand-subtitle {
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       font-weight: 400;
       color: #ffffff;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
+      text-align: center;
     }
 
     .top-utility-bar {
@@ -189,7 +192,6 @@
     .tab-btn.doc-tab.active { background: #f3e8fd; color: var(--google-purple); border-color: var(--google-purple); transform: translateY(-1px); }
     .tab-btn.learning-tab.active { background: #e8f0fe; color: var(--google-blue); border-color: var(--google-blue); transform: translateY(-1px); }
 
-    /* ACTION ITEM 7: NEW RELEASE, BOOKMARKS, AND MANDATORY BADGES SHOWN ON TOP */
     .header-right-badges { display: flex; align-items: center; gap: 0.4rem; }
     .kpi-bookmark-small {
       display: inline-flex;
@@ -395,7 +397,7 @@
     }
 
     @media (max-width: 600px) {
-      .top-hero-header { flex-direction: row; text-align: left; justify-content: center; }
+      .top-hero-header { flex-direction: row; text-align: center; justify-content: center; }
       .top-utility-bar { flex-direction: column; gap: 0.5rem; align-items: stretch; }
       .top-utility-right { justify-content: space-between; }
       .filter-controls-grid { grid-template-columns: 1fr; }
@@ -433,7 +435,7 @@
     </div>
   </div>
 
-  <!-- ACTION ITEM 4: LOGO PLACED DIRECTLY NEAR THE HEADER TEXT -->
+  <!-- ACTION ITEM 3: CENTER ALIGNED HEADER & SMALLER SUBTITLE, LOGO DIRECTLY NEXT TO HEADER TEXT -->
   <div class="top-hero-header" id="heroHeaderElem">
     <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
       <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
@@ -494,7 +496,7 @@
       </button>
     </nav>
 
-    <!-- ACTION ITEM 7: NEW RELEASE, BOOKMARKS, AND MANDATORY MODULE BADGES LOCATED ON TOP -->
+    <!-- ACTION ITEM 7: MANDATORY COUNT BADGE SHOWN ON TOP PERSISTENTLY -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
@@ -523,6 +525,7 @@
               <option value="ALL">-- All Packages --</option>
             </select>
           </div>
+          <!-- ACTION ITEM 2: WORKING SORTING OPTION IN DOCUMENT HUB -->
           <div>
             <label style="font-size:0.75rem; font-weight:400; color:var(--google-purple); display:block; margin-bottom:0.2rem;">SORT BY</label>
             <select id="docSortSelect" class="styled-dropdown-catchy" onchange="renderDocumentHub()">
@@ -573,6 +576,7 @@
               <option value="ALL">-- All Modules --</option>
             </select>
           </div>
+          <!-- ACTION ITEM 2: WORKING SORTING OPTION IN LEARNING HUB -->
           <div>
             <label style="font-size:0.75rem; font-weight:400; color:var(--google-blue); display:block; margin-bottom:0.2rem;">SORT BY</label>
             <select id="learningSortSelect" class="styled-dropdown-catchy" onchange="renderLearningHub()">
@@ -699,7 +703,7 @@
     </div>
   </div>
 
-  <!-- ACTION ITEMS 1, 2, 3, 8, 9: MANDATORY MODULES MANAGEMENT WITH STAGED TABLE & POP-UP DIALOG BOXES -->
+  <!-- ACTION ITEM 1 & 4: MANDATORY MANAGEMENT WITH PERSISTENT DATA SAVE & WORKING DELETE OPTION -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
     <div class="modal-content" style="max-width: 820px;">
       <div class="modal-header">
@@ -744,7 +748,6 @@
           </div>
         </div>
 
-        <!-- ACTION ITEM 8: STAGED MODULES TABLE DETAILS -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400; color:var(--google-blue);">Staged Modules for Assignment:</label>
           <div class="table-container" style="margin-top:0.35rem; max-height:140px;">
@@ -780,7 +783,7 @@
 
         <button type="button" class="btn-submit" style="margin-top:0.65rem; width:100%;" onclick="saveMandatorySettingsMulti()">Assign Mandatory & Trigger Notification</button>
 
-        <!-- ACTION ITEM 1: MATRIX TABLE WITH DELETE OPTION FOR POWER USERS -->
+        <!-- ACTION ITEM 4: WORKING DELETE OPTION IN MATRIX TABLE FOR POWER USERS -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Mandatory User Assignments Matrix:</label>
           <div class="table-container" style="margin-top:0.35rem; max-height:180px;">
@@ -790,7 +793,7 @@
                   <th>User Email</th>
                   <th style="text-align:center;">Assigned Count</th>
                   <th style="text-align:center;">View Modules</th>
-                  <th style="text-align:right;">Actions</th>
+                  <th style="text-align:right;">Delete Assignment</th>
                 </tr>
               </thead>
               <tbody id="mandatoryUserMatrixTableBody"></tbody>
@@ -801,7 +804,6 @@
     </div>
   </div>
 
-  <!-- ACTION ITEM 2: POP-UP DIALOG MODAL FOR VIEWING ASSIGNED MANDATORY MODULES -->
   <div class="modal-overlay" id="userAssignedModulesModalOverlay">
     <div class="modal-content" style="max-width: 520px;">
       <div class="modal-header">
@@ -812,7 +814,7 @@
     </div>
   </div>
 
-  <!-- ACTION ITEMS 5 & 6: NEW JOINERS ONBOARDING CONTROL WITH MULTIPLE USER ADDITION & DELETE OPTION -->
+  <!-- ACTION ITEM 5 & 6: NEW JOINERS ONBOARDING CONTROL WITH DEDICATED ADD USER BUTTON & PERSISTENT DATA SAVE -->
   <div class="modal-overlay" id="joinersConfigModalOverlay">
     <div class="modal-content" style="max-width: 780px;">
       <div class="modal-header">
@@ -821,10 +823,15 @@
       </div>
 
       <div class="modal-body-scroll">
-        <!-- ACTION ITEM 5: MULTIPLE NEW JOINER EMAILS ENTRY -->
         <div style="display:flex; flex-direction:column; gap:0.4rem; margin-bottom:0.85rem;">
           <label style="font-size:0.75rem; color:var(--text-secondary);">Enter New Joiner Email(s) (Comma-Separated for Multiple): *</label>
-          <input type="text" id="newJoinerEmail" placeholder="joiner1@maxval.com, joiner2@maxval.com" required style="padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
+          <div style="display:flex; gap:0.4rem;">
+            <input type="text" id="newJoinerEmail" placeholder="joiner1@maxval.com, joiner2@maxval.com" style="flex:1; padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
+            <!-- ACTION ITEM 5: DEDICATED ADD USER BUTTON -->
+            <button type="button" class="btn-submit" style="padding:0.4rem 0.75rem; white-space:nowrap;" onclick="handleAddJoinersSubmit()">
+              <span class="material-icons-outlined" style="font-size:16px; vertical-align:middle;">person_add</span> Add User(s)
+            </button>
+          </div>
           
           <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.3rem;">
             <label style="font-size:0.75rem; color:var(--text-secondary);">Select Onboarding Modules Across Hubs:</label>
@@ -853,11 +860,9 @@
               <tbody id="stagedJoinerTableBody"></tbody>
             </table>
           </div>
-
-          <button type="button" class="btn-submit" style="padding:0.45rem 0.75rem; margin-top:0.5rem;" onclick="handleAddJoinersSubmit()">Add Joiners & Trigger Onboarding Email</button>
         </div>
 
-        <!-- ACTION ITEM 6: DELETE OPTION FOR ACTIVE RESTRICTED NEW JOINERS -->
+        <!-- ACTION ITEM 4 & 6: DELETE OPTION IN RESTRICTED NEW JOINERS TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Restricted New Joiners (<strong id="newJoinersCount">0</strong>):</label>
           <div class="table-container" style="margin-top:0.35rem; max-height:180px;">
@@ -1043,7 +1048,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbwbLSnlfipXC_OG-CEKT1kgRii2gmMlc8wLYpPp-6C-wJ7m-swHRvHG_99msR2q7j-f/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxhsnJgsdJAa4sQOrg8ZdLaBKcbEN3FAQ5oIWnMhL5kAlu8hXG0xz9EilOISRbIQQJY/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1335,6 +1340,7 @@
       }
     }
 
+    <!-- ACTION ITEM 1, 6 & 7: FETCH AND RETAIN PERSISTENT MANDATORY & NEW JOINERS DATA ON LOAD AND REFRESH -->
     function detectGoogleSessionAccount() {
       callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
         if (data && data.email && data.email.includes('@maxval.com')) {
@@ -1347,6 +1353,9 @@
         if (data && data.roster) implementationRosterList = data.roster;
         if (data && data.mandatoryData) mandatoryData = data.mandatoryData;
         if (data && data.joinersData) joinersData = data.joinersData;
+
+        updateTopMandatoryCount();
+        renderCurrentActiveTab();
       });
     }
 
@@ -1436,6 +1445,7 @@
       renderCurrentActiveTab();
     }
 
+    <!-- ACTION ITEM 1, 6 & 7: ALWAYS SYNC SERVER TRUTH MANDATORY & NEW JOINERS DATA ON LOAD AND REFRESH -->
     function loadGlobalCustomLinks() {
       callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
         if (data) {
@@ -1443,6 +1453,9 @@
           globalCustomLearning = data.learning || [];
           globalCustomDocs = data.docs || [];
           globalCustomCategories = data.customCategories || [];
+
+          if (data.mandatoryData) mandatoryData = data.mandatoryData;
+          if (data.joinersData) joinersData = data.joinersData;
 
           quickDataset = [...baseQuickDataset, ...globalCustomQuick];
           dataset = [...baseDataset, ...globalCustomLearning];
@@ -1452,9 +1465,9 @@
           renderMandatoryMultiCheckboxes();
           renderUserRosterCheckboxes();
           renderJoinersMultiCheckboxes();
+          updateTopMandatoryCount();
           renderCurrentActiveTab();
           checkSameDayReleases();
-          updateTopMandatoryCount();
         }
       });
     }
@@ -1587,6 +1600,7 @@
       }).join('');
     }
 
+    <!-- ACTION ITEM 2: WORKING SORTING OPTION IN DOCUMENT HUB -->
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let isRestricted = isUserRestrictedNewJoiner();
@@ -1602,6 +1616,11 @@
         let matchesMandatory = filterOnlyMandatory ? !!mandatoryData[docId] : true;
         return matchesPkg && matchesSearch && matchesBookmark && matchesMandatory;
       });
+
+      const sortMode = document.getElementById('docSortSelect') ? document.getElementById('docSortSelect').value : 'default';
+      if (sortMode === 'package_asc') filtered.sort((a,b) => a.pkg.localeCompare(b.pkg));
+      else if (sortMode === 'package_desc') filtered.sort((a,b) => b.pkg.localeCompare(a.pkg));
+      else if (sortMode === 'date') filtered.sort((a,b) => (b.createdDate || '').localeCompare(a.createdDate || ''));
 
       const activeBookmarksCount = docDataset.filter(d => bookmarkedIds.has(d.id || (d.pkg + d.type))).length;
       document.getElementById('kpiBookmarks').textContent = activeBookmarksCount;
@@ -1668,6 +1687,7 @@
       }).join('');
     }
 
+    <!-- ACTION ITEM 2: WORKING SORTING OPTION IN LEARNING HUB -->
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let isRestricted = isUserRestrictedNewJoiner();
@@ -1681,6 +1701,12 @@
         let matchesMandatory = filterOnlyMandatory ? !!mandatoryData[res.id] : true;
         return matchesModule && matchesSearch && matchesBookmark && matchesMandatory;
       });
+
+      const sortMode = document.getElementById('learningSortSelect') ? document.getElementById('learningSortSelect').value : 'default';
+      if (sortMode === 'title_asc') filtered.sort((a,b) => a.name.localeCompare(b.name));
+      else if (sortMode === 'title_desc') filtered.sort((a,b) => b.name.localeCompare(a.name));
+      else if (sortMode === 'category') filtered.sort((a,b) => a.category.localeCompare(b.category));
+      else if (sortMode === 'date') filtered.sort((a,b) => (b.createdDate || '').localeCompare(a.createdDate || ''));
 
       const activeBookmarksCount = dataset.filter(d => bookmarkedIds.has(d.id)).length;
       document.getElementById('kpiBookmarks').textContent = activeBookmarksCount;
@@ -1960,7 +1986,6 @@
       renderStagedMandatoryTable();
     }
 
-    <!-- ACTION ITEM 8: STAGED MANDATORY MODULES DETAILS TABLE -->
     function renderStagedMandatoryTable() {
       const tbody = document.getElementById('stagedMandatoryTableBody');
       let items = Array.from(stagedMandatoryModules);
@@ -1994,7 +2019,7 @@
       renderStagedMandatoryTable();
     }
 
-    <!-- ACTION ITEM 9: CUMULATIVE INCREMENTAL MANDATORY ASSIGNMENTS -->
+    <!-- ACTION ITEM 1 & 7: PERMANENTLY SAVE MANDATORY ASSIGNMENTS ON BACKEND & RETAIN COUNTS -->
     function saveMandatorySettingsMulti() {
       const userCheckboxes = document.querySelectorAll('.roster-user-chk:checked');
       const dueDate = document.getElementById('mandatoryDueDate').value;
@@ -2022,7 +2047,7 @@
         triggerConfig: JSON.stringify({ timing: timingSelect })
       }, function(res) {
         if (res && res.status === "SUCCESS") {
-          showToast("Mandatory assignments updated & notifications dispatched!");
+          showToast("Mandatory assignments updated & saved permanently!");
           if (res.mandatoryData) mandatoryData = res.mandatoryData;
           
           selectedItems.forEach(itemId => {
@@ -2049,7 +2074,7 @@
       });
     }
 
-    <!-- ACTION ITEM 1 & 3: MATRIX TABLE WITH WORKING DELETE OPTION & CONFIRMATION DIALOG -->
+    <!-- ACTION ITEM 4: FULLY WORKING CONFIRMATION POP-UP & DELETE FOR MANDATORY ASSIGNMENTS -->
     function renderMandatoryUserMatrixTable() {
       const tbody = document.getElementById('mandatoryUserMatrixTableBody');
       let rosterList = implementationRosterList.length > 0 ? implementationRosterList : Array.from(powerUsers);
@@ -2083,13 +2108,12 @@
       }).join('');
     }
 
-    <!-- ACTION ITEM 3: CONFIRMATION POP-UP FOR DELETING MANDATORY ASSIGNMENTS -->
     function executeDeleteUserMandatoryAssignment(user) {
-      if (!confirm(`Confirmation Required:\n\nAre you sure you want to remove ALL mandatory module assignments for ${deriveDisplayName(user)} (${user})?`)) return;
+      if (!confirm(`Are you sure you want to delete all mandatory assignments for ${deriveDisplayName(user)} (${user})?`)) return;
 
       callGasJsonp({ action: 'DELETE_MANDATORY_ASSIGNMENT', targetUser: user, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
-          showToast(`Mandatory assignments cleared for ${user}`);
+          showToast(`Mandatory assignments deleted for ${user}`);
           if (res.mandatoryData) mandatoryData = res.mandatoryData;
           renderMandatoryUserMatrixTable();
           updateTopMandatoryCount();
@@ -2100,7 +2124,6 @@
       });
     }
 
-    <!-- ACTION ITEM 2: WORKING ASSIGNED MODULES POP-UP DIALOG BOX -->
     function openUserMandatoryEyeModal(user) {
       const keys = Object.keys(mandatoryData);
       let assignedKeys = keys.filter(k => {
@@ -2211,7 +2234,7 @@
       renderStagedJoinerTable();
     }
 
-    <!-- ACTION ITEM 5: MULTIPLE NEW JOINER USERS ENTRY -->
+    <!-- ACTION ITEM 5 & 6: DEDICATED ADD USER BUTTON & PERMANENT SAVING OF RESTRICTED NEW JOINERS -->
     function handleAddJoinersSubmit() {
       const input = document.getElementById('newJoinerEmail').value.trim();
       if (!input) {
@@ -2247,15 +2270,16 @@
       stagedJoinerModules.clear();
       renderStagedJoinerTable();
 
-      callGasJsonp({ action: 'SAVE_NEW_JOINERS_DATA', data: JSON.stringify(joinersData), newJoinerEmail: emailList.join(',') }, function() {
+      callGasJsonp({ action: 'SAVE_NEW_JOINERS_DATA', data: JSON.stringify(joinersData), newJoinerEmail: emailList.join(',') }, function(res) {
+        if (res && res.joinersData) joinersData = res.joinersData;
         renderJoinersTable();
-        showToast(`Onboarded ${emailList.length} new joiner(s) & emails dispatched!`);
+        showToast(`Onboarded ${emailList.length} new joiner(s) & saved permanently!`);
       });
     }
 
-    <!-- ACTION ITEM 6: DELETE OPTION FOR ACTIVE RESTRICTED NEW JOINERS -->
+    <!-- ACTION ITEM 4 & 6: WORKING DELETE OPTION IN RESTRICTED NEW JOINERS TABLE -->
     function executeDeleteJoiner(email) {
-      if (!confirm(`Confirmation Required:\n\nRemove restricted access for ${email}? They will gain full unrestricted portal access.`)) return;
+      if (!confirm(`Are you sure you want to delete restricted access for ${email}? They will gain full unrestricted access.`)) return;
 
       callGasJsonp({ action: 'DELETE_NEW_JOINER', targetUser: email, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
@@ -2336,7 +2360,7 @@
       renderCurrentActiveTab();
     }
 
-    <!-- ACTION ITEM 10: FULLY WORKING DELETE OPTION FOR POWER USERS ACROSS ALL HUBS -->
+    <!-- ACTION ITEM 4: WORKING DELETE OPTION FOR POWER USERS IN ALL HUBS -->
     function executeDeleteItem(hub, link, id) {
       if (!confirm("Are you sure you want to permanently delete this resource link from the portal?")) return;
       
