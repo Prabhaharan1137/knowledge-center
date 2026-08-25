@@ -218,7 +218,6 @@
       color: #b06000;
     }
 
-    /* LOWERCASE "new release" BADGE */
     .new-release-badge {
       display: inline-flex;
       align-items: center;
@@ -338,7 +337,7 @@
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 400; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
-    /* DIALOG MODAL CONSTRAINTS */
+    /* DIALOG MODALS */
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 16, 18, 0.85);
@@ -568,7 +567,7 @@
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
-          <input type="text" id="docSearchInput" class="search-input" placeholder="My Modules Search / Filter...">
+          <input type="text" id="docSearchInput" class="search-input" placeholder="Search / Filter...">
         </div>
         <div class="view-toggle-group">
           <button type="button" class="view-toggle-btn active" id="docTableToggleBtn" onclick="setHubViewMode('document', 'table')" title="Table List View"><span class="material-icons-outlined" style="font-size:18px;">table_chart</span></button>
@@ -627,7 +626,7 @@
       <section class="toolbar">
         <div class="search-box">
           <span class="material-icons-outlined">search</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="My Modules Search / Filter...">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search / Filter...">
         </div>
         <div class="view-toggle-group">
           <button type="button" class="view-toggle-btn active" id="learningGridToggleBtn" onclick="setHubViewMode('learning', 'grid')" title="Tile View"><span class="material-icons-outlined" style="font-size:18px;">grid_view</span></button>
@@ -982,7 +981,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzw4cy5pbZEgHYKRFoGb1JxUISLP6k9nDcv3bkg0IkQyuMfkntmlup6EcuqA1FxM3Sh/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzWx_3DlCnISjESQLlZ-VujAEkYMqOsBQ9S8CTNtRvK2zL_5jfh6u82FvcjcC5GCrx3/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1520,6 +1519,11 @@
 
     function isPowerUserActive() {
       return currentUser && powerUsers.has(currentUser.toLowerCase().trim()) && isPowerUserViewMode;
+    }
+
+    function isUserRestrictedNewJoiner() {
+      if (!currentUser) return false;
+      return joinersData[currentUser.toLowerCase().trim()] && joinersData[currentUser.toLowerCase().trim()].restricted;
     }
 
     function renderQuickLinksHub() {
