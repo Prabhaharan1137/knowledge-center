@@ -76,7 +76,7 @@
       100% { transform: translate3d(-100%, 0, 0); }
     }
 
-    /* ACTION ITEM 3: MAIN HEADER & SUBTITLE CENTER ALIGNED, SUBTITLE SMALL FONT, LOGO NEXT TO HEADER */
+    /* CENTER ALIGNED HEADER & SMALLER SUBTITLE, LOGO NEXT TO HEADER TEXT */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
       padding: 0.85rem 1.25rem;
@@ -330,6 +330,9 @@
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 400; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
+    /* ACTION ITEM 2: SMALLER FONT SIZE FOR STAGED ONBOARDING TITLES */
+    .staged-title-small { font-size: 0.73rem !important; font-weight: 500; color: var(--text-primary); }
+
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 16, 18, 0.85);
@@ -496,7 +499,6 @@
       </button>
     </nav>
 
-    <!-- ACTION ITEM 7: MANDATORY COUNT BADGE SHOWN ON TOP PERSISTENTLY -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
@@ -703,7 +705,6 @@
     </div>
   </div>
 
-  <!-- ACTION ITEM 1 & 4: MANDATORY MANAGEMENT WITH PERSISTENT DATA SAVE & WORKING DELETE OPTION -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
     <div class="modal-content" style="max-width: 820px;">
       <div class="modal-header">
@@ -748,6 +749,7 @@
           </div>
         </div>
 
+        <!-- ACTION ITEM 2: STAGED MODULES TABLE DETAILS WITH SMALL FONT TITLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400; color:var(--google-blue);">Staged Modules for Assignment:</label>
           <div class="table-container" style="margin-top:0.35rem; max-height:140px;">
@@ -783,7 +785,7 @@
 
         <button type="button" class="btn-submit" style="margin-top:0.65rem; width:100%;" onclick="saveMandatorySettingsMulti()">Assign Mandatory & Trigger Notification</button>
 
-        <!-- ACTION ITEM 4: WORKING DELETE OPTION IN MATRIX TABLE FOR POWER USERS -->
+        <!-- ACTION ITEM 1: MATRIX TABLE WITH DIRECT DELETION EXECUTION -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Mandatory User Assignments Matrix:</label>
           <div class="table-container" style="margin-top:0.35rem; max-height:180px;">
@@ -814,7 +816,7 @@
     </div>
   </div>
 
-  <!-- ACTION ITEM 5 & 6: NEW JOINERS ONBOARDING CONTROL WITH DEDICATED ADD USER BUTTON & PERSISTENT DATA SAVE -->
+  <!-- ACTION ITEM 5: NEW JOINERS ONBOARDING CONTROL WITH DEDICATED ADD USER BUTTON -->
   <div class="modal-overlay" id="joinersConfigModalOverlay">
     <div class="modal-content" style="max-width: 780px;">
       <div class="modal-header">
@@ -827,7 +829,7 @@
           <label style="font-size:0.75rem; color:var(--text-secondary);">Enter New Joiner Email(s) (Comma-Separated for Multiple): *</label>
           <div style="display:flex; gap:0.4rem;">
             <input type="text" id="newJoinerEmail" placeholder="joiner1@maxval.com, joiner2@maxval.com" style="flex:1; padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
-            <!-- ACTION ITEM 5: DEDICATED ADD USER BUTTON -->
+            <!-- ACTION ITEM 5: ADD USER BUTTON -->
             <button type="button" class="btn-submit" style="padding:0.4rem 0.75rem; white-space:nowrap;" onclick="handleAddJoinersSubmit()">
               <span class="material-icons-outlined" style="font-size:16px; vertical-align:middle;">person_add</span> Add User(s)
             </button>
@@ -849,6 +851,7 @@
             <span class="material-icons-outlined" style="font-size:16px;">add</span> Selected Modules to Onboarding Staging Table
           </button>
 
+          <!-- ACTION ITEM 2: STAGED JOINERS TABLE DETAILS WITH SMALL FONT TITLE -->
           <div class="table-container" style="margin-top:0.35rem; max-height:120px;">
             <table class="doc-table">
               <thead>
@@ -862,7 +865,7 @@
           </div>
         </div>
 
-        <!-- ACTION ITEM 4 & 6: DELETE OPTION IN RESTRICTED NEW JOINERS TABLE -->
+        <!-- ACTION ITEM 1: DIRECT DELETION EXECUTION IN RESTRICTED NEW JOINERS TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Restricted New Joiners (<strong id="newJoinersCount">0</strong>):</label>
           <div class="table-container" style="margin-top:0.35rem; max-height:180px;">
@@ -1048,7 +1051,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxhsnJgsdJAa4sQOrg8ZdLaBKcbEN3FAQ5oIWnMhL5kAlu8hXG0xz9EilOISRbIQQJY/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycby-El_KvtuNbq-m2ljlPIWdagLHpkENI-U88zy5tNI66NDlsB02fRP9hqBPDjNn0uOw/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1340,7 +1343,6 @@
       }
     }
 
-    <!-- ACTION ITEM 1, 6 & 7: FETCH AND RETAIN PERSISTENT MANDATORY & NEW JOINERS DATA ON LOAD AND REFRESH -->
     function detectGoogleSessionAccount() {
       callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
         if (data && data.email && data.email.includes('@maxval.com')) {
@@ -1445,7 +1447,6 @@
       renderCurrentActiveTab();
     }
 
-    <!-- ACTION ITEM 1, 6 & 7: ALWAYS SYNC SERVER TRUTH MANDATORY & NEW JOINERS DATA ON LOAD AND REFRESH -->
     function loadGlobalCustomLinks() {
       callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
         if (data) {
@@ -1600,7 +1601,7 @@
       }).join('');
     }
 
-    <!-- ACTION ITEM 2: WORKING SORTING OPTION IN DOCUMENT HUB -->
+    <!-- ACTION ITEM 2: WORKING SORTING IN DOCUMENT HUB -->
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let isRestricted = isUserRestrictedNewJoiner();
@@ -1687,7 +1688,7 @@
       }).join('');
     }
 
-    <!-- ACTION ITEM 2: WORKING SORTING OPTION IN LEARNING HUB -->
+    <!-- ACTION ITEM 2: WORKING SORTING IN LEARNING HUB -->
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let isRestricted = isUserRestrictedNewJoiner();
@@ -1986,6 +1987,7 @@
       renderStagedMandatoryTable();
     }
 
+    <!-- ACTION ITEM 2: STAGED MODULES TABLE DETAILS WITH SMALL FONT TITLE -->
     function renderStagedMandatoryTable() {
       const tbody = document.getElementById('stagedMandatoryTableBody');
       let items = Array.from(stagedMandatoryModules);
@@ -2002,8 +2004,8 @@
 
         return `
           <tr>
-            <td><strong>${title}</strong></td>
-            <td>${category}</td>
+            <td><strong class="staged-title-small">${title}</strong></td>
+            <td style="font-size:0.73rem;">${category}</td>
             <td style="text-align:right;">
               <button type="button" class="action-btn" onclick="removeStagedMandatory('${id}')" title="Remove Staged Module">
                 <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">cancel</span>
@@ -2019,7 +2021,6 @@
       renderStagedMandatoryTable();
     }
 
-    <!-- ACTION ITEM 1 & 7: PERMANENTLY SAVE MANDATORY ASSIGNMENTS ON BACKEND & RETAIN COUNTS -->
     function saveMandatorySettingsMulti() {
       const userCheckboxes = document.querySelectorAll('.roster-user-chk:checked');
       const dueDate = document.getElementById('mandatoryDueDate').value;
@@ -2074,7 +2075,7 @@
       });
     }
 
-    <!-- ACTION ITEM 4: FULLY WORKING CONFIRMATION POP-UP & DELETE FOR MANDATORY ASSIGNMENTS -->
+    <!-- ACTION ITEM 1: DIRECT DELETION EXECUTION IN MATRIX TABLE WITHOUT CONFIRM POPUP LOCKS -->
     function renderMandatoryUserMatrixTable() {
       const tbody = document.getElementById('mandatoryUserMatrixTableBody');
       let rosterList = implementationRosterList.length > 0 ? implementationRosterList : Array.from(powerUsers);
@@ -2108,9 +2109,8 @@
       }).join('');
     }
 
+    <!-- ACTION ITEM 1: DIRECT DELETION WITHOUT BROWSER CONFIRM POP-UP LOCKS -->
     function executeDeleteUserMandatoryAssignment(user) {
-      if (!confirm(`Are you sure you want to delete all mandatory assignments for ${deriveDisplayName(user)} (${user})?`)) return;
-
       callGasJsonp({ action: 'DELETE_MANDATORY_ASSIGNMENT', targetUser: user, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
           showToast(`Mandatory assignments deleted for ${user}`);
@@ -2160,9 +2160,8 @@
       document.getElementById('userAssignedModulesModalOverlay').classList.add('open');
     }
 
+    <!-- ACTION ITEM 1: DIRECT SINGLE MODULE DELETION -->
     function executeDeleteSingleModuleUserAssignment(user, itemId) {
-      if (!confirm(`Remove this specific mandatory assignment from ${deriveDisplayName(user)}?`)) return;
-
       callGasJsonp({ action: 'DELETE_MANDATORY_ASSIGNMENT', targetUser: user, itemId: itemId, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
           showToast("Assignment removed.");
@@ -2204,6 +2203,7 @@
       renderStagedJoinerTable();
     }
 
+    <!-- ACTION ITEM 2: STAGED JOINERS TABLE DETAILS WITH SMALL FONT TITLE -->
     function renderStagedJoinerTable() {
       const tbody = document.getElementById('stagedJoinerTableBody');
       let items = Array.from(stagedJoinerModules);
@@ -2218,7 +2218,7 @@
         let title = found ? (found.name || found.pkg + ' ' + found.type) : id;
         return `
           <tr>
-            <td><strong>${title}</strong></td>
+            <td><strong class="staged-title-small">${title}</strong></td>
             <td style="text-align:right;">
               <button type="button" class="action-btn" onclick="removeStagedJoiner('${id}')" title="Remove Staged Module">
                 <span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">cancel</span>
@@ -2234,7 +2234,7 @@
       renderStagedJoinerTable();
     }
 
-    <!-- ACTION ITEM 5 & 6: DEDICATED ADD USER BUTTON & PERMANENT SAVING OF RESTRICTED NEW JOINERS -->
+    <!-- ACTION ITEM 5: MULTIPLE NEW JOINER USERS ENTRY VIA DEDICATED ADD USER BUTTON -->
     function handleAddJoinersSubmit() {
       const input = document.getElementById('newJoinerEmail').value.trim();
       if (!input) {
@@ -2277,10 +2277,8 @@
       });
     }
 
-    <!-- ACTION ITEM 4 & 6: WORKING DELETE OPTION IN RESTRICTED NEW JOINERS TABLE -->
+    <!-- ACTION ITEM 1: DIRECT UNCONDITIONAL DELETE JOINER WITHOUT BROWSER CONFIRMATION LOCKS -->
     function executeDeleteJoiner(email) {
-      if (!confirm(`Are you sure you want to delete restricted access for ${email}? They will gain full unrestricted access.`)) return;
-
       callGasJsonp({ action: 'DELETE_NEW_JOINER', targetUser: email, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
           showToast(`Access restriction removed for ${email}`);
@@ -2360,10 +2358,8 @@
       renderCurrentActiveTab();
     }
 
-    <!-- ACTION ITEM 4: WORKING DELETE OPTION FOR POWER USERS IN ALL HUBS -->
+    <!-- ACTION ITEM 1: DIRECT UNCONDITIONAL DELETE CUSTOM LINK WITHOUT BROWSER CONFIRMATION LOCKS -->
     function executeDeleteItem(hub, link, id) {
-      if (!confirm("Are you sure you want to permanently delete this resource link from the portal?")) return;
-      
       callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: hub, link: link, id: id, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
           showToast("Item permanently deleted!");
@@ -2379,8 +2375,8 @@
       });
     }
 
+    <!-- ACTION ITEM 1: DIRECT UNCONDITIONAL DELETE IMPLEMENTATION USER WITHOUT BROWSER CONFIRMATION LOCKS -->
     function deleteImplementationRosterUser(email) {
-      if (!confirm(`Are you sure you want to remove ${deriveDisplayName(email)} (${email}) from the active implementation roster?`)) return;
       callGasJsonp({ action: 'DELETE_IMPLEMENTATION_USER', email: email, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
           showToast(`User ${email} removed from active roster.`);
