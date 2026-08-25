@@ -153,8 +153,8 @@
     .user-profile-badge { background: rgba(52, 168, 83, 0.25) !important; border-color: #34a853 !important; font-weight: 400 !important; }
 
     .user-avatar-icon {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       object-fit: cover;
     }
@@ -334,12 +334,13 @@
     .completion-status-tag.completed { background: var(--google-green-light); color: var(--google-green); }
     .completion-status-tag.pending { background: var(--bg-body); color: var(--text-secondary); border: 1px solid var(--border-color); }
 
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; max-height: 500px; }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 680px; }
-    .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
-    .doc-table th { background: var(--bg-body); font-weight: 400; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
+    /* ACTION ITEMS 4 & 6: SMALL COMPACT TABLES FOR MATRIX AND STAGED MODULES */
+    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; max-height: 220px; }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; table-layout: fixed; min-width: 580px; }
+    .doc-table th, .doc-table td { padding: 0.35rem 0.5rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
+    .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
-    .staged-title-small { font-size: 0.73rem !important; font-weight: 500; color: var(--text-primary); }
+    .staged-title-small { font-size: 0.72rem !important; font-weight: 500; color: var(--text-primary); }
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -361,7 +362,8 @@
     .btn-submit { background: var(--google-blue); color: white; border: none; padding: 0.5rem; border-radius: 6px; font-weight: 400; cursor: pointer; font-size: 0.82rem; }
     .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-secondary { background: var(--bg-body); color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.45rem 0.65rem; border-radius: 6px; font-weight: 400; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; }
-    
+    .btn-ai-sync { background: var(--google-purple-light); color: var(--google-purple); border: 1px solid var(--google-purple); padding: 0.2rem 0.45rem; border-radius: 4px; font-size: 0.7rem; font-weight: 400; cursor: pointer; display: inline-flex; align-items: center; gap: 0.2rem; margin-left: auto; }
+
     .app-lock-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 16, 18, 0.88);
       backdrop-filter: blur(12px); z-index: 9999999; display: flex; justify-content: center; align-items: flex-start; padding: 20px 10px; overflow-y: auto;
@@ -486,6 +488,7 @@
         <span class="material-icons-outlined" style="font-size:16px;" id="themeIcon">dark_mode</span>
       </button>
 
+      <!-- ACTION ITEM 7: DYNAMIC USER PROFILE PICTURE / AVATAR LOGIC -->
       <button type="button" class="top-utility-btn user-profile-badge" onclick="openProfileModal()">
         <span id="profileAvatarSlot"><span class="material-icons-outlined" style="font-size:16px;">account_circle</span></span>
         <span id="activeUserDisplay">Sign In</span>
@@ -506,7 +509,7 @@
       </button>
     </nav>
 
-    <!-- ACTION ITEM 1: MANDATORY BADGE SHOWS ALL MANDATORY DOCUMENTS ACROSS ALL HUBS IN ONE CLICK -->
+    <!-- ACTION ITEM 3: MANDATORY BADGE SHOWS ALL MANDATORY DOCUMENTS IN ONE CLICK -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
@@ -642,6 +645,7 @@
         <p style="font-size: 0.8rem; color: var(--text-secondary);" id="modalProfileEmail">user@maxval.com</p>
       </div>
 
+      <!-- ACTION ITEM 5: IMPLEMENTATION TEAM ROSTER CONTROL ADDED TO PROFILE & CONTROLS -->
       <div class="modal-body-scroll" style="padding: 0.85rem 0; display:flex; flex-direction:column; gap:0.6rem;">
         <button type="button" class="btn-secondary" onclick="closeModal('profileModalOverlay'); openUserAnalyticsDashboard();">
           <span class="material-icons-outlined" style="font-size:18px;">insights</span><span>Implementation User Progress Dashboard</span>
@@ -655,6 +659,10 @@
           <span class="material-icons-outlined" style="font-size:18px;">people</span><span>Power Users List</span>
         </button>
 
+        <button type="button" class="btn-secondary" id="rosterManagerBtn" onclick="openRosterManagerModal()">
+          <span class="material-icons-outlined" style="font-size:18px;">groups</span><span>Implementation Team Roster Control</span>
+        </button>
+
         <button type="button" class="btn-secondary" id="mandatoryConfigBtn" onclick="openMandatoryConfigModal()">
           <span class="material-icons-outlined" style="font-size:18px;">assignment_late</span><span>Mandatory Modules & Reminders</span>
         </button>
@@ -666,6 +674,23 @@
         <button type="button" class="btn-secondary" style="color:var(--google-red); border-color:var(--google-red); margin-top:0.4rem;" onclick="handleSignOut()">
           <span class="material-icons-outlined" style="font-size:18px;">logout</span><span>Sign Out</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION ITEM 5: IMPLEMENTATION TEAM ROSTER CONTROL MODAL -->
+  <div class="modal-overlay" id="rosterManagerModalOverlay">
+    <div class="modal-content" style="max-width: 520px;">
+      <div class="modal-header">
+        <h2>Implementation Team Roster Control</h2>
+        <button class="modal-close-btn" onclick="closeModal('rosterManagerModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+      <div class="modal-body-scroll" style="padding:0.4rem 0;">
+        <div style="display:flex; gap:0.4rem; margin-bottom:0.85rem;">
+          <input type="email" id="newRosterUserEmailInput" placeholder="user.name@maxval.com" style="flex:1; padding:0.4rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.82rem;">
+          <button type="button" class="btn-submit" style="padding:0.4rem 0.75rem;" onclick="handleAddRosterUserDirect()">Add to Roster</button>
+        </div>
+        <div id="rosterListContainer" style="max-height:220px; overflow-y:auto;"></div>
       </div>
     </div>
   </div>
@@ -713,7 +738,7 @@
     </div>
   </div>
 
-  <!-- ACTION ITEMS 4 & 5: MANDATORY MANAGEMENT WITH DIRECT INSTANT DELETE -->
+  <!-- ACTION ITEMS 4 & 6: MANDATORY MANAGEMENT WITH COMPACT STAGED AND MATRIX TABLES -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
     <div class="modal-content" style="max-width: 820px;">
       <div class="modal-header">
@@ -758,9 +783,10 @@
           </div>
         </div>
 
+        <!-- ACTION ITEM 6: COMPACT STAGED MODULES TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400; color:var(--google-blue);">Staged Modules for Assignment:</label>
-          <div class="table-container" style="margin-top:0.35rem; max-height:140px;">
+          <div class="table-container" style="margin-top:0.35rem; max-height:120px;">
             <table class="doc-table">
               <thead>
                 <tr>
@@ -793,9 +819,10 @@
 
         <button type="button" class="btn-submit" style="margin-top:0.65rem; width:100%;" onclick="saveMandatorySettingsMulti()">Assign Mandatory & Trigger Notification</button>
 
+        <!-- ACTION ITEM 4: COMPACT ACTIVE MANDATORY USER ASSIGNMENTS MATRIX TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Mandatory User Assignments Matrix:</label>
-          <div class="table-container" style="margin-top:0.35rem; max-height:180px;">
+          <div class="table-container" style="margin-top:0.35rem; max-height:150px;">
             <table class="doc-table">
               <thead>
                 <tr>
@@ -823,7 +850,6 @@
     </div>
   </div>
 
-  <!-- ACTION ITEM 6: NEW JOINERS ONBOARDING CONTROL WITH DIRECT INSTANT DELETE -->
   <div class="modal-overlay" id="joinersConfigModalOverlay">
     <div class="modal-content" style="max-width: 780px;">
       <div class="modal-header">
@@ -908,6 +934,7 @@
     </div>
   </div>
 
+  <!-- ACTION ITEM 1: SUBMIT LINK WITH AUTO INSPECT DOCUMENT AI REFRESH -->
   <div class="modal-overlay" id="addModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -932,18 +959,18 @@
           <div class="form-group"><label>URL / Link *</label><input type="url" id="newLink" placeholder="https://..." required></div>
 
           <div id="quickFields">
-            <div class="form-group"><label>Tool / Link Title *</label><input type="text" id="newQuickTitle" placeholder="e.g., Jira Portal" oninput="autoGenerateAIDescription()"></div>
-            <div class="form-group"><label>Category Badge *</label><input type="text" id="newQuickCategory" placeholder="e.g., Status / Tracker" oninput="autoGenerateAIDescription()"></div>
+            <div class="form-group"><label>Tool / Link Title *</label><input type="text" id="newQuickTitle" placeholder="e.g., Jira Portal"></div>
+            <div class="form-group"><label>Category Badge *</label><input type="text" id="newQuickCategory" placeholder="e.g., Status / Tracker"></div>
           </div>
 
           <div id="documentFields" style="display:none;">
-            <div class="form-group"><label>Package Name *</label><input type="text" id="newPkg" placeholder="e.g., Symphony LF" oninput="autoGenerateAIDescription()"></div>
-            <div class="form-group"><label>Package Version *</label><input type="text" id="newVer" placeholder="e.g., v1.3.4" oninput="autoGenerateAIDescription()"></div>
-            <div class="form-group"><label>Type of Doc *</label><input type="text" id="newDocType" placeholder="e.g., Installation Guide" oninput="autoGenerateAIDescription()"></div>
+            <div class="form-group"><label>Package Name *</label><input type="text" id="newPkg" placeholder="e.g., Symphony LF"></div>
+            <div class="form-group"><label>Package Version *</label><input type="text" id="newVer" placeholder="e.g., v1.3.4"></div>
+            <div class="form-group"><label>Type of Doc *</label><input type="text" id="newDocType" placeholder="e.g., Installation Guide"></div>
           </div>
 
           <div id="learningFields" style="display:none;">
-            <div class="form-group"><label>Resource Title *</label><input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims" oninput="autoGenerateAIDescription()"></div>
+            <div class="form-group"><label>Resource Title *</label><input type="text" id="newTitle" placeholder="e.g., Guide to Patent Claims"></div>
             
             <div class="form-group">
               <label>Module Category *</label>
@@ -965,8 +992,12 @@
             </div>
           </div>
 
+          <!-- ACTION ITEM 1: AI AUTO INSPECT REFRESH BUTTON & TEXTAREA -->
           <div class="form-group">
-            <label>Description (AI Pre-Populated) *</label>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <label>Description (AI Pre-Populated) *</label>
+              <button type="button" class="btn-ai-sync" onclick="autoInspectDocumentAI()" title="Refresh & Inspect Document Content via AI"><span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>AI Inspect Doc</span></button>
+            </div>
             <textarea id="newDescription" rows="3" placeholder="AI description will be automatically generated..." required></textarea>
           </div>
 
@@ -1055,7 +1086,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzkziUJvZYkKiz8RF2kplwQ4bl4iKj6sSViyHpnE6H2znKwA-4GuxxpjrRj97wDO7Kq/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbySCNu0LsL2DnKGozXcDHaOQDYFs3otV9JJIrKps1jYSFxLGO-ke_Wd4RlMPnBcwwJl/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1281,7 +1312,7 @@
       renderCurrentActiveTab();
     }
 
-    <!-- ACTION ITEM 1: MANDATORY BADGE FILTERS & SHOWS ALL MANDATORY DOCUMENTS IN ONE CLICK -->
+    <!-- ACTION ITEM 3: MANDATORY BADGE FILTERS & SHOWS ALL MANDATORY DOCUMENTS ACROSS ALL HUBS -->
     function filterMandatoryModulesOnly() {
       filterOnlyMandatory = !filterOnlyMandatory;
       filterOnlyBookmarks = false;
@@ -1318,6 +1349,40 @@
       document.getElementById('customCategoryGroup').style.display = (val === '__NEW_CUSTOM__') ? 'block' : 'none';
     }
 
+    <!-- ACTION ITEM 1: SUBMIT LINK AUTO-INSPECT REFRESH DESCRIPTION -->
+    function autoInspectDocumentAI() {
+      const targetLink = document.getElementById('newLink').value.trim();
+      const descBox = document.getElementById('newDescription');
+
+      if (!targetLink) {
+        alert("Please enter a valid URL in the Link field first.");
+        return;
+      }
+
+      const hub = document.getElementById('targetHub').value;
+      let title = "Document";
+      let category = "General";
+
+      if (hub === 'quick') title = document.getElementById('newQuickTitle').value.trim() || 'Tool Link';
+      else if (hub === 'learning') {
+        title = document.getElementById('newTitle').value.trim() || 'Symphony Module';
+        category = document.getElementById('newModule').value;
+      } else {
+        title = (document.getElementById('newPkg').value.trim() + " " + document.getElementById('newDocType').value.trim()).trim() || 'Technical Document';
+      }
+
+      descBox.value = "Inspecting document content via AI...";
+
+      callGasJsonp({ action: 'PARSE_DOC_FOR_AI', url: targetLink, title: title, category: category }, function(res) {
+        if (res && res.text) {
+          descBox.value = res.text;
+          showToast("Description generated via AI!");
+        } else {
+          descBox.value = `Official reference document for ${title} providing operational instructions and configuration steps.`;
+        }
+      });
+    }
+
     function callGasJsonp(params, callback) {
       const cbName = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
       window[cbName] = function(data) {
@@ -1350,6 +1415,7 @@
       }
     }
 
+    <!-- ACTION ITEM 8: AUTOMATICALLY REGISTER LOGGED-IN USERS TO ROSTER & DASHBOARD -->
     function detectGoogleSessionAccount() {
       callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
         if (data && data.email && data.email.includes('@maxval.com')) {
@@ -1411,7 +1477,9 @@
         completedTopics: Array.from(completedSet),
         seenDocs: viewedLog
       };
-      callGasJsonp({ action: 'SYNC_USER_ANALYTICS', email: currentUser, data: JSON.stringify(payload) }, function(){});
+      callGasJsonp({ action: 'SYNC_USER_ANALYTICS', email: currentUser, data: JSON.stringify(payload) }, function(res){
+        if (res && res.roster) implementationRosterList = res.roster;
+      });
     }
 
     function trackDocView(pkg, type) {
@@ -1422,20 +1490,30 @@
       renderDocumentHub();
     }
 
+    <!-- ACTION ITEM 7: DYNAMIC USER PROFILE PICTURE / AVATAR AUTO GENERATOR -->
     function updateUserBadgeDisplay() {
       const displayElem = document.getElementById('activeUserDisplay');
       if (currentUser) {
-        displayElem.textContent = deriveDisplayName(currentUser);
-        document.getElementById('modalProfileDisplayName').textContent = deriveDisplayName(currentUser);
+        let name = deriveDisplayName(currentUser);
+        displayElem.textContent = name;
+        document.getElementById('modalProfileDisplayName').textContent = name;
         document.getElementById('modalProfileEmail').textContent = currentUser;
 
-        let avatarUrl = `https://lh3.googleusercontent.com/a/default-user`;
-        document.getElementById('profileAvatarSlot').innerHTML = `<img src="${avatarUrl}" class="user-avatar-icon" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\\'material-icons-outlined\\' style=\\'font-size:16px;\\'>account_circle</span>';">`;
-        document.getElementById('modalLargeAvatarSlot').innerHTML = `<img src="${avatarUrl}" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\\'material-icons-outlined\\' style=\\'font-size:48px; color:var(--google-green);\\'>account_circle</span>';">`;
+        let initials = name.split(' ').map(n => n.charAt(0)).join('').substring(0, 2).toUpperCase();
+        let bgColors = ['#1a73e8', '#1e8e3e', '#9334e6', '#d93025', '#fbbc05'];
+        let colorHash = currentUser.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % bgColors.length;
+        let avatarBg = bgColors[colorHash];
+
+        let smallAvatarHtml = `<div style="width:20px; height:20px; border-radius:50%; background:${avatarBg}; color:#fff; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center;">${initials}</div>`;
+        let largeAvatarHtml = `<div style="width:52px; height:52px; border-radius:50%; background:${avatarBg}; color:#fff; font-size:22px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto;">${initials}</div>`;
+
+        document.getElementById('profileAvatarSlot').innerHTML = smallAvatarHtml;
+        document.getElementById('modalLargeAvatarSlot').innerHTML = largeAvatarHtml;
 
         const isPower = powerUsers.has(currentUser.toLowerCase().trim());
         document.getElementById('powerPrivilegesBtn').style.display = isPower ? 'inline-flex' : 'none';
         document.getElementById('powerUsersListBtn').style.display = isPower ? 'inline-flex' : 'none';
+        document.getElementById('rosterManagerBtn').style.display = isPower ? 'inline-flex' : 'none';
         document.getElementById('mandatoryConfigBtn').style.display = isPower ? 'inline-flex' : 'none';
         document.getElementById('onboardingConfigBtn').style.display = isPower ? 'inline-flex' : 'none';
       }
@@ -1620,7 +1698,7 @@
       }).join('');
     }
 
-    <!-- ACTION ITEM 2: ENABLED COMPLETION STATUS FOR MANDATORY DOCUMENTS IN DOCUMENT HUB -->
+    <!-- ACTION ITEM 2: ENABLED COMPLETION STATUS CIRCLES FOR MANDATORY DOCUMENTS IN DOCUMENT HUB -->
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1730,7 +1808,7 @@
       }).join('');
     }
 
-    <!-- ACTION ITEM 2: ENABLED COMPLETION STATUS FOR MANDATORY DOCUMENTS IN LEARNING HUB -->
+    <!-- ACTION ITEM 2: ENABLED COMPLETION STATUS CIRCLES FOR MANDATORY DOCUMENTS IN LEARNING HUB -->
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1975,6 +2053,9 @@
     function openPowerUserPrivilegesModal() { document.getElementById('powerPrivilegesModalOverlay').classList.add('open'); }
     function openPowerUsersListModal() { renderPowerUsersList(); document.getElementById('powerUsersListModalOverlay').classList.add('open'); }
     
+    <!-- ACTION ITEM 5: OPEN IMPLEMENTATION ROSTER MANAGER MODAL -->
+    function openRosterManagerModal() { renderRosterManagerList(); document.getElementById('rosterManagerModalOverlay').classList.add('open'); }
+
     function openMandatoryConfigModal() { 
       stagedMandatoryModules.clear();
       renderUserRosterCheckboxes(); 
@@ -1997,6 +2078,55 @@
       document.querySelectorAll('#mandatoryConfigModalOverlay .modal-tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderMandatoryMultiCheckboxes();
+    }
+
+    <!-- ACTION ITEM 5: RENDER AND CONTROL IMPLEMENTATION TEAM ROSTER -->
+    function renderRosterManagerList() {
+      const container = document.getElementById('rosterListContainer');
+      let rosterList = implementationRosterList.length > 0 ? implementationRosterList : Array.from(powerUsers);
+
+      container.innerHTML = rosterList.map(u => `
+        <div class="power-user-chip">
+          <span><strong>${deriveDisplayName(u)}</strong> (${u})</span>
+          <button type="button" onclick="executeDeleteRosterUserDirect('${u}')" style="background:none; border:none; color:var(--google-red); cursor:pointer;" title="Remove from Roster">
+            <span class="material-icons-outlined" style="font-size:16px;">cancel</span>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function handleAddRosterUserDirect() {
+      const inputElem = document.getElementById('newRosterUserEmailInput');
+      let newEmail = inputElem.value.trim().toLowerCase();
+      if (!newEmail || !newEmail.includes('@maxval.com')) {
+        alert("Valid @maxval.com email address required.");
+        return;
+      }
+
+      callGasJsonp({ action: 'ADD_IMPLEMENTATION_USER', email: newEmail, requesterEmail: currentUser }, function(res) {
+        if (res && res.status === "SUCCESS") {
+          showToast(`User ${newEmail} added to implementation roster.`);
+          if (res.roster) implementationRosterList = res.roster;
+          inputElem.value = "";
+          renderRosterManagerList();
+          renderUserRosterCheckboxes();
+        } else {
+          alert(res ? res.message : "Failed to add user.");
+        }
+      });
+    }
+
+    function executeDeleteRosterUserDirect(user) {
+      callGasJsonp({ action: 'DELETE_IMPLEMENTATION_USER', email: user, requesterEmail: currentUser }, function(res) {
+        if (res && res.status === "SUCCESS") {
+          showToast(`User ${user} removed from roster.`);
+          if (res.roster) implementationRosterList = res.roster;
+          renderRosterManagerList();
+          renderUserRosterCheckboxes();
+        } else {
+          alert(res ? res.message : "Failed to remove user.");
+        }
+      });
     }
 
     function renderUserRosterCheckboxes() {
@@ -2025,6 +2155,7 @@
           if (res.roster) implementationRosterList = res.roster;
           inputElem.value = "";
           renderUserRosterCheckboxes();
+          renderRosterManagerList();
         } else {
           alert(res ? res.message : "Failed to add user.");
         }
@@ -2057,6 +2188,7 @@
       renderStagedMandatoryTable();
     }
 
+    <!-- ACTION ITEM 6: COMPACT STAGED MODULES TABLE DETAILS -->
     function renderStagedMandatoryTable() {
       const tbody = document.getElementById('stagedMandatoryTableBody');
       let items = Array.from(stagedMandatoryModules);
@@ -2144,7 +2276,7 @@
       });
     }
 
-    <!-- ACTION ITEMS 4 & 5: DIRECT INSTANT DELETE IN MANDATORY MATRIX TABLE -->
+    <!-- ACTION ITEM 4: COMPACT ACTIVE MANDATORY USER ASSIGNMENTS MATRIX TABLE -->
     function renderMandatoryUserMatrixTable() {
       const tbody = document.getElementById('mandatoryUserMatrixTableBody');
       let rosterList = implementationRosterList.length > 0 ? implementationRosterList : Array.from(powerUsers);
@@ -2178,7 +2310,6 @@
       }).join('');
     }
 
-    <!-- ACTION ITEM 4 & 5: DIRECT DELETION WITHOUT POPUP LOCKS -->
     function executeDeleteUserMandatoryAssignment(user) {
       callGasJsonp({ action: 'DELETE_MANDATORY_ASSIGNMENT', targetUser: user, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
@@ -2343,7 +2474,6 @@
       });
     }
 
-    <!-- ACTION ITEM 6: DIRECT UNCONDITIONAL DELETE NEW JOINER -->
     function executeDeleteJoiner(email) {
       callGasJsonp({ action: 'DELETE_NEW_JOINER', targetUser: email, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
@@ -2424,7 +2554,6 @@
       renderCurrentActiveTab();
     }
 
-    <!-- ACTION ITEM 3 & 10: DIRECT UNCONDITIONAL DELETE FOR CUSTOM LINKS -->
     function executeDeleteItem(hub, link, id) {
       callGasJsonp({ action: 'DELETE_CUSTOM_LINK', hub: hub, link: link, id: id, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
@@ -2441,7 +2570,6 @@
       });
     }
 
-    <!-- ACTION ITEM 3 & 10: DIRECT UNCONDITIONAL DELETE FOR IMPLEMENTATION USER -->
     function deleteImplementationRosterUser(email) {
       callGasJsonp({ action: 'DELETE_IMPLEMENTATION_USER', email: email, requesterEmail: currentUser }, function(res) {
         if (res && res.status === "SUCCESS") {
@@ -2514,7 +2642,7 @@
       document.getElementById('dashboardSubtabMandatory').style.display = (tabName === 'mandatory_progress') ? 'block' : 'none';
     }
 
-    <!-- ACTION ITEM 7: REALTIME SYNC FOR POWER USER PROGRESS DASHBOARD -->
+    <!-- ACTION ITEM 8: REALTIME SYNC & AUTO-REGISTRATION OF ALL LOGGED-IN USERS ON DASHBOARD -->
     function openUserAnalyticsDashboard() {
       document.getElementById('userDashboardModalOverlay').classList.add('open');
       const tbody = document.getElementById('userAnalyticsTableBody');
@@ -2588,7 +2716,6 @@
       });
     }
 
-    <!-- ACTION ITEMS 8 & 9: CLEAN MARGINS & TABLES FOR DRILLDOWN DETAILED VIEW -->
     function openDrilldownModal(email, tabType) {
       const u = globalAnalyticsCache[email] || { completedTopics: [], seenDocs: [] };
       document.getElementById('drilldownUserTitle').textContent = `User Details: ${deriveDisplayName(email)}`;
