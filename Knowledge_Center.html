@@ -88,7 +88,6 @@
       text-align: center;
     }
 
-    /* ACTION ITEM 4: ANIMATED LOGO */
     .idea-lightbulb-svg {
       width: 42px;
       height: 42px;
@@ -333,7 +332,6 @@
     .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-color: var(--google-blue); }
     .resource-card.mandatory-card { border: 1.5px solid var(--google-red) !important; background: #fff5f5; }
     
-    /* ACTION ITEM 2: HIGHLIGHT ANIMATION FOR NEW RELEASES */
     .resource-card.highlight-target, tr.highlight-target {
       border: 2px solid var(--google-yellow) !important;
       background: #fef7e0 !important;
@@ -366,7 +364,7 @@
     .completion-status-tag.completed { background: var(--google-green-light); color: var(--google-green); }
     .completion-status-tag.pending { background: var(--bg-body); color: var(--text-secondary); border: 1px solid var(--border-color); }
 
-    /* ACTION ITEM 1: FULL-SIZE TABLES (MAX-HEIGHT EXPANDED TO SHOW ALL ITEMS) */
+    /* FULL-SIZE TABLES FOR COMPLETE UNTRUNCATED LISTS */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; max-height: 750px; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 680px; }
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
@@ -479,7 +477,7 @@
     </div>
   </div>
 
-  <!-- ACTION ITEM 4: HERO HEADER WITH ANIMATED LOGO -->
+  <!-- HERO HEADER WITH ANIMATED LIGHTBULB -->
   <div class="top-hero-header" id="heroHeaderElem">
     <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
       <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
@@ -591,7 +589,6 @@
         </div>
       </section>
 
-      <!-- ACTION ITEM 1: FULL SIZE TABLE VIEW -->
       <div class="table-container" id="docTableContainer">
         <table class="doc-table">
           <thead>
@@ -644,7 +641,6 @@
         </div>
       </section>
 
-      <!-- ACTION ITEM 1: FULL SIZE TABLE VIEW -->
       <div class="table-container" id="learningTableContainer" style="display:none; margin-bottom:0.8rem;">
         <table class="doc-table">
           <thead>
@@ -1048,10 +1044,12 @@
     </div>
   </div>
 
+  <!-- ACTION ITEMS 1 & 4: ROLE-GATED USER PROGRESS DASHBOARD -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 860px;">
       <div class="modal-header">
-        <h2 id="dashboardModalTitle">Implementation User Progress Dashboard</h2>
+        <!-- DYNAMIC DASHBOARD TITLE BASED ON POWER USER ROLE -->
+        <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
         <div style="display:flex; align-items:center; gap:0.4rem;">
           <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="openUserAnalyticsDashboard()">
             <span class="material-icons-outlined" style="font-size:14px;">refresh</span><span>Refresh Live</span>
@@ -1111,7 +1109,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbySCNu0LsL2DnKGozXcDHaOQDYFs3otV9JJIrKps1jYSFxLGO-ke_Wd4RlMPnBcwwJl/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzkB2SikXR_L3aXgzBGriwc7_Y5vYMBbGMhoVVEE-KuXItz1Zql28Y_3EVLkaAofqcW/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1610,7 +1608,7 @@
       }
     }
 
-    <!-- ACTION ITEM 2: NAVIGATE TO NEW DOCUMENT & APPLY HIGHLIGHT EFFECT -->
+    <!-- ACTION ITEM 2: NAVIGATE TO NEW RELEASE AND HIGHLIGHT -->
     function navigateToLatestRelease() {
       const todayStr = new Date().toLocaleDateString();
       const newItems = quickDataset.concat(dataset, docDataset).filter(item => item.releaseDate === todayStr);
@@ -2132,7 +2130,6 @@
       `).join('');
     }
 
-    <!-- ACTION ITEM 3: SILENT ADDITION TO IMPLEMENTATION ROSTER -->
     function handleAddRosterUserDirect() {
       const inputElem = document.getElementById('newRosterUserEmailInput');
       let newEmail = inputElem.value.trim().toLowerCase();
@@ -2678,6 +2675,7 @@
       document.getElementById('dashboardSubtabMandatory').style.display = (tabName === 'mandatory_progress') ? 'block' : 'none';
     }
 
+    <!-- ACTION ITEMS 1 & 4: ROLE-GATED ACCESS TO USER PROGRESS DASHBOARD -->
     function openUserAnalyticsDashboard() {
       document.getElementById('userDashboardModalOverlay').classList.add('open');
       const tbody = document.getElementById('userAnalyticsTableBody');
@@ -2686,14 +2684,17 @@
       tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:1rem;">Loading live analytics...</td></tr>`;
       tbodyMandatory.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem;">Loading live mandatory progress...</td></tr>`;
 
-      callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS' }, function(data) {
+      callGasJsonp({ action: 'GET_GLOBAL_ANALYTICS', requesterEmail: currentUser }, function(data) {
         if (data) {
           globalAnalyticsCache = data.users || {};
           if (data.roster) implementationRosterList = data.roster;
           if (data.mandatoryData) mandatoryData = data.mandatoryData;
+          if (data.dashboardTitle) {
+            document.getElementById('dashboardModalTitle').textContent = data.dashboardTitle;
+          }
         }
 
-        let rosterList = implementationRosterList.length > 0 ? [...implementationRosterList] : Object.keys(globalAnalyticsCache);
+        let rosterList = (data && data.roster && data.roster.length > 0) ? data.roster : [currentUser];
 
         rosterList.sort((a, b) => {
           let lastA = globalAnalyticsCache[a] ? new Date(globalAnalyticsCache[a].lastLogin || 0) : new Date(0);
@@ -2714,7 +2715,9 @@
               <td style="font-size:0.78rem; color:var(--text-secondary);">${recentDoc}</td>
               <td style="text-align:right;" onclick="event.stopPropagation();">
                 <button type="button" class="action-btn" onclick="openDrilldownModal('${u}', 'all')" title="View Details"><span class="material-icons-outlined" style="font-size:18px;">visibility</span></button>
-                <button type="button" class="action-btn" onclick="deleteImplementationRosterUser('${u}')" title="Remove User"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-red);">delete</span></button>
+                ${isPowerUserActive() ? `
+                  <button type="button" class="action-btn" onclick="deleteImplementationRosterUser('${u}')" title="Remove User"><span class="material-icons-outlined" style="font-size:18px; color:var(--google-red);">delete</span></button>
+                ` : ''}
               </td>
             </tr>
           `;
