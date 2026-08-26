@@ -76,7 +76,7 @@
       100% { transform: translate3d(-100%, 0, 0); }
     }
 
-    /* HEADER & ANIMATED LOGO */
+    /* HERO HEADER & ANIMATED LOGO */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
       padding: 0.85rem 1.25rem;
@@ -99,18 +99,9 @@
     }
 
     @keyframes logoPulseGlow {
-      0% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 4px rgba(66, 133, 244, 0.4));
-      }
-      50% {
-        transform: scale(1.08);
-        filter: drop-shadow(0 0 12px rgba(147, 52, 230, 0.8));
-      }
-      100% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 4px rgba(52, 168, 83, 0.6));
-      }
+      0% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(66, 133, 244, 0.4)); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 12px rgba(147, 52, 230, 0.8)); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(52, 168, 83, 0.6)); }
     }
 
     .header-title-container {
@@ -318,6 +309,7 @@
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.65rem; }
 
+    /* ACTION ITEM 1: UNIVERSAL RED HIGHLIGHT FOR ALL MANDATORY CARDS ACROSS HUBS */
     .resource-card { 
       background: var(--bg-card); 
       border: 1px solid var(--border-color); 
@@ -330,8 +322,8 @@
       position: relative;
     }
     .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-color: var(--google-blue); }
-    .resource-card.mandatory-card { border: 1.5px solid var(--google-red) !important; background: #fff5f5; }
-    
+    .resource-card.mandatory-card, tr.mandatory-card { border: 1.5px solid var(--google-red) !important; background: #fff5f5 !important; }
+
     .resource-card.highlight-target, tr.highlight-target {
       border: 2px solid var(--google-yellow) !important;
       background: #fef7e0 !important;
@@ -364,13 +356,16 @@
     .completion-status-tag.completed { background: var(--google-green-light); color: var(--google-green); }
     .completion-status-tag.pending { background: var(--bg-body); color: var(--text-secondary); border: 1px solid var(--border-color); }
 
-    /* FULL-SIZE TABLES FOR COMPLETE UNTRUNCATED LISTS */
+    /* ACTION ITEM 4, 5, 6, 7: COMPACT TABLES FOR MANAGEMENT & ASSIGNMENTS MODALS */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; max-height: 750px; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 680px; }
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
-    .staged-title-small { font-size: 0.73rem !important; font-weight: 500; color: var(--text-primary); }
+    .compact-modal-table-container { max-height: 130px !important; }
+    .compact-modal-table th, .compact-modal-table td { padding: 0.28rem 0.45rem !important; font-size: 0.72rem !important; }
+
+    .staged-title-small { font-size: 0.72rem !important; font-weight: 500; color: var(--text-primary); }
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -477,7 +472,6 @@
     </div>
   </div>
 
-  <!-- HERO HEADER WITH ANIMATED LIGHTBULB -->
   <div class="top-hero-header" id="heroHeaderElem">
     <svg class="idea-lightbulb-svg" viewBox="0 0 200 200">
       <circle cx="50" cy="30" r="12" fill="none" stroke="#4285f4" stroke-width="4"/>
@@ -538,6 +532,7 @@
       </button>
     </nav>
 
+    <!-- ACTION ITEM 2: ONE CLICK MANDATORY BADGE FILTERS AND RENDERS ALL MANDATORY DOCUMENTS IN UI -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
@@ -764,6 +759,7 @@
     </div>
   </div>
 
+  <!-- MANDATORY MODULES MANAGEMENT MODAL -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
     <div class="modal-content" style="max-width: 820px;">
       <div class="modal-header">
@@ -789,14 +785,14 @@
             </div>
           </div>
 
+          <!-- ACTION ITEM 3: EXCLUDED QUICK LINKS, REMAINING ONLY DOCUMENT HUB AND LEARNING HUB -->
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
               <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Modules Across Hubs *</label>
             </div>
             
             <div class="modal-subtabs" style="margin-bottom:0.4rem;">
-              <button type="button" class="modal-tab-btn active" onclick="switchMandatoryTab('quick', this)">Quick Links</button>
-              <button type="button" class="modal-tab-btn" onclick="switchMandatoryTab('document', this)">Document Hub</button>
+              <button type="button" class="modal-tab-btn active" onclick="switchMandatoryTab('document', this)">Document Hub</button>
               <button type="button" class="modal-tab-btn" onclick="switchMandatoryTab('learning', this)">Learning Hub</button>
             </div>
 
@@ -808,10 +804,11 @@
           </div>
         </div>
 
+        <!-- ACTION ITEM 5: COMPACT STAGED MODULES TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400; color:var(--google-blue);">Staged Modules for Assignment:</label>
-          <div class="table-container" style="margin-top:0.35rem; max-height:120px;">
-            <table class="doc-table">
+          <div class="table-container compact-modal-table-container" style="margin-top:0.35rem;">
+            <table class="doc-table compact-modal-table">
               <thead>
                 <tr>
                   <th>Module Name / Title</th>
@@ -843,10 +840,11 @@
 
         <button type="button" class="btn-submit" style="margin-top:0.65rem; width:100%;" onclick="saveMandatorySettingsMulti()">Assign Mandatory & Trigger Notification</button>
 
+        <!-- ACTION ITEM 4: COMPACT ACTIVE MANDATORY USER ASSIGNMENTS MATRIX TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Mandatory User Assignments Matrix:</label>
-          <div class="table-container" style="margin-top:0.35rem; max-height:150px;">
-            <table class="doc-table">
+          <div class="table-container compact-modal-table-container" style="margin-top:0.35rem;">
+            <table class="doc-table compact-modal-table">
               <thead>
                 <tr>
                   <th>User Email</th>
@@ -873,6 +871,7 @@
     </div>
   </div>
 
+  <!-- ACTION ITEMS 6 & 7: NEW JOINERS ONBOARDING CONTROL WITH COMPACT STAGED & RESTRICTED USER TABLES -->
   <div class="modal-overlay" id="joinersConfigModalOverlay">
     <div class="modal-content" style="max-width: 780px;">
       <div class="modal-header">
@@ -895,8 +894,7 @@
           </div>
 
           <div class="modal-subtabs" style="margin-bottom:0.4rem;">
-            <button type="button" class="modal-tab-btn active" onclick="switchJoinersTab('quick', this)">Quick Links</button>
-            <button type="button" class="modal-tab-btn" onclick="switchJoinersTab('document', this)">Document Hub</button>
+            <button type="button" class="modal-tab-btn active" onclick="switchJoinersTab('document', this)">Document Hub</button>
             <button type="button" class="modal-tab-btn" onclick="switchJoinersTab('learning', this)">Learning Hub</button>
           </div>
 
@@ -906,8 +904,9 @@
             <span class="material-icons-outlined" style="font-size:16px;">add</span> Selected Modules to Onboarding Staging Table
           </button>
 
-          <div class="table-container" style="margin-top:0.35rem; max-height:120px;">
-            <table class="doc-table">
+          <!-- ACTION ITEM 6: COMPACT STAGED ONBOARDING TABLE -->
+          <div class="table-container compact-modal-table-container" style="margin-top:0.35rem;">
+            <table class="doc-table compact-modal-table">
               <thead>
                 <tr>
                   <th>Staged Onboarding Module Title</th>
@@ -919,10 +918,11 @@
           </div>
         </div>
 
+        <!-- ACTION ITEM 7: COMPACT ACTIVE RESTRICTED NEW JOINERS TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Restricted New Joiners (<strong id="newJoinersCount">0</strong>):</label>
-          <div class="table-container" style="margin-top:0.35rem; max-height:180px;">
-            <table class="doc-table">
+          <div class="table-container compact-modal-table-container" style="margin-top:0.35rem;">
+            <table class="doc-table compact-modal-table">
               <thead>
                 <tr>
                   <th>Joiner Email</th>
@@ -1044,11 +1044,9 @@
     </div>
   </div>
 
-  <!-- ACTION ITEMS 1 & 4: ROLE-GATED USER PROGRESS DASHBOARD -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 860px;">
       <div class="modal-header">
-        <!-- DYNAMIC DASHBOARD TITLE BASED ON POWER USER ROLE -->
         <h2 id="dashboardModalTitle">User Progress Dashboard</h2>
         <div style="display:flex; align-items:center; gap:0.4rem;">
           <button type="button" class="btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem;" onclick="openUserAnalyticsDashboard()">
@@ -1109,7 +1107,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzkB2SikXR_L3aXgzBGriwc7_Y5vYMBbGMhoVVEE-KuXItz1Zql28Y_3EVLkaAofqcW/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyvpQcsNy6Kl1vVK9UWP89QWiS9OCdfVj7RT1CH3yRmieIm44UuaZ1x3btZdMVAXWVi/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1280,8 +1278,8 @@
     let stagedJoinerModules = new Set();
 
     let activeTab = 'quickLinksTab';
-    let activeMandatorySubtab = 'quick';
-    let activeJoinersSubtab = 'quick';
+    let activeMandatorySubtab = 'document';
+    let activeJoinersSubtab = 'document';
 
     let currentUser = localStorage.getItem('kc_user_maxval_email');
     let pendingOtpEmail = "";
@@ -1335,6 +1333,7 @@
       renderCurrentActiveTab();
     }
 
+    <!-- ACTION ITEM 2: ONE CLICK MANDATORY CROSS-HUB FILTER RENDERS ALL MANDATORY ITEMS ACROSS HUBS -->
     function filterMandatoryModulesOnly() {
       filterOnlyMandatory = !filterOnlyMandatory;
       filterOnlyBookmarks = false;
@@ -1608,7 +1607,6 @@
       }
     }
 
-    <!-- ACTION ITEM 2: NAVIGATE TO NEW RELEASE AND HIGHLIGHT -->
     function navigateToLatestRelease() {
       const todayStr = new Date().toLocaleDateString();
       const newItems = quickDataset.concat(dataset, docDataset).filter(item => item.releaseDate === todayStr);
@@ -1688,6 +1686,7 @@
       return joinersData[currentUser.toLowerCase().trim()] && joinersData[currentUser.toLowerCase().trim()].restricted;
     }
 
+    <!-- ACTION ITEM 1: UNIVERSAL MANDATORY RED BORDER AND DUE DATE DISPLAY ON QUICK LINKS -->
     function renderQuickLinksHub() {
       const grid = document.getElementById('quickLinksGrid');
       let isRestricted = isUserRestrictedNewJoiner();
@@ -1705,8 +1704,10 @@
 
       grid.innerHTML = filtered.map(item => {
         const isBookmarked = bookmarkedIds.has(item.id);
+        const dueDate = mandatoryData[item.id] ? (typeof mandatoryData[item.id] === 'object' ? mandatoryData[item.id].dueDate : mandatoryData[item.id]) : null;
+
         return `
-          <article class="resource-card" data-card-id="${item.id}" style="border-top: 3px solid var(--google-blue);">
+          <article class="resource-card ${dueDate ? 'mandatory-card' : ''}" data-card-id="${item.id}" style="${!dueDate ? 'border-top: 3px solid var(--google-blue);' : ''}">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">${item.category}</span>
@@ -1714,7 +1715,10 @@
                   <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
                 </button>
               </div>
-              <h3 class="card-title">${item.name}</h3>
+              <h3 class="card-title">
+                ${item.name}
+                ${dueDate ? `<span class="mandatory-tag-pill" title="Due: ${dueDate}">DUE: ${dueDate}</span>` : ''}
+              </h3>
               <p class="card-desc">${item.description}</p>
             </div>
             <div class="card-actions">
@@ -1737,6 +1741,7 @@
       }).join('');
     }
 
+    <!-- ACTION ITEM 1: UNIVERSAL MANDATORY RED BORDER AND DUE DATE DISPLAY ON DOCUMENT HUB -->
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1768,21 +1773,25 @@
         const isBookmarked = bookmarkedIds.has(docId);
         const isCompleted = completedSet.has(docId);
         const isNew = doc.releaseDate === todayStr;
-        const isMandatory = !!mandatoryData[docId];
+        const dueDate = mandatoryData[docId] ? (typeof mandatoryData[docId] === 'object' ? mandatoryData[docId].dueDate : mandatoryData[docId]) : null;
 
         return `
-          <tr data-card-id="${docId}">
+          <tr class="${dueDate ? 'mandatory-card' : ''}" data-card-id="${docId}">
             <td style="text-align:center;">
               <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${docId}')">
                 <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
               </button>
             </td>
-            <td><strong>${doc.pkg}</strong> ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}</td>
+            <td>
+              <strong>${doc.pkg}</strong> 
+              ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}
+              ${dueDate ? `<span class="mandatory-tag-pill">DUE: ${dueDate}</span>` : ''}
+            </td>
             <td>${doc.ver}</td>
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${doc.description || 'Technical Documentation.'}</td>
             <td style="text-align:center;">
-              ${(isMandatory || isRestricted) ? `
+              ${(dueDate || isRestricted) ? `
                 <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)">
                   <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
                     ${isCompleted ? '✓ Completed' : 'Pending Review'}
@@ -1809,15 +1818,15 @@
         const isBookmarked = bookmarkedIds.has(docId);
         const isCompleted = completedSet.has(docId);
         const isNew = doc.releaseDate === todayStr;
-        const isMandatory = !!mandatoryData[docId];
+        const dueDate = mandatoryData[docId] ? (typeof mandatoryData[docId] === 'object' ? mandatoryData[docId].dueDate : mandatoryData[docId]) : null;
 
         return `
-          <article class="resource-card" data-card-id="${docId}">
+          <article class="resource-card ${dueDate ? 'mandatory-card' : ''}" data-card-id="${docId}">
             <div>
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">${doc.pkg}</span>
                 <div class="action-icons">
-                  ${(isMandatory || isRestricted) ? `
+                  ${(dueDate || isRestricted) ? `
                     <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion">
                       <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
                         ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
@@ -1829,7 +1838,11 @@
                   </button>
                 </div>
               </div>
-              <h3 class="card-title">${doc.type} (${doc.ver}) ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}</h3>
+              <h3 class="card-title">
+                ${doc.type} (${doc.ver}) 
+                ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}
+                ${dueDate ? `<span class="mandatory-tag-pill" title="Due: ${dueDate}">DUE: ${dueDate}</span>` : ''}
+              </h3>
               <p class="card-desc">${doc.description || 'Technical Documentation.'}</p>
             </div>
             <div class="card-actions">
@@ -1846,6 +1859,7 @@
       }).join('');
     }
 
+    <!-- ACTION ITEM 1: UNIVERSAL MANDATORY RED BORDER AND DUE DATE DISPLAY ON LEARNING HUB -->
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1876,7 +1890,6 @@
         const isCompleted = completedSet.has(res.id);
         const isNew = res.releaseDate === todayStr;
         const dueDate = mandatoryData[res.id] ? (typeof mandatoryData[res.id] === 'object' ? mandatoryData[res.id].dueDate : mandatoryData[res.id]) : null;
-        const isMandatory = !!dueDate;
 
         return `
           <article class="resource-card ${dueDate ? 'mandatory-card' : ''}" data-card-id="${res.id}">
@@ -1884,7 +1897,7 @@
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">${res.category}</span>
                 <div class="action-icons">
-                  ${(isMandatory || isRestricted) ? `
+                  ${(dueDate || isRestricted) ? `
                     <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion">
                       <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
                         ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
@@ -1904,7 +1917,7 @@
               <p class="card-desc">${res.description || 'Comprehensive learning module.'}</p>
             </div>
             <div class="card-actions">
-              ${(isMandatory || isRestricted) ? `
+              ${(dueDate || isRestricted) ? `
                 <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
                   ${isCompleted ? '✓ Completed' : 'Pending'}
                 </span>
@@ -1927,10 +1940,9 @@
         const isCompleted = completedSet.has(res.id);
         const isNew = res.releaseDate === todayStr;
         const dueDate = mandatoryData[res.id] ? (typeof mandatoryData[res.id] === 'object' ? mandatoryData[res.id].dueDate : mandatoryData[res.id]) : null;
-        const isMandatory = !!dueDate;
 
         return `
-          <tr data-card-id="${res.id}">
+          <tr class="${dueDate ? 'mandatory-card' : ''}" data-card-id="${res.id}">
             <td style="text-align:center;">
               <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
                 <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
@@ -1944,7 +1956,7 @@
             </td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${res.description || 'N/A'}</td>
             <td style="text-align:center;">
-              ${(isMandatory || isRestricted) ? `
+              ${(dueDate || isRestricted) ? `
                 <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)">
                   <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
                     ${isCompleted ? '✓ Completed' : 'Pending'}
@@ -2203,7 +2215,7 @@
 
     function renderMandatoryMultiCheckboxes() {
       const container = document.getElementById('mandatoryMultiCheckboxContainer');
-      let targetList = activeMandatorySubtab === 'quick' ? quickDataset : (activeMandatorySubtab === 'learning' ? dataset : docDataset);
+      let targetList = activeMandatorySubtab === 'document' ? docDataset : dataset;
 
       container.innerHTML = targetList.map(d => {
         let itemId = d.id || (d.pkg + d.type);
@@ -2223,6 +2235,7 @@
       renderStagedMandatoryTable();
     }
 
+    <!-- ACTION ITEM 5: COMPACT STAGED MODULES TABLE -->
     function renderStagedMandatoryTable() {
       const tbody = document.getElementById('stagedMandatoryTableBody');
       let items = Array.from(stagedMandatoryModules);
@@ -2310,6 +2323,7 @@
       });
     }
 
+    <!-- ACTION ITEM 4: COMPACT ACTIVE MANDATORY USER ASSIGNMENTS MATRIX TABLE -->
     function renderMandatoryUserMatrixTable() {
       const tbody = document.getElementById('mandatoryUserMatrixTableBody');
       let rosterList = implementationRosterList.length > 0 ? implementationRosterList : Array.from(powerUsers);
@@ -2415,7 +2429,7 @@
 
     function renderJoinersMultiCheckboxes() {
       const container = document.getElementById('joinerModulesCheckboxContainer');
-      let targetList = activeJoinersSubtab === 'quick' ? quickDataset : (activeJoinersSubtab === 'learning' ? dataset : docDataset);
+      let targetList = activeJoinersSubtab === 'document' ? docDataset : dataset;
 
       container.innerHTML = targetList.map(d => {
         let itemId = d.id || (d.pkg + d.type);
@@ -2435,6 +2449,7 @@
       renderStagedJoinerTable();
     }
 
+    <!-- ACTION ITEM 6: COMPACT STAGED ONBOARDING MODULES TABLE -->
     function renderStagedJoinerTable() {
       const tbody = document.getElementById('stagedJoinerTableBody');
       let items = Array.from(stagedJoinerModules);
@@ -2520,6 +2535,7 @@
       });
     }
 
+    <!-- ACTION ITEM 7: COMPACT ACTIVE RESTRICTED NEW JOINERS TABLE -->
     function renderJoinersTable() {
       const tbody = document.getElementById('joinersTableBody');
       const keys = Object.keys(joinersData);
@@ -2675,7 +2691,6 @@
       document.getElementById('dashboardSubtabMandatory').style.display = (tabName === 'mandatory_progress') ? 'block' : 'none';
     }
 
-    <!-- ACTION ITEMS 1 & 4: ROLE-GATED ACCESS TO USER PROGRESS DASHBOARD -->
     function openUserAnalyticsDashboard() {
       document.getElementById('userDashboardModalOverlay').classList.add('open');
       const tbody = document.getElementById('userAnalyticsTableBody');
