@@ -76,7 +76,6 @@
       100% { transform: translate3d(-100%, 0, 0); }
     }
 
-    /* HERO HEADER & ANIMATED LOGO */
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
       padding: 0.85rem 1.25rem;
@@ -84,13 +83,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
       text-align: center;
     }
 
     .idea-lightbulb-svg {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       object-fit: contain;
       vertical-align: middle;
       flex-shrink: 0;
@@ -309,7 +308,6 @@
 
     .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.65rem; }
 
-    /* ACTION ITEM 1: UNIVERSAL RED HIGHLIGHT FOR ALL MANDATORY CARDS ACROSS HUBS */
     .resource-card { 
       background: var(--bg-card); 
       border: 1px solid var(--border-color); 
@@ -352,16 +350,37 @@
     .new-tag-pill { background: var(--google-purple); color: #fff; font-size: 0.58rem; font-weight: 400; padding: 0.08rem 0.3rem; border-radius: 4px; text-transform: uppercase; margin-left: 0.25rem; }
     .mandatory-tag-pill { background: var(--google-red); color: #fff; font-size: 0.58rem; font-weight: 400; padding: 0.08rem 0.3rem; border-radius: 4px; margin-left: 0.25rem; }
     
-    .completion-status-tag { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; padding: 0.12rem 0.35rem; border-radius: 4px; font-weight: 400; }
+    .completion-status-tag { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.72rem; padding: 0.12rem 0.35rem; border-radius: 4px; font-weight: 400; cursor: pointer; }
     .completion-status-tag.completed { background: var(--google-green-light); color: var(--google-green); }
     .completion-status-tag.pending { background: var(--bg-body); color: var(--text-secondary); border: 1px solid var(--border-color); }
 
-    /* ACTION ITEM 4, 5, 6, 7: COMPACT TABLES FOR MANAGEMENT & ASSIGNMENTS MODALS */
+    /* ACTION ITEM 5: VIEWED PERSON PRESENCE AVATAR STACK */
+    .viewed-presence-stack {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 0.2rem;
+      gap: 2px;
+    }
+    .presence-avatar-circle {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      color: #ffffff;
+      font-size: 8px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ffffff;
+    }
+
+    /* FULL SIZE TABLES FOR MAIN CONTENT HUBS */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; width: 100%; max-height: 750px; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 680px; }
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
+    /* COMPACT MODAL TABLES FOR NO-SCROLL FIT */
     .compact-modal-table-container { max-height: 130px !important; }
     .compact-modal-table th, .compact-modal-table td { padding: 0.28rem 0.45rem !important; font-size: 0.72rem !important; }
 
@@ -532,7 +551,7 @@
       </button>
     </nav>
 
-    <!-- ACTION ITEM 2: ONE CLICK MANDATORY BADGE FILTERS AND RENDERS ALL MANDATORY DOCUMENTS IN UI -->
+    <!-- ACTION ITEM 1: ONE CLICK CROSS-HUB MANDATORY FILTER -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
@@ -759,7 +778,7 @@
     </div>
   </div>
 
-  <!-- MANDATORY MODULES MANAGEMENT MODAL -->
+  <!-- ACTION ITEM 7: EXCLUDED QUICK LINKS TAB FROM MANDATORY SELECTION -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
     <div class="modal-content" style="max-width: 820px;">
       <div class="modal-header">
@@ -785,7 +804,6 @@
             </div>
           </div>
 
-          <!-- ACTION ITEM 3: EXCLUDED QUICK LINKS, REMAINING ONLY DOCUMENT HUB AND LEARNING HUB -->
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
               <label style="font-size:0.75rem; font-weight:400; color:var(--text-secondary);">Select Modules Across Hubs *</label>
@@ -804,7 +822,6 @@
           </div>
         </div>
 
-        <!-- ACTION ITEM 5: COMPACT STAGED MODULES TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400; color:var(--google-blue);">Staged Modules for Assignment:</label>
           <div class="table-container compact-modal-table-container" style="margin-top:0.35rem;">
@@ -840,7 +857,6 @@
 
         <button type="button" class="btn-submit" style="margin-top:0.65rem; width:100%;" onclick="saveMandatorySettingsMulti()">Assign Mandatory & Trigger Notification</button>
 
-        <!-- ACTION ITEM 4: COMPACT ACTIVE MANDATORY USER ASSIGNMENTS MATRIX TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Mandatory User Assignments Matrix:</label>
           <div class="table-container compact-modal-table-container" style="margin-top:0.35rem;">
@@ -871,7 +887,7 @@
     </div>
   </div>
 
-  <!-- ACTION ITEMS 6 & 7: NEW JOINERS ONBOARDING CONTROL WITH COMPACT STAGED & RESTRICTED USER TABLES -->
+  <!-- ACTION ITEM 6: NEW JOINERS ONBOARDING CONTROL WITH SEARCH FILTER -->
   <div class="modal-overlay" id="joinersConfigModalOverlay">
     <div class="modal-content" style="max-width: 780px;">
       <div class="modal-header">
@@ -898,13 +914,18 @@
             <button type="button" class="modal-tab-btn" onclick="switchJoinersTab('learning', this)">Learning Hub</button>
           </div>
 
+          <!-- SEARCH INPUT FOR ONBOARDING MODULES -->
+          <div class="search-box" style="margin-bottom:0.3rem;">
+            <span class="material-icons-outlined">search</span>
+            <input type="text" id="joinerModuleSearchInput" class="search-input" placeholder="Search onboarding modules..." oninput="renderJoinersMultiCheckboxes()">
+          </div>
+
           <div class="checkbox-multi-grid" id="joinerModulesCheckboxContainer"></div>
           
           <button type="button" class="btn-secondary" style="margin-top:0.3rem; justify-content:center;" onclick="addSelectedJoinerModulesToStaging()">
             <span class="material-icons-outlined" style="font-size:16px;">add</span> Selected Modules to Onboarding Staging Table
           </button>
 
-          <!-- ACTION ITEM 6: COMPACT STAGED ONBOARDING TABLE -->
           <div class="table-container compact-modal-table-container" style="margin-top:0.35rem;">
             <table class="doc-table compact-modal-table">
               <thead>
@@ -918,7 +939,6 @@
           </div>
         </div>
 
-        <!-- ACTION ITEM 7: COMPACT ACTIVE RESTRICTED NEW JOINERS TABLE -->
         <div style="margin-top:0.85rem;">
           <label style="font-size:0.78rem; font-weight:400;">Active Restricted New Joiners (<strong id="newJoinersCount">0</strong>):</label>
           <div class="table-container compact-modal-table-container" style="margin-top:0.35rem;">
@@ -1096,6 +1116,7 @@
     </div>
   </div>
 
+  <!-- ACTION ITEMS 10 & 11: COMPACT NO-SCROLL DRILLDOWN MODAL -->
   <div class="modal-overlay" id="userDetailBreakdownModalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -1107,7 +1128,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyvpQcsNy6Kl1vVK9UWP89QWiS9OCdfVj7RT1CH3yRmieIm44UuaZ1x3btZdMVAXWVi/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyH1t7naE4D2h6IpI3k_xm7Yqu5eCObwQIXtovKQ43Pj6hVBv2gWcfLmw263SrSKu4O/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01" },
@@ -1333,7 +1354,7 @@
       renderCurrentActiveTab();
     }
 
-    <!-- ACTION ITEM 2: ONE CLICK MANDATORY CROSS-HUB FILTER RENDERS ALL MANDATORY ITEMS ACROSS HUBS -->
+    <!-- ACTION ITEM 1 & 3: ONE CLICK CROSS-HUB MANDATORY FILTER RENDERS ALL MANDATORY ITEMS -->
     function filterMandatoryModulesOnly() {
       filterOnlyMandatory = !filterOnlyMandatory;
       filterOnlyBookmarks = false;
@@ -1550,15 +1571,25 @@
       renderCurrentActiveTab();
     }
 
+    <!-- ACTION ITEM 4: TOGGLE COMPLETION WITH CONFIRMATION ON UNCHECKING -->
     function toggleTopicCompletion(resId, e) {
       if (e) e.stopPropagation();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
-      if (completedSet.has(resId)) completedSet.delete(resId);
-      else completedSet.add(resId);
+      
+      if (completedSet.has(resId)) {
+        if (!confirm("This module is currently marked as Completed. Are you sure you want to uncheck and reset its status to Pending?")) {
+          return;
+        }
+        completedSet.delete(resId);
+      } else {
+        completedSet.add(resId);
+      }
+
       localStorage.setItem('user_completed_topics_v23', JSON.stringify(Array.from(completedSet)));
       syncUserAnalyticsToBackend();
       renderLearningHub();
       renderDocumentHub();
+      updateTopMandatoryCount();
     }
 
     function loadGlobalCustomLinks() {
@@ -1686,7 +1717,31 @@
       return joinersData[currentUser.toLowerCase().trim()] && joinersData[currentUser.toLowerCase().trim()].restricted;
     }
 
-    <!-- ACTION ITEM 1: UNIVERSAL MANDATORY RED BORDER AND DUE DATE DISPLAY ON QUICK LINKS -->
+    <!-- ACTION ITEM 5: HELPER TO GENERATE VIEWED PERSON AVATAR PRESENCE STACK -->
+    function generateViewedPresenceHtml(pkg, type) {
+      if (!globalAnalyticsCache) return "";
+      let viewedUsers = [];
+      
+      for (let email in globalAnalyticsCache) {
+        let userDocs = globalAnalyticsCache[email].seenDocs || [];
+        if (userDocs.some(d => d.pkg === pkg && d.type === type)) {
+          viewedUsers.push(email);
+        }
+      }
+
+      if (viewedUsers.length === 0) return "";
+
+      let avatarStack = viewedUsers.slice(0, 4).map(email => {
+        let name = deriveDisplayName(email);
+        let initials = name.split(' ').map(n => n.charAt(0)).join('').substring(0, 2).toUpperCase();
+        let bgColors = ['#1a73e8', '#1e8e3e', '#9334e6', '#d93025', '#fbbc05'];
+        let colorHash = email.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % bgColors.length;
+        return `<div class="presence-avatar-circle" style="background:${bgColors[colorHash]};" title="Viewed by ${name} (${email})">${initials}</div>`;
+      }).join('');
+
+      return `<div class="viewed-presence-stack">${avatarStack} ${viewedUsers.length > 4 ? `<span style="font-size:0.65rem; color:var(--text-secondary);">+${viewedUsers.length - 4}</span>` : ''}</div>`;
+    }
+
     function renderQuickLinksHub() {
       const grid = document.getElementById('quickLinksGrid');
       let isRestricted = isUserRestrictedNewJoiner();
@@ -1720,6 +1775,7 @@
                 ${dueDate ? `<span class="mandatory-tag-pill" title="Due: ${dueDate}">DUE: ${dueDate}</span>` : ''}
               </h3>
               <p class="card-desc">${item.description}</p>
+              ${generateViewedPresenceHtml(item.category, item.name)}
             </div>
             <div class="card-actions">
               <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="link-btn" onclick="trackDocView('${item.category}', '${item.name}')">
@@ -1741,7 +1797,7 @@
       }).join('');
     }
 
-    <!-- ACTION ITEM 1: UNIVERSAL MANDATORY RED BORDER AND DUE DATE DISPLAY ON DOCUMENT HUB -->
+    <!-- ACTION ITEM 1 & 2: UNIVERSAL MANDATORY RED HIGHLIGHT & COMPLETION STATUS IN BOTH LIST AND TILE VIEWS -->
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1786,6 +1842,7 @@
               <strong>${doc.pkg}</strong> 
               ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}
               ${dueDate ? `<span class="mandatory-tag-pill">DUE: ${dueDate}</span>` : ''}
+              ${generateViewedPresenceHtml(doc.pkg, doc.type)}
             </td>
             <td>${doc.ver}</td>
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
@@ -1844,22 +1901,28 @@
                 ${dueDate ? `<span class="mandatory-tag-pill" title="Due: ${dueDate}">DUE: ${dueDate}</span>` : ''}
               </h3>
               <p class="card-desc">${doc.description || 'Technical Documentation.'}</p>
+              ${generateViewedPresenceHtml(doc.pkg, doc.type)}
             </div>
             <div class="card-actions">
-              <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
-              ${isPowerUserActive() ? `
-                <div class="action-icons">
+              ${(dueDate || isRestricted) ? `
+                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                  ${isCompleted ? '✓ Completed' : 'Pending Review'}
+                </span>
+              ` : '<span></span>'}
+              <div class="action-icons">
+                <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
+                ${isPowerUserActive() ? `
                   <button class="action-btn" onclick="openEditModal('document', '${docId}')" title="Edit Doc"><span class="material-icons-outlined" style="font-size:16px; color:var(--google-blue);">edit</span></button>
                   <button class="action-btn" onclick="executeDeleteItem('document', '${doc.link}', '${docId}')" title="Delete Doc"><span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span></button>
-                </div>
-              ` : ''}
+                ` : ''}
+              </div>
             </div>
           </article>
         `;
       }).join('');
     }
 
-    <!-- ACTION ITEM 1: UNIVERSAL MANDATORY RED BORDER AND DUE DATE DISPLAY ON LEARNING HUB -->
+    <!-- ACTION ITEM 1 & 2: UNIVERSAL MANDATORY RED BORDER AND DUE DATE DISPLAY ON LEARNING HUB -->
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1915,6 +1978,7 @@
                 ${dueDate ? `<span class="mandatory-tag-pill" title="Due: ${dueDate}">DUE: ${dueDate}</span>` : ''}
               </h3>
               <p class="card-desc">${res.description || 'Comprehensive learning module.'}</p>
+              ${generateViewedPresenceHtml(res.category, res.name)}
             </div>
             <div class="card-actions">
               ${(dueDate || isRestricted) ? `
@@ -1953,6 +2017,7 @@
               ${isNew ? '<span class="new-tag-pill">NEW</span>' : ''}
               ${dueDate ? `<span class="mandatory-tag-pill">DUE: ${dueDate}</span>` : ''}
               <br><span style="font-size:0.72rem; color:var(--text-secondary);">${res.category}</span>
+              ${generateViewedPresenceHtml(res.category, res.name)}
             </td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${res.description || 'N/A'}</td>
             <td style="text-align:center;">
@@ -2235,7 +2300,6 @@
       renderStagedMandatoryTable();
     }
 
-    <!-- ACTION ITEM 5: COMPACT STAGED MODULES TABLE -->
     function renderStagedMandatoryTable() {
       const tbody = document.getElementById('stagedMandatoryTableBody');
       let items = Array.from(stagedMandatoryModules);
@@ -2299,6 +2363,7 @@
           showToast("Mandatory assignments updated & saved permanently!");
           if (res.mandatoryData) mandatoryData = res.mandatoryData;
           
+          <!-- ACTION ITEM 9: TARGETED REMINDER DISPATCH SKIPS ALREADY COMPLETED USERS -->
           selectedItems.forEach(itemId => {
             let found = quickDataset.find(d => d.id === itemId) || dataset.find(d => d.id === itemId) || docDataset.find(d => (d.id === itemId || (d.pkg + d.type) === itemId));
             let title = found ? (found.name || found.pkg + ' ' + found.type) : 'Mandatory Module';
@@ -2308,7 +2373,8 @@
               emails: selectedUsers.join(','),
               moduleTitle: title,
               dueDate: dueDate || 'ASAP',
-              triggerTiming: timingSelect
+              triggerTiming: timingSelect,
+              itemId: itemId
             }, function(){});
           });
 
@@ -2323,7 +2389,7 @@
       });
     }
 
-    <!-- ACTION ITEM 4: COMPACT ACTIVE MANDATORY USER ASSIGNMENTS MATRIX TABLE -->
+    <!-- ACTION ITEM 8: REALTIME MATRIX TABLE RENDER & SYNC -->
     function renderMandatoryUserMatrixTable() {
       const tbody = document.getElementById('mandatoryUserMatrixTableBody');
       let rosterList = implementationRosterList.length > 0 ? implementationRosterList : Array.from(powerUsers);
@@ -2427,9 +2493,15 @@
       renderJoinersMultiCheckboxes();
     }
 
+    <!-- ACTION ITEM 6: SEARCH FILTER FOR ONBOARDING MODULES SELECTION -->
     function renderJoinersMultiCheckboxes() {
       const container = document.getElementById('joinerModulesCheckboxContainer');
       let targetList = activeJoinersSubtab === 'document' ? docDataset : dataset;
+      let query = (document.getElementById('joinerModuleSearchInput') ? document.getElementById('joinerModuleSearchInput').value : '').toLowerCase().trim();
+
+      if (query) {
+        targetList = targetList.filter(d => (d.name || d.pkg + ' ' + d.type).toLowerCase().includes(query) || (d.category || d.pkg).toLowerCase().includes(query));
+      }
 
       container.innerHTML = targetList.map(d => {
         let itemId = d.id || (d.pkg + d.type);
@@ -2449,7 +2521,6 @@
       renderStagedJoinerTable();
     }
 
-    <!-- ACTION ITEM 6: COMPACT STAGED ONBOARDING MODULES TABLE -->
     function renderStagedJoinerTable() {
       const tbody = document.getElementById('stagedJoinerTableBody');
       let items = Array.from(stagedJoinerModules);
@@ -2535,7 +2606,6 @@
       });
     }
 
-    <!-- ACTION ITEM 7: COMPACT ACTIVE RESTRICTED NEW JOINERS TABLE -->
     function renderJoinersTable() {
       const tbody = document.getElementById('joinersTableBody');
       const keys = Object.keys(joinersData);
@@ -2769,6 +2839,7 @@
       });
     }
 
+    <!-- ACTION ITEMS 10 & 11: COMPACT NO-SCROLL DRILLDOWN MODAL TABLES -->
     function openDrilldownModal(email, tabType) {
       const u = globalAnalyticsCache[email] || { completedTopics: [], seenDocs: [] };
       document.getElementById('drilldownUserTitle').textContent = `User Details: ${deriveDisplayName(email)}`;
@@ -2789,9 +2860,9 @@
         let pct = myMandatory.length > 0 ? Math.round((myCompletedMandatory.length / myMandatory.length) * 100) : 0;
 
         html = `
-          <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.65rem; margin-bottom:0.5rem;">
-            <strong style="font-size:0.9rem;">${deriveDisplayName(email)}</strong> (${email})
-            <div style="display:flex; justify-content:space-between; margin-top:0.4rem; font-size:0.78rem;">
+          <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.55rem; margin-bottom:0.4rem;">
+            <strong style="font-size:0.85rem;">${deriveDisplayName(email)}</strong> (${email})
+            <div style="display:flex; justify-content:space-between; margin-top:0.3rem; font-size:0.75rem;">
               <span>Mandatory Total: <strong>${myMandatory.length}</strong></span>
               <span>Completed: <strong style="color:var(--google-green);">${myCompletedMandatory.length}</strong></span>
               <span>Pending: <strong style="color:var(--google-red);">${myPendingMandatory.length}</strong></span>
@@ -2800,9 +2871,9 @@
           </div>
 
           <div>
-            <label style="font-size:0.75rem; font-weight:400; color:var(--google-green); margin-bottom:0.2rem; display:block;">Completed Mandatory Modules:</label>
-            <div class="table-container" style="max-height:140px;">
-              <table class="doc-table">
+            <label style="font-size:0.73rem; font-weight:500; color:var(--google-green); margin-bottom:0.15rem; display:block;">Completed Mandatory Modules:</label>
+            <div class="table-container compact-modal-table-container">
+              <table class="doc-table compact-modal-table">
                 <thead>
                   <tr>
                     <th>Module Title</th>
@@ -2819,10 +2890,10 @@
             </div>
           </div>
 
-          <div style="margin-top:0.6rem;">
-            <label style="font-size:0.75rem; font-weight:400; color:var(--google-red); margin-bottom:0.2rem; display:block;">Pending Mandatory Modules:</label>
-            <div class="table-container" style="max-height:140px;">
-              <table class="doc-table">
+          <div style="margin-top:0.4rem;">
+            <label style="font-size:0.73rem; font-weight:500; color:var(--google-red); margin-bottom:0.15rem; display:block;">Pending Mandatory Modules:</label>
+            <div class="table-container compact-modal-table-container">
+              <table class="doc-table compact-modal-table">
                 <thead>
                   <tr>
                     <th>Module Title</th>
@@ -2844,17 +2915,17 @@
         let seenDocsHistory = u.seenDocs || [];
 
         html = `
-          <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.65rem; margin-bottom:0.5rem;">
-            <strong style="font-size:0.9rem;">${deriveDisplayName(email)}</strong> (${email})
-            <div style="margin-top:0.4rem; font-size:0.78rem;">
+          <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.55rem; margin-bottom:0.4rem;">
+            <strong style="font-size:0.85rem;">${deriveDisplayName(email)}</strong> (${email})
+            <div style="margin-top:0.3rem; font-size:0.75rem;">
               <span>Total Viewed Documents Count: <strong style="color:var(--google-blue);">${seenDocsHistory.length}</strong></span>
             </div>
           </div>
 
           <div>
-            <label style="font-size:0.75rem; font-weight:400; color:var(--google-purple); margin-bottom:0.2rem; display:block;">Viewed Documents History:</label>
-            <div class="table-container" style="max-height:220px;">
-              <table class="doc-table">
+            <label style="font-size:0.73rem; font-weight:500; color:var(--google-purple); margin-bottom:0.15rem; display:block;">Viewed Documents History:</label>
+            <div class="table-container compact-modal-table-container" style="max-height:220px !important;">
+              <table class="doc-table compact-modal-table">
                 <thead>
                   <tr>
                     <th>Document Package & Type</th>
@@ -2862,7 +2933,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  ${seenDocsHistory.length > 0 ? seenDocsHistory.map(doc => `<tr><td><strong>${doc.pkg} - ${doc.type}</strong></td><td style="text-align:right; font-size:0.7rem; color:var(--text-secondary);">${doc.timestamp || ''}</td></tr>`).join('') : '<tr><td colspan="2" style="text-align:center; color:var(--text-secondary);">No document history recorded.</td></tr>'}
+                  ${seenDocsHistory.length > 0 ? seenDocsHistory.map(doc => `<tr><td><strong>${doc.pkg} - ${doc.type}</strong></td><td style="text-align:right; font-size:0.68rem; color:var(--text-secondary);">${doc.timestamp || ''}</td></tr>`).join('') : '<tr><td colspan="2" style="text-align:center; color:var(--text-secondary);">No document history recorded.</td></tr>'}
                 </tbody>
               </table>
             </div>
