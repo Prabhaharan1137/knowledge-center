@@ -355,22 +355,12 @@
     }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; overflow-y: auto; width: 100%; max-height: 480px; }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 720px; }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 680px; }
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
     .compact-modal-table-container { max-height: 220px !important; overflow-y: auto !important; }
     .compact-modal-table th, .compact-modal-table td { padding: 0.28rem 0.45rem !important; font-size: 0.72rem !important; }
-
-    .inline-keyword-input {
-      width: 100%;
-      padding: 0.18rem 0.35rem;
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      font-size: 0.72rem;
-      background: var(--bg-card);
-      color: var(--text-primary);
-    }
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -546,12 +536,12 @@
       </button>
     </nav>
 
-    <!-- ISSUE 2 FIX: MANDATORY BUTTON SHOWS ALL MANDATORY MODULES ACROSS ALL HUBS SIMULTANEOUSLY -->
+    <!-- ISSUE 1 FIX: MANDATORY BUTTON NOW OPENS CROSS-HUB MANDATORY OVERLAY DIALOG -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
       </div>
-      <div class="mandatory-top-badge" id="mandatoryTopBadge" onclick="filterMandatoryModulesOnly()">
+      <div class="mandatory-top-badge" id="mandatoryTopBadge" onclick="openMandatoryDialogOverlay()">
         <span class="material-icons-outlined" style="font-size:14px;">assignment_late</span><span>Mandatory: <strong id="kpiMandatoryCount">0</strong></span>
       </div>
       <div class="kpi-bookmark-small" id="bookmarkContainer" onclick="toggleFilterOnlyBookmarks()" title="Click to filter bookmarked items in this hub">
@@ -598,16 +588,16 @@
         </div>
       </section>
 
+      <!-- ISSUE 2 FIX: CLEAN TABLE LAYOUT (REMOVED KEYWORD COLUMN FROM MAIN UI) -->
       <div class="table-container" id="docTableContainer">
         <table class="doc-table">
           <thead>
             <tr>
               <th style="width:40px; text-align:center;">⭐</th>
-              <th style="width:20%;">Package Name</th>
-              <th style="width:10%;">Version</th>
-              <th style="width:16%;">Type of Doc</th>
-              <th style="width:22%;">Description</th>
-              <th style="width:14%; text-align:center;">Keywords</th>
+              <th style="width:24%;">Package Name</th>
+              <th style="width:12%;">Version</th>
+              <th style="width:18%;">Type of Doc</th>
+              <th style="width:28%;">Description</th>
               <th style="width:10%; text-align:center;">Status</th>
               <th style="width:8%; text-align:right;">Action</th>
             </tr>
@@ -651,14 +641,14 @@
         </div>
       </section>
 
+      <!-- ISSUE 2 FIX: CLEAN TABLE LAYOUT (REMOVED KEYWORD COLUMN FROM MAIN UI) -->
       <div class="table-container" id="learningTableContainer" style="display:none; margin-bottom:0.8rem;">
         <table class="doc-table">
           <thead>
             <tr>
               <th style="width:40px; text-align:center;">⭐</th>
-              <th style="width:24%;">Module / Title</th>
-              <th style="width:30%;">Description</th>
-              <th style="width:18%; text-align:center;">Keywords</th>
+              <th style="width:28%;">Module / Title</th>
+              <th style="width:38%;">Description</th>
               <th style="width:14%; text-align:center;">Status</th>
               <th style="width:10%; text-align:right;">Action</th>
             </tr>
@@ -668,6 +658,41 @@
       </div>
 
       <main class="resources-grid" id="resourcesGrid"></main>
+    </div>
+  </div>
+
+  <!-- ISSUE 1 FEATURE: CROSS-HUB MANDATORY MODULES OVERLAY DIALOG -->
+  <div class="modal-overlay" id="mandatoryDialogModalOverlay">
+    <div class="modal-content" style="max-width: 720px;">
+      <div class="modal-header">
+        <h2 style="color:var(--google-red); display:flex; align-items:center; gap:0.4rem;">
+          <span class="material-icons-outlined">assignment_late</span>
+          <span>Assigned Mandatory Modules Across All Hubs</span>
+        </h2>
+        <button class="modal-close-btn" onclick="closeModal('mandatoryDialogModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+
+      <div class="modal-body-scroll" style="display:flex; flex-direction:column; gap:0.65rem;">
+        <div style="background:#fff5f5; border:1px solid var(--google-red); border-radius:6px; padding:0.65rem;">
+          <p style="font-size:0.8rem; color:var(--text-primary);">
+            Below are all active required modules assigned to your account across <strong>Quick Links</strong>, <strong>Document Hub</strong>, and <strong>Learning Hub</strong>. Once completed, items will automatically be cleared from this list.
+          </p>
+        </div>
+
+        <div class="table-container compact-modal-table-container" style="max-height: 380px !important;">
+          <table class="doc-table compact-modal-table">
+            <thead>
+              <tr>
+                <th style="width:18%;">Hub</th>
+                <th style="width:38%;">Module / Resource Title</th>
+                <th style="width:18%; text-align:center;">Due Date</th>
+                <th style="width:16%; text-align:center;">Action / Status</th>
+              </tr>
+            </thead>
+            <tbody id="mandatoryDialogTableBody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -693,7 +718,7 @@
           <span class="material-icons-outlined" style="font-size:18px;">swap_horiz</span><span>Reassign Documents to Category/Module</span>
         </button>
 
-        <!-- ISSUE 3 FEATURE: POWER USER BULK KEYWORDS & EXPORT/IMPORT MODAL -->
+        <!-- ISSUE 2 FEATURE: EXCLUSIVE POWER USER KEYWORDS MANAGEMENT & CSV BULK EDIT -->
         <button type="button" class="btn-secondary" id="bulkKeywordsBtn" onclick="openBulkKeywordsModal()">
           <span class="material-icons-outlined" style="font-size:18px;">label</span><span>Keywords & Bulk Metadata Management</span>
         </button>
@@ -725,7 +750,6 @@
     </div>
   </div>
 
-  <!-- ISSUE 3 MODAL: POWER USER KEYWORDS BULK EXPORT / CSV IMPORT -->
   <div class="modal-overlay" id="bulkKeywordsModalOverlay">
     <div class="modal-content" style="max-width: 680px;">
       <div class="modal-header">
@@ -737,7 +761,7 @@
         <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.65rem;">
           <h4 style="font-size:0.82rem; font-weight:500; margin-bottom:0.2rem;">Bulk Export / Import via CSV</h4>
           <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:0.55rem;">
-            Export the complete dataset to CSV, edit keywords in Excel or Google Sheets, and upload the updated CSV file to bulk update keywords instantly.
+            Export dataset to CSV, edit keywords in Excel/Google Sheets, and upload updated CSV to bulk sync keywords permanently.
           </p>
 
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1221,7 +1245,6 @@
     </div>
   </div>
 
-  <!-- ISSUE 4 FEATURE: POWER USER RESTRICTED VIEW HISTORY & DETAILS MODAL -->
   <div class="modal-overlay" id="documentDetailsModalOverlay">
     <div class="modal-content" style="max-width: 580px;">
       <div class="modal-header">
@@ -1233,7 +1256,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzg8B9gKvaHx1giGXRdI5B3rULfi45oKw3ClfleRuh3ZaH6osLvDGPp3QmZBRGes1i2/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyRc7egEwnGDUvUjJadRad202P0zLRtQ0WE2n9uPFkGY8Yb1A2cJuW4ZFe4qh19l74D/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01", lastModified: "2026-01-01 10:00:00" },
@@ -1242,7 +1265,6 @@
       { id: 'quick_4', name: "Jira Tracker Looker Studio Report", category: "Analytics", description: "Interactive dashboard tracking Jira issues, bugs, and resolution velocity.", link: "https://datastudio.google.com/reporting/13608382-2fcb-4f5b-8273-7caa1dc3abb9/page/c3dXF", createdDate: "2026-01-04", lastModified: "2026-01-04 14:20:00" }
     ];
 
-    /* ISSUE 1 FIX: FULL 51 LEARNING HUB BASE ITEMS GUARANTEED */
     const baseDataset = [
       { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228", description: "Comprehensive guide covering foundational IP legal frameworks, asset protection types, and corporate IP strategy.", createdDate: "2026-01-10" },
       { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228", description: "Foundational breakdown of patents, trademarks, copyrights, and trade secrets.", createdDate: "2026-01-12" },
@@ -1297,7 +1319,6 @@
       { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m", description: "Recorded instructor-led training (ILT) sessions and workshops.", createdDate: "2026-03-14" }
     ];
 
-    /* ISSUE 1 FIX: FULL 88 DOCUMENT HUB BASE ITEMS GUARANTEED */
     const baseDocDataset = [
       { id: 'doc_1', pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0", description: "Complete installation steps for Symphony Law Firm v1.3.4 package.", createdDate: "2026-02-01" },
       { id: 'doc_2', pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0", description: "Release updates, bug fixes, and new features in LF v1.3.4.", createdDate: "2026-02-03" },
@@ -1462,13 +1483,62 @@
       renderCurrentActiveTab();
     }
 
-    /* ISSUE 2 FIX: MANDATORY BUTTON SHOWS ALL MANDATORY MODULES ACROSS ALL HUBS SIMULTANEOUSLY */
     function filterMandatoryModulesOnly() {
       filterOnlyMandatory = !filterOnlyMandatory;
       filterOnlyBookmarks = false;
       document.getElementById('bookmarkContainer').classList.remove('filter-active');
       document.getElementById('mandatoryTopBadge').classList.toggle('filter-active', filterOnlyMandatory);
       renderCurrentActiveTab();
+    }
+
+    /* ISSUE 1 FIX: MANDATORY OVERLAY DIALOG SHOWS ALL ACTIVE REQUIRED MODULES ACROSS ALL HUBS */
+    function openMandatoryDialogOverlay() {
+      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
+      let mandatoryList = [];
+
+      for (let k in mandatoryData) {
+        if (completedSet.has(k)) continue; // Exclude completed items
+
+        let entry = mandatoryData[k];
+        let users = typeof entry === 'object' && entry.users ? entry.users : [];
+        let dueDate = typeof entry === 'object' ? entry.dueDate : entry;
+
+        if (users.length === 0 || (currentUser && users.indexOf(currentUser.toLowerCase().trim()) > -1)) {
+          let found = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
+          
+          let hubName = "Learning Hub";
+          if (quickDataset.some(d => d.id === k)) hubName = "Quick Links";
+          else if (docDataset.some(d => (d.id === k || (d.pkg + d.type) === k))) hubName = "Document Hub";
+
+          let title = found ? (found.name || `${found.pkg} - ${found.type}`) : k;
+          let link = found ? found.link : '#';
+
+          mandatoryList.push({ id: k, hub: hubName, title: title, dueDate: dueDate || 'ASAP', link: link });
+        }
+      }
+
+      const tbody = document.getElementById('mandatoryDialogTableBody');
+      if (mandatoryList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:1rem; color:var(--google-green);">🎉 No active pending mandatory modules assigned to your account!</td></tr>`;
+      } else {
+        tbody.innerHTML = mandatoryList.map(m => `
+          <tr class="mandatory-card">
+            <td><span style="font-size:0.72rem; font-weight:500; color:var(--google-blue);">${m.hub}</span></td>
+            <td><strong>${m.title}</strong></td>
+            <td style="text-align:center; color:var(--google-red); font-size:0.75rem;"><strong>${m.dueDate}</strong></td>
+            <td style="text-align:center;">
+              <div style="display:flex; align-items:center; justify-content:center; gap:0.3rem;">
+                <a href="${m.link}" target="_blank" class="link-btn" style="padding:0.15rem 0.3rem;">Link <span class="material-icons-outlined" style="font-size:12px;">open_in_new</span></a>
+                <button class="action-btn" onclick="toggleTopicCompletion('${m.id}', event); openMandatoryDialogOverlay();" title="Mark Completed">
+                  <span class="completion-status-tag pending">Pending</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      document.getElementById('mandatoryDialogModalOverlay').classList.add('open');
     }
 
     function setHubViewMode(hub, mode) {
@@ -1702,7 +1772,6 @@
       updateTopMandatoryCount();
     }
 
-    /* ISSUE 1 FIX: GUARANTEED MAP-BASED DEDUPLICATION & PRESERVATION OF ALL BASE ITEMS */
     function loadGlobalCustomLinks() {
       callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
         if (data) {
@@ -1714,7 +1783,6 @@
           if (data.mandatoryData) mandatoryData = data.mandatoryData;
           if (data.joinersData) joinersData = data.joinersData;
 
-          // Merge custom entries over base datasets cleanly
           let quickMap = new Map(baseQuickDataset.map(item => [item.id, item]));
           globalCustomQuick.forEach(item => {
             let existing = quickMap.get(item.id || item.link) || {};
@@ -1848,7 +1916,6 @@
       return joinersData[currentUser.toLowerCase().trim()] && joinersData[currentUser.toLowerCase().trim()].restricted;
     }
 
-    /* ISSUE 4 FIX: VIEW HISTORY & PRESENCE STACK RESTRICTED EXCLUSIVELY TO POWER USERS */
     function generateViewedPresenceHtml(pkg, type) {
       if (!isPowerUserActive() || !globalAnalyticsCache) return "";
       let viewedUsers = [];
@@ -1993,7 +2060,7 @@
       }).join('');
     }
 
-    /* ISSUE 3 & 5 FIX: INLINE KEYWORD EDITING AND COMPLETED BADGE IN DOCUMENT HUB TABLE VIEW */
+    /* ISSUE 3 FIX: COMPLETED ICON & STATUS BADGE RENDERED IN DOCUMENT HUB LIST VIEW */
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -2047,19 +2114,12 @@
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${doc.description || 'Technical Documentation.'}</td>
             <td style="text-align:center;">
-              ${isPowerUserActive() ? `
-                <input type="text" class="inline-keyword-input" value="${doc.keywords || ''}" placeholder="+ keywords" onchange="handleInlineKeywordChange('${docId}', 'document', this.value)">
-              ` : `<span style="font-size:0.72rem; color:var(--text-secondary);">${doc.keywords || '-'}</span>`}
-            </td>
-            <td style="text-align:center;">
-              <!-- ISSUE 5 FIX: COMPLETED ICON & TOGGLE IN LIST VIEW -->
-              ${(dueDate || isRestricted) ? `
-                <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)">
-                  <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                    ${isCompleted ? '✓ Completed' : 'Pending Review'}
-                  </span>
-                </button>
-              ` : '<span style="color:var(--text-secondary); font-size:0.75rem;">Standard</span>'}
+              <!-- ISSUE 3 FIX: COMPLETED BADGE & TOGGLE BUTTON IN TABLE VIEW -->
+              <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion Status">
+                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                  ${isCompleted ? '✓ Completed' : 'Pending Review'}
+                </span>
+              </button>
             </td>
             <td style="text-align:right;">
               <div class="action-icons">
@@ -2098,13 +2158,11 @@
                       <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
                     </button>
                   ` : ''}
-                  ${(dueDate || isRestricted) ? `
-                    <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion">
-                      <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
-                        ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
-                      </span>
-                    </button>
-                  ` : ''}
+                  <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion">
+                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
+                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                    </span>
+                  </button>
                   <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${docId}')">
                     <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
@@ -2119,11 +2177,9 @@
               ${generateViewedPresenceHtml(doc.pkg, doc.type)}
             </div>
             <div class="card-actions">
-              ${(dueDate || isRestricted) ? `
-                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                  ${isCompleted ? '✓ Completed' : 'Pending Review'}
-                </span>
-              ` : '<span></span>'}
+              <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}" onclick="toggleTopicCompletion('${docId}', event)">
+                ${isCompleted ? '✓ Completed' : 'Pending Review'}
+              </span>
               <div class="action-icons">
                 <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
                 ${isPowerUserActive() ? `
@@ -2137,7 +2193,7 @@
       }).join('');
     }
 
-    /* ISSUE 3 & 5 FIX: INLINE KEYWORD EDITING AND COMPLETED BADGE IN LEARNING HUB TABLE VIEW */
+    /* ISSUE 3 FIX: COMPLETED BADGE & TOGGLE BUTTON RENDERED IN LEARNING HUB TABLE VIEW */
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -2182,13 +2238,11 @@
                       <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
                     </button>
                   ` : ''}
-                  ${(dueDate || isRestricted) ? `
-                    <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion">
-                      <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
-                        ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
-                      </span>
-                    </button>
-                  ` : ''}
+                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion">
+                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
+                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                    </span>
+                  </button>
                   <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
                     <span class="material-icons-outlined gold-star" style="font-size:20px;">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
@@ -2203,11 +2257,9 @@
               ${generateViewedPresenceHtml(res.category, res.name)}
             </div>
             <div class="card-actions">
-              ${(dueDate || isRestricted) ? `
-                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                  ${isCompleted ? '✓ Completed' : 'Pending'}
-                </span>
-              ` : '<span></span>'}
+              <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}" onclick="toggleTopicCompletion('${res.id}', event)">
+                ${isCompleted ? '✓ Completed' : 'Pending'}
+              </span>
               <div class="action-icons">
                 <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
                 ${isPowerUserActive() ? `
@@ -2243,19 +2295,12 @@
             </td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${res.description || 'N/A'}</td>
             <td style="text-align:center;">
-              ${isPowerUserActive() ? `
-                <input type="text" class="inline-keyword-input" value="${res.keywords || ''}" placeholder="+ keywords" onchange="handleInlineKeywordChange('${res.id}', 'learning', this.value)">
-              ` : `<span style="font-size:0.72rem; color:var(--text-secondary);">${res.keywords || '-'}</span>`}
-            </td>
-            <td style="text-align:center;">
-              <!-- ISSUE 5 FIX: COMPLETED ICON IN LEARNING TABLE LIST VIEW -->
-              ${(dueDate || isRestricted) ? `
-                <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)">
-                  <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                    ${isCompleted ? '✓ Completed' : 'Pending'}
-                  </span>
-                </button>
-              ` : '<span style="color:var(--text-secondary); font-size:0.75rem;">Standard</span>'}
+              <!-- ISSUE 3 FIX: COMPLETED BADGE & TOGGLE BUTTON IN TABLE VIEW -->
+              <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion Status">
+                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                  ${isCompleted ? '✓ Completed' : 'Pending'}
+                </span>
+              </button>
             </td>
             <td style="text-align:right;">
               <div class="action-icons">
@@ -2274,19 +2319,6 @@
           </tr>
         `;
       }).join('');
-    }
-
-    function handleInlineKeywordChange(itemId, hub, newKeywords) {
-      callGasJsonp({
-        action: 'SAVE_BULK_KEYWORDS',
-        data: JSON.stringify([{ id: itemId, hub: hub, keywords: newKeywords.trim() }]),
-        requesterEmail: currentUser
-      }, function(res) {
-        if (res && res.status === "SUCCESS") {
-          showToast("Keyword updated!");
-          loadGlobalCustomLinks();
-        }
-      });
     }
 
     function openGlobalSearchModal() {
@@ -2410,7 +2442,7 @@
       document.getElementById('addModalOverlay').classList.add('open');
     }
 
-    /* ISSUE 3 FEATURE: POWER USER BATCH KEYWORDS & CSV EXPORT / IMPORT LOGIC */
+    /* ISSUE 2 FEATURE: POWER USER BATCH KEYWORDS & CSV EXPORT / IMPORT LOGIC */
     function openBulkKeywordsModal() {
       renderBulkKeywordsModalTable();
       document.getElementById('bulkKeywordsModalOverlay').classList.add('open');
