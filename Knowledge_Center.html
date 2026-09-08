@@ -315,18 +315,6 @@
     .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-color: var(--google-blue); }
     .resource-card.mandatory-card, tr.mandatory-card { border: 1.5px solid var(--google-red) !important; background: #fff5f5 !important; }
 
-    .resource-card.highlight-target, tr.highlight-target {
-      border: 2px solid var(--google-yellow) !important;
-      background: #fef7e0 !important;
-      box-shadow: 0 0 12px rgba(251, 188, 5, 0.6) !important;
-      animation: highlightPulse 3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    @keyframes highlightPulse {
-      0% { transform: scale(1.02); }
-      50% { transform: scale(1.03); }
-      100% { transform: scale(1); }
-    }
-
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.35rem; }
     .card-title { font-family: 'Google Sans', sans-serif; font-size: 0.85rem; font-weight: 400; color: var(--text-primary); }
     .category-badge { font-size: 0.65rem; font-weight: 400; padding: 0.12rem 0.4rem; border-radius: 8px; }
@@ -367,14 +355,22 @@
     }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; overflow-y: auto; width: 100%; max-height: 480px; }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 680px; }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 720px; }
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
 
     .compact-modal-table-container { max-height: 220px !important; overflow-y: auto !important; }
     .compact-modal-table th, .compact-modal-table td { padding: 0.28rem 0.45rem !important; font-size: 0.72rem !important; }
 
-    .staged-title-small { font-size: 0.72rem !important; font-weight: 500; color: var(--text-primary); }
+    .inline-keyword-input {
+      width: 100%;
+      padding: 0.18rem 0.35rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 0.72rem;
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -550,7 +546,7 @@
       </button>
     </nav>
 
-    <!-- ISSUE 6: MANDATORY BUTTON SHOWS ALL MANDATORY MODULES ACROSS ALL HUBS -->
+    <!-- ISSUE 2 FIX: MANDATORY BUTTON SHOWS ALL MANDATORY MODULES ACROSS ALL HUBS SIMULTANEOUSLY -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
@@ -608,11 +604,12 @@
             <tr>
               <th style="width:40px; text-align:center;">⭐</th>
               <th style="width:20%;">Package Name</th>
-              <th style="width:12%;">Version</th>
-              <th style="width:18%;">Type of Doc</th>
-              <th style="width:25%;">Description</th>
-              <th style="width:13%; text-align:center;">Status</th>
-              <th style="width:12%; text-align:right;">Action</th>
+              <th style="width:10%;">Version</th>
+              <th style="width:16%;">Type of Doc</th>
+              <th style="width:22%;">Description</th>
+              <th style="width:14%; text-align:center;">Keywords</th>
+              <th style="width:10%; text-align:center;">Status</th>
+              <th style="width:8%; text-align:right;">Action</th>
             </tr>
           </thead>
           <tbody id="docTableBody"></tbody>
@@ -659,10 +656,11 @@
           <thead>
             <tr>
               <th style="width:40px; text-align:center;">⭐</th>
-              <th style="width:25%;">Module / Title</th>
-              <th style="width:38%;">Description</th>
-              <th style="width:17%; text-align:center;">Status</th>
-              <th style="width:16%; text-align:right;">Action</th>
+              <th style="width:24%;">Module / Title</th>
+              <th style="width:30%;">Description</th>
+              <th style="width:18%; text-align:center;">Keywords</th>
+              <th style="width:14%; text-align:center;">Status</th>
+              <th style="width:10%; text-align:right;">Action</th>
             </tr>
           </thead>
           <tbody id="learningTableBody"></tbody>
@@ -695,6 +693,11 @@
           <span class="material-icons-outlined" style="font-size:18px;">swap_horiz</span><span>Reassign Documents to Category/Module</span>
         </button>
 
+        <!-- ISSUE 3 FEATURE: POWER USER BULK KEYWORDS & EXPORT/IMPORT MODAL -->
+        <button type="button" class="btn-secondary" id="bulkKeywordsBtn" onclick="openBulkKeywordsModal()">
+          <span class="material-icons-outlined" style="font-size:18px;">label</span><span>Keywords & Bulk Metadata Management</span>
+        </button>
+
         <button type="button" class="btn-secondary" id="powerPrivilegesBtn" onclick="openPowerUserPrivilegesModal()">
           <span class="material-icons-outlined" style="font-size:18px;">admin_panel_settings</span><span>Power User Privileges</span>
         </button>
@@ -722,7 +725,54 @@
     </div>
   </div>
 
-  <!-- ISSUE 2: POWER TOOLS REASSIGNMENT WITH SEARCH BAR & ICON -->
+  <!-- ISSUE 3 MODAL: POWER USER KEYWORDS BULK EXPORT / CSV IMPORT -->
+  <div class="modal-overlay" id="bulkKeywordsModalOverlay">
+    <div class="modal-content" style="max-width: 680px;">
+      <div class="modal-header">
+        <h2>Keywords & Bulk Metadata Management</h2>
+        <button class="modal-close-btn" onclick="closeModal('bulkKeywordsModalOverlay')"><span class="material-icons-outlined">close</span></button>
+      </div>
+
+      <div class="modal-body-scroll" style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.65rem;">
+          <h4 style="font-size:0.82rem; font-weight:500; margin-bottom:0.2rem;">Bulk Export / Import via CSV</h4>
+          <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:0.55rem;">
+            Export the complete dataset to CSV, edit keywords in Excel or Google Sheets, and upload the updated CSV file to bulk update keywords instantly.
+          </p>
+
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button type="button" class="btn-secondary" onclick="exportKeywordsCsvTemplate()">
+              <span class="material-icons-outlined" style="font-size:16px;">file_download</span> Export Complete CSV
+            </button>
+
+            <label class="btn-secondary" style="cursor:pointer;">
+              <span class="material-icons-outlined" style="font-size:16px;">file_upload</span> Upload & Sync CSV
+              <input type="file" id="keywordsCsvFileInput" accept=".csv" style="display:none;" onchange="handleBulkKeywordsCsvUpload(event)">
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-size:0.82rem; font-weight:500; margin-bottom:0.3rem;">Batch Inline Keywords Editor:</h4>
+          <div class="table-container compact-modal-table-container" style="max-height:260px !important;">
+            <table class="doc-table compact-modal-table">
+              <thead>
+                <tr>
+                  <th>Title / Package</th>
+                  <th>Hub</th>
+                  <th>Keywords (Comma Separated)</th>
+                </tr>
+              </thead>
+              <tbody id="bulkKeywordsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="saveBatchKeywordsFromModal()">Save All Keyword Updates</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="reassignModulesModalOverlay">
     <div class="modal-content" style="max-width: 620px;">
       <div class="modal-header">
@@ -1171,7 +1221,7 @@
     </div>
   </div>
 
-  <!-- ISSUE 4: POWER USER RESTRICTED VIEW HISTORY & DETAILS MODAL -->
+  <!-- ISSUE 4 FEATURE: POWER USER RESTRICTED VIEW HISTORY & DETAILS MODAL -->
   <div class="modal-overlay" id="documentDetailsModalOverlay">
     <div class="modal-content" style="max-width: 580px;">
       <div class="modal-header">
@@ -1183,7 +1233,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbx-qK3TkKfn94hkGlqp0gesIoGc2TdGc7DSZ_4qRYsSvca2cFqqa1MSbb72cw8KVfrD/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbzg8B9gKvaHx1giGXRdI5B3rULfi45oKw3ClfleRuh3ZaH6osLvDGPp3QmZBRGes1i2/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01", lastModified: "2026-01-01 10:00:00" },
@@ -1192,17 +1242,151 @@
       { id: 'quick_4', name: "Jira Tracker Looker Studio Report", category: "Analytics", description: "Interactive dashboard tracking Jira issues, bugs, and resolution velocity.", link: "https://datastudio.google.com/reporting/13608382-2fcb-4f5b-8273-7caa1dc3abb9/page/c3dXF", createdDate: "2026-01-04", lastModified: "2026-01-04 14:20:00" }
     ];
 
+    /* ISSUE 1 FIX: FULL 51 LEARNING HUB BASE ITEMS GUARANTEED */
     const baseDataset = [
-      { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228", description: "Comprehensive guide covering foundational IP legal frameworks, asset protection types, and corporate IP strategy.", createdDate: "2026-01-10", lastModified: "2026-01-10 08:00:00" },
-      { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228", description: "Foundational breakdown of patents, trademarks, copyrights, and trade secrets.", createdDate: "2026-01-12", lastModified: "2026-01-12 12:00:00" },
-      { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229", description: "Explores operational friction points in IP management and modern software solutions.", createdDate: "2026-01-15", lastModified: "2026-01-15 15:30:00" },
-      { id: 'res_4', name: "The Value of Intellectual Property", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Strategic view on leveraging corporate IP assets for market advantage.", createdDate: "2026-01-18", lastModified: "2026-01-18 10:45:00" },
-      { id: 'res_5', name: "Challenges in Managing IP", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Risk analysis on docketing errors, annuity defaults, and compliance pitfalls.", createdDate: "2026-01-20", lastModified: "2026-01-20 16:20:00" }
+      { id: 'res_1', name: "What is Intellectual Property?", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228", description: "Comprehensive guide covering foundational IP legal frameworks, asset protection types, and corporate IP strategy.", createdDate: "2026-01-10" },
+      { id: 'res_2', name: "Types of IP Rights", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=228", description: "Foundational breakdown of patents, trademarks, copyrights, and trade secrets.", createdDate: "2026-01-12" },
+      { id: 'res_3', name: "IP Challenges and the role of IPMS", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=229", description: "Explores operational friction points in IP management and modern software solutions.", createdDate: "2026-01-15" },
+      { id: 'res_4', name: "The Value of Intellectual Property", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Strategic view on leveraging corporate IP assets for market advantage.", createdDate: "2026-01-18" },
+      { id: 'res_5', name: "Challenges in Managing IP", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Risk analysis on docketing errors, annuity defaults, and compliance pitfalls.", createdDate: "2026-01-20" },
+      { id: 'res_6', name: "The Symphony Solution", category: "Intellectual Property", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Overview of Symphony IPMS automation tools and core architecture.", createdDate: "2026-01-22" },
+      { id: 'res_7', name: "Introduction to Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Onboarding module explaining navigation, user roles, and dashboard features.", createdDate: "2026-01-25" },
+      { id: 'res_8', name: "Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Workflow guide on capturing innovation ideas via Symphony portal.", createdDate: "2026-01-28" },
+      { id: 'res_9', name: "The Value of Capturing an Idea", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Best practices for R&D teams submitting clean invention disclosures.", createdDate: "2026-01-30" },
+      { id: 'res_10', name: "The Challenges in Invention Disclosure", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Addressing delays, missing data, and evaluation backlog.", createdDate: "2026-02-01" },
+      { id: 'res_11', name: "The Solution: Invention Disclosure in Symphony", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Automated review board workflows and submission pipelines.", createdDate: "2026-02-02" },
+      { id: 'res_12', name: "The Benefits for Users and Clients", category: "Introduction to Symphony", link: "https://learning.maxval-ip.com/course/view.php?id=304", description: "Quantifying speed, compliance, and ROI gains.", createdDate: "2026-02-03" },
+      { id: 'res_13', name: "IDF Invention Disclosure Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/19MWylq6fYMnMeaFnVlr5fCarEurIzyZ4", description: "Folder containing IDF workflow charts, configuration rules, and forms.", createdDate: "2026-02-04" },
+      { id: 'res_14', name: "Invention Management", category: "Invention Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP", description: "Invention lifecycle setup guidelines and field customisation rules.", createdDate: "2026-02-05" },
+      { id: 'res_15', name: "Invention Submission", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229", description: "Walkthrough of inventor portal submission forms and attachments.", createdDate: "2026-02-06" },
+      { id: 'res_16', name: "Invention Review", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229", description: "Patent committee evaluation routines and scoring matrices.", createdDate: "2026-02-07" },
+      { id: 'res_17', name: "Invention Decision", category: "Invention Module", link: "https://learning.maxval-ip.com/course/view.php?id=229", description: "Filing decisions, foreign filing options, and abandonment logs.", createdDate: "2026-02-08" },
+      { id: 'res_18', name: "Patent Drafting and Filing", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP", description: "Outside counsel handoff, specification drafting, and USPTO filing records.", createdDate: "2026-02-09" },
+      { id: 'res_19', name: "Patent Prosecution", category: "Patent Module", link: "https://drive.google.com/drive/folders/18wgoMzvl3JjqpUj_RG5J8w5zD1iinUMP", description: "Tracking office actions, response deadlines, and claims adjustments.", createdDate: "2026-02-10" },
+      { id: 'res_20', name: "Patent Search", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230", description: "Prior art search integration and landscape analysis.", createdDate: "2026-02-11" },
+      { id: 'res_21', name: "Types of Patent Searches", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230", description: "Novelty, freedom-to-operate (FTO), and invalidity search guidelines.", createdDate: "2026-02-12" },
+      { id: 'res_22', name: "AIA", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=230", description: "America Invents Act provisions, first-inventor-to-file rules, and IPRs.", createdDate: "2026-02-13" },
+      { id: 'res_23', name: "Importance of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", description: "PTO drawing requirements and technical illustration standards.", createdDate: "2026-02-14" },
+      { id: 'res_24', name: "Tools we use", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", description: "Illustration software and drafting tools for IP teams.", createdDate: "2026-02-15" },
+      { id: 'res_25', name: "Types of Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", description: "Utility vs Design patent drawing specifications.", createdDate: "2026-02-16" },
+      { id: 'res_26', name: "PTO Rules for Patent Drawings", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", description: "Margin, numbering, and line density rules across global offices.", createdDate: "2026-02-17" },
+      { id: 'res_27', name: "Handling Patent drawing rejections", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", description: "Correcting informal drawings and responding to PTO objections.", createdDate: "2026-02-18" },
+      { id: 'res_28', name: "Overview of Patent Center", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=244", description: "USPTO Patent Center portal navigation and electronic filing.", createdDate: "2026-02-19" },
+      { id: 'res_29', name: "Overview of WIPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", description: "PCT international application filings and ePCT portal guide.", createdDate: "2026-02-20" },
+      { id: 'res_30', name: "Overview of EPO", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=243", description: "European Patent Office procedures, opposition, and validation.", createdDate: "2026-02-21" },
+      { id: 'res_31', name: "US Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231", description: "Declarations, power of attorney, assignments, and RCE filings.", createdDate: "2026-02-22" },
+      { id: 'res_32', name: "PCT Prosecution - Different type of documents", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=231", description: "Demand for Chapter II, Article 19/34 amendments, and national phase entries.", createdDate: "2026-02-23" },
+      { id: 'res_33', name: "Overview of IDS", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232", description: "Information Disclosure Statement duty of candor and submission rules.", createdDate: "2026-02-24" },
+      { id: 'res_34', name: "IDS obligation and procedure", category: "Patent Module", link: "https://learning.maxval-ip.com/course/view.php?id=232", description: "Timelines, fee tiers, and cross-citation automation in Symphony.", createdDate: "2026-02-25" },
+      { id: 'res_35', name: "Renewals Overview", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", description: "Annuity lifecycle management and patent maintenance fee structures.", createdDate: "2026-02-26" },
+      { id: 'res_36', name: "Duration of Asset Protection", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", description: "Calculations for patent terms, SPC extensions, and trademark renewals.", createdDate: "2026-02-27" },
+      { id: 'res_37', name: "Patent term and renewal timeline", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", description: "3.5, 7.5, and 11.5 year US maintenance fee windows and grace periods.", createdDate: "2026-02-28" },
+      { id: 'res_38', name: "Consequences of not renewing an asset", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", description: "Asset expiration, public domain transition, and reinstatement rules.", createdDate: "2026-03-01" },
+      { id: 'res_39', name: "Renewal Fee and mode of payment", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", description: "Direct PTO payments, agent processing, and currency handling.", createdDate: "2026-03-02" },
+      { id: 'res_40', name: "Who can pay the renewals", category: "Renewals", link: "https://learning.maxval-ip.com/course/view.php?id=233", description: "In-house counsel vs foreign agent renewal responsibilities.", createdDate: "2026-03-03" },
+      { id: 'res_41', name: "What is a Trademark?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "Brand identifier protection, service marks, and trade dress.", createdDate: "2026-03-04" },
+      { id: 'res_42', name: "What can be Trademarked?", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "Word marks, logos, slogans, shapes, sounds, and color marks.", createdDate: "2026-03-05" },
+      { id: 'res_43', name: "Unconventional marks as a Trademark", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "Guidelines for registering sound, motion, and scent marks.", createdDate: "2026-03-06" },
+      { id: 'res_44', name: "Types of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "Coined, arbitrary, suggestive, descriptive, and generic marks.", createdDate: "2026-03-07" },
+      { id: 'res_45', name: "Trademarks Distinctiveness Spectrum", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "Abercrombie spectrum analysis for brand strength evaluation.", createdDate: "2026-03-08" },
+      { id: 'res_46', name: "Classification of Goods & Services", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "Nice Classification system (Classes 1-45) selection rules.", createdDate: "2026-03-09" },
+      { id: 'res_47', name: "Basis of Filings and Use Requirement", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "Section 1(a) Use in Commerce vs Section 1(b) Intent-to-Use filings.", createdDate: "2026-03-10" },
+      { id: 'res_48', name: "Maintenance of Trademarks", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "Section 8 declarations, Section 9 renewals, and Section 15 incontestability.", createdDate: "2026-03-11" },
+      { id: 'res_49', name: "Trademark Life Cycle", category: "Trademark", link: "https://learning.maxval-ip.com/course/view.php?id=242", description: "End-to-end management from clearance search to perpetual renewal.", createdDate: "2026-03-12" },
+      { id: 'res_50', name: "Take the Assessment Quiz", category: "Assessment", link: "https://forms.gle/Qo1MQLLhNJ2pVPNz8", description: "Interactive evaluation quiz to test operational knowledge in Symphony.", createdDate: "2026-03-13" },
+      { id: 'res_51', name: "Additional ILT Recordings Folder", category: "Additional Reference Materials", link: "https://drive.google.com/drive/folders/1g40peLwW4rgqLkPPqc_eMnuSzMPWqv9m", description: "Recorded instructor-led training (ILT) sessions and workshops.", createdDate: "2026-03-14" }
     ];
 
+    /* ISSUE 1 FIX: FULL 88 DOCUMENT HUB BASE ITEMS GUARANTEED */
     const baseDocDataset = [
-      { id: 'doc_1', pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0", description: "Complete installation steps for Symphony Law Firm v1.3.4 package.", createdDate: "2026-02-01", lastModified: "2026-02-01 11:00:00" },
-      { id: 'doc_2', pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0", description: "Release updates, bug fixes, and new features in LF v1.3.4.", createdDate: "2026-02-03", lastModified: "2026-02-03 14:10:00" }
+      { id: 'doc_1', pkg: "Symphony LF", ver: "v1.3.4", type: "Installation Guide", link: "https://docs.google.com/document/d/1f_xfUnT-O6xiA0BFmHrPMh9K_L1vdlZ_N0AYA6Taexg/edit?tab=t.0", description: "Complete installation steps for Symphony Law Firm v1.3.4 package.", createdDate: "2026-02-01" },
+      { id: 'doc_2', pkg: "Symphony LF", ver: "v1.3.4", type: "Release Notes", link: "https://docs.google.com/document/d/1FpL5Zg6Tfs4NdHDx1YTS_mCL2D9pv7U99zjcsFkEQMc/edit?tab=t.0", description: "Release updates, bug fixes, and new features in LF v1.3.4.", createdDate: "2026-02-03" },
+      { id: 'doc_3', pkg: "Symphony LF", ver: "Standard", type: "OOB Guide", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0#heading=h.4d34og8", description: "Out-of-the-box standard functionality and configuration guide.", createdDate: "2026-02-05" },
+      { id: 'doc_4', pkg: "Symphony LF", ver: "Standard", type: "PTO Integration", link: "https://docs.google.com/document/d/1MiR6AGAMgPJHxmwySp4bap_tmQFHWATG66dB1X7B0bY/edit?tab=t.0#heading=h.gn2p9i53yy15", description: "PTO API setup, docketing sync rules, and status mapping.", createdDate: "2026-02-06" },
+      { id: 'doc_5', pkg: "Symphony LF", ver: "Standard", type: "Field Configuration", link: "https://docs.google.com/spreadsheets/d/1qZTCt4lbngMsRQ37JxkCiHfTOfhFlhCweXqsEZrCyJ8/edit?gid=0#gid=0", description: "Field level security matrix, custom field rules, and layouts.", createdDate: "2026-02-07" },
+      { id: 'doc_6', pkg: "Symphony LF", ver: "Standard", type: "Data Uploads & Renewals", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0#heading=h.fvxjcsbrpisy", description: "Data import guidelines and automated renewal processing.", createdDate: "2026-02-08" },
+      { id: 'doc_7', pkg: "Symphony LF", ver: "Standard", type: "Dates Component Config", link: "https://docs.google.com/document/d/1Lz90hLqDNZqNKay1CahffYgFMu9yX0tv7H8ijJgd0iE/edit?tab=t.0", description: "Configuration guide for key statutory date tracking fields.", createdDate: "2026-02-09" },
+      { id: 'doc_8', pkg: "Symphony LF", ver: "Standard", type: "Family Tree Tech Doc", link: "https://docs.google.com/document/d/1oxMp3xiPkMttzt43dPVJJcfKd4OSAlPul7aajz75qfQ/edit?tab=t.0", description: "Patent family relationship visualization setup.", createdDate: "2026-02-10" },
+      { id: 'doc_9', pkg: "Symphony LF", ver: "Standard", type: "Related IP Matters - Configuration", link: "https://docs.google.com/document/d/1_-rbG5XfJUmNKNzbj_DEgOFjGeXiNuNqWDaDfs1oL_g/edit?hl=en&forcehl=1&tab=t.0#heading=h.x4tnm73un1bn", description: "Linking cross-matter dependencies and priority records.", createdDate: "2026-02-11" },
+      { id: 'doc_10', pkg: "Symphony LF", ver: "Standard", type: "Update Term Name", link: "https://docs.google.com/document/d/1mkQQ--uSk3k2WX0RUkCdsT-4_85ggM0OyY3gfEOBPD0/edit?tab=t.0", description: "Terminology customisation guide for system labels.", createdDate: "2026-02-12" },
+      { id: 'doc_11', pkg: "Symphony LF", ver: "Standard", type: "PTO Doc Codes", link: "https://docs.google.com/document/d/1Y64tmdzbawTj8hHvr-P3jOLZeYtQwGEgteQKnBkR2r0/edit?tab=t.nn7xerowdjpb", description: "Standardized USPTO and EPO document code mappings.", createdDate: "2026-02-13" },
+      { id: 'doc_12', pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Configuration Steps", link: "https://docs.google.com/document/d/1USadU5-pzbZhLzYlvGEc2SPuUgjpxbOOVIgbnC_zoyY/edit?tab=t.0", description: "Deployment setup for Symphony DF extensions.", createdDate: "2026-02-14" },
+      { id: 'doc_13', pkg: "Symphony DF (LF)", ver: "v1.0.5", type: "Upgrade Steps", link: "https://docs.google.com/document/d/1OvitBT0PemTnXxpue0MagvPjFGs8h0eNQ8pYE_FKrI4/edit?tab=t.0#heading=h.f6wmunhppk9w", description: "Upgrade checklist and database migration steps for v1.0.5.", createdDate: "2026-02-15" },
+      { id: 'doc_14', pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Release Notes", link: "https://docs.google.com/document/d/1UW30pnWjtAj30meb6XfuBXbKa0E0epf1CrJTKaAkg7U/edit?tab=t.3eyh0nlcm3z0#heading=h.529i7peg55gb", description: "Master release notes for Symphony IPMS v4.0 suite.", createdDate: "2026-02-16" },
+      { id: 'doc_15', pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Technical Documentation", link: "https://docs.google.com/document/d/1WZ5AxZ-BF522U67xxzh2yN8gXxyidRlHh2rw8TRoINU/edit?tab=t.0", description: "Architecture diagrams and technical specifications for v4.0.", createdDate: "2026-02-17" },
+      { id: 'doc_16', pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Installation Doc", link: "https://docs.google.com/document/d/1z5P5YvE8pVtIgv1Y27khwNxZCLcpZgse23Qctfi61sg/edit?usp=sharing", description: "System prerequisites and package installation steps.", createdDate: "2026-02-18" },
+      { id: 'doc_17', pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Upgrade Doc", link: "https://docs.google.com/document/d/1wQoKpdDCyuORvtPxychos06PYPqJGTPrVazlCGel19c/edit?usp=sharing", description: "Package upgrade path from v3.7 to v4.0.", createdDate: "2026-02-19" },
+      { id: 'doc_18', pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "Recordings Folder", link: "https://drive.google.com/drive/folders/1nPPwt0RvFvvzSKy2StbSNVP7lIM-CmNO", description: "Video walkthroughs for v4.0 installation and configuration.", createdDate: "2026-02-20" },
+      { id: 'doc_19', pkg: "SymphonyIPM", ver: "Symphony IPMS v4.0", type: "User Guides & Technical Docs Folder", link: "https://drive.google.com/drive/folders/1AjCqtpHhEg9HpLhUY7mED_MuGb_8qJpb?usp=drive_link", description: "Central repository of all v4.0 operational guides.", createdDate: "2026-02-21" },
+      { id: 'doc_20', pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Installation Procedure", link: "https://docs.google.com/document/d/12t1TSmtTI7cT4p7VA3eG8ZuNgpCGLf0GruB5RSWN_gE/edit?tab=t.0", description: "Deployment procedures for v3.7 environment.", createdDate: "2026-02-22" },
+      { id: 'doc_21', pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes(Patch Updates)", link: "https://docs.google.com/document/d/1DSzp2roWj81PLDsgM1jzCm3kFOU7H5AqhKGAEyYB-w4/edit?tab=t.0#heading=h.doi0kxxzb3c6", description: "Patch updates and bug fix history for v3.7.", createdDate: "2026-02-23" },
+      { id: 'doc_22', pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "PTA & TD", link: "https://docs.google.com/document/d/1ZK_k1vmJ4S-B9pm9X3T_rAtB7Nuu_J4mPwioi6Ag1pk/edit?tab=t.0", description: "Patent Term Adjustment and Terminal Disclaimer configuration.", createdDate: "2026-02-24" },
+      { id: 'doc_23', pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "Release Notes", link: "https://docs.google.com/document/d/1aMEtBF9hJ4LbsNBddzP3FBjdGblc-MIdx3C4eX9NK3k/edit?tab=t.0#heading=h.rv6hsfad8zu2", description: "v3.7 major release specifications.", createdDate: "2026-02-25" },
+      { id: 'doc_24', pkg: "SymphonyIPM", ver: "Symphony IPMS v3.7", type: "TM Renewal & Maintenance workflow", link: "https://docs.google.com/document/d/1YYWUrchs1ofHUY4lhJbhfbazXUYko7eYZSgfGm-Xeok/edit?tab=t.0", description: "Trademark renewal timeline and task automation rules.", createdDate: "2026-02-26" },
+      { id: 'doc_25', pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Installation Procedure", link: "https://docs.google.com/document/d/15ojq7aUyBebs87Q5j_qOuJKbC4QN7q2OKeWURHbUO64/edit?tab=t.0", description: "Legacy v3.6 installation documentation.", createdDate: "2026-02-27" },
+      { id: 'doc_26', pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "Release Notes", link: "https://docs.google.com/document/d/1nAxplj9o5V-gd-wK-hsQ_IVYE48bheTlphi2-v2nP_c/edit?tab=t.0#heading=h.rv6hsfad8zu2", description: "Features and updates included in v3.6.", createdDate: "2026-02-28" },
+      { id: 'doc_27', pkg: "SymphonyIPM", ver: "Symphony IPMS v3.6", type: "FAQs", link: "https://docs.google.com/document/d/15eUk8aTdCMwxRXu-cO6ga9kD9lAeX6IqoVb0ZY01CwI/edit", description: "Frequently asked technical and operational questions for v3.6.", createdDate: "2026-03-01" },
+      { id: 'doc_28', pkg: "SymphonyIPM", ver: "Post Installation", type: "Template cloned org - Post Installation", link: "https://docs.google.com/document/d/1zFWAJflfnTFunMkCObs17UHBUdIoo3rKYXAfE8zc5Ow/edit?tab=t.0#heading=h.nxx749ly2sd1", description: "Post-installation checklist for cloned target orgs.", createdDate: "2026-03-02" },
+      { id: 'doc_29', pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Additional Steps", link: "https://docs.google.com/document/d/1Q6Q5krn9pUo27ukZexeRlt---_dzeUctndN9ksH_K3s/edit?tab=t.0", description: "Supplementary post-deployment configuration steps.", createdDate: "2026-03-03" },
+      { id: 'doc_30', pkg: "SymphonyIPM", ver: "Post Installation", type: "OOB Post Installation", link: "https://docs.google.com/document/d/1TYoM38OwvqGUj2vIBf1cXrH07wIrkL6iYP8E1GGBNZ8/edit?tab=t.0", description: "Out-of-the-box standard post-install setup.", createdDate: "2026-03-04" },
+      { id: 'doc_31', pkg: "SymphonyIPM", ver: "Post Installation", type: "Post Installation Consolidated", link: "https://docs.google.com/spreadsheets/d/12-cra50RDo8BD5bkNql0wfn11CBLegFNbsW2reJS94k/edit?gid=0#gid=0", description: "Master spreadsheet tracking all post-install tasks.", createdDate: "2026-03-05" },
+      { id: 'doc_32', pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Installation Procedure", link: "https://docs.google.com/document/d/1sN0_8dLaGhSjFiDwiSvTZxf4aGHPACO4jo2cuep1Euc/edit?tab=t.0", description: "Extension package installation steps.", createdDate: "2026-03-06" },
+      { id: 'doc_33', pkg: "SymphonyIPMExt", ver: "SymphonyIPM Ext v1.x", type: "Release Notes", link: "https://docs.google.com/document/d/16m5mOKx96X2dpQMmEYhTM-Vu4RBGRzadyByFbGWepEI/edit?tab=t.0#heading=h.afvb612sap42", description: "Extension features and patch logs.", createdDate: "2026-03-07" },
+      { id: 'doc_34', pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Release Notes", link: "https://docs.google.com/document/d/1k_aNNuBtpBS6bctW21TVKF5A1dmsqhuG_4kS57DvcUE/edit?tab=t.0#heading=h.z20ne1xmld5z", description: "Docketing Framework Extension v1 release updates.", createdDate: "2026-03-08" },
+      { id: 'doc_35', pkg: "SymphonyDFExt", ver: "SymphonyDF Ext v1", type: "Installation Procedure", link: "https://drive.google.com/file/d/1fFiQUZu8ATOinYmH_zI-jr6J9UPS4f9E/view", description: "PDF guide for installing Docketing Framework Extension.", createdDate: "2026-03-09" },
+      { id: 'doc_36', pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Installation Procedure", link: "https://docs.google.com/document/d/18Rkm3Y_GGUjWToa_N-GtKLx2gZ-rrg48MubcU9W_xrE/edit?usp=sharing", description: "Novelty Search package installation steps.", createdDate: "2026-03-10" },
+      { id: 'doc_37', pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "Release Notes", link: "https://docs.google.com/document/d/1s3xLP2YA0l2UG3sXJ8vk62Xolw1XiKl8Tx6QH2vp6zM/edit?usp=sharing", description: "Novelty Search release highlights and API changes.", createdDate: "2026-03-11" },
+      { id: 'doc_38', pkg: "SymphonySF (Novelty Search)", ver: "SymphonySF", type: "User Guide", link: "https://docs.google.com/document/d/1d8KEX4fXKGU3jC8mNmGjIV5MHZ40gQJ2L5JwGcXj74g/edit?usp=sharing", description: "End-user guide for conducting prior art searches.", createdDate: "2026-03-12" },
+      { id: 'doc_39', pkg: "PTO Integration", ver: "PTO Integration", type: "Configuration & Setup", link: "https://docs.google.com/document/d/12O9E13nzhvUCf3G4tPJcCALdoU_-rNBe06Qwb555YVA/edit?tab=t.0#heading=h.w1f633o6rz3d", description: "Connecting Symphony to PTO databases via API.", createdDate: "2026-03-13" },
+      { id: 'doc_40', pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Configuration ( Recent Changes )", link: "https://docs.google.com/document/d/17oQjYBs-7YXTbrt8w0xr9v7AVmeezISCGw4s-1hW0GE/edit?usp=sharing", description: "Recent API updates and authentication protocol changes.", createdDate: "2026-03-14" },
+      { id: 'doc_41', pkg: "PTO Integration", ver: "PTO Integration", type: "PTO TM Configuration", link: "https://docs.google.com/document/d/1KNFCiqFxOYpreqQI6pzTSNFMKpIJcRUZg1fX7_-ZS3Q/edit?tab=t.0#heading=h.9j1x6qq0ikur", description: "Trademark PTO sync rules and status mapping.", createdDate: "2026-03-15" },
+      { id: 'doc_42', pkg: "PTO Integration", ver: "PTO Integration", type: "Symphony Corporate - Technical Document", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.3iawlk4gm5a9", description: "Corporate architecture setup for multi-entity PTO syncing.", createdDate: "2026-03-16" },
+      { id: 'doc_43', pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration User guide", link: "https://docs.google.com/document/d/19U7qsSC6n9Umpz-ZVtcJ6TLeRwS1DUDE/edit", description: "User manual for managing automated PTO docketing entries.", createdDate: "2026-03-17" },
+      { id: 'doc_44', pkg: "PTO Integration", ver: "PTO Integration", type: "TM PTO Integration - User Guide", link: "https://docs.google.com/document/d/1x7pQZnZmd4PDr-S_U2BIN1NSs0Qhc_Ujiz8TwiKXpAc/edit?tab=t.0", description: "Trademark-specific PTO sync user instructions.", createdDate: "2026-03-18" },
+      { id: 'doc_45', pkg: "PTO Integration", ver: "PTO Integration", type: "PTO Integration - FAQ", link: "https://docs.google.com/spreadsheets/d/12XkVFQoFoLbBDwW6o2Xn0ieAyptyS15HjETrPWSAeW8/edit?gid=0#gid=0", description: "Troubleshooting common PTO API sync errors.", createdDate: "2026-03-19" },
+      { id: 'doc_46', pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 1", link: "https://docs.google.com/document/d/1xQSlTOKb1YlB4YgCkTbZrz5_yCHDND71rwyqVo9xk4U/edit?tab=t.0", description: "Part 1 of MaRS Renewal Base package setup.", createdDate: "2026-03-20" },
+      { id: 'doc_47', pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 2", link: "https://docs.google.com/document/d/1TxknkBApfacf5IhmcIUFoTCOSqlwCTHx2nLTfPeXd7w/edit?tab=t.0", description: "Part 2 of MaRS Renewal Base package setup.", createdDate: "2026-03-21" },
+      { id: 'doc_48', pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Installation Procedure 3", link: "https://docs.google.com/document/d/1dR31w_O5cmKH1Hjg1GmH3F-dbvfE6xAosjd9AdeEiiI/edit?tab=t.0#heading=h.e8ns8op5dsap", description: "Part 3 of MaRS Renewal Base package setup.", createdDate: "2026-03-22" },
+      { id: 'doc_49', pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Package details", link: "https://docs.google.com/spreadsheets/d/1sTxqq6GV5jN7zf_Bbsv2l7zOt_b_3x6tlM1QlTxzPZs/edit?gid=0#gid=0", description: "Component inventory for MaRS v1.7.x.", createdDate: "2026-03-23" },
+      { id: 'doc_50', pkg: "SIPMRenewalBase", ver: "MaRS Package Version 1.7.x", type: "Release Notes", link: "https://docs.google.com/document/d/1LRGEHLGKZ8ktQ4K-FALU6E-xwLTN37gleI5TWUB1aPc/edit?hl=en&forcehl=1&tab=t.0", description: "MaRS v1.7.x release notes.", createdDate: "2026-03-24" },
+      { id: 'doc_51', pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Installation Procedure", link: "https://docs.google.com/document/d/1uDOHTA1nAuptl50XVE8zroDriJvEC-vWaMlr-Qmul0k/edit?tab=t.0", description: "Corsearch integration extension installation.", createdDate: "2026-03-25" },
+      { id: 'doc_52', pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "User Guide", link: "https://docs.google.com/document/d/1x0Byh0sS7mjE3Mrtm0Qotq671hQvpPoMwccpgTDhw3k/edit?tab=t.0", description: "User manual for Corsearch trademark clearance sync.", createdDate: "2026-03-26" },
+      { id: 'doc_53', pkg: "Symphony DI Corsearch Ext", ver: "Symphony DI Corsearch Ext 1.3v", type: "Release Notes", link: "https://docs.google.com/document/d/1QqwMgMNlzuTAThfFUunGB5sTo_Pj2OyECF0loyi4Nzs/edit?tab=t.0#heading=h.rv6hsfad8zu2", description: "Corsearch extension release updates.", createdDate: "2026-03-27" },
+      { id: 'doc_54', pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Package details", link: "https://docs.google.com/document/d/1Lsz2mprPkHYf58fmE6yQK81NAzlI7f3j/edit", description: "Simba E-Billing package architecture and components.", createdDate: "2026-03-28" },
+      { id: 'doc_55', pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "Release Notes", link: "https://docs.google.com/document/d/1lXuZP5OL0ZaFQp_dqxz3i-WPh40HRGlqfB3y4cJ9-6E/edit?tab=t.0", description: "Release updates for Simba v1.1.", createdDate: "2026-03-29" },
+      { id: 'doc_56', pkg: "Symphony E-Billing", ver: "Simba v1.1", type: "User Guide", link: "https://docs.google.com/document/d/1To_yiyqfyBO7_qVLqyADumWNaLsFwxTEaVqlDhPTzao/edit?tab=t.0", description: "Outside counsel LEDES invoice upload and approval workflows.", createdDate: "2026-03-30" },
+      { id: 'doc_57', pkg: "sIDS Docketing", ver: "sIDS Docketing", type: "User Guide", link: "https://docs.google.com/document/d/1CZDWmzKugbwrZ7RIOsgW1k5cVTkvbRLWDICjXvfUQ60/edit?tab=t.0", description: "User manual for automated IDS docketing engine.", createdDate: "2026-03-31" },
+      { id: 'doc_58', pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Installation Procedure", link: "https://docs.google.com/document/d/1xzAKXMiD2eyGp9R4xfNLRTdhrOk92-Cdb4Sx2pazwQE/edit?tab=t.0", description: "Symphony Universal Portal developer installation steps.", createdDate: "2026-04-01" },
+      { id: 'doc_59', pkg: "Symphony UP Dev", ver: "SymphonyIPMUP", type: "Release Notes", link: "https://docs.google.com/document/d/1_OeGOTnVSgh84uEH5q7nGy35Oo3u3uZ-3_iwRrRN1_E/edit?tab=t.0#heading=h.33ebwiv13lft", description: "Developer release notes for Universal Portal.", createdDate: "2026-04-02" },
+      { id: 'doc_60', pkg: "Other", ver: "Other", type: "Production Checklist", link: "https://docs.google.com/spreadsheets/d/1hb_bFG5AB5OST8K6l7kZrqJZNO8Fvn4z/edit?gid=1020191051#gid=1020191051", description: "Go-live verification checklist for production org deployments.", createdDate: "2026-04-03" },
+      { id: 'doc_61', pkg: "Other", ver: "Other", type: "Estimation Template", link: "https://docs.google.com/spreadsheets/d/1e50bRJxcbc3k_bI2WD1733xgv4sxZMleO09EwPClugU/edit?gid=0#gid=0", description: "Project scoping and implementation effort estimation matrix.", createdDate: "2026-04-04" },
+      { id: 'doc_62', pkg: "Other", ver: "Other", type: "OOB IDF template", link: "https://docs.google.com/document/d/10hxmDD0DOwIVe2ObxgOaEEbJFA9uCoh2KeGn--6dldk/edit?tab=t.0#heading=h.gjdgxs", description: "Standard Out-of-the-Box Invention Disclosure Form template.", createdDate: "2026-04-05" },
+      { id: 'doc_63', pkg: "Other", ver: "Other", type: "Fields updated by clicking on 'Data Sync' button (IFI import)", link: "https://docs.google.com/spreadsheets/d/1FAKrv_VfK75gxdzzyoyCce3vXhPoVY_aSwj-AsiwAfA/edit?gid=0#gid=0", description: "Mapping of fields refreshed during IFI CLAIMS data synchronization.", createdDate: "2026-04-06" },
+      { id: 'doc_64', pkg: "Other", ver: "Other", type: "Encryption and field tracking doc", link: "https://docs.google.com/spreadsheets/d/1_H5i1sHYWIeE6iA5x-cqibG97fYeqZgaDfwRwkOOceY/edit?gid=1277242720#gid=1277242720", description: "Field history tracking and Shield platform encryption setup.", createdDate: "2026-04-07" },
+      { id: 'doc_65', pkg: "Other", ver: "Other", type: "Salesforce Shield Platform Encryption", link: "https://docs.google.com/presentation/d/1AgTXlLsyh-buIzKlnrwSR1GBuMk94n0ivpASf7bSTf4/edit#slide=id.p", description: "Presentation deck on Shield Encryption compliance.", createdDate: "2026-04-08" },
+      { id: 'doc_66', pkg: "Other", ver: "Other", type: "Turning off - OOB Status updation", link: "https://docs.google.com/document/d/1viGZjOQC15qfd3It-YwgGEcIx1UjD4HM/edit", description: "Guide to disabling automated status automation rules.", createdDate: "2026-04-09" },
+      { id: 'doc_67', pkg: "Other", ver: "Other", type: "Symphony LF - Data Upload Steps/Guideline", link: "https://docs.google.com/document/d/1BKP4zdSe9gxlRM6hdtF5GMHsPulVSQ5eVOaHhglykKY/edit?tab=t.0", description: "Data migration and CSV upload procedures for Law Firm orgs.", createdDate: "2026-04-10" },
+      { id: 'doc_68', pkg: "Other", ver: "Other", type: "Rules by Case Type", link: "https://docs.google.com/document/d/1_IeSJf_8idS_WCLP3Ua0H_TtozwzrEZEvIhoGmUi0Tw/edit?tab=t.0", description: "Configuring docketing rules according to specific IP case types.", createdDate: "2026-04-11" },
+      { id: 'doc_69', pkg: "Other", ver: "Other", type: "Reminder object data for LF", link: "https://drive.google.com/drive/folders/1-FtZUh7lP5WQm0jT7vcLx4z_nnCylPde?usp=sharing", description: "Automated email reminder templates and trigger configurations.", createdDate: "2026-04-12" },
+      { id: 'doc_70', pkg: "Other", ver: "Other", type: "Schedule Jobs - All Packages", link: "https://docs.google.com/spreadsheets/d/1NZSbNl44jviJpYmAKwpyFGATJXqSSp7T/edit?gid=1001576285#gid=1001576285", description: "Master list of scheduled Apex jobs across all Symphony packages.", createdDate: "2026-04-13" },
+      { id: 'doc_71', pkg: "Other", ver: "Other", type: "Technical PTO document (from PE)", link: "https://docs.google.com/document/d/18X6P6SFVMZuOj3sTI065RMjPhOmG5Hg4AZOEv0f4_g0/edit?tab=t.0#heading=h.vdqd05xcieik", description: "Product engineering technical reference for PTO integrations.", createdDate: "2026-04-14" },
+      { id: 'doc_72', pkg: "Other", ver: "Other", type: "Symphony-List of Processes & Details", link: "https://docs.google.com/spreadsheets/d/1jT24l1SDvVkNsrN1PZV4wulD_e7lkrs059LOrsOnSg0/edit?gid=1810542744#gid=1810542744", description: "Process flows and automation trigger documentation.", createdDate: "2026-04-15" },
+      { id: 'doc_73', pkg: "Other", ver: "Other", type: "Patent field description", link: "https://docs.google.com/spreadsheets/d/1u3ngTQfzKslP5za1-uF8JrY0ou-2aCMUkE7n4jUDTok/edit?gid=1042587126#gid=1042587126", description: "Comprehensive data dictionary describing all Patent object fields.", createdDate: "2026-04-16" },
+      { id: 'doc_74', pkg: "Other", ver: "Other", type: "OOB email templates", link: "https://docs.google.com/document/d/17_WuOjbpkbAX9VQcRrrUAu4_qO6PT3epTGcwu5UDfsI/edit?tab=t.0", description: "Standard Out-of-the-Box email templates for notification triggers.", createdDate: "2026-04-17" },
+      { id: 'doc_75', pkg: "Other", ver: "Other", type: "Glossary and Number Formats for Symphony", link: "https://docs.google.com/spreadsheets/d/1gX7mHK1rnjfRUgznFZ_ahwvmv4KWNoUR/edit?gid=1452062042#gid=1452062042", description: "Terminology definitions and auto-numbering format standards.", createdDate: "2026-04-18" },
+      { id: 'doc_76', pkg: "Other", ver: "Other", type: "MaxForms List Old", link: "https://docs.google.com/spreadsheets/d/1Kyt3D24WY-t8RXjy4GsDuAuYsA6zdDfmIGTsEilcQSg/edit?gid=0#gid=0", description: "Legacy MaxForms component inventory.", createdDate: "2026-04-19" },
+      { id: 'doc_77', pkg: "Other", ver: "Other", type: "Prosecution Analytics Requirement Definition Document", link: "https://docs.google.com/document/d/16fefj0Mr4q1u-jxrPNykY-ZE_P1Pw0Z1/edit?usp=sharing", description: "Functional requirements for Prosecution Analytics module.", createdDate: "2026-04-20" },
+      { id: 'doc_78', pkg: "Other", ver: "Other", type: "Prosecution Analytics & History Doc", link: "https://docs.google.com/document/d/1EJ270FIDMS5eRTsokPeV8x4zovO6WsCt8sSjsOeNQKo/edit?usp=sharing", description: "Historical data analysis and examiner metrics documentation.", createdDate: "2026-04-21" },
+      { id: 'doc_79', pkg: "Other", ver: "Other", type: "Prosecution Analytics- Api Integration", link: "https://drive.google.com/file/d/1QZGbpZEhgPsdDDyz8_X24ordjNURJfIC/view?usp=sharing", description: "API endpoint specifications for analytics integration.", createdDate: "2026-04-22" },
+      { id: 'doc_80', pkg: "Other", ver: "Other", type: "Support checklist document Template", link: "https://docs.google.com/spreadsheets/d/1S7fqp95TLsLXdI6VMQWSj8ffLu34uJYClceJMGKo5x4/edit?gid=2105910797#gid=2105910797", description: "Level 1 and Level 2 customer support resolution checklist.", createdDate: "2026-04-23" },
+      { id: 'doc_81', pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 1", link: "https://docs.google.com/document/d/1BeMcpIbVNIP0etuufO-Duc_SXznyEqJo_yQaB-ah-2Y/edit?tab=t.0", description: "Field audit trail purging procedure Part 1.", createdDate: "2026-04-24" },
+      { id: 'doc_82', pkg: "Other", ver: "Other", type: "Audit Trail deletion doc 2", link: "https://docs.google.com/document/d/1YA0f1BRx5tB1UXB3Q74e_LdrQ0lyKrphEnNYEp0rw30/edit?tab=t.0", description: "Field audit trail purging procedure Part 2.", createdDate: "2026-04-25" },
+      { id: 'doc_83', pkg: "Other", ver: "Other", type: "Law Firm OOB features", link: "https://docs.google.com/document/d/1JcWaU-NJ2jxVAQHDbMW3bjTL5W33O5KLMyvhFfejGwU/edit?tab=t.0", description: "Summary of out-of-the-box features for law firm deployments.", createdDate: "2026-04-26" },
+      { id: 'doc_84', pkg: "Other", ver: "Other", type: "DKIM Setup Document", link: "https://docs.google.com/document/d/1mSO7qCLeEx3ZSMb3upBh5bEbm0w978JC/edit", description: "Configuring email deliverability and DKIM keys in Salesforce.", createdDate: "2026-04-27" },
+      { id: 'doc_85', pkg: "Other", ver: "Other", type: "Post Installation Steps", link: "https://docs.google.com/spreadsheets/d/1VVZZtIYXpzAd_-dGjt-JDOjhnehh5Uawe5WZJ7eN96c/edit?gid=0#gid=0", description: "Quick verification spreadsheet for post-install setup.", createdDate: "2026-04-28" },
+      { id: 'doc_86', pkg: "Other", ver: "Other", type: "USPTO sponsorship - Patent Center", link: "https://drive.google.com/file/d/17L3Zk12DOm33_tb77ZLO41E6dWKtr_nH/view", description: "Guide to practitioner sponsorship in USPTO Patent Center.", createdDate: "2026-04-29" },
+      { id: 'doc_87', pkg: "Other", ver: "Other", type: "PTO Sync document", link: "https://docs.google.com/document/d/1aaI7LNgQx2ccEhru7qYAA9EOSh9JuyE5HIurhWHvah4/edit?usp=sharing", description: "Automated PTO scraping and synchronization workflow.", createdDate: "2026-04-30" },
+      { id: 'doc_88', pkg: "Other", ver: "Other", type: "E-Billing recording", link: "https://drive.google.com/drive/folders/1g4ydUD4rj2gLYQBH3A_z4u0-FhwoD-Bd", description: "Video recordings covering E-Billing module setup.", createdDate: "2026-05-01" }
     ];
 
     let globalCustomQuick = [];
@@ -1278,7 +1462,7 @@
       renderCurrentActiveTab();
     }
 
-    /* ISSUE 6 FIX: MANDATORY BUTTON FILTERS ALL MANDATORY MODULES ACROSS ALL HUBS */
+    /* ISSUE 2 FIX: MANDATORY BUTTON SHOWS ALL MANDATORY MODULES ACROSS ALL HUBS SIMULTANEOUSLY */
     function filterMandatoryModulesOnly() {
       filterOnlyMandatory = !filterOnlyMandatory;
       filterOnlyBookmarks = false;
@@ -1480,6 +1664,7 @@
         document.getElementById('mandatoryConfigBtn').style.display = isPower ? 'inline-flex' : 'none';
         document.getElementById('onboardingConfigBtn').style.display = isPower ? 'inline-flex' : 'none';
         document.getElementById('reassignModulesBtn').style.display = isPower ? 'inline-flex' : 'none';
+        document.getElementById('bulkKeywordsBtn').style.display = isPower ? 'inline-flex' : 'none';
       }
     }
 
@@ -1496,7 +1681,6 @@
       renderCurrentActiveTab();
     }
 
-    /* ISSUE 6 FIX: REMOVE MANDATORY BADGE WHEN COMPLETED BY USER */
     function toggleTopicCompletion(resId, e) {
       if (e) e.stopPropagation();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1518,7 +1702,7 @@
       updateTopMandatoryCount();
     }
 
-    /* ISSUE 1 FIX: ALWAYS KEEP BASE DATASETS & MERGE CUSTOM ENTRIES SO NO DOCUMENT IS EVER MISSING */
+    /* ISSUE 1 FIX: GUARANTEED MAP-BASED DEDUPLICATION & PRESERVATION OF ALL BASE ITEMS */
     function loadGlobalCustomLinks() {
       callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
         if (data) {
@@ -1530,17 +1714,26 @@
           if (data.mandatoryData) mandatoryData = data.mandatoryData;
           if (data.joinersData) joinersData = data.joinersData;
 
-          // Merge custom items into base without duplicating
+          // Merge custom entries over base datasets cleanly
           let quickMap = new Map(baseQuickDataset.map(item => [item.id, item]));
-          globalCustomQuick.forEach(item => quickMap.set(item.id || item.link, item));
+          globalCustomQuick.forEach(item => {
+            let existing = quickMap.get(item.id || item.link) || {};
+            quickMap.set(item.id || item.link, { ...existing, ...item });
+          });
           quickDataset = Array.from(quickMap.values());
 
           let learningMap = new Map(baseDataset.map(item => [item.id, item]));
-          globalCustomLearning.forEach(item => learningMap.set(item.id || item.link, item));
+          globalCustomLearning.forEach(item => {
+            let existing = learningMap.get(item.id || item.link) || {};
+            learningMap.set(item.id || item.link, { ...existing, ...item });
+          });
           dataset = Array.from(learningMap.values());
 
           let docMap = new Map(baseDocDataset.map(item => [item.id || (item.pkg + item.type), item]));
-          globalCustomDocs.forEach(item => docMap.set(item.id || (item.pkg + item.type), item));
+          globalCustomDocs.forEach(item => {
+            let existing = docMap.get(item.id || (item.pkg + item.type)) || {};
+            docMap.set(item.id || (item.pkg + item.type), { ...existing, ...item });
+          });
           docDataset = Array.from(docMap.values());
 
           syncDropdownOptions();
@@ -1655,7 +1848,7 @@
       return joinersData[currentUser.toLowerCase().trim()] && joinersData[currentUser.toLowerCase().trim()].restricted;
     }
 
-    /* ISSUE 4 FIX: ONLY POWER USERS CAN SEE PRESENCE AVATARS AND VIEWED BY HISTORY */
+    /* ISSUE 4 FIX: VIEW HISTORY & PRESENCE STACK RESTRICTED EXCLUSIVELY TO POWER USERS */
     function generateViewedPresenceHtml(pkg, type) {
       if (!isPowerUserActive() || !globalAnalyticsCache) return "";
       let viewedUsers = [];
@@ -1680,10 +1873,9 @@
       return `<div class="viewed-presence-stack">${avatarStack} ${viewedUsers.length > 4 ? `<span style="font-size:0.65rem; color:var(--text-secondary);">+${viewedUsers.length - 4}</span>` : ''}</div>`;
     }
 
-    /* ISSUE 4 FIX: VIEW HISTORY DETAILS MODAL EXCLUSIVELY AVAILABLE FOR POWER USERS */
     function openDocumentDetailsModal(itemId, pkg, type) {
       if (!isPowerUserActive()) {
-        showToast("View History details are available for Power Users.");
+        showToast("View History details are restricted to Power Users.");
         return;
       }
 
@@ -1801,7 +1993,7 @@
       }).join('');
     }
 
-    /* ISSUE 5 FIX: COMPLETED BADGE & TOGGLE DISPLAYED IN TABLE LIST VIEW */
+    /* ISSUE 3 & 5 FIX: INLINE KEYWORD EDITING AND COMPLETED BADGE IN DOCUMENT HUB TABLE VIEW */
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1818,8 +2010,6 @@
                               (doc.description && doc.description.toLowerCase().includes(docSearchQuery)) ||
                               (doc.keywords && doc.keywords.toLowerCase().includes(docSearchQuery));
         let matchesBookmark = filterOnlyBookmarks && bookmarkedIds.size > 0 ? bookmarkedIds.has(docId) : true;
-        
-        // ISSUE 6 FIX: EXCLUDE COMPLETED MANDATORY MODULES WHEN MANDATORY FILTER IS ACTIVE
         let matchesMandatory = filterOnlyMandatory ? (!!mandatoryData[docId] && !completedSet.has(docId)) : true;
         return matchesPkg && matchesSearch && matchesBookmark && matchesMandatory;
       });
@@ -1857,7 +2047,12 @@
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${doc.description || 'Technical Documentation.'}</td>
             <td style="text-align:center;">
-              <!-- ISSUE 5 FIX: COMPLETED ICON IN LIST VIEW -->
+              ${isPowerUserActive() ? `
+                <input type="text" class="inline-keyword-input" value="${doc.keywords || ''}" placeholder="+ keywords" onchange="handleInlineKeywordChange('${docId}', 'document', this.value)">
+              ` : `<span style="font-size:0.72rem; color:var(--text-secondary);">${doc.keywords || '-'}</span>`}
+            </td>
+            <td style="text-align:center;">
+              <!-- ISSUE 5 FIX: COMPLETED ICON & TOGGLE IN LIST VIEW -->
               ${(dueDate || isRestricted) ? `
                 <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)">
                   <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
@@ -1942,7 +2137,7 @@
       }).join('');
     }
 
-    /* ISSUE 5 FIX: COMPLETED BADGE & TOGGLE DISPLAYED IN LEARNING HUB TABLE VIEW */
+    /* ISSUE 3 & 5 FIX: INLINE KEYWORD EDITING AND COMPLETED BADGE IN LEARNING HUB TABLE VIEW */
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1956,8 +2151,6 @@
                               (res.description && res.description.toLowerCase().includes(searchQuery)) ||
                               (res.keywords && res.keywords.toLowerCase().includes(searchQuery));
         let matchesBookmark = filterOnlyBookmarks && bookmarkedIds.size > 0 ? bookmarkedIds.has(res.id) : true;
-        
-        // ISSUE 6 FIX: EXCLUDE COMPLETED MANDATORY MODULES WHEN MANDATORY FILTER IS ACTIVE
         let matchesMandatory = filterOnlyMandatory ? (!!mandatoryData[res.id] && !completedSet.has(res.id)) : true;
         return matchesModule && matchesSearch && matchesBookmark && matchesMandatory;
       });
@@ -2050,6 +2243,11 @@
             </td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${res.description || 'N/A'}</td>
             <td style="text-align:center;">
+              ${isPowerUserActive() ? `
+                <input type="text" class="inline-keyword-input" value="${res.keywords || ''}" placeholder="+ keywords" onchange="handleInlineKeywordChange('${res.id}', 'learning', this.value)">
+              ` : `<span style="font-size:0.72rem; color:var(--text-secondary);">${res.keywords || '-'}</span>`}
+            </td>
+            <td style="text-align:center;">
               <!-- ISSUE 5 FIX: COMPLETED ICON IN LEARNING TABLE LIST VIEW -->
               ${(dueDate || isRestricted) ? `
                 <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)">
@@ -2076,6 +2274,19 @@
           </tr>
         `;
       }).join('');
+    }
+
+    function handleInlineKeywordChange(itemId, hub, newKeywords) {
+      callGasJsonp({
+        action: 'SAVE_BULK_KEYWORDS',
+        data: JSON.stringify([{ id: itemId, hub: hub, keywords: newKeywords.trim() }]),
+        requesterEmail: currentUser
+      }, function(res) {
+        if (res && res.status === "SUCCESS") {
+          showToast("Keyword updated!");
+          loadGlobalCustomLinks();
+        }
+      });
     }
 
     function openGlobalSearchModal() {
@@ -2199,7 +2410,113 @@
       document.getElementById('addModalOverlay').classList.add('open');
     }
 
-    /* ISSUE 2 FIX: REASSIGN MULTI-CHECKBOXES WITH LIVE SEARCH QUERY FILTER */
+    /* ISSUE 3 FEATURE: POWER USER BATCH KEYWORDS & CSV EXPORT / IMPORT LOGIC */
+    function openBulkKeywordsModal() {
+      renderBulkKeywordsModalTable();
+      document.getElementById('bulkKeywordsModalOverlay').classList.add('open');
+    }
+
+    function renderBulkKeywordsModalTable() {
+      const tbody = document.getElementById('bulkKeywordsTableBody');
+      let allItems = [
+        ...dataset.map(i => ({ ...i, hub: 'learning', displayTitle: i.name })),
+        ...docDataset.map(i => ({ ...i, hub: 'document', displayTitle: `${i.pkg} (${i.ver}) - ${i.type}` })),
+        ...quickDataset.map(i => ({ ...i, hub: 'quick', displayTitle: i.name }))
+      ];
+
+      tbody.innerHTML = allItems.map(item => {
+        let itemId = item.id || (item.pkg + item.type);
+        return `
+          <tr>
+            <td><strong>${item.displayTitle}</strong></td>
+            <td><span style="font-size:0.68rem; text-transform:uppercase;">${item.hub}</span></td>
+            <td>
+              <input type="text" class="batch-modal-keyword-input" data-item-id="${itemId}" data-hub="${item.hub}" value="${item.keywords || ''}" style="width:100%; padding:0.2rem; border:1px solid var(--border-color); border-radius:4px; font-size:0.75rem;">
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function exportKeywordsCsvTemplate() {
+      let rows = [["ID", "Hub", "Title/Package", "Category", "Current Keywords", "URL"]];
+      
+      dataset.forEach(i => rows.push([i.id, "learning", i.name, i.category, i.keywords || "", i.link]));
+      docDataset.forEach(i => rows.push([i.id || (i.pkg + i.type), "document", `${i.pkg} - ${i.type}`, i.pkg, i.keywords || "", i.link]));
+      quickDataset.forEach(i => rows.push([i.id, "quick", i.name, i.category, i.keywords || "", i.link]));
+
+      let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.map(cell => `"${(cell || "").toString().replace(/"/g, '""')}"`).join(",")).join("\n");
+      let encodedUri = encodeURI(csvContent);
+      let link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Symphony_Hub_Keywords_Master_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    function handleBulkKeywordsCsvUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const text = e.target.result;
+        const lines = text.split("\n");
+        let payload = [];
+
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i].trim()) continue;
+          let cols = lines[i].split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+          if (cols.length >= 5) {
+            let itemId = cols[0];
+            let hub = cols[1];
+            let keywords = cols[4];
+            if (itemId) payload.push({ id: itemId, hub: hub, keywords: keywords });
+          }
+        }
+
+        if (payload.length > 0) {
+          callGasJsonp({
+            action: 'SAVE_BULK_KEYWORDS',
+            data: JSON.stringify(payload),
+            requesterEmail: currentUser
+          }, function(res) {
+            if (res && res.status === "SUCCESS") {
+              showToast(`Successfully imported & updated keywords for ${payload.length} items!`);
+              closeModal('bulkKeywordsModalOverlay');
+              loadGlobalCustomLinks();
+            } else alert("Failed to process CSV file.");
+          });
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function saveBatchKeywordsFromModal() {
+      let inputs = document.querySelectorAll('.batch-modal-keyword-input');
+      let payload = [];
+      inputs.forEach(inp => {
+        payload.push({
+          id: inp.getAttribute('data-item-id'),
+          hub: inp.getAttribute('data-hub'),
+          keywords: inp.value.trim()
+        });
+      });
+
+      callGasJsonp({
+        action: 'SAVE_BULK_KEYWORDS',
+        data: JSON.stringify(payload),
+        requesterEmail: currentUser
+      }, function(res) {
+        if (res && res.status === "SUCCESS") {
+          showToast("Batch keywords saved successfully!");
+          closeModal('bulkKeywordsModalOverlay');
+          loadGlobalCustomLinks();
+        }
+      });
+    }
+
     function openReassignModulesModal() {
       if (document.getElementById('reassignSearchInput')) document.getElementById('reassignSearchInput').value = '';
       renderReassignMultiCheckboxes();
