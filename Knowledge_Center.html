@@ -366,7 +366,6 @@
       border: 1px solid #ffffff;
     }
 
-    /* REQUIREMENT 4: FIXED CONTAINER & SCROLLABLE TABLE CONTAINERS FOR DASHBOARDS */
     .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; overflow-y: auto; width: 100%; max-height: 480px; }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 680px; }
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
@@ -551,7 +550,7 @@
       </button>
     </nav>
 
-    <!-- REQUIREMENT 1: MANDATORY BUTTON SHOWS ALL MANDATORY ITEMS ACROSS ALL MODULES -->
+    <!-- ISSUE 6: MANDATORY BUTTON SHOWS ALL MANDATORY MODULES ACROSS ALL HUBS -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
@@ -692,7 +691,6 @@
           <span class="material-icons-outlined" style="font-size:18px;">insights</span><span>Implementation User Progress Dashboard</span>
         </button>
 
-        <!-- REQUIREMENT 2: REASSIGN DOCUMENTS CONTROL FOR POWER USERS IN PROFILE & CONTROLS -->
         <button type="button" class="btn-secondary" id="reassignModulesBtn" onclick="openReassignModulesModal()">
           <span class="material-icons-outlined" style="font-size:18px;">swap_horiz</span><span>Reassign Documents to Category/Module</span>
         </button>
@@ -724,7 +722,7 @@
     </div>
   </div>
 
-  <!-- REQUIREMENT 2 MODAL: BULK DOCUMENT REASSIGNMENT -->
+  <!-- ISSUE 2: POWER TOOLS REASSIGNMENT WITH SEARCH BAR & ICON -->
   <div class="modal-overlay" id="reassignModulesModalOverlay">
     <div class="modal-content" style="max-width: 620px;">
       <div class="modal-header">
@@ -744,6 +742,11 @@
         <div class="form-group" style="margin-bottom: 0.5rem;">
           <label>Select Target Category / Module Name *</label>
           <input type="text" id="targetNewCategoryInput" placeholder="e.g., Patent Module or Symphony LF">
+        </div>
+
+        <div class="search-box" style="margin-bottom:0.4rem;">
+          <span class="material-icons-outlined">search</span>
+          <input type="text" id="reassignSearchInput" class="search-input" placeholder="Search documents to move..." oninput="renderReassignMultiCheckboxes()">
         </div>
 
         <label style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:0.2rem; display:block;">Select Document(s) to Move (Multi-Select):</label>
@@ -813,7 +816,6 @@
     </div>
   </div>
 
-  <!-- REQUIREMENT 3: SEARCH BAR ADDED TO MANDATORY MODULES SELECTION -->
   <div class="modal-overlay" id="mandatoryConfigModalOverlay">
     <div class="modal-content" style="max-width: 820px;">
       <div class="modal-header">
@@ -1072,7 +1074,6 @@
             </div>
           </div>
 
-          <!-- REQUIREMENT 9: KEYWORDS ENTRY FOR SEARCH OPTIMIZATION -->
           <div class="form-group">
             <label>Custom Search Keywords (Comma Separated)</label>
             <input type="text" id="newKeywords" placeholder="e.g., docketing, uspto, setup, guide">
@@ -1108,7 +1109,6 @@
     </div>
   </div>
 
-  <!-- REQUIREMENT 4: DASHBOARD MODAL WITH SCROLLABLE TABLE BARS -->
   <div class="modal-overlay" id="userDashboardModalOverlay">
     <div class="modal-content" style="max-width: 880px;">
       <div class="modal-header">
@@ -1171,7 +1171,7 @@
     </div>
   </div>
 
-  <!-- REQUIREMENTS 5 & 6 MODAL: DOCUMENT DETAILS / VIEW HISTORY & LAST MODIFIED INFO -->
+  <!-- ISSUE 4: POWER USER RESTRICTED VIEW HISTORY & DETAILS MODAL -->
   <div class="modal-overlay" id="documentDetailsModalOverlay">
     <div class="modal-content" style="max-width: 580px;">
       <div class="modal-header">
@@ -1183,7 +1183,7 @@
   </div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbxI6Kxkx_B-4Mmzu7bRYYJK7wXZHmnmcEP5S2jD37BsHNdaySMVFX0cv2c7X2Mqcrze/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbx-qK3TkKfn94hkGlqp0gesIoGc2TdGc7DSZ_4qRYsSvca2cFqqa1MSbb72cw8KVfrD/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01", lastModified: "2026-01-01 10:00:00" },
@@ -1278,7 +1278,7 @@
       renderCurrentActiveTab();
     }
 
-    /* REQUIREMENT 1: CLICKING MANDATORY BUTTON SHOWS ALL MANDATORY MODULES ACROSS ALL HUBS */
+    /* ISSUE 6 FIX: MANDATORY BUTTON FILTERS ALL MANDATORY MODULES ACROSS ALL HUBS */
     function filterMandatoryModulesOnly() {
       filterOnlyMandatory = !filterOnlyMandatory;
       filterOnlyBookmarks = false;
@@ -1496,7 +1496,7 @@
       renderCurrentActiveTab();
     }
 
-    /* REQUIREMENT 7: COMPLETED MANDATORY MODULE IS REMOVED FROM MANDATORY LIST AND UI */
+    /* ISSUE 6 FIX: REMOVE MANDATORY BADGE WHEN COMPLETED BY USER */
     function toggleTopicCompletion(resId, e) {
       if (e) e.stopPropagation();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1518,7 +1518,7 @@
       updateTopMandatoryCount();
     }
 
-    /* REQUIREMENT 8: ALL ADDED DOCUMENTS ARE VISIBLE TO ALL USERS AUTOMATICALLY */
+    /* ISSUE 1 FIX: ALWAYS KEEP BASE DATASETS & MERGE CUSTOM ENTRIES SO NO DOCUMENT IS EVER MISSING */
     function loadGlobalCustomLinks() {
       callGasJsonp({ action: 'GET_CUSTOM_LINKS' }, function(data) {
         if (data) {
@@ -1530,9 +1530,18 @@
           if (data.mandatoryData) mandatoryData = data.mandatoryData;
           if (data.joinersData) joinersData = data.joinersData;
 
-          quickDataset = [...baseQuickDataset, ...globalCustomQuick];
-          dataset = [...baseDataset, ...globalCustomLearning];
-          docDataset = [...baseDocDataset, ...globalCustomDocs];
+          // Merge custom items into base without duplicating
+          let quickMap = new Map(baseQuickDataset.map(item => [item.id, item]));
+          globalCustomQuick.forEach(item => quickMap.set(item.id || item.link, item));
+          quickDataset = Array.from(quickMap.values());
+
+          let learningMap = new Map(baseDataset.map(item => [item.id, item]));
+          globalCustomLearning.forEach(item => learningMap.set(item.id || item.link, item));
+          dataset = Array.from(learningMap.values());
+
+          let docMap = new Map(baseDocDataset.map(item => [item.id || (item.pkg + item.type), item]));
+          globalCustomDocs.forEach(item => docMap.set(item.id || (item.pkg + item.type), item));
+          docDataset = Array.from(docMap.values());
 
           syncDropdownOptions();
           renderMandatoryMultiCheckboxes();
@@ -1549,7 +1558,7 @@
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
       let count = 0;
       for (let k in mandatoryData) {
-        if (completedSet.has(k)) continue; // Exclude completed
+        if (completedSet.has(k)) continue; 
         let entry = mandatoryData[k];
         let users = typeof entry === 'object' && entry.users ? entry.users : [];
         if (users.length === 0 || (currentUser && users.indexOf(currentUser.toLowerCase().trim()) > -1)) {
@@ -1646,8 +1655,9 @@
       return joinersData[currentUser.toLowerCase().trim()] && joinersData[currentUser.toLowerCase().trim()].restricted;
     }
 
+    /* ISSUE 4 FIX: ONLY POWER USERS CAN SEE PRESENCE AVATARS AND VIEWED BY HISTORY */
     function generateViewedPresenceHtml(pkg, type) {
-      if (!globalAnalyticsCache) return "";
+      if (!isPowerUserActive() || !globalAnalyticsCache) return "";
       let viewedUsers = [];
       
       for (let email in globalAnalyticsCache) {
@@ -1670,8 +1680,13 @@
       return `<div class="viewed-presence-stack">${avatarStack} ${viewedUsers.length > 4 ? `<span style="font-size:0.65rem; color:var(--text-secondary);">+${viewedUsers.length - 4}</span>` : ''}</div>`;
     }
 
-    /* REQUIREMENTS 5 & 6: OPEN DOCUMENT DETAILS WITH INFO ICON (SHOWS WHO VIEWED, LAST VIEWED, LAST MODIFIED) */
+    /* ISSUE 4 FIX: VIEW HISTORY DETAILS MODAL EXCLUSIVELY AVAILABLE FOR POWER USERS */
     function openDocumentDetailsModal(itemId, pkg, type) {
+      if (!isPowerUserActive()) {
+        showToast("View History details are available for Power Users.");
+        return;
+      }
+
       let found = quickDataset.find(d => d.id === itemId) || dataset.find(d => d.id === itemId) || docDataset.find(d => (d.id === itemId || (d.pkg + d.type) === itemId));
       
       let title = found ? (found.name || found.type) : type;
@@ -1697,7 +1712,7 @@
         </div>
 
         <div style="margin-top:0.4rem;">
-          <label style="font-size:0.75rem; font-weight:500; color:var(--google-purple); margin-bottom:0.25rem; display:block;">Viewed By History:</label>
+          <label style="font-size:0.75rem; font-weight:500; color:var(--google-purple); margin-bottom:0.25rem; display:block;">Viewed By History (Power User View):</label>
           <div class="table-container compact-modal-table-container">
             <table class="doc-table compact-modal-table">
               <thead>
@@ -1749,9 +1764,11 @@
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">${item.category}</span>
                 <div class="action-icons">
-                  <button class="action-btn" onclick="openDocumentDetailsModal('${item.id}', '${item.category}', '${item.name}')" title="Document Details & Views">
-                    <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
-                  </button>
+                  ${isPowerUserActive() ? `
+                    <button class="action-btn" onclick="openDocumentDetailsModal('${item.id}', '${item.category}', '${item.name}')" title="Document Details & Views">
+                      <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
+                    </button>
+                  ` : ''}
                   <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${item.id}')">
                     <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
@@ -1784,6 +1801,7 @@
       }).join('');
     }
 
+    /* ISSUE 5 FIX: COMPLETED BADGE & TOGGLE DISPLAYED IN TABLE LIST VIEW */
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1801,7 +1819,7 @@
                               (doc.keywords && doc.keywords.toLowerCase().includes(docSearchQuery));
         let matchesBookmark = filterOnlyBookmarks && bookmarkedIds.size > 0 ? bookmarkedIds.has(docId) : true;
         
-        // REQUIREMENT 7: EXCLUDE COMPLETED MANDATORY ITEMS WHEN MANDATORY FILTER IS ACTIVE
+        // ISSUE 6 FIX: EXCLUDE COMPLETED MANDATORY MODULES WHEN MANDATORY FILTER IS ACTIVE
         let matchesMandatory = filterOnlyMandatory ? (!!mandatoryData[docId] && !completedSet.has(docId)) : true;
         return matchesPkg && matchesSearch && matchesBookmark && matchesMandatory;
       });
@@ -1839,6 +1857,7 @@
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${doc.description || 'Technical Documentation.'}</td>
             <td style="text-align:center;">
+              <!-- ISSUE 5 FIX: COMPLETED ICON IN LIST VIEW -->
               ${(dueDate || isRestricted) ? `
                 <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)">
                   <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
@@ -1849,10 +1868,11 @@
             </td>
             <td style="text-align:right;">
               <div class="action-icons">
-                <!-- REQUIREMENTS 5 & 6: INFO ICON FOR VIEW HISTORY & LAST MODIFIED -->
-                <button class="action-btn" onclick="openDocumentDetailsModal('${docId}', '${doc.pkg}', '${doc.type}')" title="Document Details & Views">
-                  <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
-                </button>
+                ${isPowerUserActive() ? `
+                  <button class="action-btn" onclick="openDocumentDetailsModal('${docId}', '${doc.pkg}', '${doc.type}')" title="Document Details & Views">
+                    <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
+                  </button>
+                ` : ''}
                 <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
                 ${isPowerUserActive() ? `
                   <button class="action-btn" onclick="openEditModal('document', '${docId}')" title="Edit Doc"><span class="material-icons-outlined" style="font-size:16px; color:var(--google-blue);">edit</span></button>
@@ -1878,9 +1898,11 @@
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-purple-light); color:var(--google-purple);">${doc.pkg}</span>
                 <div class="action-icons">
-                  <button class="action-btn" onclick="openDocumentDetailsModal('${docId}', '${doc.pkg}', '${doc.type}')" title="Document Details & Views">
-                    <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
-                  </button>
+                  ${isPowerUserActive() ? `
+                    <button class="action-btn" onclick="openDocumentDetailsModal('${docId}', '${doc.pkg}', '${doc.type}')" title="Document Details & Views">
+                      <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
+                    </button>
+                  ` : ''}
                   ${(dueDate || isRestricted) ? `
                     <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion">
                       <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
@@ -1920,6 +1942,7 @@
       }).join('');
     }
 
+    /* ISSUE 5 FIX: COMPLETED BADGE & TOGGLE DISPLAYED IN LEARNING HUB TABLE VIEW */
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -1934,7 +1957,7 @@
                               (res.keywords && res.keywords.toLowerCase().includes(searchQuery));
         let matchesBookmark = filterOnlyBookmarks && bookmarkedIds.size > 0 ? bookmarkedIds.has(res.id) : true;
         
-        // REQUIREMENT 7: EXCLUDE COMPLETED MANDATORY ITEMS WHEN MANDATORY FILTER IS ACTIVE
+        // ISSUE 6 FIX: EXCLUDE COMPLETED MANDATORY MODULES WHEN MANDATORY FILTER IS ACTIVE
         let matchesMandatory = filterOnlyMandatory ? (!!mandatoryData[res.id] && !completedSet.has(res.id)) : true;
         return matchesModule && matchesSearch && matchesBookmark && matchesMandatory;
       });
@@ -1961,9 +1984,11 @@
               <div class="card-header">
                 <span class="category-badge" style="background:var(--google-blue-light); color:var(--google-blue);">${res.category}</span>
                 <div class="action-icons">
-                  <button class="action-btn" onclick="openDocumentDetailsModal('${res.id}', '${res.category}', '${res.name}')" title="Document Details & Views">
-                    <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
-                  </button>
+                  ${isPowerUserActive() ? `
+                    <button class="action-btn" onclick="openDocumentDetailsModal('${res.id}', '${res.category}', '${res.name}')" title="Document Details & Views">
+                      <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
+                    </button>
+                  ` : ''}
                   ${(dueDate || isRestricted) ? `
                     <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion">
                       <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
@@ -2025,6 +2050,7 @@
             </td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${res.description || 'N/A'}</td>
             <td style="text-align:center;">
+              <!-- ISSUE 5 FIX: COMPLETED ICON IN LEARNING TABLE LIST VIEW -->
               ${(dueDate || isRestricted) ? `
                 <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)">
                   <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
@@ -2035,9 +2061,11 @@
             </td>
             <td style="text-align:right;">
               <div class="action-icons">
-                <button class="action-btn" onclick="openDocumentDetailsModal('${res.id}', '${res.category}', '${res.name}')" title="Document Details & Views">
-                  <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
-                </button>
+                ${isPowerUserActive() ? `
+                  <button class="action-btn" onclick="openDocumentDetailsModal('${res.id}', '${res.category}', '${res.name}')" title="Document Details & Views">
+                    <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
+                  </button>
+                ` : ''}
                 <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
                 ${isPowerUserActive() ? `
                   <button class="action-btn" onclick="openEditModal('learning', '${res.id}')" title="Edit Resource"><span class="material-icons-outlined" style="font-size:16px; color:var(--google-blue);">edit</span></button>
@@ -2056,7 +2084,6 @@
       document.getElementById('globalSearchResultsContainer').innerHTML = `<p style="font-size:0.78rem; color:var(--text-secondary); text-align:center;">Type any keyword to search across all hubs...</p>`;
     }
 
-    /* REQUIREMENT 9: GLOBAL SEARCH MATCHES ASSIGNED KEYWORDS IN ADDITION TO TITLE/DESCRIPTION */
     function executeGlobalSearch(term) {
       let query = term.toLowerCase().trim();
       const container = document.getElementById('globalSearchResultsContainer');
@@ -2172,8 +2199,9 @@
       document.getElementById('addModalOverlay').classList.add('open');
     }
 
-    /* REQUIREMENT 2: REASSIGN MODULES CONTROL FUNCTIONS FOR POWER USER */
+    /* ISSUE 2 FIX: REASSIGN MULTI-CHECKBOXES WITH LIVE SEARCH QUERY FILTER */
     function openReassignModulesModal() {
+      if (document.getElementById('reassignSearchInput')) document.getElementById('reassignSearchInput').value = '';
       renderReassignMultiCheckboxes();
       document.getElementById('reassignModulesModalOverlay').classList.add('open');
     }
@@ -2182,6 +2210,11 @@
       const hub = document.getElementById('reassignHubSelect').value;
       const container = document.getElementById('reassignDocCheckboxContainer');
       let targetList = hub === 'learning' ? dataset : docDataset;
+      let query = (document.getElementById('reassignSearchInput') ? document.getElementById('reassignSearchInput').value : '').toLowerCase().trim();
+
+      if (query) {
+        targetList = targetList.filter(d => (d.name || d.pkg + ' ' + d.type).toLowerCase().includes(query) || (d.category || d.pkg).toLowerCase().includes(query));
+      }
 
       container.innerHTML = targetList.map(d => {
         let itemId = d.id || (d.pkg + d.type);
@@ -2342,7 +2375,6 @@
       document.querySelectorAll('.roster-user-chk').forEach(cb => cb.checked = select);
     }
 
-    /* REQUIREMENT 3: MANDATORY CONFIG MULTI CHECKBOXES WITH LIVE SEARCH */
     function renderMandatoryMultiCheckboxes() {
       const container = document.getElementById('mandatoryMultiCheckboxContainer');
       let targetList = activeMandatorySubtab === 'document' ? docDataset : dataset;
@@ -2769,7 +2801,6 @@
       });
     }
 
-    /* REQUIREMENT 8 & 9: SAVE CUSTOM LINK & PUBLISH LIVE WITH KEYWORDS AND MODIFIED DETAILS */
     function handleAddSubmission(e) {
       e.preventDefault();
       const submitBtn = document.getElementById('submitBtn');
