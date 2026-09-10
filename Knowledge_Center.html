@@ -197,7 +197,7 @@
       outline: none;
     }
 
-    /* REQUIREMENT 2 & 4: STANDALONE FOLDER GRID TILES */
+    /* REQUIREMENT 2 & 4: STANDALONE FOLDER GRID SECTION */
     .folder-section-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -321,13 +321,13 @@
 
   <div id="toastContainer"></div>
 
-  <!-- FIXED EMAIL VERIFICATION / OTP OVERLAY -->
+  <!-- FIXED EMAIL VERIFICATION / OTP OVERLAY WITH SESSION AUTO-POPULATION -->
   <div id="mandatoryLockOverlay" class="app-lock-overlay">
     <div class="app-lock-card">
       <span class="material-icons-outlined" style="font-size: 44px; color: var(--google-blue); margin-bottom: 0.4rem;">lock</span>
       <h2 style="font-family: 'Google Sans', sans-serif; font-size: 1.15rem; margin-bottom: 0.4rem; font-weight: 400;">Email Verification</h2>
       <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.85rem;">
-        Enter your official <strong>@maxval.com</strong> email to receive your access passcode.
+        Confirm your official <strong>@maxval.com</strong> email to receive your access passcode.
       </p>
 
       <form id="otpRequestForm" onsubmit="handleRequestOtp(event)" style="display: flex; flex-direction: column; gap: 0.65rem;">
@@ -734,11 +734,17 @@
       document.body.appendChild(script);
     }
 
-    /* EMAIL VERIFICATION & OTP DISPATCH LOGIC */
+    /* AUTO-POPULATE GOOGLE SESSION EMAIL & VERIFICATION INITIALIZER */
     function checkUserLoginState() {
       const lockOverlay = document.getElementById('mandatoryLockOverlay');
       if (!currentUser || !currentUser.toLowerCase().includes('@maxval.com')) {
         lockOverlay.style.display = 'flex';
+        // Auto-detect and pre-fill Google Workspace account address
+        callGasJsonp({ action: 'GET_ACTIVE_EMAIL' }, function(data) {
+          if (data && data.email && data.email.includes('@maxval.com')) {
+            document.getElementById('loginEmailInput').value = data.email.toLowerCase().trim();
+          }
+        });
       } else {
         lockOverlay.style.display = 'none';
         document.getElementById('activeUserDisplay').textContent = deriveDisplayName(currentUser);
@@ -746,6 +752,7 @@
       }
     }
 
+    /* FAST EMAIL OTP DISPATCH LOGIC */
     function handleRequestOtp(e) {
       e.preventDefault();
       let input = document.getElementById('loginEmailInput').value.trim().toLowerCase();
@@ -762,9 +769,9 @@
         if (data && data.status === "SUCCESS") {
           document.getElementById('otpRequestForm').style.display = 'none';
           document.getElementById('otpVerifyForm').style.display = 'flex';
-          showToast("Verification passcode sent to " + pendingOtpEmail);
+          showToast("Passcode sent to " + pendingOtpEmail);
         } else {
-          alert(data ? (data.message || "OTP Delivery Failed.") : "Delivery failed. Please try again.");
+          alert(data ? (data.message || "OTP Delivery Failed.") : "Delivery failed. Please check network/email.");
         }
       });
     }
@@ -784,7 +791,7 @@
           localStorage.setItem('kc_user_maxval_email', currentUser);
           document.getElementById('mandatoryLockOverlay').style.display = 'none';
           document.getElementById('activeUserDisplay').textContent = deriveDisplayName(currentUser);
-          showToast("Welcome to Symphony Learning Hub!");
+          showToast("Access Verified!");
           loadGlobalCustomLinks();
         } else {
           alert(data ? data.message : "Invalid verification code.");
