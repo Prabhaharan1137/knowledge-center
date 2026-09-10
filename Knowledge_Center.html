@@ -38,18 +38,23 @@
       --google-purple-light: #2d1842;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
+    html, body {
       width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
       background-color: var(--bg-body);
       color: var(--text-primary);
       font-family: 'Roboto', sans-serif;
+    }
+
+    #appContainer {
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
-      position: relative;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
     }
 
     .release-ticker-bar {
@@ -64,6 +69,7 @@
       position: relative;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
+      flex-shrink: 0;
     }
     .ticker-content {
       display: inline-block;
@@ -78,18 +84,19 @@
 
     .top-hero-header {
       background: linear-gradient(135deg, #101012 0%, #1f2023 100%);
-      padding: 0.85rem 1.25rem;
+      padding: 0.75rem 1.25rem;
       border-bottom: 2px solid var(--google-blue);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.65rem;
       text-align: center;
+      flex-shrink: 0;
     }
 
     .idea-lightbulb-svg {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       object-fit: contain;
       vertical-align: middle;
       flex-shrink: 0;
@@ -114,21 +121,19 @@
 
     .brand-title-main {
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 500;
       color: #ffffff;
       line-height: 1.2;
-      text-align: center;
     }
 
     .brand-subtitle {
       font-family: 'Google Sans', sans-serif;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 400;
       color: #ffffff;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      text-align: center;
     }
 
     .top-utility-bar {
@@ -137,6 +142,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-shrink: 0;
     }
     .top-utility-left { display: flex; align-items: center; gap: 0.5rem; }
     .top-utility-right { display: flex; align-items: center; gap: 0.65rem; }
@@ -148,12 +154,12 @@
       align-items: center;
       gap: 0.3rem;
       font-weight: 400;
-      padding: 0.35rem 0.65rem;
+      padding: 0.3rem 0.6rem;
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       transition: all 0.2s ease;
     }
     .top-utility-btn:hover { background: rgba(255, 255, 255, 0.22); }
@@ -169,6 +175,7 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 0.5rem;
+      flex-shrink: 0;
     }
     
     .nav-tabs { display: flex; gap: 0.35rem; align-items: center; }
@@ -247,11 +254,20 @@
       cursor: pointer;
     }
 
-    .container { width: 100%; padding: 0.65rem 1rem; display: flex; flex-direction: column; }
+    .container {
+      flex: 1;
+      width: 100%;
+      padding: 0.65rem 1rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
     
     .tab-content { 
       display: none; 
       flex-direction: column; 
+      flex: 1;
+      overflow: hidden;
       opacity: 0;
       transform: translateY(6px);
       transition: opacity 0.25s ease, transform 0.25s ease;
@@ -271,6 +287,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
+      flex-shrink: 0;
     }
     .filter-controls-grid {
       display: grid;
@@ -290,7 +307,7 @@
       outline: none;
     }
 
-    .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.35rem 0.65rem; margin-bottom: 0.55rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+    .toolbar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.35rem 0.65rem; margin-bottom: 0.55rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-shrink: 0; }
     .search-box { position: relative; flex: 1; }
     .search-box .material-icons-outlined { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 16px; }
     .search-input { width: 100%; padding: 0.3rem 0.85rem 0.3rem 2rem; border: 1px solid var(--border-color); border-radius: 16px; font-size: 0.8rem; outline: none; background: var(--bg-card); color: var(--text-primary); }
@@ -299,7 +316,14 @@
     .view-toggle-btn { background: none; border: none; padding: 0.2rem 0.45rem; border-radius: 4px; cursor: pointer; color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center; }
     .view-toggle-btn.active { background: var(--bg-card); color: var(--google-blue); box-shadow: var(--shadow-sm); }
 
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.65rem; }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.65rem;
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 0.2rem;
+    }
 
     .resource-card { 
       background: var(--bg-card); 
@@ -354,7 +378,15 @@
       border: 1px solid #ffffff;
     }
 
-    .table-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow-x: auto; overflow-y: auto; width: 100%; max-height: 480px; }
+    .table-container { 
+      background: var(--bg-card); 
+      border: 1px solid var(--border-color); 
+      border-radius: var(--radius); 
+      overflow-x: auto; 
+      overflow-y: auto; 
+      width: 100%; 
+      flex: 1;
+    }
     .doc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; table-layout: fixed; min-width: 680px; }
     .doc-table th, .doc-table td { padding: 0.55rem 0.65rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); word-wrap: break-word; }
     .doc-table th { background: var(--bg-body); font-weight: 500; color: var(--text-secondary); position: sticky; top: 0; z-index: 2; }
@@ -449,6 +481,7 @@
 </head>
 <body>
 
+<div id="appContainer">
   <div id="toastContainer"></div>
 
   <div id="releaseTickerBar" class="release-ticker-bar" onclick="navigateToLatestRelease()">
@@ -536,7 +569,6 @@
       </button>
     </nav>
 
-    <!-- ISSUE 1 FIX: MANDATORY BUTTON NOW OPENS CROSS-HUB MANDATORY OVERLAY DIALOG -->
     <div class="header-right-badges">
       <div class="new-release-badge" id="newReleaseHeaderBadge" style="display:none;" onclick="navigateToLatestRelease()">
         <span class="material-icons-outlined" style="font-size:14px;">auto_awesome</span><span>New Release</span>
@@ -553,6 +585,33 @@
 
   <div class="container">
     <div id="quickLinksTab" class="tab-content active">
+      <section class="toolbar">
+        <div class="search-box">
+          <span class="material-icons-outlined">search</span>
+          <input type="text" id="quickSearchInput" class="search-input" placeholder="Search Quick Links..." oninput="renderQuickLinksHub()">
+        </div>
+        <div class="view-toggle-group">
+          <button type="button" class="view-toggle-btn active" id="quickGridToggleBtn" onclick="setHubViewMode('quick', 'grid')" title="Tile Card View"><span class="material-icons-outlined" style="font-size:18px;">grid_view</span></button>
+          <button type="button" class="view-toggle-btn" id="quickListToggleBtn" onclick="setHubViewMode('quick', 'table')" title="Table List View"><span class="material-icons-outlined" style="font-size:18px;">table_chart</span></button>
+        </div>
+      </section>
+
+      <div class="table-container" id="quickTableContainer" style="display:none; margin-bottom:0.8rem;">
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th style="width:40px; text-align:center;">⭐</th>
+              <th style="width:28%;">Tool / Link Title</th>
+              <th style="width:18%;">Category</th>
+              <th style="width:34%;">Description</th>
+              <th style="width:10%; text-align:center;">Status</th>
+              <th style="width:10%; text-align:right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="quickTableBody"></tbody>
+        </table>
+      </div>
+
       <main class="resources-grid" id="quickLinksGrid"></main>
     </div>
 
@@ -588,7 +647,6 @@
         </div>
       </section>
 
-      <!-- ISSUE 2 FIX: CLEAN TABLE LAYOUT (REMOVED KEYWORD COLUMN FROM MAIN UI) -->
       <div class="table-container" id="docTableContainer">
         <table class="doc-table">
           <thead>
@@ -641,7 +699,6 @@
         </div>
       </section>
 
-      <!-- ISSUE 2 FIX: CLEAN TABLE LAYOUT (REMOVED KEYWORD COLUMN FROM MAIN UI) -->
       <div class="table-container" id="learningTableContainer" style="display:none; margin-bottom:0.8rem;">
         <table class="doc-table">
           <thead>
@@ -661,7 +718,6 @@
     </div>
   </div>
 
-  <!-- ISSUE 1 FEATURE: CROSS-HUB MANDATORY MODULES OVERLAY DIALOG -->
   <div class="modal-overlay" id="mandatoryDialogModalOverlay">
     <div class="modal-content" style="max-width: 720px;">
       <div class="modal-header">
@@ -718,7 +774,6 @@
           <span class="material-icons-outlined" style="font-size:18px;">swap_horiz</span><span>Reassign Documents to Category/Module</span>
         </button>
 
-        <!-- ISSUE 2 FEATURE: EXCLUSIVE POWER USER KEYWORDS MANAGEMENT & CSV BULK EDIT -->
         <button type="button" class="btn-secondary" id="bulkKeywordsBtn" onclick="openBulkKeywordsModal()">
           <span class="material-icons-outlined" style="font-size:18px;">label</span><span>Keywords & Bulk Metadata Management</span>
         </button>
@@ -800,22 +855,28 @@
   <div class="modal-overlay" id="reassignModulesModalOverlay">
     <div class="modal-content" style="max-width: 620px;">
       <div class="modal-header">
-        <h2>Reassign Documents to Different Module</h2>
+        <h2>Reassign Documents to Different Category / Module</h2>
         <button class="modal-close-btn" onclick="closeModal('reassignModulesModalOverlay')"><span class="material-icons-outlined">close</span></button>
       </div>
 
       <div class="modal-body-scroll">
         <div class="form-group" style="margin-bottom: 0.5rem;">
           <label>Target Hub *</label>
-          <select id="reassignHubSelect" onchange="renderReassignMultiCheckboxes()">
+          <select id="reassignHubSelect" onchange="syncReassignCategoryDropdown(); renderReassignMultiCheckboxes();">
             <option value="learning">Learning Hub</option>
             <option value="document">Document Hub</option>
           </select>
         </div>
 
         <div class="form-group" style="margin-bottom: 0.5rem;">
-          <label>Select Target Category / Module Name *</label>
-          <input type="text" id="targetNewCategoryInput" placeholder="e.g., Patent Module or Symphony LF">
+          <label>Target Category / Module *</label>
+          <select id="reassignCategoryDropdown" class="styled-dropdown-catchy" onchange="toggleReassignNewFolderInput(this.value)">
+          </select>
+        </div>
+
+        <div class="form-group" id="reassignNewFolderGroup" style="display:none; margin-bottom: 0.5rem;">
+          <label>Enter New Folder / Category Name *</label>
+          <input type="text" id="targetNewCategoryInput" placeholder="e.g., Patent Strategy & Portfolio Management">
         </div>
 
         <div class="search-box" style="margin-bottom:0.4rem;">
@@ -981,6 +1042,7 @@
                 <tr>
                   <th>User Email</th>
                   <th style="text-align:center;">Assigned Count</th>
+                  <th style="text-align:center;">Completed Count</th>
                   <th style="text-align:center;">View Modules</th>
                   <th style="text-align:right;">Delete Assignment</th>
                 </tr>
@@ -994,7 +1056,7 @@
   </div>
 
   <div class="modal-overlay" id="userAssignedModulesModalOverlay">
-    <div class="modal-content" style="max-width: 520px;">
+    <div class="modal-content" style="max-width: 540px;">
       <div class="modal-header">
         <h2 id="assignedModulesModalTitle">Assigned Mandatory Modules</h2>
         <button class="modal-close-btn" onclick="closeModal('userAssignedModulesModalOverlay')"><span class="material-icons-outlined">close</span></button>
@@ -1254,9 +1316,10 @@
       <div class="modal-body-scroll" id="docInfoModalContent" style="display:flex; flex-direction:column; gap:0.65rem;"></div>
     </div>
   </div>
+</div>
 
   <script>
-    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyRc7egEwnGDUvUjJadRad202P0zLRtQ0WE2n9uPFkGY8Yb1A2cJuW4ZFe4qh19l74D/exec";
+    const GAS_ENDPOINT_URL = "https://script.google.com/a/macros/maxval.com/s/AKfycbyqBKIfQEepXDtH8PofoDueChe7u7PoFWa92NjO1-2kUvswNvhY-VNMbljn2O24A7dF/exec";
 
     const baseQuickDataset = [
       { id: 'quick_1', name: "PSO Org Access Request Portal", category: "PSO Portal", description: "Request and manage org credentials for implementation environments.", link: "https://psodevelopment-dev-ed.develop.my.site.com/accessrequest/", createdDate: "2026-01-01", lastModified: "2026-01-01 10:00:00" },
@@ -1436,6 +1499,7 @@
     let searchQuery = '';
     let selectedDocPackage = 'ALL';
     let docSearchQuery = '';
+    let quickSearchQuery = '';
     let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('user_private_bookmarks_v24') || '[]'));
     let filterOnlyBookmarks = false;
     let filterOnlyMandatory = false;
@@ -1444,6 +1508,7 @@
     let powerUsers = new Set(DEFAULT_POWER_USERS);
     let isPowerUserViewMode = true;
 
+    let quickHubLayoutMode = 'grid';
     let learningHubLayoutMode = 'grid';
     let docHubLayoutMode = 'table';
     let globalAnalyticsCache = {};
@@ -1491,13 +1556,12 @@
       renderCurrentActiveTab();
     }
 
-    /* ISSUE 1 FIX: MANDATORY OVERLAY DIALOG SHOWS ALL ACTIVE REQUIRED MODULES ACROSS ALL HUBS */
     function openMandatoryDialogOverlay() {
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
       let mandatoryList = [];
 
       for (let k in mandatoryData) {
-        if (completedSet.has(k)) continue; // Exclude completed items
+        if (completedSet.has(k)) continue;
 
         let entry = mandatoryData[k];
         let users = typeof entry === 'object' && entry.users ? entry.users : [];
@@ -1542,7 +1606,14 @@
     }
 
     function setHubViewMode(hub, mode) {
-      if (hub === 'learning') {
+      if (hub === 'quick') {
+        quickHubLayoutMode = mode;
+        document.getElementById('quickGridToggleBtn').classList.toggle('active', mode === 'grid');
+        document.getElementById('quickListToggleBtn').classList.toggle('active', mode === 'table');
+        document.getElementById('quickTableContainer').style.display = (mode === 'table') ? 'block' : 'none';
+        document.getElementById('quickLinksGrid').style.display = (mode === 'grid') ? 'grid' : 'none';
+        renderQuickLinksHub();
+      } else if (hub === 'learning') {
         learningHubLayoutMode = mode;
         document.getElementById('learningGridToggleBtn').classList.toggle('active', mode === 'grid');
         document.getElementById('learningListToggleBtn').classList.toggle('active', mode === 'table');
@@ -1687,12 +1758,41 @@
       });
     }
 
+    function toggleTopicCompletion(resId, e) {
+      if (e) e.stopPropagation();
+      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
+      let completedTimestamps = JSON.parse(localStorage.getItem('user_completed_timestamps_v23') || '{}');
+      
+      if (completedSet.has(resId)) {
+        if (!confirm("This module is currently marked as Completed. Reset status to Pending?")) {
+          return;
+        }
+        completedSet.delete(resId);
+        delete completedTimestamps[resId];
+      } else {
+        completedSet.add(resId);
+        completedTimestamps[resId] = new Date().toLocaleString();
+        showToast("Module marked as Completed!");
+      }
+
+      localStorage.setItem('user_completed_topics_v23', JSON.stringify(Array.from(completedSet)));
+      localStorage.setItem('user_completed_timestamps_v23', JSON.stringify(completedTimestamps));
+      
+      syncUserAnalyticsToBackend();
+      renderLearningHub();
+      renderDocumentHub();
+      renderQuickLinksHub();
+      updateTopMandatoryCount();
+    }
+
     function syncUserAnalyticsToBackend() {
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
+      let completedTimestamps = JSON.parse(localStorage.getItem('user_completed_timestamps_v23') || '{}');
       let viewedLog = JSON.parse(localStorage.getItem('user_viewed_log_v23') || '[]');
       let payload = {
         lastLogin: new Date().toLocaleString(),
         completedTopics: Array.from(completedSet),
+        completedTimestamps: completedTimestamps,
         seenDocs: viewedLog
       };
       callGasJsonp({ action: 'SYNC_USER_ANALYTICS', email: currentUser, data: JSON.stringify(payload) }, function(res){
@@ -1749,27 +1849,6 @@
       if (bookmarkedIds.has(id)) bookmarkedIds.delete(id); else bookmarkedIds.add(id);
       localStorage.setItem('user_private_bookmarks_v24', JSON.stringify(Array.from(bookmarkedIds)));
       renderCurrentActiveTab();
-    }
-
-    function toggleTopicCompletion(resId, e) {
-      if (e) e.stopPropagation();
-      let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
-      
-      if (completedSet.has(resId)) {
-        if (!confirm("This module is currently marked as Completed. Reset status to Pending?")) {
-          return;
-        }
-        completedSet.delete(resId);
-      } else {
-        completedSet.add(resId);
-        showToast("Module marked as Completed!");
-      }
-
-      localStorage.setItem('user_completed_topics_v23', JSON.stringify(Array.from(completedSet)));
-      syncUserAnalyticsToBackend();
-      renderLearningHub();
-      renderDocumentHub();
-      updateTopMandatoryCount();
     }
 
     function loadGlobalCustomLinks() {
@@ -1999,14 +2078,19 @@
 
     function renderQuickLinksHub() {
       const grid = document.getElementById('quickLinksGrid');
+      const tbody = document.getElementById('quickTableBody');
       let isRestricted = isUserRestrictedNewJoiner();
       let allowedIds = isRestricted ? (joinersData[currentUser.toLowerCase().trim()].quick || []) : null;
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
+      let query = (document.getElementById('quickSearchInput') ? document.getElementById('quickSearchInput').value : '').toLowerCase().trim();
 
       let filtered = quickDataset.filter(item => {
         if (allowedIds && !allowedIds.includes(item.id)) return false;
         if (filterOnlyBookmarks && bookmarkedIds.size > 0) return bookmarkedIds.has(item.id);
         if (filterOnlyMandatory) return !!mandatoryData[item.id] && !completedSet.has(item.id);
+        if (query) {
+          return item.name.toLowerCase().includes(query) || item.category.toLowerCase().includes(query) || item.description.toLowerCase().includes(query);
+        }
         return true;
       });
 
@@ -2058,9 +2142,36 @@
           </article>
         `;
       }).join('');
+
+      tbody.innerHTML = filtered.map(item => {
+        const isBookmarked = bookmarkedIds.has(item.id);
+        const dueDate = mandatoryData[item.id] ? (typeof mandatoryData[item.id] === 'object' ? mandatoryData[item.id].dueDate : mandatoryData[item.id]) : null;
+
+        return `
+          <tr class="${dueDate ? 'mandatory-card' : ''}" data-card-id="${item.id}">
+            <td style="text-align:center;">
+              <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${item.id}')">
+                <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
+              </button>
+            </td>
+            <td><strong>${item.name}</strong> ${dueDate ? `<span class="mandatory-tag-pill">DUE: ${dueDate}</span>` : ''}</td>
+            <td><span style="background:var(--google-blue-light); color:var(--google-blue); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${item.category}</span></td>
+            <td style="font-size:0.78rem; color:var(--text-secondary);">${item.description}</td>
+            <td style="text-align:center;"><span style="color:var(--text-secondary); font-size:0.75rem;">Standard</span></td>
+            <td style="text-align:right;">
+              <div class="action-icons">
+                <a href="${item.link}" target="_blank" class="link-btn" onclick="trackDocView('${item.category}', '${item.name}')"><span>Link</span><span class="material-icons-outlined" style="font-size:14px;">open_in_new</span></a>
+                ${isPowerUserActive() ? `
+                  <button class="action-btn" onclick="openEditModal('quick', '${item.id}')" title="Edit Quick Link"><span class="material-icons-outlined" style="font-size:16px; color:var(--google-blue);">edit</span></button>
+                  <button class="action-btn" onclick="executeDeleteItem('quick', '${item.link}', '${item.id}')" title="Delete Quick Link"><span class="material-icons-outlined" style="font-size:16px; color:var(--google-red);">delete</span></button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
-    /* ISSUE 3 FIX: COMPLETED ICON & STATUS BADGE RENDERED IN DOCUMENT HUB LIST VIEW */
     function renderDocumentHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -2114,12 +2225,13 @@
             <td><span style="background:var(--google-purple-light); color:var(--google-purple); padding:0.15rem 0.4rem; border-radius:4px; font-size:0.72rem;">${doc.type}</span></td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${doc.description || 'Technical Documentation.'}</td>
             <td style="text-align:center;">
-              <!-- ISSUE 3 FIX: COMPLETED BADGE & TOGGLE BUTTON IN TABLE VIEW -->
-              <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion Status">
-                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                  ${isCompleted ? '✓ Completed' : 'Pending Review'}
-                </span>
-              </button>
+              ${dueDate ? `
+                <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion Status">
+                  <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                    ${isCompleted ? '✓ Completed' : 'Pending Review'}
+                  </span>
+                </button>
+              ` : '<span style="color:var(--text-secondary); font-size:0.75rem;">Standard</span>'}
             </td>
             <td style="text-align:right;">
               <div class="action-icons">
@@ -2158,11 +2270,13 @@
                       <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
                     </button>
                   ` : ''}
-                  <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion">
-                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
-                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
-                    </span>
-                  </button>
+                  ${dueDate ? `
+                    <button class="action-btn" onclick="toggleTopicCompletion('${docId}', event)" title="Toggle Completion">
+                      <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
+                        ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                      </span>
+                    </button>
+                  ` : ''}
                   <button class="action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${docId}')">
                     <span class="material-icons-outlined gold-star" style="font-size:18px;">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
@@ -2177,9 +2291,11 @@
               ${generateViewedPresenceHtml(doc.pkg, doc.type)}
             </div>
             <div class="card-actions">
-              <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}" onclick="toggleTopicCompletion('${docId}', event)">
-                ${isCompleted ? '✓ Completed' : 'Pending Review'}
-              </span>
+              ${dueDate ? `
+                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}" onclick="toggleTopicCompletion('${docId}', event)">
+                  ${isCompleted ? '✓ Completed' : 'Pending Review'}
+                </span>
+              ` : '<span style="color:var(--text-secondary); font-size:0.75rem;">Standard</span>'}
               <div class="action-icons">
                 <a href="${doc.link}" target="_blank" class="link-btn" onclick="trackDocView('${doc.pkg}', '${doc.type}')"><span>Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
                 ${isPowerUserActive() ? `
@@ -2193,7 +2309,6 @@
       }).join('');
     }
 
-    /* ISSUE 3 FIX: COMPLETED BADGE & TOGGLE BUTTON RENDERED IN LEARNING HUB TABLE VIEW */
     function renderLearningHub() {
       const todayStr = new Date().toLocaleDateString();
       let completedSet = new Set(JSON.parse(localStorage.getItem('user_completed_topics_v23') || '[]'));
@@ -2238,11 +2353,13 @@
                       <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">info</span>
                     </button>
                   ` : ''}
-                  <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion">
-                    <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
-                      ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
-                    </span>
-                  </button>
+                  ${dueDate ? `
+                    <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion">
+                      <span class="material-icons-outlined" style="color:${isCompleted ? 'var(--google-green)' : 'var(--text-secondary)'}; font-size:20px;">
+                        ${isCompleted ? 'check_circle' : 'radio_button_unchecked'}
+                      </span>
+                    </button>
+                  ` : ''}
                   <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${res.id}')">
                     <span class="material-icons-outlined gold-star" style="font-size:20px;">${isBookmarked ? 'star' : 'star_border'}</span>
                   </button>
@@ -2257,9 +2374,11 @@
               ${generateViewedPresenceHtml(res.category, res.name)}
             </div>
             <div class="card-actions">
-              <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}" onclick="toggleTopicCompletion('${res.id}', event)">
-                ${isCompleted ? '✓ Completed' : 'Pending'}
-              </span>
+              ${dueDate ? `
+                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}" onclick="toggleTopicCompletion('${res.id}', event)">
+                  ${isCompleted ? '✓ Completed' : 'Pending'}
+                </span>
+              ` : '<span style="color:var(--text-secondary); font-size:0.75rem;">Standard</span>'}
               <div class="action-icons">
                 <a href="${res.link}" target="_blank" class="link-btn" onclick="trackDocView('${res.category}', '${res.name}')"><span>Link</span><span class="material-icons-outlined" style="font-size:15px;">open_in_new</span></a>
                 ${isPowerUserActive() ? `
@@ -2295,12 +2414,13 @@
             </td>
             <td style="font-size:0.78rem; color:var(--text-secondary);">${res.description || 'N/A'}</td>
             <td style="text-align:center;">
-              <!-- ISSUE 3 FIX: COMPLETED BADGE & TOGGLE BUTTON IN TABLE VIEW -->
-              <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion Status">
-                <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
-                  ${isCompleted ? '✓ Completed' : 'Pending'}
-                </span>
-              </button>
+              ${dueDate ? `
+                <button class="action-btn" onclick="toggleTopicCompletion('${res.id}', event)" title="Toggle Completion Status">
+                  <span class="completion-status-tag ${isCompleted ? 'completed' : 'pending'}">
+                    ${isCompleted ? '✓ Completed' : 'Pending'}
+                  </span>
+                </button>
+              ` : '<span style="color:var(--text-secondary); font-size:0.75rem;">Standard</span>'}
             </td>
             <td style="text-align:right;">
               <div class="action-icons">
@@ -2397,6 +2517,23 @@
 
       const selectModuleElem = document.getElementById('newModule');
       selectModuleElem.innerHTML = Array.from(categories).map(c => `<option value="${c}">${c}</option>`).join('') + `<option value="__NEW_CUSTOM__">+ Add New Module Category...</option>`;
+      
+      syncReassignCategoryDropdown();
+    }
+
+    function syncReassignCategoryDropdown() {
+      const hub = document.getElementById('reassignHubSelect') ? document.getElementById('reassignHubSelect').value : 'learning';
+      const dropdown = document.getElementById('reassignCategoryDropdown');
+      if (!dropdown) return;
+
+      let categories = hub === 'learning' ? new Set(dataset.map(d => d.category).concat(globalCustomCategories)) : new Set(docDataset.map(d => d.pkg));
+
+      dropdown.innerHTML = Array.from(categories).map(c => `<option value="${c}">${c}</option>`).join('') + `<option value="__NEW_FOLDER__">+ Create New Folder / Category...</option>`;
+      toggleReassignNewFolderInput(dropdown.value);
+    }
+
+    function toggleReassignNewFolderInput(val) {
+      document.getElementById('reassignNewFolderGroup').style.display = (val === '__NEW_FOLDER__') ? 'block' : 'none';
     }
 
     function openAddModal() {
@@ -2442,7 +2579,6 @@
       document.getElementById('addModalOverlay').classList.add('open');
     }
 
-    /* ISSUE 2 FEATURE: POWER USER BATCH KEYWORDS & CSV EXPORT / IMPORT LOGIC */
     function openBulkKeywordsModal() {
       renderBulkKeywordsModalTable();
       document.getElementById('bulkKeywordsModalOverlay').classList.add('open');
@@ -2551,6 +2687,7 @@
 
     function openReassignModulesModal() {
       if (document.getElementById('reassignSearchInput')) document.getElementById('reassignSearchInput').value = '';
+      syncReassignCategoryDropdown();
       renderReassignMultiCheckboxes();
       document.getElementById('reassignModulesModalOverlay').classList.add('open');
     }
@@ -2578,11 +2715,16 @@
 
     function executeBulkModuleReassign() {
       const hub = document.getElementById('reassignHubSelect').value;
-      const newCategory = document.getElementById('targetNewCategoryInput').value.trim();
+      let newCategory = document.getElementById('reassignCategoryDropdown').value;
+      
+      if (newCategory === '__NEW_FOLDER__') {
+        newCategory = document.getElementById('targetNewCategoryInput').value.trim();
+      }
+
       const selectedChks = document.querySelectorAll('.reassign-item-chk:checked');
 
       if (!newCategory) {
-        alert("Please enter a target category/module name.");
+        alert("Please select or enter a valid target folder/category name.");
         return;
       }
       if (selectedChks.length === 0) {
@@ -2600,7 +2742,7 @@
         requesterEmail: currentUser
       }, function(res) {
         if (res && res.status === "SUCCESS") {
-          showToast("Documents reassigned successfully!");
+          showToast(`Documents successfully reassigned to ${newCategory}!`);
           closeModal('reassignModulesModalOverlay');
           loadGlobalCustomLinks();
         } else {
@@ -2845,16 +2987,22 @@
       const keys = Object.keys(mandatoryData);
 
       tbody.innerHTML = rosterList.map(user => {
+        let userRecord = globalAnalyticsCache[user] || { completedTopics: [] };
+        let userCompletedSet = new Set(userRecord.completedTopics || []);
+
         let assignedKeys = keys.filter(k => {
           let entry = mandatoryData[k];
           let users = typeof entry === 'object' && entry.users ? entry.users : [];
           return users.length === 0 || users.indexOf(user) > -1;
         });
 
+        let completedKeys = assignedKeys.filter(k => userCompletedSet.has(k));
+
         return `
           <tr>
             <td><strong>${deriveDisplayName(user)}</strong><br><span style="font-size:0.72rem; color:var(--text-secondary);">${user}</span></td>
             <td style="text-align:center;"><strong style="color:var(--google-blue);">${assignedKeys.length}</strong></td>
+            <td style="text-align:center;"><strong style="color:var(--google-green);">${completedKeys.length}</strong></td>
             <td style="text-align:center;">
               <button type="button" class="action-btn" onclick="openUserMandatoryEyeModal('${user}')" title="View Assigned Modules">
                 <span class="material-icons-outlined" style="font-size:18px; color:var(--google-blue);">visibility</span>
@@ -2888,6 +3036,10 @@
 
     function openUserMandatoryEyeModal(user) {
       const keys = Object.keys(mandatoryData);
+      let userRecord = globalAnalyticsCache[user] || { completedTopics: [], completedTimestamps: {} };
+      let userCompletedSet = new Set(userRecord.completedTopics || []);
+      let timestampsMap = userRecord.completedTimestamps || {};
+
       let assignedKeys = keys.filter(k => {
         let entry = mandatoryData[k];
         let users = typeof entry === 'object' && entry.users ? entry.users : [];
@@ -2903,11 +3055,17 @@
         container.innerHTML = assignedKeys.map(k => {
           let found = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
           let dueDate = typeof mandatoryData[k] === 'object' ? mandatoryData[k].dueDate : mandatoryData[k];
+          let isDone = userCompletedSet.has(k);
+          let doneTimestamp = timestampsMap[k] || 'N/A';
+
           return `
             <div style="background:var(--bg-body); border:1px solid var(--border-color); border-radius:6px; padding:0.5rem; margin-bottom:0.4rem; display:flex; justify-content:space-between; align-items:center;">
               <div>
                 <strong style="font-size:0.82rem;">${found ? (found.name || found.pkg + ' ' + found.type) : k}</strong>
                 <p style="font-size:0.72rem; color:var(--google-red);">Due Date: ${dueDate}</p>
+                <p style="font-size:0.72rem; color:${isDone ? 'var(--google-green)' : 'var(--text-secondary)'}; font-weight:500;">
+                  Status: ${isDone ? `✓ Completed on ${doneTimestamp}` : 'Pending Review'}
+                </p>
               </div>
               ${isPowerUserActive() ? `
                 <button type="button" class="action-btn" onclick="executeDeleteSingleModuleUserAssignment('${user}', '${k}')" title="Remove Module from User">
@@ -3288,10 +3446,11 @@
     }
 
     function openDrilldownModal(email, tabType) {
-      const u = globalAnalyticsCache[email] || { completedTopics: [], seenDocs: [] };
+      const u = globalAnalyticsCache[email] || { completedTopics: [], completedTimestamps: {}, seenDocs: [] };
       document.getElementById('drilldownUserTitle').textContent = `User Details: ${deriveDisplayName(email)}`;
 
       const completedIds = u.completedTopics || [];
+      const timestampsMap = u.completedTimestamps || {};
       const mandatoryKeys = Object.keys(mandatoryData);
       const myMandatory = mandatoryKeys.filter(k => {
         let entry = mandatoryData[k];
@@ -3324,13 +3483,14 @@
                 <thead>
                   <tr>
                     <th>Module Title</th>
-                    <th style="text-align:right;">Status</th>
+                    <th style="text-align:right;">Completed Timestamp</th>
                   </tr>
                 </thead>
                 <tbody>
                   ${myCompletedMandatory.length > 0 ? myCompletedMandatory.map(k => {
                     let item = quickDataset.find(d => d.id === k) || dataset.find(d => d.id === k) || docDataset.find(d => (d.id === k || (d.pkg + d.type) === k));
-                    return `<tr><td><strong>${item ? (item.name || item.pkg + ' ' + item.type) : k}</strong></td><td style="text-align:right; color:var(--google-green);">Reviewed</td></tr>`;
+                    let ts = timestampsMap[k] || 'Reviewed';
+                    return `<tr><td><strong>${item ? (item.name || item.pkg + ' ' + item.type) : k}</strong></td><td style="text-align:right; color:var(--google-green);">${ts}</td></tr>`;
                   }).join('') : '<tr><td colspan="2" style="text-align:center; color:var(--text-secondary);">No mandatory modules completed yet.</td></tr>'}
                 </tbody>
               </table>
